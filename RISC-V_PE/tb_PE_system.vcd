@@ -1,5 +1,5 @@
 $date
-	Thu Mar 27 23:01:09 2025
+	Thu Apr  3 01:06:25 2025
 $end
 $version
 	Icarus Verilog
@@ -18,15 +18,15 @@ $var wire 5 ' rdOutBus [4:0] $end
 $var wire 1 ( mem_writeBus $end
 $var wire 1 ) mem_readBus $end
 $var wire 32 * mem_addressBus [31:0] $end
-$var wire 1 + bus_request $end
-$var wire 32 , PCoutBus [31:0] $end
-$var reg 32 - AmuxBus [31:0] $end
-$var reg 32 . BmuxBus [31:0] $end
-$var reg 32 / PCinBus [31:0] $end
-$var reg 1 0 clk $end
-$var reg 1 1 data_ReadyBus $end
-$var reg 1 2 grant $end
-$var reg 1 3 instrWrite $end
+$var wire 1 + execution_complete $end
+$var wire 32 , data_Store [31:0] $end
+$var wire 1 - bus_request $end
+$var wire 32 . PCoutBus [31:0] $end
+$var reg 32 / AmuxBus [31:0] $end
+$var reg 32 0 BmuxBus [31:0] $end
+$var reg 1 1 clk $end
+$var reg 1 2 data_ReadyBus $end
+$var reg 1 3 grant $end
 $var reg 32 4 instructionBus [31:0] $end
 $var reg 32 5 memData [31:0] $end
 $var reg 1 6 mem_ackBus $end
@@ -34,11 +34,10 @@ $var reg 1 7 reset $end
 $scope module uut $end
 $var wire 32 8 AmuxBus [31:0] $end
 $var wire 32 9 BmuxBus [31:0] $end
-$var wire 32 : PCinBus [31:0] $end
-$var wire 1 0 clk $end
-$var wire 1 1 data_ReadyBus $end
-$var wire 1 2 grant $end
-$var wire 1 3 instrWrite $end
+$var wire 32 : PCin [31:0] $end
+$var wire 1 1 clk $end
+$var wire 1 2 data_ReadyBus $end
+$var wire 1 3 grant $end
 $var wire 32 ; instructionBus [31:0] $end
 $var wire 32 < memData [31:0] $end
 $var wire 1 6 mem_ackBus $end
@@ -64,46 +63,48 @@ $var wire 1 ) mem_readBus $end
 $var wire 32 J mem_addressPE [31:0] $end
 $var wire 32 K mem_addressBus [31:0] $end
 $var wire 1 L mem_ackPE $end
-$var wire 32 M instructionPE [31:0] $end
-$var wire 1 N data_ReadyPE $end
-$var wire 1 + bus_request $end
-$var wire 32 O PCoutPE [31:0] $end
-$var wire 32 P PCoutBus [31:0] $end
-$var wire 32 Q PCinPE [31:0] $end
+$var wire 1 M execution_completePE $end
+$var wire 1 + execution_complete $end
+$var wire 32 N data_Store [31:0] $end
+$var wire 1 O data_ReadyPE $end
+$var wire 1 - bus_request $end
+$var wire 32 P PCoutPE [31:0] $end
+$var wire 32 Q PCoutBus [31:0] $end
 $var wire 32 R BmuxPE [31:0] $end
 $var wire 32 S AmuxPE [31:0] $end
 $scope module PE $end
-$var wire 1 0 clk $end
+$var wire 32 T PCin [31:0] $end
+$var wire 1 1 clk $end
+$var wire 32 U instruction [31:0] $end
 $var wire 1 7 reset $end
-$var wire 5 T rs2Out [4:0] $end
-$var wire 5 U rs2 [4:0] $end
-$var wire 5 V rs1Out [4:0] $end
-$var wire 5 W rs1 [4:0] $end
-$var wire 32 X result_out [31:0] $end
+$var wire 5 V rs2Out [4:0] $end
+$var wire 5 W rs2 [4:0] $end
+$var wire 5 X rs1Out [4:0] $end
+$var wire 5 Y rs1 [4:0] $end
+$var wire 32 Z result_out [31:0] $end
 $var wire 1 C reg_select $end
-$var wire 1 Y reg_reset $end
+$var wire 1 [ reg_reset $end
 $var wire 1 D read_en $end
 $var wire 1 E rdWrite $end
-$var wire 5 Z rdOut [4:0] $end
-$var wire 5 [ rd [4:0] $end
-$var wire 32 \ opB [31:0] $end
-$var wire 32 ] opA [31:0] $end
-$var wire 7 ^ op [6:0] $end
+$var wire 5 \ rdOut [4:0] $end
+$var wire 5 ] rd [4:0] $end
+$var wire 32 ^ opB [31:0] $end
+$var wire 32 _ opA [31:0] $end
+$var wire 7 ` op [6:0] $end
 $var wire 1 H mem_write $end
 $var wire 1 I mem_read $end
-$var wire 32 _ mem_address [31:0] $end
+$var wire 32 a mem_address [31:0] $end
 $var wire 1 L mem_ack $end
-$var wire 32 ` instructionIn [31:0] $end
-$var wire 32 a instruction [31:0] $end
-$var wire 32 b immvalue [31:0] $end
-$var wire 20 c immhi [19:0] $end
-$var wire 12 d imm12 [11:0] $end
-$var wire 7 e funct7 [6:0] $end
-$var wire 3 f funct3 [2:0] $end
-$var wire 1 g decodeComplete $end
-$var wire 1 N data_Ready $end
-$var wire 32 h PCout [31:0] $end
-$var wire 32 i PCin [31:0] $end
+$var wire 32 b instructionIn [31:0] $end
+$var wire 32 c immvalue [31:0] $end
+$var wire 20 d immhi [19:0] $end
+$var wire 12 e imm12 [11:0] $end
+$var wire 7 f funct7 [6:0] $end
+$var wire 3 g funct3 [2:0] $end
+$var wire 1 M execution_complete $end
+$var wire 1 h decodeComplete $end
+$var wire 1 O data_Ready $end
+$var wire 32 i PCout [31:0] $end
 $var wire 2 j Osel [1:0] $end
 $var wire 1 k IRenable $end
 $var wire 32 l Bval [31:0] $end
@@ -119,10 +120,10 @@ $var wire 1 u ALUcomplete $end
 $var wire 32 v ALURes [31:0] $end
 $var wire 1 w ALU0 $end
 $scope module alu $end
-$var wire 1 0 clk $end
+$var wire 1 1 clk $end
 $var wire 32 x sub_result [31:0] $end
 $var wire 1 y sub_borrow $end
-$var wire 1 Y reset $end
+$var wire 1 [ reset $end
 $var wire 32 z add_result [31:0] $end
 $var wire 1 { add_carry_out $end
 $var wire 32 | B [31:0] $end
@@ -930,20 +931,20 @@ $scope module ctrl $end
 $var wire 1 w ALU0 $end
 $var wire 32 9& ALURes [31:0] $end
 $var wire 1 u ALUcomplete $end
-$var wire 1 0 clk $end
+$var wire 32 :& PCin [31:0] $end
+$var wire 1 1 clk $end
 $var wire 1 7 reset $end
-$var wire 5 :& rs2 [4:0] $end
-$var wire 5 ;& rs1 [4:0] $end
-$var wire 5 <& rd [4:0] $end
-$var wire 7 =& op [6:0] $end
+$var wire 5 ;& rs2 [4:0] $end
+$var wire 5 <& rs1 [4:0] $end
+$var wire 5 =& rd [4:0] $end
+$var wire 7 >& op [6:0] $end
 $var wire 1 L mem_ack $end
-$var wire 20 >& immhi [19:0] $end
-$var wire 12 ?& imm12 [11:0] $end
-$var wire 7 @& funct7 [6:0] $end
-$var wire 3 A& funct3 [2:0] $end
-$var wire 1 g decodeComplete $end
-$var wire 1 N dataReady $end
-$var wire 32 B& PCin [31:0] $end
+$var wire 20 ?& immhi [19:0] $end
+$var wire 12 @& imm12 [11:0] $end
+$var wire 7 A& funct7 [6:0] $end
+$var wire 3 B& funct3 [2:0] $end
+$var wire 1 h decodeComplete $end
+$var wire 1 O dataReady $end
 $var reg 1 C& ALURes_sync $end
 $var reg 1 D& ALUcomplete_sync $end
 $var reg 5 E& ALUsel [4:0] $end
@@ -955,6 +956,7 @@ $var reg 1 k IRenable $end
 $var reg 2 H& Osel [1:0] $end
 $var reg 32 I& PCout [31:0] $end
 $var reg 1 J& dataReady_sync $end
+$var reg 1 M execution_complete $end
 $var reg 32 K& immvalue [31:0] $end
 $var reg 32 L& mem_address [31:0] $end
 $var reg 1 I mem_read $end
@@ -962,7 +964,7 @@ $var reg 1 H mem_write $end
 $var reg 5 M& rdOut [4:0] $end
 $var reg 1 E rdWrite $end
 $var reg 1 D read_en $end
-$var reg 1 Y reg_reset $end
+$var reg 1 [ reg_reset $end
 $var reg 1 C reg_select $end
 $var reg 5 N& rs1Out [4:0] $end
 $var reg 5 O& rs2Out [4:0] $end
@@ -978,7 +980,7 @@ $upscope $end
 $upscope $end
 $scope module deco $end
 $var wire 32 U& instruction [31:0] $end
-$var reg 1 g decodeComplete $end
+$var reg 1 h decodeComplete $end
 $var reg 3 V& funct3 [2:0] $end
 $var reg 7 W& funct7 [6:0] $end
 $var reg 12 X& imm12 [11:0] $end
@@ -990,8 +992,8 @@ $var reg 5 ]& rs2 [4:0] $end
 $upscope $end
 $scope module muxA $end
 $var wire 32 ^& in_1 [31:0] $end
-$var wire 2 _& sel [1:0] $end
-$var wire 32 `& in_3 [31:0] $end
+$var wire 32 _& in_3 [31:0] $end
+$var wire 2 `& sel [1:0] $end
 $var wire 32 a& in_2 [31:0] $end
 $var reg 32 b& data_out [31:0] $end
 $upscope $end
@@ -1010,69 +1012,67 @@ $var wire 32 k& in_2 [31:0] $end
 $var reg 32 l& data_out [31:0] $end
 $upscope $end
 $scope module regA $end
-$var wire 1 0 clock $end
+$var wire 1 1 clock $end
 $var wire 32 m& data_in [31:0] $end
 $var wire 1 s r_enable $end
-$var wire 1 Y reset $end
+$var wire 1 [ reset $end
 $var reg 32 n& data_out [31:0] $end
 $upscope $end
 $scope module regB $end
-$var wire 1 0 clock $end
+$var wire 1 1 clock $end
 $var wire 32 o& data_in [31:0] $end
 $var wire 1 o r_enable $end
-$var wire 1 Y reset $end
+$var wire 1 [ reset $end
 $var reg 32 p& data_out [31:0] $end
 $upscope $end
 $scope module regIR $end
-$var wire 1 0 clock $end
-$var wire 1 k r_enable $end
-$var wire 1 Y reset $end
+$var wire 1 1 clock $end
 $var wire 32 q& data_in [31:0] $end
+$var wire 1 k r_enable $end
+$var wire 1 [ reset $end
 $var reg 32 r& data_out [31:0] $end
 $upscope $end
 $upscope $end
 $scope module busint $end
 $var wire 32 s& AmuxBus [31:0] $end
 $var wire 32 t& BmuxBus [31:0] $end
-$var wire 32 u& PCinBus [31:0] $end
-$var wire 32 v& PCoutPE [31:0] $end
-$var wire 1 0 clk $end
-$var wire 1 1 data_ReadyBus $end
-$var wire 1 2 grant $end
-$var wire 1 3 instrWrite $end
-$var wire 32 w& instructionBus [31:0] $end
-$var wire 32 x& memData [31:0] $end
+$var wire 32 u& PCoutPE [31:0] $end
+$var wire 1 1 clk $end
+$var wire 1 2 data_ReadyBus $end
+$var wire 1 M execution_completePE $end
+$var wire 1 3 grant $end
+$var wire 32 v& memData [31:0] $end
 $var wire 1 6 mem_ackBus $end
-$var wire 32 y& mem_addressPE [31:0] $end
+$var wire 32 w& mem_addressPE [31:0] $end
 $var wire 1 I mem_readPE $end
 $var wire 1 H mem_writePE $end
-$var wire 5 z& rdOutPE [4:0] $end
+$var wire 5 x& rdOutPE [4:0] $end
 $var wire 1 E rd_writePE $end
 $var wire 1 D read_enPE $end
 $var wire 1 C reg_selectPE $end
 $var wire 1 7 reset $end
-$var wire 32 {& result_inPE [31:0] $end
-$var wire 5 |& rs1OutPE [4:0] $end
-$var wire 5 }& rs2OutPE [4:0] $end
-$var reg 32 ~& AmuxPE [31:0] $end
-$var reg 32 !' BmuxPE [31:0] $end
-$var reg 32 "' PCinPE [31:0] $end
-$var reg 32 #' PCoutBus [31:0] $end
-$var reg 1 $' active $end
-$var reg 1 + bus_request $end
-$var reg 1 N data_ReadyPE $end
-$var reg 32 %' instructionPE [31:0] $end
+$var wire 32 y& result_inPE [31:0] $end
+$var wire 5 z& rs1OutPE [4:0] $end
+$var wire 5 {& rs2OutPE [4:0] $end
+$var reg 32 |& AmuxPE [31:0] $end
+$var reg 32 }& BmuxPE [31:0] $end
+$var reg 32 ~& PCoutBus [31:0] $end
+$var reg 1 !' active $end
+$var reg 1 - bus_request $end
+$var reg 1 O data_ReadyPE $end
+$var reg 32 "' data_Store [31:0] $end
+$var reg 1 + execution_completeBus $end
 $var reg 1 L mem_ackPE $end
-$var reg 32 &' mem_addressBus [31:0] $end
+$var reg 32 #' mem_addressBus [31:0] $end
 $var reg 1 ) mem_readBus $end
 $var reg 1 ( mem_writeBus $end
-$var reg 5 '' rdOutBus [4:0] $end
+$var reg 5 $' rdOutBus [4:0] $end
 $var reg 1 & rd_writeBus $end
 $var reg 1 % read_enBus $end
 $var reg 1 $ reg_selectBus $end
-$var reg 32 (' result_outBus [31:0] $end
-$var reg 5 )' rs1OutBus [4:0] $end
-$var reg 5 *' rs2OutBus [4:0] $end
+$var reg 32 %' result_outBus [31:0] $end
+$var reg 5 &' rs1OutBus [4:0] $end
+$var reg 5 '' rs2OutBus [4:0] $end
 $upscope $end
 $upscope $end
 $upscope $end
@@ -1146,16 +1146,13 @@ b0 *"
 $end
 #0
 $dumpvars
-b0 *'
-b0 )'
-b0 ('
 b0 ''
 b0 &'
 b0 %'
-0$'
+b0 $'
 b0 #'
-b0 "'
-b0 !'
+bx "'
+0!'
 b0 ~&
 b0 }&
 b0 |&
@@ -1187,7 +1184,7 @@ b0 c&
 b0 b&
 b0 a&
 b0 `&
-b0 _&
+bz _&
 b0 ^&
 b0 ]&
 b0 \&
@@ -1224,7 +1221,7 @@ b0 >&
 b0 =&
 b0 <&
 b0 ;&
-b0 :&
+bz :&
 b0 9&
 x8&
 x7&
@@ -1584,8 +1581,8 @@ b0 l
 1k
 b0 j
 b0 i
-b0 h
-0g
+0h
+b0 g
 b0 f
 b0 e
 b0 d
@@ -1593,25 +1590,25 @@ b0 c
 b0 b
 b0 a
 b0 `
-b0 _
-b0 ^
-bx ]
-bx \
-b0 [
+bx _
+bx ^
+b0 ]
+b0 \
+0[
 b0 Z
-0Y
+b0 Y
 b0 X
 b0 W
 b0 V
 b0 U
-b0 T
+bz T
 b0 S
 b0 R
 b0 Q
 b0 P
-b0 O
-0N
-b0 M
+0O
+bx N
+0M
 0L
 b0 K
 b0 J
@@ -1630,7 +1627,7 @@ b0 >
 b0 =
 b0 <
 b0 ;
-b0 :
+bz :
 b0 9
 b0 8
 17
@@ -1640,11 +1637,11 @@ b0 4
 03
 02
 01
-00
+b0 0
 b0 /
 b0 .
-b0 -
-b0 ,
+0-
+bx ,
 0+
 b0 *
 0)
@@ -1659,94 +1656,151 @@ b0 !
 $end
 #5000
 1w
-0Y
-10
+0[
+11
 #10000
-00
-b10010001101000101011001111000 /
-b10010001101000101011001111000 :
-b10010001101000101011001111000 u&
-13
+01
 b10101110111000000110100011 4
 b10101110111000000110100011 ;
-b10101110111000000110100011 w&
+b10101110111000000110100011 U
+b10101110111000000110100011 q&
 07
 #15000
+b1011 l
+b1011 g&
+b1011 o&
+b10111 p
+b10111 b&
+b10111 m&
+1h
+b1011 c&
+b1011 W
+b1011 ;&
+b1011 ]&
+b10111 ^&
+b10111 Y
+b10111 <&
+b10111 \&
+b100011 e
+b100011 @&
+b100011 X&
+b100011 `
+b100011 >&
+b100011 Z&
 0k
-1+
-10
+b10101110111000000110100011 b
+b10101110111000000110100011 U&
+b10101110111000000110100011 r&
+11
 #20000
-00
-12
-b10010001101000101011001111001 /
-b10010001101000101011001111001 :
-b10010001101000101011001111001 u&
-03
+01
+13
 #25000
-1$'
-0+
-10
+b100011 l
+b100011 g&
+b100011 o&
+1!'
+b100011 c
+b100011 K&
+b100011 d&
+b10 m
+b10 G&
+b10 e&
+1D
+b10111 ?
+b10111 X
+b10111 N&
+b10111 z&
+0[
+bz P
+bz i
+bz I&
+bz u&
+b0 p
+b0 b&
+b0 m&
+b100011 R&
+b1 q
+b1 F&
+b1 `&
+11
 #30000
-00
+01
 16
 b10000111011001010100001100100001 5
 b10000111011001010100001100100001 <
-b10000111011001010100001100100001 x&
-12
+b10000111011001010100001100100001 v&
+13
 #35000
-0$'
+b10000111011001010100001100100001 p
+b10000111011001010100001100100001 b&
+b10000111011001010100001100100001 m&
+0[
+0!'
 1L
 b10000111011001010100001100100001 S
 b10000111011001010100001100100001 r
 b10000111011001010100001100100001 a&
-b10000111011001010100001100100001 ~&
-b10010001101000101011001111001 Q
-b10010001101000101011001111001 i
-b10010001101000101011001111001 B&
-b10010001101000101011001111001 `&
-b10010001101000101011001111001 "'
-10
-#40000
-00
+b10000111011001010100001100100001 |&
+1%
+b10111 "
+b10111 @
+b10111 &'
+bz .
+bz Q
+bz ~&
 11
-b100010001000100010001000100010 .
+#40000
+01
+12
+b100010001000100010001000100010 0
 b100010001000100010001000100010 9
 b100010001000100010001000100010 t&
-b10001000100010001000100010001 -
+b10001000100010001000100010001 /
 b10001000100010001000100010001 8
 b10001000100010001000100010001 s&
-02
+03
 06
 #45000
-10
+1-
+0[
+11
 #50000
-00
-12
 01
-#55000
-1$'
-10
-#60000
-00
+13
 02
+#55000
+0[
+1!'
+0-
+11
+#60000
+01
+03
 #65000
-0$'
-10
+0!'
+0[
+11
 #70000
-00
+01
 #75000
-10
+0[
+1-
+11
 #80000
-00
+01
 #85000
-10
+0[
+11
 #90000
-00
+01
 #95000
-10
+0[
+11
 #100000
-00
+01
 #105000
-10
+0[
+11
 #110000
-00
+01

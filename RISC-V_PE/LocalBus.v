@@ -18,7 +18,7 @@ module local_bus_top (
 );
 
     // Internal signals for the interconnections
-    wire [127:0] PCsIM;            // Program counters for instruction memory
+    wire [31:0] PCsIM;            // Program counters for instruction memory
     wire [3:0] InstReadEn;         // Read enable signals for instruction memory
     wire [127:0] PCinPE;           // Program counters to PEs
     wire [127:0] PCoutPE;          // Program counters from PEs
@@ -41,6 +41,7 @@ module local_bus_top (
     wire [31:0] data_out1;
     wire [31:0] data_out2;
     wire [31:0] data_Store;
+    wire last_instruction;
 
     wire [31:0] result_mux;
 
@@ -55,15 +56,18 @@ module local_bus_top (
         .PCinPE(PCinPE),
         .instruction_outPE(instruction_outPE),
         .PCoutPE(PCoutPE),
-        .execution_complete(execution_complete)
+        .execution_complete(execution_complete),
+        .last_instruction(last_instruction)
     );
 
-    // Instruction Memory (e.g., ROM)
+    // Instruction Memory 
     instruction_memory instr_mem (
         .clk(clk),
+        .reset(reset),
         .read_enable(InstReadEn),
         .PC(PCsIM),
-        .instruction(instruction_mem)
+        .instruction(instruction_mem),
+        .last_instruction(last_instruction)
     );
 
     // Arbiter

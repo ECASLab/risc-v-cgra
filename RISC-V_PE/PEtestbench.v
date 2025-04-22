@@ -82,14 +82,14 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #10;
+    #20;
     data_Ready = 1;
 
-    #10;
+    #20;
     AmuxIn = 32'b00000000000000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
     mem_ack = 1;
 
-    #30;
+    #40;
     //Expected result: 111111111111111111111111_10100101
     if (result_out == 32'b11111111111111111111111110100101) 
     begin
@@ -119,14 +119,14 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #10;
+    #20;
     data_Ready = 1;
 
-    #10;
+    #20;
     AmuxIn = 32'b00000000000000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
     mem_ack = 1;
 
-    #30;
+    #40;
     //Expected result: 11111111111111111_1000000010100101
     if (result_out == 32'b11111111111111111000000010100101) 
     begin
@@ -155,14 +155,14 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #10;
+    #20;
     data_Ready = 1;
 
-    #10;
+    #20;
     AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
     mem_ack = 1;
 
-    #30;
+    #40;
     //Expected result: b10100010110000001000000010100101
     if (result_out == 32'b10100010110000001000000010100101) 
     begin
@@ -191,14 +191,14 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #10;
+    #20;
     data_Ready = 1;
 
-    #10;
+    #20;
     AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
     mem_ack = 1;
 
-    #30;
+    #40;
     //Expected result: b00000000000000000000000010100101
     if (result_out == 32'b00000000000000000000000010100101) 
     begin
@@ -227,14 +227,14 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #10;
+    #20;
     data_Ready = 1;
 
-    #10;
+    #20;
     AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
     mem_ack = 1;
 
-    #30;
+    #40;
     //Expected result: b00000000000000001000000010100101
     if (result_out == 32'b00000000000000001000000010100101) 
     begin

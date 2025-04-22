@@ -156,7 +156,6 @@ begin
         mem_read <= 0;
         Aenable <= 0;
         Benable <= 0;
-        //req <= 0;
         PCout <= PCin; // By default, retain the same PC value
         execution_complete <= 0;
 
@@ -219,6 +218,7 @@ begin
                     rdOut <= rd; 
                     rdWrite <= 1; //Send signal to write output value into rd register
                     execution_complete <= 1;
+                    $display("Execution complete");
                     //req <= 1;
                 end
             end     

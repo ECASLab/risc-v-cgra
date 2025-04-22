@@ -39,9 +39,21 @@ module demux1_32 (
             5'b00000: out_1 = data_in; 
             5'b00001: out_2 = data_in; 
             5'b00010: out_3 = data_in; 
-            5'b00011: out_4 = data_in; 
-            5'b00100: out_5 = data_in; 
-            5'b00101: out_6 = data_in; 
+            5'b00011: 
+            begin
+                out_4 = data_in; 
+                $display("Data out for Reg 3 is :" + out_4);
+            end
+            5'b00100: 
+            begin
+                out_5 = data_in; 
+                $display("Data out for Reg 4 is :" + out_4);
+            end
+            5'b00101: 
+            begin 
+                out_6 = data_in; 
+                $display("Data out for Reg 3 is :" + out_4);
+            end
             5'b00110: out_7 = data_in; 
             5'b00111: out_8 = data_in; 
             5'b01000: out_9 = data_in; 
