@@ -10,6 +10,7 @@ reg mem_ack;
 reg data_Ready;
 reg [31:0] AmuxIn;
 reg [31:0] BmuxIn;
+reg [31:0] memData;
 reg        reset;
 wire [31:0] mem_address;
 wire reg_select;
@@ -46,7 +47,8 @@ processing_element uut (
     .PCout(PCout),
     .read_en(read_en),
     .reset(reset),
-    .execution_complete(execution_complete)
+    .execution_complete(execution_complete),
+    .memData(memData)
 );
 
 // Generate clock signal
@@ -58,8 +60,8 @@ end
 // Initialize and apply test vectors
 initial begin
     // Monitor outputs
-        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | messReg: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b", 
-                 $time, PCout, mem_address, reg_select, mem_read, mem_write, messReg, rs1Out, rs2Out, rdOut, rdWrite, result_out);
+        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b", 
+                 $time, PCout, mem_address, reg_select, mem_read, mem_write, rs1Out, rs2Out, rdOut, rdWrite, result_out);
 
     // Initialize inputs
     PCin = 32'b0;
@@ -79,17 +81,19 @@ initial begin
     instruction = 32'b000000100011_01011_000_10111_0000011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 000, op = 3
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b00000000000000000000000000100101; // Data from rs1 to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #20;
+    #10;
     data_Ready = 1;
 
-    #20;
-    AmuxIn = 32'b00000000000000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
+    #10;
+    memData = 32'b00000000000000001000000010100101; // Data from global memory Address to be loaded into A mux from address calculated. 
+    
+    #10;
     mem_ack = 1;
 
-    #40;
+    #50;
     //Expected result: 111111111111111111111111_10100101
     if (result_out == 32'b11111111111111111111111110100101) 
     begin
@@ -119,14 +123,16 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #20;
+    #10;
     data_Ready = 1;
 
-    #20;
-    AmuxIn = 32'b00000000000000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
+    #10;
+    memData = 32'b00000000000000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
+
+    #10;
     mem_ack = 1;
 
-    #40;
+    #50;
     //Expected result: 11111111111111111_1000000010100101
     if (result_out == 32'b11111111111111111000000010100101) 
     begin
@@ -155,14 +161,16 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #20;
+    #10;
     data_Ready = 1;
 
-    #20;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
+    #10;
+    memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
+
+    #10;
     mem_ack = 1;
 
-    #40;
+    #50;
     //Expected result: b10100010110000001000000010100101
     if (result_out == 32'b10100010110000001000000010100101) 
     begin
@@ -191,14 +199,16 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #20;
+    #10;
     data_Ready = 1;
 
-    #20;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
+    #10;
+    memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
+
+    #10;
     mem_ack = 1;
 
-    #40;
+    #50;
     //Expected result: b00000000000000000000000010100101
     if (result_out == 32'b00000000000000000000000010100101) 
     begin
@@ -227,14 +237,16 @@ initial begin
     AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
-    #20;
+    #10;
     data_Ready = 1;
 
-    #20;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
+    #10;
+    memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
+
+    #109;
     mem_ack = 1;
 
-    #40;
+    #50;
     //Expected result: b00000000000000001000000010100101
     if (result_out == 32'b00000000000000001000000010100101) 
     begin
@@ -595,13 +607,13 @@ initial begin
     data_Ready = 0;
     //tempAddress = b00000000000000000000000000100101 = mem_address
     //rs2_out = rs2 and reg_select = 1
-    AmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
+    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
 
     #10;
     data_Ready = 1;
-    //mem_address, mem_write, ALU = 10010
+    //mem_address, mem_write, ALU = 10111
 
-    #30;
+    #40;
     //Expected result: b10110100101101001011010011010111
     if (mem_address == 32'b00000000000000000000000000100101) 
     begin
@@ -641,11 +653,11 @@ initial begin
     data_Ready = 0;
     //tempAddress = b00000000000000000000000000100101 = mem_address
     //rs2_out = rs2 and reg_select = 1
-    AmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
+    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
 
     #10;
     data_Ready = 1;
-    //mem_address, mem_write, ALU = 10010
+    //mem_address, mem_write, ALU = 11000
 
     #30;
     //Expected result: b10110100101101001011010011010111
@@ -687,11 +699,11 @@ initial begin
     data_Ready = 0;
     //tempAddress = b00000000000000000000000000100101 = mem_address
     //rs2_out = rs2 and reg_select = 1
-    AmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
+    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
 
     #10;
     data_Ready = 1;
-    //mem_address, mem_write, ALU = 10010
+    //mem_address, mem_write, ALU = 11001
 
     #30;
     //Expected result: b10110100101101001011010011010111

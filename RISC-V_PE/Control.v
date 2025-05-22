@@ -37,7 +37,7 @@ output reg       read_en,  //Enable signal to read rs1 or rs2 values from the re
 
 // Selection signal outputs for the 3 MUX and the ALU
 output reg [4:0] ALUsel,
-output reg [1:0] Asel, //Can be rs1 from decoder, dataInput from bus or PC from bus
+output reg [1:0] Asel, //Can be memData from global memory, dataInput from bus or PC from bus
 output reg [1:0] Bsel, //Can be rs2 from decoder, dataInput from bus or immvalue from controller
 output reg [1:0] Osel, //Can be ALU result, opA register, or opB register
 
@@ -97,9 +97,9 @@ initial begin
     Aenable = 0;
     Benable = 0;
     IRenable = 0;
-    Asel = 2'b00;
-    Bsel = 2'b00;
-    Osel = 2'b00;
+    Asel = 2'b11;
+    Bsel = 2'b11;
+    Osel = 2'b11;
     dataReady_sync = 0;
     ALUcomplete_sync = 0;
     ALURes_sync = 0;
@@ -116,9 +116,9 @@ begin
         //initialize values
         PCout <= 0;
         ALUsel <= 5'b11111;
-        Asel <= 2'b00;
-        Bsel <= 2'b00;
-        Osel <= 2'b00;
+        Asel <= 2'b11;
+        Bsel <= 2'b11;
+        Osel <= 2'b11;
         rdOut <= 0;
         rdWrite <= 0;
         Aenable <= 0;
@@ -165,7 +165,7 @@ begin
         if (dataReady_sync)
         begin
             read_en <= 0;
-            Asel <= 2'b01; // Select data from bus as A input
+            Asel <= 2'b01; // Select data from local bus as A input
             //immvalue <= (imm12[11] == 0) ? {20'b0, imm12} : {20'b11111111111111111111, imm12};
             immvalue <= sign_extend(imm12);
             Bsel <= 2'b10; //Select immidiate value as B input
@@ -183,12 +183,14 @@ begin
                 mem_read <= 1; //Send signal for memory read
                 Aenable <= 0;
                 Benable <= 0;
+                Asel <= 2'b00; //Select data from global memory as A input
+                Aenable <= 1;
 
                 if (mem_ack) //After acknowledge signal has been received
                 begin
                     mem_read <= 0;
-                    Aenable <= 1;
-                    Asel <= 2'b01; //Select data from bus as A input
+                    //Aenable <= 1;
+                    //Asel <= 2'b00; //Select data from global memory as A input
                     case (funct3)
                     3'b000: // Load byte sign extended
                         begin
@@ -630,7 +632,7 @@ begin
         begin
             Aenable <= 1;
             Benable <= 0;
-            Asel <= 2'b01; //Select data from bus as A input
+            Asel <= 2'b00; //Select data from global mem as A input
             Osel <= 2'b01; //Select register A as output
             rdOut <= rd; 
             rdWrite <= 1; //Send signal to write output value into rd register
@@ -684,11 +686,11 @@ begin
         else if (!dataReady_sync && tempAddress !=0)
         begin
             ALUsel <= 5'b11111;
-            Aenable <= 1;
+            Benable <= 1;
             rs2Out <= rs2;
             read_en <= 1;
-            reg_select <= 1; //Selects register rs2 to pull data from
-            Asel <= 2'b01; //Select data from bus
+            reg_select <= 1; //Selects both registers rs1 and rs2 to pull data from *will only use rs2
+            Bsel <= 2'b01; //Select data from local bus at B operand (rs2)
         end
 
         else if (dataReady_sync && tempAddress != 0)
@@ -697,19 +699,19 @@ begin
             case(funct3)
             3'b000: //Store byte
                 begin
-                    ALUsel = 5'b10010; //Take only lower byte of rs2 value
+                    ALUsel = 5'b10111; //Take only lower byte of rs2 value
                     Osel = 2'b00; //Select output from ALU
                 end 
 
             3'b001: //Store half word
                 begin
-                    ALUsel = 5'b10011; //Take lower half word of rs2 value
+                    ALUsel = 5'b11000; //Take lower half word of rs2 value
                     Osel = 2'b00; //Select output from ALU
                 end
                     
             3'b010: //Store word
                 begin
-                    ALUsel = 5'b10100;
+                    ALUsel = 5'b11001;
                     Osel = 2'b00; //Select output from ALU
                 end
             endcase

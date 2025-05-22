@@ -16,8 +16,9 @@ module bus_interface (
     input       execution_completePE,
 
     //Outputs to the PE
-    output reg [31:0] AmuxPE,    //Data being sent to A mux
-    output reg [31:0] BmuxPE,    //Data being sent to B mux
+    output reg [31:0] AmuxPE,    //Data being sent to A mux input 2
+    output reg [31:0] BmuxPE,    //Data being sent to B mux input 2
+    output reg [31:0] memDataPE, //Data being sent to A mux input 1
     output reg        mem_ackPE, //Memory acknowledgment signal into the PE
     output reg        data_ReadyPE, //data_Ready signal into the PE
 
@@ -37,11 +38,11 @@ module bus_interface (
     output reg       read_enBus,
     output reg       execution_completeBus,
     output reg [31:0]  data_Store,      //data_in for local memory
-    input [31:0] AmuxBus,    //Data being sent to A mux
-    input [31:0] BmuxBus,    //Data being sent to B mux
+    input [31:0] AmuxBus,    //Data being sent to A mux input 2
+    input [31:0] BmuxBus,    //Data being sent to B mux input 2
+    input [31:0] memData, //Data being sent to A mux input 1
     input        mem_ackBus, //Memory acknowledgment signal coming from the global memory
-    input        data_ReadyBus, //register read complete
-    input [31:0] memData      //Data coming from global memory
+    input        data_ReadyBus //register read complete
 );
 
     reg active; // Keep track of the bus request state
@@ -51,6 +52,7 @@ module bus_interface (
             bus_request <= 0;
             AmuxPE <= 0;
             BmuxPE <= 0;
+            memDataPE <= 0;
             mem_ackPE <= 0;
             data_ReadyPE <= 0;
             mem_addressBus <= 0;
@@ -107,7 +109,7 @@ module bus_interface (
             if (active) begin
                 if (mem_ackBus)
                 begin
-                    AmuxPE <= memData;
+                    memDataPE <= memData;
                     mem_ackPE <= mem_ackBus;
                 end
                 if (data_ReadyBus)

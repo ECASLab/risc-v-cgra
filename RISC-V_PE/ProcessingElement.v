@@ -12,8 +12,9 @@ module processing_element (
     input [31:0] instruction,  // Input instruction to IR            
     input mem_ack,             // Memory acknowledgment signal from bus
     input data_Ready,          // Data ready signal from bus
-    input [31:0] AmuxIn,       // Data from bus to be loaded into A mux
-    input [31:0] BmuxIn,       // Data from bus to be loaded into B mux
+    input [31:0] AmuxIn,       // Data from bus local memory to be loaded into A mux
+    input [31:0] BmuxIn,       // Data from bus local memory to be loaded into B mux
+    input [31:0] memData,      // Data from global memory to be loaded to A mux
     input        reset,
     output [31:0] mem_address, // Address for memory operations (store)
     output reg_select,         // Signal to select proper register to read
@@ -158,7 +159,7 @@ module processing_element (
 
     // Instantiate MUXes 
     mux3_1 muxA (
-        .in_1(rs1), 
+        .in_1(memData), 
         .in_2(AmuxIn), 
         .in_3(PCin),
         .sel(Asel), 

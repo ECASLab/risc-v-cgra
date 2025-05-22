@@ -24,6 +24,7 @@ module tb_bus_interface;
     // Outputs to the PE
     wire [31:0] AmuxPE;
     wire [31:0] BmuxPE;
+    wire [31:0] memDataPE;
     wire mem_ackPE;
     wire data_ReadyPE;
 
@@ -65,6 +66,7 @@ module tb_bus_interface;
         .read_enPE(read_enPE),
         .AmuxPE(AmuxPE),
         .BmuxPE(BmuxPE),
+        .memDataPE(memDataPE),
         .mem_ackPE(mem_ackPE),
         .data_ReadyPE(data_ReadyPE),
         .bus_request(bus_request),
@@ -101,8 +103,8 @@ module tb_bus_interface;
         $dumpfile("tb_bus_interface.vcd");
         $dumpvars(0, tb_bus_interface);
 
-        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b | AmuxPE: %b | BmuxPE: %b | mem_ackPE: %b | data_ReadyPE: %b", 
-                 $time, PCoutBus, mem_addressBus, reg_selectBus, mem_readBus, mem_writeBus, rs1OutBus, rs2OutBus, rdOutBus, rd_writeBus, result_outBus, AmuxPE, BmuxPE, mem_ackPE, data_ReadyPE);
+        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b | AmuxPE: %b | BmuxPE: %b | memDataPE: %b | mem_ackPE: %b | data_ReadyPE: %b", 
+                 $time, PCoutBus, mem_addressBus, reg_selectBus, mem_readBus, mem_writeBus, rs1OutBus, rs2OutBus, rdOutBus, rd_writeBus, result_outBus, AmuxPE, BmuxPE, memDataPE, mem_ackPE, data_ReadyPE);
 
 
         // Initialize signals

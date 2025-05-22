@@ -188,6 +188,41 @@ Subtraction subtractor (
                    ALU_Out <= A;
                    ALUcomplete <= 1;
                 end 
+            5'b10101: // Take lower byte sign extended with B operand
+                begin
+                   if (B[7] == 1) begin
+                      ALU_Out <= {24'b111111111111111111111111, B[7:0]};
+                      ALUcomplete <= 1;
+                   end else begin
+                      ALU_Out <= {24'b0, B[7:0]};
+                      ALUcomplete <= 1;
+                   end
+                end
+            5'b10110: // Take lower half word sign extended with B operand
+                begin
+                   if (B[15] == 1) begin
+                      ALU_Out <= {16'b1111111111111111, B[15:0]};
+                      ALUcomplete <= 1;
+                   end else begin
+                      ALU_Out <= {16'b0, B[15:0]};
+                      ALUcomplete <= 1;
+                   end
+                end
+            5'b10111: // Take lower byte unsigned with B operand
+                begin
+                   ALU_Out <= {24'b0, B[7:0]};
+                   ALUcomplete <= 1;
+                end
+            5'b11000: // Take lower half word unsigned with B operand
+                begin
+                   ALU_Out <= {16'b0, B[15:0]};
+                   ALUcomplete <= 1;
+                end 
+            5'b11001: // Take entire word with B operand
+                begin
+                   ALU_Out <= B;
+                   ALUcomplete <= 1;
+                end 
             5'b11111: // Default case
                 begin
                    ALU_Out <= 32'b0;

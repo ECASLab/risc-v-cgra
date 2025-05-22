@@ -44,8 +44,9 @@ module PE_system (
     wire       execution_completePE;
 
     //Outputs to the PE
-    wire [31:0] AmuxPE;    //Data being sent to A mux
-    wire [31:0] BmuxPE;    //Data being sent to B mux
+    wire [31:0] AmuxPE;    //Data being sent to A mux input 2
+    wire [31:0] BmuxPE;    //Data being sent to B mux input 2
+    wire [31:0] memDataPE; //Data being sent to A mux input 1
     wire        mem_ackPE; //Memory acknowledgment signal into the PE
     wire        data_ReadyPE; //data_Ready signal into the PE
 
@@ -58,6 +59,7 @@ module PE_system (
         .data_Ready(data_ReadyPE),          // Data ready signal from bus
         .AmuxIn(AmuxPE),       // Data from bus to be loaded into A mux
         .BmuxIn(BmuxPE),       // Data from bus to be loaded into B mux
+        .memData(memDataPE), // Data from global mem to be loaded into A mux
         .reset(reset),
         .mem_address(mem_addressPE), // Address for memory operations (store)
         .reg_select(reg_selectPE),         // Signal to select proper register to read
@@ -90,6 +92,7 @@ module PE_system (
         .read_enPE(read_enPE),
         .AmuxPE(AmuxPE),
         .BmuxPE(BmuxPE),
+        .memDataPE(memDataPE),
         .mem_ackPE(mem_ackPE),
         .data_ReadyPE(data_ReadyPE),
         .bus_request(bus_request),

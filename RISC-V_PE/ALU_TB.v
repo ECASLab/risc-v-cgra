@@ -160,7 +160,37 @@ module tb_alu;
          // Test case for take half word unsigned
          A = 32'b10111111001111011101011010110101;
          B = 32'b0;
-         ALU_Sel = 5'b10011; // byte unsigned
+         ALU_Sel = 5'b10011; // half word unsigned
+         #10;
+
+         // Test case for take half word unsigned with B operand
+         A = 32'b10111111001111011101011010110110;
+         B = 32'b10111111001111011101011010110101;
+         ALU_Sel = 5'b11000; // half word unsigned B
+         #10;
+
+         // Test case for take byte unsigned with B operand
+         A = 32'b10111111001111011101011010110110;
+         B = 32'b10111111001111011101011010110101;
+         ALU_Sel = 5'b10111; // byte unsigned B
+         #10;
+
+         // Test case for take half word sign extended with B operand
+         A = 32'b10111111001111011101011010110110;
+         B = 32'b10111111001111011101011010110101;
+         ALU_Sel = 5'b10110; // half word sign extended B
+         #10;
+
+         // Test case for take byte sign extended with B operand
+         A = 32'b10111111001111011101011010110110;
+         B = 32'b10111111001111011101011010110101;
+         ALU_Sel = 5'b10101; // byte sign extended B
+         #10;
+
+         // Test case for take entire B operand
+         A = 32'b10111111001111011101011010110110;
+         B = 32'b10111111001111011101011010110101;
+         ALU_Sel = 5'b11001; // word B
          #10;
 
          // Test case for invalid ALU select
