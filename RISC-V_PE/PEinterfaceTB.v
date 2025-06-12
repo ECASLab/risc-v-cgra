@@ -88,7 +88,7 @@ module tb_PE_system;
 
         #10 reset = 0; // Release reset
 
-        // Test Case 1: Instruction Write
+        // Test Case 1: Instruction Write, store
         instructionBus = 32'h2BB81A3; // Load an instruction -> store byte
         PCin = 32'd1;
         data_ReadyBus = 0;
@@ -121,16 +121,58 @@ module tb_PE_system;
 
         #10 
         grant = 0;
+        data_ReadyBus = 0;
 
-        //data_ReadyBus = 0;
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
 
-        //#40
+        #10 reset = 0; // Release reset
 
-        // Test Case 2: Memory Write Request
-        //grant = 1; // Bus grants access
-        //instructionBus = 32'h2BB81A3;
-        //#10 // Clear memory write request
-        //grant = 0;
+        // Test Case 2: Load operation
+        PCin = 32'h00000001; // Program counter input
+        instructionBus = 32'b000000100011_01011_001_10111_0000011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 001, op = 3
+        data_ReadyBus = 0;
+        #30 // waiting for read_en
+        grant = 1;
+
+        #10
+        grant = 0;
+        AmuxBus = 32'b00000000000000000000000000100101;
+        data_ReadyBus = 1;
+        
+        #50 // waiting for mem_read signal
+        data_ReadyBus = 0;
+
+        #10
+        data_ReadyBus = 1;
+        grant = 1;
+
+        #20
+        grant = 0;
+        data_ReadyBus = 0;
+
+        #10
+        memData = 32'b00000000000000001000000010100101;
+        mem_ackBus = 1;
+
+        #10
+        data_ReadyBus = 1;
+
+        #20 // waiting for rdWrite
+        grant = 1;
+
+        #10
+        grant = 0;
+
+        #50;
 
         // Test Case 3: Memory Read Request
         //grant = 1; // Bus grants access

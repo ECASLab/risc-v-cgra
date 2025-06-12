@@ -81,33 +81,26 @@ module bus_interface (
             currentExecComplete <= 0;
             deactivate <= 0;
         end else begin
-            if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || execution_completePE) && !active) begin
+            if ((mem_readPE || mem_writePE || rd_writePE || read_enPE) && !active) begin
                 $display("Signal received to request bus");
                 bus_request <= 1; // Request the bus
                 if (read_enPE)
                 begin
-                    $display ("Need to request a value from local memory");
                     currentReadEn <= 1;
                 end
                 else if (rd_writePE)
                 begin
-                    $display ("Need to write a value to local memory");
+                    display("Received rdWrite");
                     currentRdWrite <= 1;
                 end
                 else if (mem_writePE)
                 begin
-                    $display ("Will write a value to global memory");
                     currentMemWrite <= 1;
                 end
                 else if (mem_readPE)
                 begin
-                    $display ("Will read a value from global memory");
+                    $display("Received signal to read from global memory");
                     currentMemRead <= 1;
-                end
-                else if (execution_completePE)
-                begin
-                    $display ("Finished execution");
-                    currentExecComplete <= 1;
                 end
             end
             if (grant) begin
@@ -132,18 +125,10 @@ module bus_interface (
                 end
                 if (currentReadEn)
                 begin
-                    $display ("Register address to read from");
                     rs1OutBus <= rs1OutPE;
                     rs2OutBus <= rs2OutPE;
                     read_enBus <= read_enPE;
                     reg_selectBus <= reg_selectPE;
-                end
-                if (currentExecComplete)
-                begin
-                    $display ("Execution Completed");
-                    result_outBus <= result_inPE;
-                    mem_addressBus <= mem_addressPE;
-                    execution_completeBus <= execution_completePE;
                 end
                 bus_request <= 0; // Clear the request once granted
                 active <= 1;
@@ -151,6 +136,7 @@ module bus_interface (
             if (active) begin
                 if (mem_ackBus) //Only when memRead
                 begin
+                    $display("received mem ack");
                     memDataPE <= memData;
                     mem_ackPE <= mem_ackBus;
                     currentMemRead <= 0;

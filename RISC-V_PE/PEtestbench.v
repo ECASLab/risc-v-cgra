@@ -243,7 +243,7 @@ initial begin
     #10;
     memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
 
-    #109;
+    #10;
     mem_ack = 1;
 
     #50;
@@ -272,15 +272,14 @@ initial begin
     instruction = 32'b000000100011_01011_000_10111_0010011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 000, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1. Value 35
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: 10100010110000001000000011001000
@@ -308,15 +307,14 @@ initial begin
     instruction = 32'b000000000011_01011_001_10111_0010011; // rs1 = 11, rd = 23, funct3 = 001, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: 00010110000001000000010100101000
@@ -344,15 +342,14 @@ initial begin
     instruction = 32'b000000000011_01011_010_10111_0010011; // rs1 = 11, rd = 23, funct3 = 001, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10000000000000000000000000000101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10000000000000000000000000000101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: b00000000000000000000000000000001
@@ -380,15 +377,14 @@ initial begin
     instruction = 32'b000000000011_01011_011_10111_0010011; // rs1 = 11, rd = 23, funct3 = 011, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10000000000000000000000000000101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10000000000000000000000000000101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: b00000000000000000000000000000000 OpA is larger than Imm value
@@ -416,15 +412,14 @@ initial begin
     instruction = 32'b010100001011_01011_100_10111_0010011; // rs1 = 11, rd = 23, funct3 = 100, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
- 
+
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: 10100010110000001000010110101110
@@ -452,15 +447,14 @@ initial begin
     instruction = 32'b000000000011_01011_101_10111_0010011; // rs1 = 11, rd = 23, funct3 = 101, op = 19, funct7 = 0
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: 00010100010110000001000000010100
@@ -488,15 +482,14 @@ initial begin
     instruction = 32'b010000000011_01011_101_10111_0010011; // rs1 = 11, rd = 23, funct3 = 101, op = 19, funct7 = 0100000
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: 11110100010110000001000000010100
@@ -524,15 +517,14 @@ initial begin
     instruction = 32'b000000100011_01011_110_10111_0010011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 110, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: b10100010110000001000000010100111
@@ -561,15 +553,14 @@ initial begin
     instruction = 32'b000000100011_01011_111_10111_0010011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 010, op = 19
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000100101; // Data from bus to be loaded into A mux for address calculation. Value 35
+    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from rs1
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
     data_Ready = 1;
 
-    #10;
-    AmuxIn = 32'b10100010110000001000000010100101; // Data from bus to be loaded into A mux from address calculated. 
-    mem_ack = 1;
+    #30
+    data_Ready = 0;
 
     #30;
     //Expected result: b00000000000000000000000000100001
@@ -613,7 +604,10 @@ initial begin
     data_Ready = 1;
     //mem_address, mem_write, ALU = 10111
 
-    #40;
+    #10;
+    data_Ready = 0;
+
+    #30;
     //Expected result: b10110100101101001011010011010111
     if (mem_address == 32'b00000000000000000000000000100101) 
     begin
@@ -643,7 +637,7 @@ initial begin
     instruction = 32'b0000001_01011_10111_001_00011_0100011; //Immidiate = 35 *Separated, rs1 = 11, rs2 = 23, funct3 = 010, op = 35
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b00000000000000000000000000000010; // Data from bus to be loaded into A mux for address calculation. rs1 value
+    AmuxIn = 32'b00000000000000000000000000000010; // Data from bus to be loaded into A mux for rs1 value
     BmuxIn = 32'b0; // Data from bus to be loaded into B mux
 
     #10;
@@ -658,6 +652,9 @@ initial begin
     #10;
     data_Ready = 1;
     //mem_address, mem_write, ALU = 11000
+
+    #10
+    data_Ready = 0;
 
     #30;
     //Expected result: b10110100101101001011010011010111
@@ -704,6 +701,9 @@ initial begin
     #10;
     data_Ready = 1;
     //mem_address, mem_write, ALU = 11001
+
+    #10;
+    data_Ready = 0;
 
     #30;
     //Expected result: b10110100101101001011010011010111
