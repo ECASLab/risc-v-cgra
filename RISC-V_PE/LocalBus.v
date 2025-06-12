@@ -33,6 +33,7 @@ module local_bus_top (
     wire       mem_read;
     wire       mem_write;
     wire [31:0] mem_address;
+    wire [127:0] memDatas;       //Pins to the 4 PEs for global memory input
     wire       mem_ack;
     wire       rdWrite;
     wire       read_en;

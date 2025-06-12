@@ -46,6 +46,12 @@ module bus_interface (
 );
 
     reg active; // Keep track of the bus request state
+    reg currentMemRead;
+    reg currentMemWrite;
+    reg currentReadEn;
+    reg deactivate;
+    reg currentExecComplete;
+    reg currentRdWrite; //Local signals to store the signal that triggered the bus request
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -68,59 +74,118 @@ module bus_interface (
             read_enBus <= 0;
             active <= 0;
             execution_completeBus <= 0;
+            currentMemRead <= 0;
+            currentMemWrite <= 0;
+            currentRdWrite <= 0;
+            currentReadEn <= 0;
+            currentExecComplete <= 0;
+            deactivate <= 0;
         end else begin
             if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || execution_completePE) && !active) begin
+                $display("Signal received to request bus");
                 bus_request <= 1; // Request the bus
+                if (read_enPE)
+                begin
+                    $display ("Need to request a value from local memory");
+                    currentReadEn <= 1;
+                end
+                else if (rd_writePE)
+                begin
+                    $display ("Need to write a value to local memory");
+                    currentRdWrite <= 1;
+                end
+                else if (mem_writePE)
+                begin
+                    $display ("Will write a value to global memory");
+                    currentMemWrite <= 1;
+                end
+                else if (mem_readPE)
+                begin
+                    $display ("Will read a value from global memory");
+                    currentMemRead <= 1;
+                end
+                else if (execution_completePE)
+                begin
+                    $display ("Finished execution");
+                    currentExecComplete <= 1;
+                end
             end
             if (grant) begin
+                $display ("Access granted");
                 PCoutBus <= PCoutPE;
-                if (mem_writePE)
+                if (currentMemWrite)
                 begin
                     mem_addressBus <= mem_addressPE;
                     mem_writeBus <= mem_writePE;
                     result_outBus <= result_inPE;
                 end
-                if (mem_readPE)
+                if (currentMemRead)
                 begin
                     mem_addressBus <= result_inPE; //Address is calculated from ALU
                     mem_readBus <= mem_readPE;
                 end
-                if (rd_writePE)
+                if (currentRdWrite)
                 begin 
                     rdOutBus <= rdOutPE; //Forward select for local memory write
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
                 end
-                if (read_enPE)
+                if (currentReadEn)
                 begin
+                    $display ("Register address to read from");
                     rs1OutBus <= rs1OutPE;
                     rs2OutBus <= rs2OutPE;
                     read_enBus <= read_enPE;
                     reg_selectBus <= reg_selectPE;
                 end
-                if (execution_completePE)
+                if (currentExecComplete)
                 begin
+                    $display ("Execution Completed");
                     result_outBus <= result_inPE;
+                    mem_addressBus <= mem_addressPE;
                     execution_completeBus <= execution_completePE;
                 end
                 bus_request <= 0; // Clear the request once granted
                 active <= 1;
             end
             if (active) begin
-                if (mem_ackBus)
+                if (mem_ackBus) //Only when memRead
                 begin
                     memDataPE <= memData;
                     mem_ackPE <= mem_ackBus;
+                    currentMemRead <= 0;
+                    bus_request <= 0;
+                    deactivate <= 1;
                 end
-                if (data_ReadyBus)
+                else if (data_ReadyBus) //Only when reading local memory
                 begin
+                    $display ("Data from local memory is ready");
                     AmuxPE <= AmuxBus;
                     BmuxPE <= BmuxBus;
                     data_ReadyPE <= data_ReadyBus;
+                    currentReadEn <= 0;
+                    bus_request <= 0;
+                    deactivate <= 1;
                 end
-                active <= 0;
-                bus_request <= 0;
-
+                else if (execution_completePE) //Will happen at write operations 
+                begin
+                    result_outBus <= result_inPE;
+                    mem_addressBus <= mem_addressPE;
+                    execution_completeBus <= execution_completePE;
+                    currentMemWrite <= 0;
+                    currentRdWrite <= 0;
+                    bus_request <= 0;
+                    deactivate <= 1;
+                end
+                else if (deactivate && !data_ReadyBus && !mem_ackBus && !execution_completePE)
+                begin
+                    active <= 0;
+                    $display("No longer active");
+                    data_ReadyPE <= data_ReadyBus;
+                    mem_ackPE <= mem_ackBus;
+                    execution_completeBus <= execution_completePE;
+                    deactivate <= 0;
+                end
             end
         end
     end

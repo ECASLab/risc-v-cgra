@@ -646,24 +646,24 @@ begin
     begin
         rdOut <= 0;
         rdWrite <= 0;
-        Aenable <= 0;
-        Benable <= 0;
         PCout <= PCin; // By default, retain the same PC value
         execution_complete <= 0;
         //req <= 0;
-        Osel <= 0;
+        immvalue <= sign_extend(imm12);
         reg_reset <= 1;
         reg_reset <= 0;
+        Osel <= 2'b11;
         rs1Out <= rs1;
         reg_select <= 0; //Selects data only from rs1 to pull 
-        read_en <= 1;
-        Asel = 2'b01; //Select data from bus
+        Asel = 2'b01; //Select data from bus local memory
         Bsel <= 2'b10; //Select immidiate value as B input
-        immvalue <= sign_extend(imm12);
+        Aenable <= 0;
+        Benable <= 0;
 
         if (!dataReady_sync && tempAddress == 0)
         begin
             ALUsel <= 5'b11111;
+            read_en <= 1;
         end
 
         if (dataReady_sync && tempAddress == 0)
@@ -696,6 +696,7 @@ begin
         else if (dataReady_sync && tempAddress != 0)
         begin
             read_en <= 0;
+            Osel <= 2'b00;
             case(funct3)
             3'b000: //Store byte
                 begin
@@ -718,6 +719,7 @@ begin
 
             if (ALUcomplete_sync)
             begin
+                $display("ALUcompleted final operation");
                 mem_address <= tempAddress; //Use the calculated destination address to store the value
                 mem_write <= 1; //Indicates that value at output will be stored at mem_address
                 execution_complete <= 1;

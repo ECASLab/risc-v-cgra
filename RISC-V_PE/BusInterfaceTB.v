@@ -103,8 +103,8 @@ module tb_bus_interface;
         $dumpfile("tb_bus_interface.vcd");
         $dumpvars(0, tb_bus_interface);
 
-        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b | AmuxPE: %b | BmuxPE: %b | memDataPE: %b | mem_ackPE: %b | data_ReadyPE: %b", 
-                 $time, PCoutBus, mem_addressBus, reg_selectBus, mem_readBus, mem_writeBus, rs1OutBus, rs2OutBus, rdOutBus, rd_writeBus, result_outBus, AmuxPE, BmuxPE, memDataPE, mem_ackPE, data_ReadyPE);
+        $monitor("Time: %0dns | bus_request: %b | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b | AmuxPE: %b | BmuxPE: %b | memDataPE: %b | mem_ackPE: %b | data_ReadyPE: %b", 
+                 $time, bus_request, PCoutBus, mem_addressBus, reg_selectBus, mem_readBus, mem_writeBus, rs1OutBus, rs2OutBus, rdOutBus, rd_writeBus, result_outBus, AmuxPE, BmuxPE, memDataPE, mem_ackPE, data_ReadyPE);
 
 
         // Initialize signals
@@ -127,40 +127,45 @@ module tb_bus_interface;
         #10 reset = 0; // Release reset
 
         // Test Case 1: PE requests a global memory write
-        mem_addressPE = 32'hAABBCCDD;
-        result_inPE = 32'h12345678;
-        mem_writePE = 1; // Request memory write
-        grant = 1; // Bus grants access
-        #10 mem_writePE = 0; // Clear memory write signal
+        mem_addressPE = 32'hAABBCCDD; //memory address calculated from rs1 and immValue
+        result_inPE = 32'h12345678; //Data from Rs2 to write in global memory
+        mem_writePE = 1; // Request memory write: Should trigger a bus_request
+        //grant = 1; // Bus grants access
+        #10 
+        grant = 1;
+
+        #10
+        mem_writePE = 0; // Clear memory write signal
+        grant = 0;
 
         // Test Case 2: PE requests a global memory read
-        mem_addressPE = 32'h11223344;
-        mem_readPE = 1; // Request memory read
-        grant = 1; // Bus grants access
-        mem_ackBus = 1; // Memory acknowledgment from bus
-        memData = 32'h87654321; // Data provided by global memory
-        #10 mem_readPE = 0; // Clear memory read signal
-        mem_ackBus = 0;
+        //mem_addressPE = 32'h11223344;
+        //mem_readPE = 1; // Request memory read
+        //grant = 1; // Bus grants access
+        //mem_ackBus = 1; // Memory acknowledgment from bus
+        //memData = 32'h87654321; // Data provided by global memory
+        //#10 mem_readPE = 0; // Clear memory read signal
+        //mem_ackBus = 0;
 
         // Test Case 4: PE requests to write to local memory
-        rdOutPE = 5'd10;
-        result_inPE = 32'hFACECAFE;
-        rd_writePE = 1; // Request to write to local memory
-        grant = 1; // Bus grants access
-        #10 rd_writePE = 0;
+        //rdOutPE = 5'd10;
+        //result_inPE = 32'hFACECAFE;
+        //rd_writePE = 1; // Request to write to local memory
+        //grant = 1; // Bus grants access
+        //#10 rd_writePE = 0;
 
         // Test Case 5: PE requests to read from local memory
-        rs1OutPE = 5'd1;
-        rs2OutPE = 5'd2;
-        reg_selectPE = 1;
-        read_enPE = 1; // Request read enable
-        grant = 1;
-        AmuxBus = 32'hABCD1234;
-        BmuxBus = 32'hDCBA4321;
-        data_ReadyBus = 1; // Data ready signal
-        #10 read_enPE = 0;
-        reg_selectPE = 0;
-        data_ReadyBus = 0;
+        //rs1OutPE = 5'd1;
+        //rs2OutPE = 5'd2;
+        //reg_selectPE = 1;
+        //read_enPE = 1; // Request read enable
+        //grant = 1;
+        //AmuxBus = 32'hABCD1234;
+        //BmuxBus = 32'hDCBA4321;
+        //data_ReadyBus = 1; // Data ready signal
+        //#10 read_enPE = 0;
+        //reg_selectPE = 0;
+        //data_ReadyBus = 0;
 
         // End simulation
         #20 $finish;

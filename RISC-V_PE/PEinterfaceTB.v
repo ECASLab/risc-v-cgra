@@ -6,12 +6,13 @@ module tb_PE_system;
     // Testbench signals
     reg clk;
     reg reset;
+    reg [31:0] PCin;  //Program counter received from controller
     reg grant;      // Grant signal from arbiter
     reg [31:0] instructionBus; // Instruction loaded into the PE
-    reg [31:0] AmuxBus;    // Data sent to A mux
-    reg [31:0] BmuxBus;    // Data sent to B mux
+    reg [31:0] AmuxBus;    // Data sent to A mux from local memory
+    reg [31:0] BmuxBus;    // Data sent to B mux from local memory
     reg mem_ackBus;        // Memory acknowledgment signal from the bus
-    reg data_ReadyBus;     // Register read complete signal
+    reg data_ReadyBus;     // Register read complete signal from local memory
     reg [31:0] memData;    // Data from global memory
 
     // Outputs from the PE_system
@@ -35,6 +36,7 @@ module tb_PE_system;
         .clk(clk),
         .reset(reset),
         .grant(grant),
+        .PCin(PCin),
         .instructionBus(instructionBus),
         .AmuxBus(AmuxBus),
         .BmuxBus(BmuxBus),
@@ -69,9 +71,14 @@ module tb_PE_system;
         $dumpfile("tb_PE_system.vcd");
         $dumpvars(0, tb_PE_system);
 
+        // Monitor outputs
+        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b", 
+                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus);
+
         // Initialize signals
         reset = 1;
         grant = 0;
+        PCin = 0;
         instructionBus = 32'h00000000;
         AmuxBus = 32'h00000000;
         BmuxBus = 32'h00000000;
@@ -82,37 +89,72 @@ module tb_PE_system;
         #10 reset = 0; // Release reset
 
         // Test Case 1: Instruction Write
-        instructionBus = 32'h2BB81A3; // Load an instruction
-        #10 
-
-        // Test Case 2: Memory Write Request
-        grant = 1; // Bus grants access
-        instructionBus = 32'h2BB81A3;
-        #10 // Clear memory write request
-        grant = 0;
-
-        // Test Case 3: Memory Read Request
-        grant = 1; // Bus grants access
-        memData = 32'h87654321; // Data from memory
-        mem_ackBus = 1; // Acknowledge memory read
-        #10  // Clear memory read request
-        mem_ackBus = 0;
-        grant = 0;
-
-        // Test Case 4: Register Read
-        AmuxBus = 32'h11111111; // Data for rs1
-        BmuxBus = 32'h22222222; // Data for rs2
-        data_ReadyBus = 1; // Data is ready
-        #10 
+        instructionBus = 32'h2BB81A3; // Load an instruction -> store byte
+        PCin = 32'd1;
         data_ReadyBus = 0;
 
-        // Test Case 5: Bus Request
-        grant = 1; // Bus grants access
+        #30
+        grant = 1;
+
+        #10
+        grant = 0;
+        AmuxBus = 32'b00000000000000000000000000001000;
+        data_ReadyBus = 1;
+
+        #30
+        data_ReadyBus = 0;
+        
+        #30
+        grant = 1;
+
+        #20
+        grant = 0;
+        BmuxBus = 32'b10110100101101001011010011010111;
+        AmuxBus = 32'b00000000000000000000000000000000;
+        data_ReadyBus = 1;
+
+        #50
+        data_ReadyBus = 0;
+
+        #30
+        grant = 1;
+
         #10 
         grant = 0;
 
+        //data_ReadyBus = 0;
+
+        //#40
+
+        // Test Case 2: Memory Write Request
+        //grant = 1; // Bus grants access
+        //instructionBus = 32'h2BB81A3;
+        //#10 // Clear memory write request
+        //grant = 0;
+
+        // Test Case 3: Memory Read Request
+        //grant = 1; // Bus grants access
+        //memData = 32'h87654321; // Data from memory
+        //mem_ackBus = 1; // Acknowledge memory read
+        //#10  // Clear memory read request
+        //mem_ackBus = 0;
+        //grant = 0;
+
+        // Test Case 4: Register Read
+        //AmuxBus = 32'h11111111; // Data for rs1
+        //BmuxBus = 32'h22222222; // Data for rs2
+        //data_ReadyBus = 1; // Data is ready
+        //#10 
+        //data_ReadyBus = 0;
+
+        // Test Case 5: Bus Request
+        //grant = 1; // Bus grants access
+        //#10 
+        //grant = 0;
+
         // End simulation
-        #50 $finish;
+        //#50 
+        $finish;
     end
 
 endmodule

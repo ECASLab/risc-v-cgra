@@ -52,10 +52,8 @@ module cluster_controller (
             end
             7'b0000011, 7'b0010011: //Type I
             begin
-                $display("Instruction: %b", instruction);
                 rd = instruction[11:7];
                 rs1 = instruction[19:15];
-                $display("Rs1: %b and Rd: %b", rs1, rd);
             end
             endcase
             // Concatenate rd, rs1, rs2 into a single output
@@ -111,6 +109,7 @@ module cluster_controller (
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             // Reset all state
+            $display("Reset module");
             current_pc <= 32'b0;
             PCinPE <= 128'b0;
             PCsIM <= 32'b0;
@@ -140,11 +139,9 @@ module cluster_controller (
                     if (dependency == 0) //There is no dependency
                     begin
                         $display("No dependency");
-                        instruction_outPE = instruction_mem;
-                        PCinPE = {PCsIM+32'd3, PCsIM+32'd2, PCsIM+32'd1, PCsIM};
+                        instruction_outPE <= instruction_mem;
+                        PCinPE <= {PCsIM+32'd3, PCsIM+32'd2, PCsIM+32'd1, PCsIM};
                         current_pc = 32'd4;
-                        $display("Instructions written to PEs: %h", instruction_outPE);
-                        $display("Current PC: %b", current_pc);
                     end
                     else 
                     begin
@@ -159,7 +156,7 @@ module cluster_controller (
                         else if (dependency[2] == 1'b1)
                         begin
                             $display("There is dependency on the third operation");
-                            $display("Will only load instructions 0 adn 1");
+                            $display("Will only load instructions 0 and 1");
                             instructionTemp[63:32] = instruction_mem[63:32];
                             PCinTemp[63:32] = PCsIM+1;
                             current_pc = 32'd2;
@@ -172,57 +169,67 @@ module cluster_controller (
                             PCinTemp[95:64] = PCsIM+2;
                             current_pc = 32'd3;
                         end
-                        instruction_outPE = instructionTemp;
-                        PCinPE = PCinTemp;
-                        $display("Instructions written to PEs: %h", instruction_outPE);
-                        $display("Current PC: %b", current_pc);
+                        instruction_outPE <= instructionTemp;
+                        PCinPE <= PCinTemp;
                     end
                     program_start <= 0;
+                    instructionTemp <= 0;
+                    PCinTemp <= 0;
                 end
             end
             else
             begin
+                $display("Instructions written to PEs: %h", instruction_outPE);
+                $display("Current PC: %h", current_pc);
+                $display("Program Counters written to PEs: %h", PCinPE);          
                 if (execution_complete != 0)
                 begin
+                    $display("Execution Complete");
                     if (PCoutPE != PCinPE) //Means there was a break or jump
                     begin
                         if (PCoutPE[31:0] != PCinPE[31:0]) //Break comes from first operation
                         begin
-                            current_pc = PCoutPE[31:0];
+                            current_pc <= PCoutPE[31:0];
                         end
                         else if (PCoutPE[63:32] != PCinPE[63:32]) //Break comes from second operation
                         begin
-                            current_pc = PCoutPE[63:32];
+                            current_pc <= PCoutPE[63:32];
                         end
                         else if (PCoutPE[95:64] != PCinPE[95:64]) //Break comes from third operation
                         begin
-                            current_pc = PCoutPE[95:64];
+                            current_pc <= PCoutPE[95:64];
                         end
                         else  //Break comes from fourth operation
                         begin
-                            current_pc = PCoutPE[127:96];
+                            current_pc <= PCoutPE[127:96];
                         end
                     end
                     else if (!end_execute)
                     begin
-                        PCsIM = current_pc;
+                        $display("Entered else clause");
+                        PCsIM <= current_pc;
                         InstReadEn <= 4'b1111;
-                        instructionTemp <= 0;
                         dependency <= 0;
-                        if (instruction_mem != 0)
+                        instructionTemp <= instruction_mem;
+                        if (instructionTemp != 0)
                         begin
+                            $display("Instruction temp is: %h", instructionTemp);
                             InstReadEn <= 0;
                             dependency_check(instruction_mem, dependency);
                             $display("Dependency: %b", dependency);
                             if (dependency == 0)
                             begin
                                 $display("No dependency");
+                                instructionTemp <= 0;
                                 instruction_outPE <= instruction_mem;
+                                PCinTemp <= 0;
                                 PCinPE <= {PCsIM+32'd3, PCsIM+32'd2, PCsIM+32'd1, PCsIM};
                                 current_pc <= current_pc + 4;
                             end
                             else 
                             begin
+                                instructionTemp <= 0;
+                                PCinTemp <= 0;
                                 instructionTemp[31:0] = instruction_mem[31:0];
                                 PCinTemp[31:0] = PCsIM;
                                 if (dependency[1] == 1'b1)
@@ -243,12 +250,16 @@ module cluster_controller (
                                 begin
                                     $display("There is dependency on the fourth operation");
                                     $display("Will only load instructions 0, 1 and 2");
+                                    instructionTemp[63:32] = instruction_mem[63:32];
+                                    PCinTemp[63:32] = PCsIM+1;
                                     instructionTemp[95:64] = instruction_mem[95:64];
                                     PCinTemp[95:64] = PCsIM+2;
                                     current_pc = current_pc + 3;
                                 end
                                 instruction_outPE <= instructionTemp;
                                 PCinPE <= PCinTemp;
+                                PCinTemp <= 0;
+                                instructionTemp <=0;
                             end
                             if (last_instruction)
                             begin
