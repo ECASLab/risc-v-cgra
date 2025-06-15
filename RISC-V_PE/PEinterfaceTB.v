@@ -101,7 +101,7 @@ module tb_PE_system;
         AmuxBus = 32'b00000000000000000000000000001000;
         data_ReadyBus = 1;
 
-        #30
+        #10
         data_ReadyBus = 0;
         
         #30

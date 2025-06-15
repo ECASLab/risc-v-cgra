@@ -88,12 +88,16 @@ initial begin
     data_Ready = 1;
 
     #10;
-    memData = 32'b00000000000000001000000010100101; // Data from global memory Address to be loaded into A mux from address calculated. 
+    data_Ready = 0;
     
-    #10;
+    #30;
     mem_ack = 1;
+    memData = 32'b00000000000000001000000010100101; // Data from global memory Address to be loaded into A mux from address calculated. 
 
-    #50;
+    #10;
+    mem_ack = 0;
+
+    #40;
     //Expected result: 111111111111111111111111_10100101
     if (result_out == 32'b11111111111111111111111110100101) 
     begin
@@ -127,12 +131,16 @@ initial begin
     data_Ready = 1;
 
     #10;
+    data_Ready = 0;
+
+    #30;
+    mem_ack = 1;
     memData = 32'b00000000000000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
 
     #10;
-    mem_ack = 1;
+    mem_ack = 0;
 
-    #50;
+    #40;
     //Expected result: 11111111111111111_1000000010100101
     if (result_out == 32'b11111111111111111000000010100101) 
     begin
@@ -165,12 +173,16 @@ initial begin
     data_Ready = 1;
 
     #10;
+    data_Ready = 0;
+
+    #30;
+    mem_ack = 1;
     memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
 
     #10;
-    mem_ack = 1;
+    mem_ack = 0;
 
-    #50;
+    #40;
     //Expected result: b10100010110000001000000010100101
     if (result_out == 32'b10100010110000001000000010100101) 
     begin
@@ -203,12 +215,16 @@ initial begin
     data_Ready = 1;
 
     #10;
+    data_Ready = 0;
+
+    #30;
+    mem_ack = 1;
     memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
 
     #10;
-    mem_ack = 1;
+    mem_ack = 0;
 
-    #50;
+    #40;
     //Expected result: b00000000000000000000000010100101
     if (result_out == 32'b00000000000000000000000010100101) 
     begin
@@ -241,12 +257,16 @@ initial begin
     data_Ready = 1;
 
     #10;
+    data_Ready = 0;
+
+    #30;
+    mem_ack = 1;
     memData = 32'b10100010110000001000000010100101; // Data from global mem to be loaded into A mux from address calculated. 
 
     #10;
-    mem_ack = 1;
+    mem_ack = 0;
 
-    #50;
+    #40;
     //Expected result: b00000000000000001000000010100101
     if (result_out == 32'b00000000000000001000000010100101) 
     begin
@@ -278,10 +298,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: 10100010110000001000000011001000
     if (result_out == 32'b10100010110000001000000011001000) 
     begin
@@ -313,10 +333,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: 00010110000001000000010100101000
     if (result_out == 32'b00010110000001000000010100101000) 
     begin
@@ -348,10 +368,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: b00000000000000000000000000000001
     if (result_out == 32'b00000000000000000000000000000001) 
     begin
@@ -383,10 +403,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: b00000000000000000000000000000000 OpA is larger than Imm value
     if (result_out == 32'b00000000000000000000000000000000) 
     begin
@@ -418,10 +438,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: 10100010110000001000010110101110
     if (result_out == 32'b10100010110000001000010110101110) 
     begin
@@ -453,10 +473,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: 00010100010110000001000000010100
     if (result_out == 32'b00010100010110000001000000010100) 
     begin
@@ -488,10 +508,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: 11110100010110000001000000010100
     if (result_out == 32'b11110100010110000001000000010100) 
     begin
@@ -523,10 +543,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: b10100010110000001000000010100111
     if (result_out == 32'b10100010110000001000000010100111) 
     begin
@@ -559,10 +579,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #30
+    #10
     data_Ready = 0;
 
-    #30;
+    #50;
     //Expected result: b00000000000000000000000000100001
     if (result_out == 32'b00000000000000000000000000100001) 
     begin
@@ -594,20 +614,20 @@ initial begin
     #10;
     data_Ready = 1;  
 
-    #30;
+    #10;
     data_Ready = 0;
     //tempAddress = b00000000000000000000000000100101 = mem_address
     //rs2_out = rs2 and reg_select = 1
-    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
 
-    #10;
+    #30;
     data_Ready = 1;
+    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
     //mem_address, mem_write, ALU = 10111
 
     #10;
     data_Ready = 0;
 
-    #30;
+    #40;
     //Expected result: b10110100101101001011010011010111
     if (mem_address == 32'b00000000000000000000000000100101) 
     begin
@@ -643,20 +663,20 @@ initial begin
     #10;
     data_Ready = 1;  
 
-    #30;
+    #10;
     data_Ready = 0;
     //tempAddress = b00000000000000000000000000100101 = mem_address
     //rs2_out = rs2 and reg_select = 1
-    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
 
-    #10;
+    #30;
     data_Ready = 1;
+    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
     //mem_address, mem_write, ALU = 11000
 
     #10
     data_Ready = 0;
 
-    #30;
+    #40;
     //Expected result: b10110100101101001011010011010111
     if (mem_address == 32'b00000000000000000000000000100101) 
     begin
@@ -692,20 +712,20 @@ initial begin
     #10;
     data_Ready = 1;  
 
-    #30;
+    #10;
     data_Ready = 0;
     //tempAddress = b00000000000000000000000000100101 = mem_address
     //rs2_out = rs2 and reg_select = 1
-    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
-
-    #10;
+    
+    #30;
     data_Ready = 1;
+    BmuxIn = 32'b10110100101101001011010011010111; //Data comming from rs2
     //mem_address, mem_write, ALU = 11001
 
     #10;
     data_Ready = 0;
 
-    #30;
+    #40;
     //Expected result: b10110100101101001011010011010111
     if (mem_address == 32'b00000000000000000000000000100101) 
     begin
@@ -741,7 +761,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: 11111111000000000000000000101001
     if (result_out == 32'b11111111000000000000000000101001) 
     begin
@@ -773,7 +796,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: 111111111000000000000000000100001
     if (result_out == 32'b11111111000000000000000000100001) 
     begin
@@ -805,7 +831,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b11110000000000000000001001010000
     if (result_out == 32'b11110000000000000000001001010000) 
     begin
@@ -837,7 +866,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b00000000000000000000000000000001
     if (result_out == 32'b00000000000000000000000000000001) 
     begin
@@ -869,7 +901,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b00000000000000000000000000000000
     if (result_out == 32'b00000000000000000000000000000000) 
     begin
@@ -901,7 +936,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b10001000110001011000010010100001
     if (result_out == 32'b10001000110001011000010010100001) 
     begin
@@ -933,7 +971,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b00001010001011000000100000001010
     if (result_out == 32'b00001010001011000000100000001010) 
     begin
@@ -965,7 +1006,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b11111010001011000000100000001010
     if (result_out == 32'b11111010001011000000100000001010) 
     begin
@@ -997,7 +1041,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: b10101010110001011000010010100101
     if (result_out == 32'b10101010110001011000010010100101) 
     begin
@@ -1029,7 +1076,10 @@ initial begin
     #10;
     data_Ready = 1;
 
-    #50;
+    #10
+    data_Ready = 0;
+
+    #40;
     //Expected result: 00100010000000000000000000000100
     if (result_out == 32'b00100010000000000000000000000100) 
     begin
@@ -1055,15 +1105,12 @@ initial begin
     instruction = 32'b10110010110100101110_00001_0110111; //20 bit upper imm, rd = 1,  op = 55
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into A mux  
-    BmuxIn = 32'b00000000000000000000000000000000; // Data from bus to be loaded into B mux
-                     
+    //AmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into A mux  
+    //BmuxIn = 32'b00000000000000000000000000000000; // Data from bus to be loaded into B mux
+                
     #30;
-    mem_ack = 1;
-
-    #30;
-    //Expected result: b01000001000000010000000000000000
-    if (result_out == 32'b01000001000000010000000000000000) 
+    //Expected result: b10110010110100101110000000000000
+    if (result_out == 32'b10110010110100101110000000000000) 
     begin
         $display ("Result as expected");
     end
@@ -1087,16 +1134,16 @@ initial begin
     instruction = 32'b1011001_01010_10101_000_11001_1100011; //12 bit imm value, rs1 = 10101, rs2 = 01010, funct3 = 000,  op = 99
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into A mux  
-    BmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into B mux
                      
     #20;
     data_Ready = 1;
+    AmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into A mux  
+    BmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into B mux
 
-    #30;
+    #10;
     data_Ready = 0;
 
-    #50;
+    #70;
     //Expected result: 11111111111111111111101101010100
     if (PCout == 32'b11111111111111111111101101010100) 
     begin
@@ -1122,16 +1169,16 @@ initial begin
     instruction = 32'b1011001_01010_10101_001_11001_1100011; //12 bit imm value, rs1 = 10101, rs2 = 01010, funct3 = 000,  op = 99
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal
-    AmuxIn = 32'b01000001000000010000000011001001; // Data from bus to be loaded into A mux  
-    BmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into B mux
-                     
+            
     #20;
     data_Ready = 1;
+    AmuxIn = 32'b01000001000000010000000011001001; // Data from bus to be loaded into A mux  
+    BmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into B mux
 
-    #30;
+    #10;
     data_Ready = 0;
 
-    #50;
+    #70;
     //Expected result: 11111111111111111111101101010101
     if (PCout == 32'b11111111111111111111101101010101) 
     begin
@@ -1160,9 +1207,12 @@ initial begin
     data_Ready = 0; // Data ready signal      
 
     #20;
-    data_Ready = 1;            
+    data_Ready = 1;  
 
-    #40;
+    #10;
+    data_Ready = 0;          
+
+    #30;
     //Expected result: 11111111111110101001001100101010
     //        +        00000000000000000000000000011110
     //                 11111111111110101001001101001000

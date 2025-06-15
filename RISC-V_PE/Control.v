@@ -65,6 +65,7 @@ reg [31:0] tempimmvalue = 0; //Fill with imm12 or immhi
 reg [31:0] tempAddress = 0; //For store operations
 reg dataReady_sync;
 reg ALUcomplete_sync;
+reg mem_ack_sync;
 reg ALURes_sync;
 reg [2:0] state; //State machine
 
@@ -103,6 +104,7 @@ initial begin
     Osel = 2'b11;
     dataReady_sync = 0;
     ALUcomplete_sync = 0;
+    mem_ack_sync = 0;
     ALURes_sync = 0;
     tempAddress = 0;
     read_en = 0;
@@ -134,6 +136,7 @@ begin
         mem_write <= 0;
         dataReady_sync <= 0;
         ALUcomplete_sync <= 0;
+        mem_ack_sync <= 0;
         ALURes_sync <= 0;
         mem_address <= 0;
         tempAddress <= 0;
@@ -149,6 +152,7 @@ begin
     begin
         dataReady_sync <= dataReady;
         ALUcomplete_sync <= ALUcomplete;
+        mem_ack_sync <= mem_ack;
         ALURes_sync <= ALURes;
 
     case(op)
@@ -170,7 +174,6 @@ begin
             state = 3'b001;
             read_en <= 0;
             Asel <= 2'b01; // Select data from local bus as A input
-            //immvalue <= (imm12[11] == 0) ? {20'b0, imm12} : {20'b11111111111111111111, imm12};
             immvalue <= sign_extend(imm12);
             Bsel <= 2'b10; //Select immidiate value as B input
             Aenable <= 1;
@@ -186,7 +189,6 @@ begin
         if (ALUcomplete_sync && state == 3'b001)
         begin
             state <= 3'b010;
-            $display("Sending mem read signal");
             mem_read <= 1; //Send signal for memory read
             Aenable <= 0;
             Benable <= 0;
@@ -194,12 +196,71 @@ begin
             Aenable <= 1;
         end
 
-        if (mem_ack && state == 3'b010) //After acknowledge signal has been received
+        if (mem_ack_sync && state == 3'b010) //After acknowledge signal has been received
         begin
             state <= 3'b011;
             mem_read <= 0;
-            //Aenable <= 1;
-            //Asel <= 2'b00; //Select data from global memory as A input
+            case (funct3)
+            3'b000: // Load byte sign extended
+                begin
+                ALUsel <= 5'b10000; // Select take byte sign extended from ALU
+                Osel <= 2'b00; //Select output from ALU
+                end
+            3'b001: // Load half word sign extended
+                begin
+                ALUsel <= 5'b10001; // Select take half word sign extended from ALU
+                Osel <= 2'b00; //Select output from ALU
+                end
+            3'b010: // Load word
+                begin
+                Osel <= 2'b01; //Select register A as output
+                end
+            3'b100: // Load byte unsigned
+                begin
+                ALUsel <= 5'b10010; // Select take byte unsigned from ALU
+                Osel <= 2'b00; // Select output from ALU
+                end
+            3'b101: // Load half word unsigned
+                begin
+                ALUsel <= 5'b10011; // Select take byte unsigned from ALU
+                Osel <= 2'b00; // Select output from ALU
+                end
+            endcase  
+        end 
+        if (ALUcomplete_sync && state == 3'b011)
+        begin
+            state <= 3'b100;
+            rdOut <= rd; 
+            rdWrite <= 1; //Send signal to write output value into rd register
+            execution_complete <= 1;
+        end
+
+        if (state == 3'b001)
+        begin
+            read_en <= 0;
+            Asel <= 2'b01; // Select data from local bus as A input
+            immvalue <= sign_extend(imm12);
+            Bsel <= 2'b10; //Select immidiate value as B input
+            Aenable <= 1;
+            Benable <= 1;
+
+            //Select ALU to add values
+            ALUsel <= 5'b00000;
+
+            //Select ALU result as output to send address
+            Osel <= 2'b00; 
+        end
+        else if (state == 3'b010)
+        begin
+            mem_read <= 1; //Send signal for memory read
+            Aenable <= 0;
+            Benable <= 0;
+            Asel <= 2'b00; //Select data from global memory as A input
+            Aenable <= 1;
+        end
+        else if (state == 3'b011)
+        begin
+            mem_read <= 0;
             case (funct3)
             3'b000: // Load byte sign extended
                 begin
@@ -226,12 +287,13 @@ begin
                 Osel <= 2'b00; // Select output from ALU
                 end
             endcase
+        end 
+        else if (state == 3'b100)
+        begin
             rdOut <= rd; 
             rdWrite <= 1; //Send signal to write output value into rd register
             execution_complete <= 1;
-            $display("Execution complete");
-            //req <= 1;    
-        end           
+        end         
     end
 
     7'b0010011: //Op code 19 is ALU operations on immidiate values
@@ -336,7 +398,90 @@ begin
             //rdWrite <= 1;
             complete_operation(2'b00,rd);
             //req <= 1;
-        end   
+        end 
+
+        if (state == 3'b001)
+        begin
+            Asel <= 2'b01; //Select data comming from bus
+            tempimmvalue = sign_extend(imm12);
+            Bsel <= 2'b10; //Select immidiate value as B input
+            // Enable registers to load value
+            Aenable <= 1; 
+            Benable <= 1;
+
+            case(funct3)
+            3'b000: //Add immidiate
+            begin
+                //Select ALU to add values
+                ALUsel <= 5'b00000;
+                immvalue <= tempimmvalue;
+            end
+
+            3'b001: //Shift left
+            begin
+                immvalue <= {27'b000000000000000000000000000, imm12[4:0]};
+
+                ALUsel <= 5'b00100;
+            end
+
+            3'b010: //Set less than Immediate
+            begin
+                immvalue <= tempimmvalue;
+
+                ALUsel <= 5'b01110;
+            end
+
+            3'b011: //Set less imm than unsigned
+            begin
+                immvalue <= tempimmvalue;
+
+                ALUsel <= 5'b01101;
+            end
+
+            3'b100: //XOR
+            begin
+                immvalue <= tempimmvalue;
+
+                ALUsel <= 5'b01010;
+            end
+
+            3'b101: //Shift right logical or arithmetic
+            begin
+                immvalue <= {27'b000000000000000000000000000, imm12[4:0]};
+
+                case(tempimmvalue[11:5])
+                7'b0000000: //Logical shift right
+                begin
+                    ALUsel <= 5'b00101;
+                end
+                7'b0100000: //Arithmetic shift right
+                begin
+                    ALUsel <= 5'b01111;
+                end
+                endcase
+            end
+
+            3'b110: //OR
+            begin
+                immvalue <= tempimmvalue;
+                ALUsel <= 5'b01001;
+            end
+
+            3'b111: //AND
+            begin
+                immvalue <= tempimmvalue;
+                ALUsel <= 5'b01000;
+            end
+            endcase
+            // Enable registers to load value
+            Aenable <= 1;
+            Benable <= 1;
+            Bsel <= 2'b10;
+        end
+        else if (state == 3'b010)
+        begin
+            complete_operation(2'b00,rd);
+        end  
     end
 
     7'b0110011: //Code 51 is ALU operations on two values comming from registers
@@ -354,7 +499,102 @@ begin
         reg_reset <= 0;
         execution_complete <= 0;
 
-        if (dataReady_sync)
+        if (dataReady_sync && state == 3'b0)
+        begin
+            state <= 3'b001;
+            read_en <= 0;
+            Asel <= 2'b01; //Select data comming from bus
+            Bsel <= 2'b01; //Select data comming from bus 
+            // Enable registers to load value
+            Aenable <= 1; 
+            Benable <= 1;
+
+            case(funct3)
+            3'b000: //Add, substract, multiply
+            begin
+                if (funct7 == 7'b0000000) begin
+                    ALUsel <= 5'b00000; // Add
+                end else if (funct7 == 7'b0100000) begin
+                    ALUsel <= 5'b00001; // Subtract
+                end else if (funct7 == 7'b0000001) begin
+                    ALUsel <= 5'b00010; //multiply
+                end
+            end
+
+            3'b001: //Shift left logical
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                ALUsel <= 5'b00100;
+            end
+
+            3'b010: //Set less than
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                ALUsel <= 5'b01110;
+            end
+
+            3'b011: //Set less than unsigned
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                ALUsel <= 5'b01101;
+            end
+
+            3'b100: //XOR
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                ALUsel <= 5'b01010;
+            end
+
+            3'b101: //Shift right logical or arithmetic
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                case(funct7)
+                7'b0000000: //Logical shift right
+                begin
+                    ALUsel <= 5'b00101;
+                end
+                7'b0100000: //Arithmetic shift right
+                begin
+                    ALUsel <= 5'b01111;
+                end
+                endcase
+            end
+
+            3'b110: //OR
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                ALUsel <= 5'b01001;
+            end
+
+            3'b111: //AND
+            begin
+                // Enable registers to load value
+                Aenable <= 1; 
+                Benable <= 1;
+                ALUsel <= 5'b01000;
+            end
+            endcase
+        end
+
+        if (ALUcomplete_sync && state == 3'b001)
+        begin
+            state <= 3'b010;
+            complete_operation(2'b00,rd);
+        end
+
+        if (state == 3'b001)
         begin
             read_en <= 0;
             Asel <= 2'b01; //Select data comming from bus
@@ -373,16 +613,6 @@ begin
                 end else if (funct7 == 7'b0000001) begin
                     ALUsel <= 5'b00010; //multiply
                 end
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00, rd);
-                    //req <= 1;
-                end
-
             end
 
             3'b001: //Shift left logical
@@ -390,17 +620,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 ALUsel <= 5'b00100;
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00,rd);
-                    //req <= 1;
-                end
             end
 
             3'b010: //Set less than
@@ -408,17 +628,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 ALUsel <= 5'b01110;
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00,rd);
-                    //req <= 1;
-                end
             end
 
             3'b011: //Set less than unsigned
@@ -426,17 +636,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 ALUsel <= 5'b01101;
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00,rd);
-                    //req <= 1;
-                end
             end
 
             3'b100: //XOR
@@ -444,17 +644,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 ALUsel <= 5'b01010;
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00,rd);
-                    //req <= 1;
-                end
             end
 
             3'b101: //Shift right logical or arithmetic
@@ -462,7 +652,6 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 case(funct7)
                 7'b0000000: //Logical shift right
                 begin
@@ -473,16 +662,6 @@ begin
                     ALUsel <= 5'b01111;
                 end
                 endcase
-
-                if (ALUcomplete_sync)
-                begin
-                    Osel <= 2'b00;
-                    rdOut <= rd;
-                    rdWrite <= 1;
-                    execution_complete <= 1;
-                    //complete_operation(2'b00,rd);
-                    //req <= 1;
-                end
             end
 
             3'b110: //OR
@@ -490,17 +669,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 ALUsel <= 5'b01001;
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00, rd);
-                    //req <= 1;
-                end
             end
 
             3'b111: //AND
@@ -508,24 +677,18 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-
                 ALUsel <= 5'b01000;
-
-                if (ALUcomplete_sync)
-                begin
-                    //Osel <= 2'b00;
-                    //rdOut <= rd;
-                    //rdWrite <= 1;
-                    complete_operation(2'b00,rd);
-                    //req <= 1;
-                end
             end
             endcase
+        end
+        else if (state == 3'b010)
+        begin
+            complete_operation(2'b00,rd);
         end
 
     end
 
-    7'b0110111: //Code 55 is Load upper immidiate word
+    7'b0110111: //Code 55 is Load upper immidiate word. Will load upper immidiate value into local memory rd
     begin
         rdOut <= 0;
         rdWrite <= 0;
@@ -545,19 +708,12 @@ begin
         //Select B register as output to send address
         Osel <= 2'b10; 
 
-        mem_read <= 1; //Send signal for memory read
-
-        if (mem_ack) //After acknowledge signal has been received
+        if (tempimmvalue != 0 && state == 3'b0) //After acknowledge signal has been received
         begin
-            Aenable <= 1;
-            Benable <= 0;
-            Asel <= 2'b00; //Select data from global mem as A input
-            Osel <= 2'b01; //Select register A as output
+            state <= 3'b001;
             rdOut <= rd; 
             rdWrite <= 1; //Send signal to write output value into rd register
-            mem_read <= 0; //Reset the memory read signal
             execution_complete <= 1;
-            //req <= 1;
         end
     end
 
@@ -580,14 +736,12 @@ begin
 
         if (state == 3'b000)
         begin
-            $display("State 0");
             ALUsel <= 5'b11111;
             read_en <= 1;
         end
 
         if (dataReady_sync && tempAddress == 0 && state == 3'b0)
         begin
-            $display("Received first data Ready: State 1");
             state <= 3'b001;
             read_en <= 0;
             // Enable registers to load value
@@ -600,7 +754,6 @@ begin
 
         if (ALUcomplete_sync && state == 3'b001)
         begin
-            $display("Complete addition of rs1 and imm: State 2");
             state <= 3'b010;
             tempAddress <= ALURes;
         end
@@ -608,7 +761,6 @@ begin
 
         if (tempAddress !=0 && state == 3'b010)
         begin
-            $display("Requesting rs2: State 3");
             state <= 3'b011;
             ALUsel <= 5'b11111;
             Benable <= 1;
@@ -620,7 +772,6 @@ begin
 
         if (dataReady_sync && tempAddress != 0 && state == 3'b011)
         begin
-            $display("Received rs2 value: State 4");
             state <= 3'b100;
             read_en <= 0;
             Osel <= 2'b00;
@@ -647,9 +798,60 @@ begin
 
         if (ALUcomplete_sync && state == 3'b100)
         begin
-            $display("Finished selecting corresponding bits for output: State 5");
             state <= 3'b101;
-            $display("ALUcompleted final operation");
+            mem_address <= tempAddress; //Use the calculated destination address to store the value
+            mem_write <= 1; //Indicates that value at output will be stored at mem_address
+            execution_complete <= 1;
+        end
+
+        if (state == 3'b001)
+        begin
+            read_en <= 0;
+            // Enable registers to load value
+            Aenable <= 1; 
+            Benable <= 1;
+
+            //Select ALU to add values
+            ALUsel <= 5'b00000;
+        end
+        else if (state == 3'b010)
+        begin
+            mem_address <= tempAddress;
+        end
+        else if (state == 3'b011)
+        begin
+            ALUsel <= 5'b11111;
+            Benable <= 1;
+            rs2Out <= rs2;
+            read_en <= 1;
+            reg_select <= 1; //Selects both registers rs1 and rs2 to pull data from *will only use rs2
+            Bsel <= 2'b01; //Select data from local bus at B operand (rs2)
+        end
+        else if (state == 3'b100)
+        begin
+            Osel <= 2'b00;
+            case(funct3)
+            3'b000: //Store byte
+                begin
+                    ALUsel = 5'b10111; //Take only lower byte of rs2 value
+                    Osel = 2'b00; //Select output from ALU
+                end 
+
+            3'b001: //Store half word
+                begin
+                    ALUsel = 5'b11000; //Take lower half word of rs2 value
+                    Osel = 2'b00; //Select output from ALU
+                end
+                    
+            3'b010: //Store word
+                begin
+                    ALUsel = 5'b11001;
+                    Osel = 2'b00; //Select output from ALU
+                end
+            endcase
+        end
+        else if (state == 3'b101)
+        begin
             mem_address <= tempAddress; //Use the calculated destination address to store the value
             mem_write <= 1; //Indicates that value at output will be stored at mem_address
             execution_complete <= 1;
@@ -664,7 +866,6 @@ begin
         Benable <= 0;
         PCout <= PCin; // By default, retain the same PC value
         execution_complete <= 0;
-        //req <= 0;
         Osel <= 0;
         reg_reset <= 1;
         reg_reset <= 0;
@@ -672,60 +873,108 @@ begin
         rs2Out <= rs2;
         reg_select <= 1; //Selects both registers to pull
         read_en <= 1;
-        Asel = 2'b01; //Select data from bus
-        Bsel <= 2'b01; //Select data from bus
+        Asel = 2'b01; //Select data from bus local mem
+        Bsel <= 2'b01; //Select data from bus local mem
         tempimmvalue = sign_extend(imm12);
         immvalue <= {tempimmvalue[30:0], 1'b0};
 
         Aenable <= 1;
         Benable <= 1;
 
-        if (dataReady_sync)
+        if (dataReady_sync && state == 3'b0)
+        begin
+            state <= 3'b001;
+            Aenable <= 1;
+            Benable <= 1;
+
+            ALUsel <= 5'b00110;
+        end
+        if (ALUcomplete_sync && state == 3'b001)
+        begin
+            state <= 3'b010;
+            ALUsel = 5'b11111;
+            case (funct3)
+            3'b000: //Case if =
+            begin
+                if (ALURes == 32'b00000000000000000000000000000001)
+                begin
+                    Asel <= 2'b10; //Select program counter
+                    Bsel <= 2'b10; //Select imm value
+                    Aenable <= 1;
+                    Benable <= 1;
+                    ALUsel <= 5'b00000; //Select add
+                    tempAddress <= 32'b00000000000000000000000000000001;
+                end
+            end
+            3'b001: //Case if !=
+            begin
+                if (ALURes == 32'b00000000000000000000000000000000)
+                begin
+                    Asel <= 2'b10; //Select program counter
+                    Bsel <= 2'b10; //Select imm value
+                    Aenable <= 1;
+                    Benable <= 1;
+                    ALUsel <= 5'b00000; //Select add
+                    tempAddress <= 32'b00000000000000000000000000000001;
+                end
+            end
+            endcase
+        end
+
+        if (ALUcomplete_sync && tempAddress != 0 && state == 3'b010)
+        begin
+            state <= 3'b011;
+            PCout <= ALURes;
+            execution_complete <= 1;
+            Aenable <= 0;
+            Benable <= 0;
+        end
+
+        if (state == 3'b001)
         begin
             Aenable <= 1;
             Benable <= 1;
 
             ALUsel <= 5'b00110;
-
-            if (ALUcomplete_sync && tempAddress == 0)
-            begin
-                ALUsel = 5'b11111;
-                case (funct3)
-                3'b000: //Case if =
-                begin
-                    if (ALURes == 32'b00000000000000000000000000000001)
-                    begin
-                        Asel <= 2'b10; //Select program counter
-                        Bsel <= 2'b10; //Select imm value
-                        Aenable <= 1;
-                        Benable <= 1;
-                        ALUsel <= 5'b00000; //Select add
-                        tempAddress <= 32'b00000000000000000000000000000001;
-                    end
-                end
-                3'b001: //Case if !=
-                begin
-                    if (ALURes == 32'b00000000000000000000000000000000)
-                    begin
-                        Asel <= 2'b10; //Select program counter
-                        Bsel <= 2'b10; //Select imm value
-                        Aenable <= 1;
-                        Benable <= 1;
-                        ALUsel <= 5'b00000; //Select add
-                        tempAddress <= 32'b00000000000000000000000000000001;
-                    end
-                end
-                endcase
-            end
         end
-        if (!dataReady_sync && ALUcomplete_sync && tempAddress != 0)
+        else if (state == 3'b010)
+        begin
+            ALUsel = 5'b11111;
+            case (funct3)
+            3'b000: //Case if =
+            begin
+                if (ALURes == 32'b00000000000000000000000000000001)
+                begin
+                    Asel <= 2'b10; //Select program counter
+                    Bsel <= 2'b10; //Select imm value
+                    Aenable <= 1;
+                    Benable <= 1;
+                    ALUsel <= 5'b00000; //Select add
+                    tempAddress <= 32'b00000000000000000000000000000001;
+                end
+            end
+            3'b001: //Case if !=
+            begin
+                if (ALURes == 32'b00000000000000000000000000000000)
+                begin
+                    Asel <= 2'b10; //Select program counter
+                    Bsel <= 2'b10; //Select imm value
+                    Aenable <= 1;
+                    Benable <= 1;
+                    ALUsel <= 5'b00000; //Select add
+                    tempAddress <= 32'b00000000000000000000000000000001;
+                end
+            end
+            endcase
+        end
+        else if (state == 3'b011)
         begin
             PCout <= ALURes;
             execution_complete <= 1;
-            //req <= 1;
             Aenable <= 0;
             Benable <= 0;
         end
+
     end
 
     7'b1101111: // Op 111 is jump and link
@@ -748,24 +997,33 @@ begin
         Benable <= 1;
 
 
-        if (dataReady_sync)
+        if (dataReady_sync && state == 3'b0)
+        begin
+            state <= 3'b001;
+            ALUsel = 5'b00000;
+        end   
+        if (ALUcomplete_sync && state == 3'b001)
+        begin
+            state <= 3'b010;
+            PCout <= ALURes;
+            execution_complete <= 1;
+            rdOut <= rd;
+            rdWrite <= 1;
+            Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
+        end
+
+        if (state == 3'b001)
         begin
             ALUsel = 5'b00000;
-            
-
-            if (ALUcomplete_sync)
-            begin
-                PCout <= ALURes;
-                execution_complete <= 1;
-                //req <= 1;
-                rdOut <= rd;
-                rdWrite <= 1;
-                Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
-                //ALUsel = 5'b11111;
-                //Aenable <= 0;
-                //Benable <= 0;
-            end
-        end   
+        end
+        else if (state == 3'b010)
+        begin
+            PCout <= ALURes;
+            execution_complete <= 1;
+            rdOut <= rd;
+            rdWrite <= 1;
+            Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
+        end
     end
 
     endcase
