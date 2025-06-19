@@ -57,7 +57,8 @@ output reg [31:0] mem_address, // used for store operations. Stores in memory
 output reg        reg_select, // Selects rs1 or rs2 when reading from register
 
 output reg [31:0] immvalue, //Value being wired to reg B mux
-output reg        execution_complete //Indicates end of processing
+output reg        execution_complete, //Indicates end of processing
+output reg        branch_exec     //Indicates a program counter branch is requested
 );
 
 // Internal signals
@@ -110,6 +111,7 @@ initial begin
     read_en = 0;
     execution_complete = 0;
     state = 3'b0;
+    branch_exec = 0;
     //req = 0;
 end
 
@@ -143,6 +145,7 @@ begin
         read_en <= 0;
         execution_complete <= 0;
         state <= 3'b0;
+        branch_exec <= 0;
         //req = 0;
     
         reg_reset <= 0;
@@ -860,36 +863,42 @@ begin
 
     7'b1100011: //Case 99 is branch operations
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        Aenable <= 0;
-        Benable <= 0;
-        PCout <= PCin; // By default, retain the same PC value
-        execution_complete <= 0;
-        Osel <= 0;
-        reg_reset <= 1;
-        reg_reset <= 0;
-        rs1Out <= rs1;
-        rs2Out <= rs2;
-        reg_select <= 1; //Selects both registers to pull
-        read_en <= 1;
-        Asel = 2'b01; //Select data from bus local mem
-        Bsel <= 2'b01; //Select data from bus local mem
-        tempimmvalue = sign_extend(imm12);
-        immvalue <= {tempimmvalue[30:0], 1'b0};
+        if (state == 0)
+        begin
+            rdOut <= 0;
+            rdWrite <= 0;
+            Aenable <= 0;
+            Benable <= 0;
+            PCout <= PCin; // By default, retain the same PC value
+            execution_complete <= 0;
+            branch_exec <= 0;
+            Osel <= 2'b11;
+            reg_reset <= 1;
+            reg_reset <= 0;
+            rs1Out <= rs1;
+            rs2Out <= rs2;
+            reg_select <= 1; //Selects both registers to pull
+            read_en <= 1;
+            Asel = 2'b01; //Select data from bus local mem
+            Bsel <= 2'b01; //Select data from bus local mem
+            ALUsel <= 5'b11111;
+            tempimmvalue = sign_extend(imm12);
+            immvalue <= {tempimmvalue[30:0], 1'b0};
 
-        Aenable <= 1;
-        Benable <= 1;
+            Aenable <= 1;
+            Benable <= 1;
+        end
 
         if (dataReady_sync && state == 3'b0)
         begin
             state <= 3'b001;
             Aenable <= 1;
             Benable <= 1;
+            read_en <= 0;
 
             ALUsel <= 5'b00110;
         end
-        if (ALUcomplete_sync && state == 3'b001)
+        if (ALUcomplete_sync && tempAddress == 0 && state == 3'b001)
         begin
             state <= 3'b010;
             ALUsel = 5'b11111;
@@ -903,7 +912,12 @@ begin
                     Aenable <= 1;
                     Benable <= 1;
                     ALUsel <= 5'b00000; //Select add
-                    tempAddress <= 32'b00000000000000000000000000000001;
+                    state <= 3'b011;
+                end
+                else
+                begin
+                    ALUsel <= 5'b11111; 
+                    state <= 3'b110;
                 end
             end
             3'b001: //Case if !=
@@ -915,15 +929,26 @@ begin
                     Aenable <= 1;
                     Benable <= 1;
                     ALUsel <= 5'b00000; //Select add
-                    tempAddress <= 32'b00000000000000000000000000000001;
+                    state <= 3'b011;
+                end
+                else
+                begin
+                    ALUsel <= 5'b11111; 
+                    state <= 3'b110;
                 end
             end
             endcase
         end
 
-        if (ALUcomplete_sync && tempAddress != 0 && state == 3'b010)
+        if (state == 3'b011)
         begin
-            state <= 3'b011;
+            state <= 3'b100;
+            tempAddress <= 32'b00000000000000000000000000000001;
+        end
+
+        if (ALUcomplete_sync && tempAddress != 0 && state == 3'b100)
+        begin
+            state <= 3'b101;
             PCout <= ALURes;
             execution_complete <= 1;
             Aenable <= 0;
@@ -934,91 +959,87 @@ begin
         begin
             Aenable <= 1;
             Benable <= 1;
-
+            read_en <= 0;
             ALUsel <= 5'b00110;
         end
         else if (state == 3'b010)
         begin
             ALUsel = 5'b11111;
-            case (funct3)
-            3'b000: //Case if =
-            begin
-                if (ALURes == 32'b00000000000000000000000000000001)
-                begin
-                    Asel <= 2'b10; //Select program counter
-                    Bsel <= 2'b10; //Select imm value
-                    Aenable <= 1;
-                    Benable <= 1;
-                    ALUsel <= 5'b00000; //Select add
-                    tempAddress <= 32'b00000000000000000000000000000001;
-                end
-            end
-            3'b001: //Case if !=
-            begin
-                if (ALURes == 32'b00000000000000000000000000000000)
-                begin
-                    Asel <= 2'b10; //Select program counter
-                    Bsel <= 2'b10; //Select imm value
-                    Aenable <= 1;
-                    Benable <= 1;
-                    ALUsel <= 5'b00000; //Select add
-                    tempAddress <= 32'b00000000000000000000000000000001;
-                end
-            end
-            endcase
         end
         else if (state == 3'b011)
         begin
+            Asel <= 2'b10; //Select program counter
+            Bsel <= 2'b10; //Select imm value
+            Aenable <= 1;
+            Benable <= 1;
+            ALUsel <= 5'b00000; //Select add
+        end
+        else if (state == 3'b100)
+        begin
+            tempAddress <= 32'b00000000000000000000000000000001;
+        end
+        else if (state == 3'b101)
+        begin
             PCout <= ALURes;
+            branch_exec <= 1;
             execution_complete <= 1;
             Aenable <= 0;
             Benable <= 0;
         end
-
+        else if (state == 3'b110)
+        begin
+            PCout <= PCin;
+            execution_complete <= 1;
+            Aenable <= 0;
+            Benable <= 0;
+            ALUsel <= 5'b11111; 
+        end
     end
 
     7'b1101111: // Op 111 is jump and link
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        Aenable <= 0;
-        Benable <= 0;
-        PCout <= PCin; // By default, retain the same PC value
-        execution_complete <= 0;
-        //req <= 0;
-        reg_reset <= 1;
-        reg_reset <= 0;
-        Asel = 2'b10; //Select PC
-        Bsel <= 2'b10; //Select immvalue
-        tempimmvalue = (immhi[19] == 0) ? {12'b0, immhi} : {12'b111111111111, immhi};
-        immvalue <= {tempimmvalue[30:0], 1'b0};
-
-        Aenable <= 1;
-        Benable <= 1;
-
-
-        if (dataReady_sync && state == 3'b0)
+        if (state == 0)
         begin
             state <= 3'b001;
-            ALUsel = 5'b00000;
-        end   
-        if (ALUcomplete_sync && state == 3'b001)
-        begin
-            state <= 3'b010;
-            PCout <= ALURes;
-            execution_complete <= 1;
-            rdOut <= rd;
-            rdWrite <= 1;
-            Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
+            rdOut <= 0;
+            rdWrite <= 0;
+            Aenable <= 0;
+            Benable <= 0;
+            PCout <= PCin; // By default, retain the same PC value
+            execution_complete <= 0;
+            reg_reset <= 1;
+            reg_reset <= 0;
+            Asel = 2'b10; //Select PC
+            Bsel <= 2'b10; //Select immvalue
+            tempimmvalue = (immhi[19] == 0) ? {12'b0, immhi} : {12'b111111111111, immhi};
+            immvalue <= {tempimmvalue[30:0], 1'b0};
+
+            Aenable <= 1;
+            Benable <= 1;
         end
+
 
         if (state == 3'b001)
         begin
+            state <= 3'b010;
+            ALUsel <= 5'b00000;
+        end   
+        if (ALUcomplete_sync && state == 3'b010)
+        begin
+            state <= 3'b011;
+            PCout <= ALURes;
+            rdOut <= rd;
+            Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
+        end
+
+        if (state == 3'b010)
+        begin
             ALUsel = 5'b00000;
         end
-        else if (state == 3'b010)
+        else if (state == 3'b011)
         begin
             PCout <= ALURes;
+            branch_exec <= 1;
             execution_complete <= 1;
             rdOut <= rd;
             rdWrite <= 1;

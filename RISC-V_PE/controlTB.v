@@ -43,6 +43,7 @@ wire [31:0] immvalue;
 wire [4:0] rs1Out;
 wire [4:0] rs2Out;
 wire       execution_complete;
+wire       branch_exec;
 
 // Instantiate the controller module
 controller uut (
@@ -81,7 +82,8 @@ controller uut (
     .IRenable(IRenable),
     .decodeComplete(decodeComplete),
     .reset(reset),
-    .execution_complete(execution_complete)
+    .execution_complete(execution_complete),
+    .branch_exec(branch_exec)
 );
 
 // Generate clock signal
@@ -93,8 +95,8 @@ end
 // Initialize and apply test vectors
 initial begin
     // Monitor outputs
-        $monitor("Time: %0dns | PCout: %d | ALUsel: %b | Asel: %b | Bsel: %b | Osel: %b | rdOut: %b | Aenable: %b | Benable: %b | mem_read: %b | immvalue: %b | rs1Out: %b | rs2Out: %b | reg_select: %b | mem_address: %b", 
-                 $time, PCout, ALUsel, Asel, Bsel, Osel, rdOut, Aenable, Benable, mem_read, immvalue, rs1Out, rs2Out, reg_select, mem_address);
+        $monitor("Time: %0dns | PCout: %d | ALUsel: %b | Asel: %b | Bsel: %b | Osel: %b | rdOut: %b | Aenable: %b | Benable: %b | mem_read: %b | immvalue: %b | rs1Out: %b | rs2Out: %b | reg_select: %b | mem_address: %b | branch_exec: %b", 
+                 $time, PCout, ALUsel, Asel, Bsel, Osel, rdOut, Aenable, Benable, mem_read, immvalue, rs1Out, rs2Out, reg_select, mem_address, branch_exec);
 
     // Initialize inputs
     reset = 1;

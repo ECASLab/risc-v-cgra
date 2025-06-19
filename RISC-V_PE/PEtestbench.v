@@ -25,6 +25,7 @@ wire [31:0] result_out;
 wire read_en;
 wire [31:0] PCout;
 wire execution_complete;
+wire branch_exec;
 
 // Instantiate the processing element module
 processing_element uut (
@@ -48,7 +49,8 @@ processing_element uut (
     .read_en(read_en),
     .reset(reset),
     .execution_complete(execution_complete),
-    .memData(memData)
+    .memData(memData),
+    .branch_exec(branch_exec)
 );
 
 // Generate clock signal
@@ -60,8 +62,8 @@ end
 // Initialize and apply test vectors
 initial begin
     // Monitor outputs
-        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b", 
-                 $time, PCout, mem_address, reg_select, mem_read, mem_write, rs1Out, rs2Out, rdOut, rdWrite, result_out);
+        $monitor("Time: %0dns | PCout: %d | mem_address: %b | reg_select: %b | mem_read: %b | mem_write: %b | rs1: %b | rs2: %b | rd: %b | rd_Write: %b | result_out: %b | branch_exec: %b", 
+                 $time, PCout, mem_address, reg_select, mem_read, mem_write, rs1Out, rs2Out, rdOut, rdWrite, result_out, branch_exec);
 
     // Initialize inputs
     PCin = 32'b0;
@@ -1204,15 +1206,9 @@ initial begin
     PCin = 30; // Program counter input
     instruction = 32'b10110010101010101001_11001_1101111; //20 bit imm value, rd = 11001,  op = 111
     mem_ack = 0; // Memory acknowledgment signal
-    data_Ready = 0; // Data ready signal      
+    data_Ready = 0; // Data ready signal               
 
-    #20;
-    data_Ready = 1;  
-
-    #10;
-    data_Ready = 0;          
-
-    #30;
+    #80;
     //Expected result: 11111111111110101001001100101010
     //        +        00000000000000000000000000011110
     //                 11111111111110101001001101001000

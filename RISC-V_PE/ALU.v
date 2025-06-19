@@ -2,6 +2,10 @@
 //`define DEBUG
 
 `include "Subtraction.v"
+//`include "dadda_16_pipelined.v"
+//`include "dadda_8_pipelined.v"
+//`include "csa_dadda.v"
+//`include "HA.v"
 
 module alu(
            input        clk,      // Clock input
@@ -17,7 +21,7 @@ module alu(
     reg [31:0] y;
     wire [32:0] tmp;
 
-    wire [31:0] add_result, sub_result;
+    wire [31:0] add_result, sub_result, mult_result;
     wire add_carry_out, sub_borrow;
 
 RippleCarryAdder adder (
@@ -34,6 +38,14 @@ Subtraction subtractor (
     .Diff(sub_result),
     .Borrow(sub_borrow)  
 );
+
+//dadda_16_pipelined mutiplier (
+//   .clk(clk),
+//   .rst(reset),
+//   .A(A[15:0]),
+//   .B(B[15:0]),
+//   .Y_reg(mult_result)
+//);
 
     always @(posedge clk or reset) begin
          if (reset)
@@ -59,6 +71,7 @@ Subtraction subtractor (
             end
             5'b00010: // Multiplication
             begin
+               //ALU_Out <= mult_result;
                ALU_Out <= A[15:0] * B[15:0];
                ALUcomplete <= 1;
             end
