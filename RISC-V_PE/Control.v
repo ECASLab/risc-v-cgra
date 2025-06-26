@@ -722,25 +722,24 @@ begin
 
     7'b0100011: //Code 35 is store operations
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        PCout <= PCin; // By default, retain the same PC value
-        execution_complete <= 0;
-        //req <= 0;
-        immvalue <= sign_extend(imm12);
-        reg_reset <= 1;
-        reg_reset <= 0;
-        rs1Out <= rs1;
-        reg_select <= 0; //Selects data only from rs1 to pull 
-        Asel <= 2'b01; //Select data from bus local memory
-        Bsel <= 2'b10; //Select immidiate value as B input
-        Aenable <= 0;
-        Benable <= 0;
-
+    
         if (state == 3'b000)
         begin
             ALUsel <= 5'b11111;
             read_en <= 1;
+            rdOut <= 0;
+            rdWrite <= 0;
+            PCout <= PCin; // By default, retain the same PC value
+            execution_complete <= 0;
+            immvalue <= sign_extend(imm12);
+            reg_reset <= 1;
+            reg_reset <= 0;
+            rs1Out <= rs1;
+            reg_select <= 0; //Selects data only from rs1 to pull 
+            Asel <= 2'b01; //Select data from bus local memory
+            Bsel <= 2'b10; //Select immidiate value as B input
+            Aenable <= 0;
+            Benable <= 0;
         end
 
         if (dataReady_sync && tempAddress == 0 && state == 3'b0)
@@ -775,6 +774,8 @@ begin
 
         if (dataReady_sync && tempAddress != 0 && state == 3'b011)
         begin
+            $display("Received second data");
+            $display("Temp address: %b", tempAddress);
             state <= 3'b100;
             read_en <= 0;
             Osel <= 2'b00;
@@ -782,19 +783,19 @@ begin
             3'b000: //Store byte
                 begin
                     ALUsel = 5'b10111; //Take only lower byte of rs2 value
-                    Osel = 2'b00; //Select output from ALU
+                    //Osel = 2'b00; //Select output from ALU
                 end 
 
             3'b001: //Store half word
                 begin
                     ALUsel = 5'b11000; //Take lower half word of rs2 value
-                    Osel = 2'b00; //Select output from ALU
+                    //Osel = 2'b00; //Select output from ALU
                 end
                     
             3'b010: //Store word
                 begin
                     ALUsel = 5'b11001;
-                    Osel = 2'b00; //Select output from ALU
+                    //Osel = 2'b00; //Select output from ALU
                 end
             endcase
         end
@@ -837,19 +838,16 @@ begin
             3'b000: //Store byte
                 begin
                     ALUsel = 5'b10111; //Take only lower byte of rs2 value
-                    Osel = 2'b00; //Select output from ALU
                 end 
 
             3'b001: //Store half word
                 begin
                     ALUsel = 5'b11000; //Take lower half word of rs2 value
-                    Osel = 2'b00; //Select output from ALU
                 end
                     
             3'b010: //Store word
                 begin
                     ALUsel = 5'b11001;
-                    Osel = 2'b00; //Select output from ALU
                 end
             endcase
         end

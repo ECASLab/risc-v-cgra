@@ -2,10 +2,10 @@
 //`define DEBUG
 
 `include "Subtraction.v"
-//`include "dadda_16_pipelined.v"
-//`include "dadda_8_pipelined.v"
-//`include "csa_dadda.v"
-//`include "HA.v"
+`include "dadda_16_pipelined.v"
+`include "dadda_8_pipelined.v"
+`include "csa_dadda.v"
+`include "HA.v"
 
 module alu(
            input        clk,      // Clock input
@@ -39,13 +39,13 @@ Subtraction subtractor (
     .Borrow(sub_borrow)  
 );
 
-//dadda_16_pipelined mutiplier (
-//   .clk(clk),
-//   .rst(reset),
-//   .A(A[15:0]),
-//   .B(B[15:0]),
-//   .Y_reg(mult_result)
-//);
+dadda_16_pipelined mutiplier (
+   .clk(clk),
+   .rst(reset),
+   .A(A[15:0]),
+   .B(B[15:0]),
+   .Y_reg(mult_result)
+);
 
     always @(posedge clk or reset) begin
          if (reset)
@@ -71,8 +71,8 @@ Subtraction subtractor (
             end
             5'b00010: // Multiplication
             begin
-               //ALU_Out <= mult_result;
-               ALU_Out <= A[15:0] * B[15:0];
+               ALU_Out <= mult_result;
+               //ALU_Out <= A[15:0] * B[15:0];
                ALUcomplete <= 1;
             end
             5'b00011: // Division

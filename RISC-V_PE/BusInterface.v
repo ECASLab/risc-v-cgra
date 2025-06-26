@@ -14,6 +14,7 @@ module bus_interface (
     input       rd_writePE,      //Signal to write to local memory
     input       read_enPE,       //Signal to read from local memory
     input       execution_completePE,
+    input       branch_exec,
 
     //Outputs to the PE
     output reg [31:0] AmuxPE,    //Data being sent to A mux input 2
@@ -37,6 +38,7 @@ module bus_interface (
     output reg       rd_writeBus,      //Signal to write to local memory
     output reg       read_enBus,
     output reg       execution_completeBus,
+    output reg       branch_execBus,
     output reg [31:0]  data_Store,      //data_in for local memory
     input [31:0] AmuxBus,    //Data being sent to A mux input 2
     input [31:0] BmuxBus,    //Data being sent to B mux input 2
@@ -49,8 +51,10 @@ module bus_interface (
     reg currentMemRead;
     reg currentMemWrite;
     reg currentReadEn;
+    reg currentBranchExec;
     reg deactivate;
     reg currentExecComplete;
+    reg currentJump;
     reg currentRdWrite; //Local signals to store the signal that triggered the bus request
 
     always @(posedge clk or posedge reset) begin
@@ -79,22 +83,30 @@ module bus_interface (
             currentRdWrite <= 0;
             currentReadEn <= 0;
             currentExecComplete <= 0;
+            currentExecComplete <= 0;
             deactivate <= 0;
         end else begin
-            if ((mem_readPE || mem_writePE || rd_writePE || read_enPE) && !active) begin
+            if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || branch_exec) && !active) begin
                 $display("Signal received to request bus");
                 bus_request <= 1; // Request the bus
                 if (read_enPE)
                 begin
+                    $display("Local memory read");
                     currentReadEn <= 1;
+                end
+                else if (branch_exec && rd_writePE)
+                begin
+                    $display("Jump and link requested");
+                    currentJump <= 1;
                 end
                 else if (rd_writePE)
                 begin
-                    display("Received rdWrite");
+                    $display("Received rdWrite");
                     currentRdWrite <= 1;
                 end
                 else if (mem_writePE)
                 begin
+                    $display("Global memory write");
                     currentMemWrite <= 1;
                 end
                 else if (mem_readPE)
@@ -102,10 +114,26 @@ module bus_interface (
                     $display("Received signal to read from global memory");
                     currentMemRead <= 1;
                 end
+                else if (branch_exec)
+                begin
+                    $display("Branching request");
+                    currentExecComplete <= 1;
+                end
+                
             end
             if (grant) begin
                 $display ("Access granted");
-                PCoutBus <= PCoutPE;
+                if (currentBranchExec)
+                begin
+                    PCoutBus <= PCoutPE;
+                end
+                if (currentJump)
+                begin
+                    PCoutBus <= PCoutPE;
+                    rdOutBus <= rdOutPE; //Forward select for local memory write
+                    rd_writeBus <= rd_writePE;
+                    data_Store <= result_inPE; //Result from ALU to be written in rd
+                end
                 if (currentMemWrite)
                 begin
                     mem_addressBus <= mem_addressPE;
@@ -119,7 +147,7 @@ module bus_interface (
                 end
                 if (currentRdWrite)
                 begin 
-                    rdOutBus <= rdOutPE; //Forward select for local memory write
+                    rdOutBus <= rdOutPE; //Select for local memory write
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
                 end
@@ -133,7 +161,8 @@ module bus_interface (
                 bus_request <= 0; // Clear the request once granted
                 active <= 1;
             end
-            if (active) begin
+            else if (active) begin
+                $display("Bus access is active");
                 if (mem_ackBus) //Only when memRead
                 begin
                     $display("received mem ack");
@@ -163,7 +192,7 @@ module bus_interface (
                     bus_request <= 0;
                     deactivate <= 1;
                 end
-                else if (deactivate && !data_ReadyBus && !mem_ackBus && !execution_completePE)
+                else if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
                     active <= 0;
                     $display("No longer active");

@@ -55,11 +55,11 @@ module tb_alu;
         ALU_Sel = 5'b00001; // Subtraction
         #10;
 
-        // Test case 3: Multiplication
+        // Test case 3: Multiplication *Takes 8 cycles to complete
         A = 32'h00000002; 
         B = 32'h00000003; 
         ALU_Sel = 5'b00010; // Multiplication
-        #10;
+        #80;
 
         // Test case 4: Division
         A = 32'h00000006; 

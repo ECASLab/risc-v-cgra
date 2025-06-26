@@ -29,6 +29,7 @@ module tb_PE_system;
     wire read_enBus;             // Signal to read from local memory
     wire bus_request;            // Request signal sent to arbiter
     wire execution_complete;
+    wire branch_exec;
     wire [31:0] data_Store;
 
     // Instantiate the PE_system
@@ -56,6 +57,7 @@ module tb_PE_system;
         .read_enBus(read_enBus),
         .bus_request(bus_request),
         .execution_complete(execution_complete),
+        .branch_exec(branch_exec),
         .data_Store(data_Store)
     );
 
@@ -72,8 +74,8 @@ module tb_PE_system;
         $dumpvars(0, tb_PE_system);
 
         // Monitor outputs
-        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b", 
-                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus);
+        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b | branch_exec: %b", 
+                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus, branch_exec);
 
         // Initialize signals
         reset = 1;
@@ -89,6 +91,9 @@ module tb_PE_system;
         #10 reset = 0; // Release reset
 
         // Test Case 1: Instruction Write, store
+        $display ("##############################################################################");
+        $display ("###################### Start of store byte case ##############################");
+        $display ("##############################################################################");
         instructionBus = 32'h2BB81A3; // Load an instruction -> store byte
         PCin = 32'd1;
         data_ReadyBus = 0;
@@ -98,32 +103,36 @@ module tb_PE_system;
 
         #10
         grant = 0;
+
+        #10
         AmuxBus = 32'b00000000000000000000000000001000;
         data_ReadyBus = 1;
 
         #10
         data_ReadyBus = 0;
-        
-        #30
+
+        #50
         grant = 1;
 
-        #20
+        #10
         grant = 0;
+        
+        #10
         BmuxBus = 32'b10110100101101001011010011010111;
         AmuxBus = 32'b00000000000000000000000000000000;
         data_ReadyBus = 1;
 
+        #10
+        data_ReadyBus = 0;
+
         #50
-        data_ReadyBus = 0;
+        //grant = 1;
 
-        #30
-        grant = 1;
+        //#10 
+        //grant = 0;
+        //data_ReadyBus = 0;
 
-        #10 
-        grant = 0;
-        data_ReadyBus = 0;
-
-        // Initialize signals
+        /*// Initialize signals
         reset = 1;
         grant = 0;
         PCin = 0;
@@ -137,6 +146,9 @@ module tb_PE_system;
         #10 reset = 0; // Release reset
 
         // Test Case 2: Load operation
+        $display ("##############################################################################");
+        $display ("###################### Start of load byte case ##############################");
+        $display ("##############################################################################");
         PCin = 32'h00000001; // Program counter input
         instructionBus = 32'b000000100011_01011_001_10111_0000011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 001, op = 3
         data_ReadyBus = 0;
@@ -172,7 +184,7 @@ module tb_PE_system;
         #10
         grant = 0;
 
-        #50;
+        #50;*/
 
         // Test Case 3: Memory Read Request
         //grant = 1; // Bus grants access

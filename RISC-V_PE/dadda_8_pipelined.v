@@ -284,8 +284,7 @@ always @(posedge clk) begin
         s5_pp_drag_pipe_3 <= 5'b00000;
         s5_pp_drag_pipe_4 <= 5'b00000;
         s5_pp_drag_pipe_5 <= 5'b00000;
-        s5_pipe <= 14'b00000000000000;
-        c5_pipe <= 14'b00000000000000;
+        
     end else begin
         // First pipe captures partial products
         s5_pp_drag_pipe_1[4] <= gen_pp[1][0];
@@ -306,8 +305,6 @@ always @(posedge clk) begin
         // Fifth pipe takes values from fourth pipe
         s5_pp_drag_pipe_5 <= s5_pp_drag_pipe_4;
         
-        s5_pipe <= s5;
-        c5_pipe <= c5;
     end
 end
   
