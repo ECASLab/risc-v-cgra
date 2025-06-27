@@ -125,12 +125,14 @@ module tb_PE_system;
         #10
         data_ReadyBus = 0;
 
-        #50
-        //grant = 1;
+        #60
+        grant = 1;
 
-        //#10 
-        //grant = 0;
+        #10 
+        grant = 0;
         //data_ReadyBus = 0;
+
+        #50 
 
         /*// Initialize signals
         reset = 1;

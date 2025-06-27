@@ -44,6 +44,7 @@ module PE_system (
     wire       read_enPE;       //Signal to read from local memory
     wire       execution_completePE;
     wire       branch_execPE;
+    wire       secondRead;
 
     //Outputs to the PE
     wire [31:0] AmuxPE;    //Data being sent to A mux input 2
@@ -75,7 +76,8 @@ module PE_system (
         .read_en(read_enPE),            // Read enable to take data from rs1 and rs2
         .PCout(PCoutPE),
         .execution_complete(execution_completePE),
-        .branch_exec(branch_execPE)
+        .branch_exec(branch_execPE),
+        .secondRead(secondRead)
     );
 
     //Instantiate the interface
@@ -120,7 +122,8 @@ module PE_system (
         .execution_completeBus(execution_complete),
         .data_Store(data_Store),
         .branch_exec(branch_execPE),
-        .branch_execBus(branch_exec)
+        .branch_execBus(branch_exec),
+        .secondRead(secondRead)
     );
 endmodule
 

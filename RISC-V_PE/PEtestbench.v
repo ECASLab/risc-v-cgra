@@ -26,6 +26,7 @@ wire read_en;
 wire [31:0] PCout;
 wire execution_complete;
 wire branch_exec;
+wire secondRead;
 
 // Instantiate the processing element module
 processing_element uut (
@@ -50,7 +51,8 @@ processing_element uut (
     .reset(reset),
     .execution_complete(execution_complete),
     .memData(memData),
-    .branch_exec(branch_exec)
+    .branch_exec(branch_exec),
+    .secondRead(secondRead)
 );
 
 // Generate clock signal
@@ -1208,7 +1210,7 @@ initial begin
     mem_ack = 0; // Memory acknowledgment signal
     data_Ready = 0; // Data ready signal               
 
-    #80;
+    #50;
     //Expected result: 11111111111110101001001100101010
     //        +        00000000000000000000000000011110
     //                 11111111111110101001001101001000

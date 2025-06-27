@@ -44,6 +44,7 @@ wire [4:0] rs1Out;
 wire [4:0] rs2Out;
 wire       execution_complete;
 wire       branch_exec;
+wire       secondRead;
 
 // Instantiate the controller module
 controller uut (
@@ -83,7 +84,8 @@ controller uut (
     .decodeComplete(decodeComplete),
     .reset(reset),
     .execution_complete(execution_complete),
-    .branch_exec(branch_exec)
+    .branch_exec(branch_exec),
+    .secondRead(secondRead)
 );
 
 // Generate clock signal

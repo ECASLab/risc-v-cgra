@@ -15,6 +15,7 @@ module bus_interface (
     input       read_enPE,       //Signal to read from local memory
     input       execution_completePE,
     input       branch_exec,
+    input       secondRead,
 
     //Outputs to the PE
     output reg [31:0] AmuxPE,    //Data being sent to A mux input 2
@@ -46,16 +47,29 @@ module bus_interface (
     input        mem_ackBus, //Memory acknowledgment signal coming from the global memory
     input        data_ReadyBus //register read complete
 );
-
+    //Internal signals
     reg active; // Keep track of the bus request state
     reg currentMemRead;
     reg currentMemWrite;
     reg currentReadEn;
     reg currentBranchExec;
     reg deactivate;
+    reg[2:0] extraTime;
     reg currentExecComplete;
     reg currentJump;
     reg currentRdWrite; //Local signals to store the signal that triggered the bus request
+
+    //Synchronized read and write signals coming from PE
+    reg read_enSync;
+    reg rdWriteSync;
+    reg mem_readSync;
+    reg mem_writeSync;
+    reg execution_completeSync;
+    reg branch_execSync;
+
+    //Optional for later if synchronization is causing trouble
+    reg mem_ackSync;
+    reg data_ReadySync;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -85,10 +99,26 @@ module bus_interface (
             currentExecComplete <= 0;
             currentExecComplete <= 0;
             deactivate <= 0;
+            extraTime <= 0;
+            read_enSync <= 0;
+            rdWriteSync <= 0;
+            mem_readSync <= 0 ;
+            mem_writeSync <= 0;
+            execution_completeSync <= 0;
+            branch_execSync <= 0;
         end else begin
-            if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || branch_exec) && !active) begin
+            //Synchronizing signals with clock
+            read_enSync <= read_enPE;
+            rdWriteSync <= rd_writePE;
+            mem_readSync <= mem_readPE;
+            mem_writeSync <= mem_writePE;
+            execution_completeSync <= execution_completePE;
+            branch_execSync <= branch_exec;
+
+            if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || branch_exec) && !active && (extraTime==0)) begin
                 $display("Signal received to request bus");
                 bus_request <= 1; // Request the bus
+                $display("Signals: Mem_Read %b | Mem_Write %b | RD_Write %b | Read_En %b | Branch %b", mem_readPE, mem_writePE, rd_writePE, read_enPE, branch_exec);
                 if (read_enPE)
                 begin
                     $display("Local memory read");
@@ -181,9 +211,14 @@ module bus_interface (
                     currentReadEn <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
+                    if (secondRead)
+                    begin
+                        extraTime <= extraTime + 1;
+                    end
                 end
                 else if (execution_completePE) //Will happen at write operations 
                 begin
+                    $display("Execution Completed");
                     result_outBus <= result_inPE;
                     mem_addressBus <= mem_addressPE;
                     execution_completeBus <= execution_completePE;
@@ -191,8 +226,9 @@ module bus_interface (
                     currentRdWrite <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
+                    extraTime <= extraTime + 1;
                 end
-                else if (deactivate && !data_ReadyBus && !mem_ackBus)
+                if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
                     active <= 0;
                     $display("No longer active");
@@ -200,6 +236,23 @@ module bus_interface (
                     mem_ackPE <= mem_ackBus;
                     execution_completeBus <= execution_completePE;
                     deactivate <= 0;
+                    currentReadEn <= 0;
+                end
+            end
+            else if (extraTime != 0 && extraTime < 3'b101)
+            begin
+                $display("Needs extra time: %b", extraTime);
+                if (extraTime == 3'b010) //&& execution_completePE == 0
+                begin
+                    extraTime <= 0;
+                end
+                else if (extraTime == 3'b100)
+                begin
+                    extraTime <= 0;
+                end
+                else
+                begin
+                    extraTime <= extraTime + 1;
                 end
             end
         end

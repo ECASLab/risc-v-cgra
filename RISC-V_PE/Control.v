@@ -33,6 +33,7 @@ input        mem_ack,
 // Signals to bus with register addresses
 output reg [4:0] rs1Out,
 output reg [4:0] rs2Out,
+output reg       secondRead,   //Signal for interface to provide extra time for processing store function
 output reg       read_en,  //Enable signal to read rs1 or rs2 values from the registers
 
 // Selection signal outputs for the 3 MUX and the ALU
@@ -112,6 +113,7 @@ initial begin
     execution_complete = 0;
     state = 3'b0;
     branch_exec = 0;
+    secondRead = 0;
     //req = 0;
 end
 
@@ -146,7 +148,7 @@ begin
         execution_complete <= 0;
         state <= 3'b0;
         branch_exec <= 0;
-        //req = 0;
+        secondRead <= 0;
     
         reg_reset <= 0;
         IRenable <= 1;
@@ -765,6 +767,7 @@ begin
         begin
             state <= 3'b011;
             ALUsel <= 5'b11111;
+            secondRead <= 1;
             Benable <= 1;
             rs2Out <= rs2;
             read_en <= 1;
@@ -776,12 +779,13 @@ begin
         begin
             $display("Received second data");
             $display("Temp address: %b", tempAddress);
-            state <= 3'b100;
             read_en <= 0;
+            state <= 3'b100;
             Osel <= 2'b00;
             case(funct3)
             3'b000: //Store byte
                 begin
+                    $display("This is a store byte case");
                     ALUsel = 5'b10111; //Take only lower byte of rs2 value
                     //Osel = 2'b00; //Select output from ALU
                 end 
@@ -800,8 +804,9 @@ begin
             endcase
         end
 
-        if (ALUcomplete_sync && state == 3'b100)
+        if (ALUcomplete && state == 3'b100)
         begin
+            $display("Completed selection of bits");
             state <= 3'b101;
             mem_address <= tempAddress; //Use the calculated destination address to store the value
             mem_write <= 1; //Indicates that value at output will be stored at mem_address
@@ -825,6 +830,7 @@ begin
         else if (state == 3'b011)
         begin
             ALUsel <= 5'b11111;
+            secondRead <= 1;
             Benable <= 1;
             rs2Out <= rs2;
             read_en <= 1;
@@ -833,6 +839,7 @@ begin
         end
         else if (state == 3'b100)
         begin
+            read_en <= 0;
             Osel <= 2'b00;
             case(funct3)
             3'b000: //Store byte
@@ -854,8 +861,9 @@ begin
         else if (state == 3'b101)
         begin
             mem_address <= tempAddress; //Use the calculated destination address to store the value
-            mem_write <= 1; //Indicates that value at output will be stored at mem_address
+            mem_write <= 0; //Indicates that value at output will be stored at mem_address. Reset after sent
             execution_complete <= 1;
+            secondRead <= 0;
         end
     end
 

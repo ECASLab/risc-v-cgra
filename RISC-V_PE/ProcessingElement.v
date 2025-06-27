@@ -28,7 +28,8 @@ module processing_element (
     output read_en,            // Read enable to take data from rs1 and rs2
     output [31:0] PCout,
     output        execution_complete,
-    output        branch_exec  //Indicates a branch operation is requested   
+    output        branch_exec,  //Indicates a branch operation is requested  
+    output        secondRead    //Indicates to interface that more time is needed for the second read in store functions 
 );
 
     // Internal signals
@@ -105,7 +106,8 @@ module processing_element (
         .read_en(read_en),
         .reset(reset),
         .execution_complete(execution_complete),
-        .branch_exec(branch_exec)
+        .branch_exec(branch_exec),
+        .secondRead(secondRead)
     );
 
     // Instantiate the register modules A, B and IR
