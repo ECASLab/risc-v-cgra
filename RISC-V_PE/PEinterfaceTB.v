@@ -74,10 +74,10 @@ module tb_PE_system;
         $dumpvars(0, tb_PE_system);
 
         // Monitor outputs
-        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b | branch_exec: %b", 
-                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus, branch_exec);
+        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b | branch_exec: %b | rdOut: %b | data_Store: %b", 
+                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus, branch_exec, rdOutBus, data_Store);
 
-        // Initialize signals
+        /*// Initialize signals
         reset = 1;
         grant = 0;
         PCin = 0;
@@ -132,9 +132,9 @@ module tb_PE_system;
         grant = 0;
         //data_ReadyBus = 0;
 
-        #50 
+        #50 */
 
-        /*// Initialize signals
+        // Initialize signals
         reset = 1;
         grant = 0;
         PCin = 0;
@@ -152,7 +152,7 @@ module tb_PE_system;
         $display ("###################### Start of load byte case ##############################");
         $display ("##############################################################################");
         PCin = 32'h00000001; // Program counter input
-        instructionBus = 32'b000000100011_01011_001_10111_0000011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 001, op = 3
+        instructionBus = 32'b000000100011_01011_000_10111_0000011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 001, op = 3
         data_ReadyBus = 0;
         #30 // waiting for read_en
         grant = 1;
@@ -162,31 +162,31 @@ module tb_PE_system;
         AmuxBus = 32'b00000000000000000000000000100101;
         data_ReadyBus = 1;
         
-        #50 // waiting for mem_read signal
+        #10 
         data_ReadyBus = 0;
 
-        #10
-        data_ReadyBus = 1;
+        #60 // waiting for mem_read signal
+
         grant = 1;
 
-        #20
+        #10
         grant = 0;
-        data_ReadyBus = 0;
 
         #10
         memData = 32'b00000000000000001000000010100101;
         mem_ackBus = 1;
 
         #10
-        data_ReadyBus = 1;
+        mem_ackBus = 0;
 
-        #20 // waiting for rdWrite
+        #40 // waiting for rdWrite
+
         grant = 1;
 
         #10
         grant = 0;
 
-        #50;*/
+        #30
 
         // Test Case 3: Memory Read Request
         //grant = 1; // Bus grants access

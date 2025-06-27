@@ -201,6 +201,10 @@ module bus_interface (
                     currentMemRead <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
+                    if (secondRead)
+                    begin
+                        extraTime <= extraTime + 1;
+                    end
                 end
                 else if (data_ReadyBus) //Only when reading local memory
                 begin

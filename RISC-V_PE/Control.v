@@ -163,21 +163,27 @@ begin
     case(op)
     7'b0000011: // Op code 3 is load operations
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        mem_read <= 0;
-        Aenable <= 0;
-        Benable <= 0;
-        PCout <= PCin; // By default, retain the same PC value
-        execution_complete <= 0;
+        if (state == 0)
+        begin
+            rdOut <= 0;
+            rdWrite <= 0;
+            mem_read <= 0;
+            Aenable <= 0;
+            Benable <= 0;
+            PCout <= PCin; // By default, retain the same PC value
+            execution_complete <= 0;
+            secondRead <= 1;
 
-        rs1Out <= rs1;
-        reg_select <= 0; //Selects only rs1 value to pull
-        read_en <= 1;
+            rs1Out <= rs1;
+            reg_select <= 0; //Selects only rs1 value to pull
+            read_en <= 1;
+        end 
+
         if (dataReady_sync && state == 3'b0)
         begin
             state = 3'b001;
             read_en <= 0;
+            secondRead <= 0;
             Asel <= 2'b01; // Select data from local bus as A input
             immvalue <= sign_extend(imm12);
             Bsel <= 2'b10; //Select immidiate value as B input
@@ -193,18 +199,21 @@ begin
 
         if (ALUcomplete_sync && state == 3'b001)
         begin
+            $display("Completed addition of address");
             state <= 3'b010;
             mem_read <= 1; //Send signal for memory read
             Aenable <= 0;
             Benable <= 0;
             Asel <= 2'b00; //Select data from global memory as A input
             Aenable <= 1;
+            secondRead <= 1;
         end
 
         if (mem_ack_sync && state == 3'b010) //After acknowledge signal has been received
         begin
             state <= 3'b011;
             mem_read <= 0;
+            secondRead <= 0;
             case (funct3)
             3'b000: // Load byte sign extended
                 begin
@@ -296,7 +305,7 @@ begin
         else if (state == 3'b100)
         begin
             rdOut <= rd; 
-            rdWrite <= 1; //Send signal to write output value into rd register
+            rdWrite <= 0; //Send signal to write output value into rd register
             execution_complete <= 1;
         end         
     end
