@@ -312,21 +312,26 @@ begin
 
     7'b0010011: //Op code 19 is ALU operations on immidiate values
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        mem_read <= 0;
-        Aenable <= 0;
-        Benable <= 0;
-        rs1Out <= rs1;
-        reg_select <= 0;
-        read_en <= 1;
-        reg_reset <= 0;
-        //req <= 0;
-        dataReady_sync <= dataReady;
+        if (state == 0)
+        begin
+            rdOut <= 0;
+            rdWrite <= 0;
+            mem_read <= 0;
+            Aenable <= 0;
+            Benable <= 0;
+            rs1Out <= rs1;
+            reg_select <= 0;
+            read_en <= 1;
+            reg_reset <= 0;
+            dataReady_sync <= dataReady;
+            secondRead <= 1;
+        end
 
         if (dataReady_sync && state == 3'b000)
         begin
+            $display("Received data from rs1");
             state <= 3'b001;
+            secondRead <= 0;
             read_en <= 0;
             Asel <= 2'b01; //Select data comming from bus
             tempimmvalue = sign_extend(imm12);
@@ -404,14 +409,16 @@ begin
             Benable <= 1;
             Bsel <= 2'b10;
         end 
+
         if (ALUcomplete_sync && state == 3'b001)
         begin
+            $display("ALU operation complete");
             state <= 3'b010;
-            //Osel <= 2'b00;
-            //rdOut <= rd;
-            //rdWrite <= 1;
-            complete_operation(2'b00,rd);
-            //req <= 1;
+            Osel <= 2'b00;
+            rdOut <= rd;
+            rdWrite <= 1;
+            execution_complete <= 1;
+            //complete_operation(2'b00,rd);
         end 
 
         if (state == 3'b001)
@@ -494,28 +501,34 @@ begin
         end
         else if (state == 3'b010)
         begin
-            complete_operation(2'b00,rd);
+            //complete_operation(2'b00,rd);
+            rdWrite <= 0;
+            execution_complete <= 1;
         end  
     end
 
     7'b0110011: //Code 51 is ALU operations on two values comming from registers
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        Aenable <= 0;
-        Benable <= 0;
-        PCout <= PCin; // By default, retain the same PC value
-        //req <= 0;
-        rs1Out <= rs1;
-        rs2Out <= rs2;
-        reg_select <= 1;
-        read_en <= 1;
-        reg_reset <= 0;
-        execution_complete <= 0;
+        if (state == 0)
+        begin
+            rdOut <= 0;
+            rdWrite <= 0;
+            Aenable <= 0;
+            Benable <= 0;
+            PCout <= PCin; // By default, retain the same PC value
+            rs1Out <= rs1;
+            rs2Out <= rs2;
+            reg_select <= 1;
+            read_en <= 1;
+            reg_reset <= 0;
+            execution_complete <= 0;
+            secondRead <= 1;
+        end
 
         if (dataReady_sync && state == 3'b0)
         begin
             state <= 3'b001;
+            secondRead <= 0;
             read_en <= 0;
             Asel <= 2'b01; //Select data comming from bus
             Bsel <= 2'b01; //Select data comming from bus 
@@ -697,30 +710,33 @@ begin
         end
         else if (state == 3'b010)
         begin
-            complete_operation(2'b00,rd);
+            //complete_operation(2'b00,rd);
+            rdWrite <= 0;
         end
 
     end
 
     7'b0110111: //Code 55 is Load upper immidiate word. Will load upper immidiate value into local memory rd
     begin
-        rdOut <= 0;
-        rdWrite <= 0;
-        Aenable <= 0;
-        Benable <= 0;
-        PCout <= PCin; // By default, retain the same PC value
-        execution_complete <= 0;
-        //req <= 0;
+        if (state == 0)
+        begin
+            rdOut <= 0;
+            rdWrite <= 0;
+            Aenable <= 0;
+            Benable <= 0;
+            PCout <= PCin; // By default, retain the same PC value
+            execution_complete <= 0;
 
-        reg_reset <= 0;
-        tempimmvalue = {immhi, 12'b000000000000};
-        immvalue <= tempimmvalue;
-        Bsel <= 2'b10; //Select immidiate value as B input
-        // Enable registers to load value
-        Benable <= 1;
+            reg_reset <= 0;
+            tempimmvalue = {immhi, 12'b000000000000};
+            immvalue <= tempimmvalue;
+            Bsel <= 2'b10; //Select immidiate value as B input
+            // Enable registers to load value
+            Benable <= 1;
 
-        //Select B register as output to send address
-        Osel <= 2'b10; 
+            //Select B register as output to send address
+            Osel <= 2'b10; 
+        end
 
         if (tempimmvalue != 0 && state == 3'b0) //After acknowledge signal has been received
         begin
@@ -728,6 +744,10 @@ begin
             rdOut <= rd; 
             rdWrite <= 1; //Send signal to write output value into rd register
             execution_complete <= 1;
+        end
+        if (state == 3'b001)
+        begin
+            rdWrite <= 0;
         end
     end
 

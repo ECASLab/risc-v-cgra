@@ -132,7 +132,7 @@ module tb_PE_system;
         grant = 0;
         //data_ReadyBus = 0;
 
-        #50 */
+        #50 
 
         // Initialize signals
         reset = 1;
@@ -186,27 +186,119 @@ module tb_PE_system;
         #10
         grant = 0;
 
+        #30 
+
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
+
+        #10 reset = 0; // Release reset
+
+        // Test Case 3: ALU with immidiate value
+        $display ("##############################################################################");
+        $display ("###################### Start of ALU imm Add case ##############################");
+        $display ("##############################################################################");
+        PCin = 32'h00000002; // Program counter input
+        instructionBus = 32'b000000100011_01011_000_10111_0010011; //Immidiate = 35, rs1 = 11, rd = 23, funct3 = 000, op = 19
+        
+        #30 // waiting for read_en
+        grant = 1;
+
+        #10
+        grant = 0;
+        data_ReadyBus = 1;
+        AmuxBus = 32'b10100010110000001000000010100101;
+
+        #10 
+        data_ReadyBus = 0;
+
+        #70 //Waiting for rdWrite signal
+
+        grant = 1;
+
+        #10
+        grant = 0;
+
+        #30 
+
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
+
+        #10 reset = 0; // Release reset
+
+        // Test Case 4: ALU with register values
+        $display ("##############################################################################");
+        $display ("###################### Start of ALU regs Add case ##############################");
+        $display ("##############################################################################");
+        PCin = 32'h00000003; // Program counter input
+        instructionBus = 32'b0000000_01100_01011_000_00001_0110011; //funct7 = 0000000, rs1 = 1, rs2 = 11, rd = 1, funct3 = 000, op = 51
+        
+        #30 // waiting for read_en
+        grant = 1;
+
+        #10
+        grant = 0;
+        data_ReadyBus = 1;
+        AmuxBus = 32'b11111111000000000000000000100101;
+        BmuxBus = 32'b00000000000000000000000000000100;
+
+        #10 
+        data_ReadyBus = 0;
+
+        #70 //Waiting for rdWrite signal
+
+        grant = 1;
+
+        #10
+        grant = 0;
+
         #30
+        //Expected 11111111000000000000000000101001 
+        */
 
-        // Test Case 3: Memory Read Request
-        //grant = 1; // Bus grants access
-        //memData = 32'h87654321; // Data from memory
-        //mem_ackBus = 1; // Acknowledge memory read
-        //#10  // Clear memory read request
-        //mem_ackBus = 0;
-        //grant = 0;
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
 
-        // Test Case 4: Register Read
-        //AmuxBus = 32'h11111111; // Data for rs1
-        //BmuxBus = 32'h22222222; // Data for rs2
-        //data_ReadyBus = 1; // Data is ready
-        //#10 
-        //data_ReadyBus = 0;
+        #10 reset = 0; // Release reset
 
-        // Test Case 5: Bus Request
-        //grant = 1; // Bus grants access
-        //#10 
-        //grant = 0;
+        // Test Case 5: Load Upper immidiate
+        $display ("##############################################################################");
+        $display ("###################### Start of Load Upper Immidiate ##############################");
+        $display ("##############################################################################");
+        PCin = 32'h00000004; // Program counter input
+        instructionBus = 32'b10110010110100101110_00001_0110111; //20 bit upper imm, rd = 1,  op = 55
+        
+        #30 // waiting for rdWrite
+        grant = 1;
+
+        #10
+        grant = 0;
+
+        #50
+        //Expected 10110010110100101110000000000000
 
         // End simulation
         //#50 
