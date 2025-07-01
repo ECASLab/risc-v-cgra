@@ -74,8 +74,8 @@ module tb_PE_system;
         $dumpvars(0, tb_PE_system);
 
         // Monitor outputs
-        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b | branch_exec: %b | rdOut: %b | data_Store: %b", 
-                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus, branch_exec, rdOutBus, data_Store);
+        $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b | branch_exec: %b | rdOut: %b | data_Store: %b | PCoutBus: %b", 
+                 $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus, branch_exec, rdOutBus, data_Store, PCoutBus);
 
         /*// Initialize signals
         reset = 1;
@@ -269,7 +269,7 @@ module tb_PE_system;
 
         #30
         //Expected 11111111000000000000000000101001 
-        */
+       
 
         // Initialize signals
         reset = 1;
@@ -299,6 +299,81 @@ module tb_PE_system;
 
         #50
         //Expected 10110010110100101110000000000000
+         
+
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
+
+        #10 reset = 0; // Release reset
+
+        // Test Case 5: Load Upper immidiate
+        $display ("##############################################################################");
+        $display ("###################### Start of Branch if equal ##############################");
+        $display ("##############################################################################");
+        PCin = 32'd28; // Program counter input
+        instructionBus = 32'b1011001_01010_10101_000_11001_1100011; //12 bit imm value, rs1 = 10101, rs2 = 01010, funct3 = 000,  op = 99
+        
+        #30 // waiting for read_en
+        grant = 1;
+
+        #10
+        grant = 0;
+
+        data_ReadyBus = 1;
+        AmuxBus = 32'b01000001000000010000000011001000;
+        BmuxBus = 32'b01000001000000010000000011001000;
+
+        #10 
+        data_ReadyBus = 0;
+
+        #70 //Waiting for rdWrite signal
+
+        grant = 1;
+
+        #10
+        grant = 0;
+
+        #30
+        //Expected 11111111111111111111101101010100 
+        */
+
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
+
+        #10 reset = 0; // Release reset
+
+        // Test Case 5: Load Upper immidiate
+        $display ("##############################################################################");
+        $display ("###################### Start of Jump and link ##############################");
+        $display ("##############################################################################");
+        PCin = 32'd30; // Program counter input
+        instructionBus = 32'b10110010101010101001_11001_1101111; //20 bit imm value, rd = 11001,  op = 111
+        
+        #80 // waiting for branch_exec and rdWrte
+        grant = 1;
+
+        #10
+        grant = 0;
+
+        #30
+        //Expected b11111111111110101001001101001000 
+        
 
         // End simulation
         //#50 

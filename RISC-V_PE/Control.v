@@ -922,6 +922,7 @@ begin
 
             Aenable <= 1;
             Benable <= 1;
+            secondRead <= 1;
         end
 
         if (dataReady_sync && state == 3'b0)
@@ -932,6 +933,7 @@ begin
             read_en <= 0;
 
             ALUsel <= 5'b00110;
+            secondRead <= 0;
         end
         if (ALUcomplete_sync && tempAddress == 0 && state == 3'b001)
         begin

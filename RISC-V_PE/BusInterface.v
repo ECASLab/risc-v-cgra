@@ -231,6 +231,12 @@ module bus_interface (
                     bus_request <= 0;
                     deactivate <= 1;
                     extraTime <= extraTime + 1;
+                    PCoutBus <= PCoutPE;
+                    read_enBus <= read_enPE;
+                    mem_readBus <= mem_readPE;
+                    mem_writeBus <= mem_writePE;
+                    rd_writeBus <= rd_writePE;
+                    branch_execBus <= branch_exec;
                 end
                 if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
