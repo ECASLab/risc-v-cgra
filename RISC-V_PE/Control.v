@@ -33,7 +33,7 @@ input        mem_ack,
 // Signals to bus with register addresses
 output reg [4:0] rs1Out,
 output reg [4:0] rs2Out,
-output reg       secondRead,   //Signal for interface to provide extra time for processing store function
+output reg [2:0] secondRead,   //Signal for interface to provide extra time for processing store function
 output reg       read_en,  //Enable signal to read rs1 or rs2 values from the registers
 
 // Selection signal outputs for the 3 MUX and the ALU
@@ -172,7 +172,7 @@ begin
             Benable <= 0;
             PCout <= PCin; // By default, retain the same PC value
             execution_complete <= 0;
-            secondRead <= 1;
+            secondRead <= 3'b001;
 
             rs1Out <= rs1;
             reg_select <= 0; //Selects only rs1 value to pull
@@ -206,7 +206,7 @@ begin
             Benable <= 0;
             Asel <= 2'b00; //Select data from global memory as A input
             Aenable <= 1;
-            secondRead <= 1;
+            secondRead <= 3'b001;
         end
 
         if (mem_ack_sync && state == 3'b010) //After acknowledge signal has been received
@@ -324,7 +324,7 @@ begin
             read_en <= 1;
             reg_reset <= 0;
             dataReady_sync <= dataReady;
-            secondRead <= 1;
+            secondRead <= 3'b001;
         end
 
         if (dataReady_sync && state == 3'b000)
@@ -522,11 +522,12 @@ begin
             read_en <= 1;
             reg_reset <= 0;
             execution_complete <= 0;
-            secondRead <= 1;
+            secondRead <= 3'b001;
         end
 
         if (dataReady_sync && state == 3'b0)
         begin
+            $display("Received rs1 and rs2 for operation");
             state <= 3'b001;
             secondRead <= 0;
             read_en <= 0;
@@ -544,6 +545,8 @@ begin
                 end else if (funct7 == 7'b0100000) begin
                     ALUsel <= 5'b00001; // Subtract
                 end else if (funct7 == 7'b0000001) begin
+                    $display("Selected multiplication");
+                    secondRead <= 3'b111;
                     ALUsel <= 5'b00010; //multiply
                 end
             end
@@ -617,6 +620,8 @@ begin
 
         if (ALUcomplete_sync && state == 3'b001)
         begin
+            $display("Completed operation");
+            secondRead <= 0;
             state <= 3'b010;
             complete_operation(2'b00,rd);
         end

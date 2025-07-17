@@ -15,7 +15,7 @@ module bus_interface (
     input       read_enPE,       //Signal to read from local memory
     input       execution_completePE,
     input       branch_exec,
-    input       secondRead,
+    input [2:0] secondRead,
 
     //Outputs to the PE
     output reg [31:0] AmuxPE,    //Data being sent to A mux input 2
@@ -54,7 +54,7 @@ module bus_interface (
     reg currentReadEn;
     reg currentBranchExec;
     reg deactivate;
-    reg[2:0] extraTime;
+    reg[4:0] extraTime;
     reg currentExecComplete;
     reg currentJump;
     reg currentRdWrite; //Local signals to store the signal that triggered the bus request
@@ -66,6 +66,14 @@ module bus_interface (
     reg mem_writeSync;
     reg execution_completeSync;
     reg branch_execSync;
+
+    //Storage signals
+    reg dataReadyRec; //Stores a dataReady signal received
+    reg rd_writeRec; //Stores a rdWrite signal received
+    reg [31:0] AmuxStore; //Storage of signal read
+    reg [31:0] BmuxStore; //Storage of signal read
+    reg AmuxStored;
+    reg BmuxStored;
 
     //Optional for later if synchronization is causing trouble
     reg mem_ackSync;
@@ -106,6 +114,12 @@ module bus_interface (
             mem_writeSync <= 0;
             execution_completeSync <= 0;
             branch_execSync <= 0;
+            dataReadyRec <= 0;
+            rd_writeRec <= 0;
+            AmuxStore <= 0;
+            BmuxStore <= 0;
+            AmuxStored <= 0;
+            BmuxStored <= 0;
         end else begin
             //Synchronizing signals with clock
             read_enSync <= read_enPE;
@@ -114,6 +128,18 @@ module bus_interface (
             mem_writeSync <= mem_writePE;
             execution_completeSync <= execution_completePE;
             branch_execSync <= branch_exec;
+
+            if (data_ReadyBus == 1)
+            begin
+                dataReadyRec <= 1;
+            end
+            if (rd_writePE == 1)
+            begin
+                rd_writeRec <= 1;
+            end
+
+            //$display("At the start of the cycle, AmuxBus: %b and BmuxBus: %b", AmuxBus, BmuxBus);
+            //$display("At the start of the cycle, AmuxStore: %b and BmuxStore: %b", AmuxStore, BmuxStore);
 
             if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || branch_exec) && !active && (extraTime==0)) begin
                 $display("Signal received to request bus");
@@ -178,21 +204,40 @@ module bus_interface (
                 if (currentRdWrite)
                 begin 
                     rdOutBus <= rdOutPE; //Select for local memory write
+                    //$display("Rd out: %b", rdOutPE);
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
+                    $display("Data to be stored: %b", result_inPE);
                 end
                 if (currentReadEn)
                 begin
                     rs1OutBus <= rs1OutPE;
                     rs2OutBus <= rs2OutPE;
                     read_enBus <= read_enPE;
+                    $display("Registers to be read are rs1: %d and rs2: %d ", rs1OutPE, rs2OutPE);
                     reg_selectBus <= reg_selectPE;
                 end
                 bus_request <= 0; // Clear the request once granted
                 active <= 1;
             end
             else if (active) begin
+                if (!AmuxStored && (^AmuxBus === ^AmuxBus)) begin
+                    AmuxStore  <= AmuxBus;
+                    AmuxStored <= 1;
+                    $display("Entered AmuxStore");
+                end
+
+                // Store BmuxBus once when it's valid
+                if (!BmuxStored && (^BmuxBus === ^BmuxBus)) begin
+                    BmuxStore  <= BmuxBus;
+                    BmuxStored <= 1;
+                end
+
                 $display("Bus access is active");
+                read_enBus <= 0;
+                mem_readBus <= 0;
+                //mem_writeBus <= 0;
+                //rd_writeBus <= 0;
                 if (mem_ackBus) //Only when memRead
                 begin
                     $display("received mem ack");
@@ -201,21 +246,22 @@ module bus_interface (
                     currentMemRead <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
-                    if (secondRead)
+                    if (secondRead != 0)
                     begin
                         extraTime <= extraTime + 1;
                     end
                 end
-                else if (data_ReadyBus) //Only when reading local memory
+                else if (dataReadyRec) //Only when reading local memory. Received at least once the dataReady signal
                 begin
                     $display ("Data from local memory is ready");
-                    AmuxPE <= AmuxBus;
-                    BmuxPE <= BmuxBus;
-                    data_ReadyPE <= data_ReadyBus;
+                    AmuxPE <= AmuxStore;
+                    BmuxPE <= BmuxStore;
+                    $display("Data being sent to PE is Amux: %b and Bmux: %b", AmuxStore, BmuxStore);
+                    data_ReadyPE <= dataReadyRec;
                     currentReadEn <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
-                    if (secondRead)
+                    if (secondRead != 0)
                     begin
                         extraTime <= extraTime + 1;
                     end
@@ -235,12 +281,17 @@ module bus_interface (
                     read_enBus <= read_enPE;
                     mem_readBus <= mem_readPE;
                     mem_writeBus <= mem_writePE;
-                    rd_writeBus <= rd_writePE;
+                    rd_writeBus <= rd_writeRec;
+                    $display("rd write in bus interface: %b", rd_writeRec);
                     branch_execBus <= branch_exec;
                 end
                 if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
                     active <= 0;
+                    dataReadyRec <= 0;
+                    rd_writeRec <= 0;
+                    //AmuxStore <= 32'bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
+                    //BmuxStore <= 32'bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
                     $display("No longer active");
                     data_ReadyPE <= data_ReadyBus;
                     mem_ackPE <= mem_ackBus;
@@ -249,14 +300,16 @@ module bus_interface (
                     currentReadEn <= 0;
                 end
             end
-            else if (extraTime != 0 && extraTime < 3'b101)
+            else if (extraTime != 0 && extraTime <= 5'b11111)
             begin
                 $display("Needs extra time: %b", extraTime);
-                if (extraTime == 3'b010) //&& execution_completePE == 0
+                if (extraTime == 4'b010 && secondRead != 3'b111)
                 begin
                     extraTime <= 0;
+                    //AmuxStored <= 0;
+                    //BmuxStored <= 0;
                 end
-                else if (extraTime == 3'b100)
+                else if (extraTime == 5'b11111) 
                 begin
                     extraTime <= 0;
                 end

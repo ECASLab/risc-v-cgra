@@ -44,7 +44,7 @@ module PE_system (
     wire       read_enPE;       //Signal to read from local memory
     wire       execution_completePE;
     wire       branch_execPE;
-    wire       secondRead;
+    wire [2:0] secondRead;
 
     //Outputs to the PE
     wire [31:0] AmuxPE;    //Data being sent to A mux input 2

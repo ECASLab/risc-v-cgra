@@ -77,7 +77,7 @@ module tb_PE_system;
         $monitor("Time: %0dns | mem_addressBus: %b | result_outBus: %b | rs1OutBus: %b | rs2OutBus: %b | reg_selectBus: %b | mem_writeBus: %b | read_enBus: %b | execution_complete: %b | bus_request: %b | reg_selectBus: %b | branch_exec: %b | rdOut: %b | data_Store: %b | PCoutBus: %b", 
                  $time, mem_addressBus, result_outBus, rs1OutBus, rs2OutBus, reg_selectBus, mem_writeBus, read_enBus, execution_complete, bus_request, reg_selectBus, branch_exec, rdOutBus, data_Store, PCoutBus);
 
-        /*// Initialize signals
+        // Initialize signals
         reset = 1;
         grant = 0;
         PCin = 0;
@@ -86,7 +86,7 @@ module tb_PE_system;
         BmuxBus = 32'h00000000;
         mem_ackBus = 0;
         data_ReadyBus = 0;
-        memData = 32'h00000000;
+        memData = 32'b0;
 
         #10 reset = 0; // Release reset
 
@@ -134,7 +134,7 @@ module tb_PE_system;
 
         #50 
 
-        // Initialize signals
+        /*// Initialize signals
         reset = 1;
         grant = 0;
         PCin = 0;
@@ -343,7 +343,6 @@ module tb_PE_system;
 
         #30
         //Expected 11111111111111111111101101010100 
-        */
 
         // Initialize signals
         reset = 1;
@@ -374,6 +373,49 @@ module tb_PE_system;
         #30
         //Expected b11111111111110101001001101001000 
         
+
+        // Initialize signals
+        reset = 1;
+        grant = 0;
+        PCin = 0;
+        instructionBus = 32'h00000000;
+        AmuxBus = 32'h00000000;
+        BmuxBus = 32'h00000000;
+        mem_ackBus = 0;
+        data_ReadyBus = 0;
+        memData = 32'h00000000;
+
+        #10 reset = 0; // Release reset
+
+        // Test Case 4: ALU with register values
+        $display ("##############################################################################");
+        $display ("###################### Start of ALU regs Multiplication case ##############################");
+        $display ("##############################################################################");
+        PCin = 32'h00000007; // Program counter input
+        instructionBus = 32'b0000001_01100_01011_000_00001_0110011; //funct7 = 0000001, rs1 = 1, rs2 = 11, rd = 1, funct3 = 000, op = 51
+        
+        #30 // waiting for read_en
+        grant = 1;
+
+        #10
+        grant = 0;
+        data_ReadyBus = 1;
+        AmuxBus = 32'b00000000000000000000000000000010;
+        BmuxBus = 32'b00000000000000000000000000000011;
+
+        #10 
+        data_ReadyBus = 0;
+
+        #400 //Waiting for rdWrite signal
+
+        //grant = 1;
+
+        //#10
+        //grant = 0;
+
+        #30
+        //Expected 00000000000000000000000000000110 
+        */
 
         // End simulation
         //#50 

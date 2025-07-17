@@ -72,8 +72,12 @@ dadda_16_pipelined mutiplier (
             5'b00010: // Multiplication
             begin
                ALU_Out <= mult_result;
+               if (ALU_Out != 0)
+               begin
+                  ALUcomplete <= 1;
+               end
+               //$display("ALU result: %b", ALU_Out);
                //ALU_Out <= A[15:0] * B[15:0];
-               ALUcomplete <= 1;
             end
             5'b00011: // Division
             begin

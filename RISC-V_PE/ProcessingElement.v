@@ -29,7 +29,7 @@ module processing_element (
     output [31:0] PCout,
     output        execution_complete,
     output        branch_exec,  //Indicates a branch operation is requested  
-    output        secondRead    //Indicates to interface that more time is needed for the second read in store functions 
+    output [2:0]  secondRead    //Indicates to interface that more time is needed for the second read in store functions 
 );
 
     // Internal signals

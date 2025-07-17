@@ -26,7 +26,7 @@ wire read_en;
 wire [31:0] PCout;
 wire execution_complete;
 wire branch_exec;
-wire secondRead;
+wire [2:0] secondRead;
 
 // Instantiate the processing element module
 processing_element uut (

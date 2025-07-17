@@ -15,7 +15,7 @@ module register_system (
     input read_en,                      // Read enable for output
     output wire [31:0] data_out1,       // 32-bit output data for read operations
     output wire [31:0] data_out2,       // 32-bit output data for read operations
-    output wire        regComplete      // Indicates read operation is complete
+    output wire        regComplete      // Indicates read operation is complete *dataReady
 );
 
     // Internal wires and registers
