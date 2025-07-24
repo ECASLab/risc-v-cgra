@@ -82,6 +82,7 @@ module bus_interface (
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             bus_request <= 0;
+            branch_execBus <= 0;
             AmuxPE <= 0;
             BmuxPE <= 0;
             memDataPE <= 0;
@@ -256,6 +257,8 @@ module bus_interface (
                     $display ("Data from local memory is ready");
                     AmuxPE <= AmuxStore;
                     BmuxPE <= BmuxStore;
+                    AmuxStored <= 0;
+                    BmuxStored <= 0;
                     $display("Data being sent to PE is Amux: %b and Bmux: %b", AmuxStore, BmuxStore);
                     data_ReadyPE <= dataReadyRec;
                     currentReadEn <= 0;

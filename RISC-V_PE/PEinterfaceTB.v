@@ -314,7 +314,7 @@ module tb_PE_system;
 
         #10 reset = 0; // Release reset
 
-        // Test Case 5: Load Upper immidiate
+        // Test Case 5: Branch
         $display ("##############################################################################");
         $display ("###################### Start of Branch if equal ##############################");
         $display ("##############################################################################");
