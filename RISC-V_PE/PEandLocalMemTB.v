@@ -428,6 +428,46 @@ module MemPE_tb;
 
     #50 
 
+    // Initialize signals
+    reset = 1;
+    grant = 0;
+    PCin = 0;
+    instructionBus = 32'h00000000;
+    mem_ackBus = 0;
+    memData = 32'h00000000;
+
+    #10;
+    reset = 0;
+
+    // Step 10: Branch if less than
+    $display ("##############################################################################");
+    $display ("###################### Start of Branch if less than ##############################");
+    $display ("##############################################################################");
+    PCin = 32'h00000008; // Program counter input
+    instructionBus = 32'b0000000_00101_00100_100_00110_1100011; //12 bit imm value, rs1 = 4, rs2 = 5, funct3 = 100,  op = 99
+        
+    #30 // waiting for read_en
+    grant = 1;
+
+    #10
+    grant = 0;
+
+    //data_ReadyBus = 1;
+    //AmuxBus = 32'b00000000000000000000000000000100;
+    //BmuxBus = 32'b00000000000000000000000000000101;
+
+    #10 
+    //data_ReadyBus = 0;
+
+    #70 //Waiting for rdWrite signal
+
+    grant = 1;
+
+    #10
+    grant = 0;
+
+    #30 
+
     $finish;
   end
 

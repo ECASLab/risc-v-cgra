@@ -937,7 +937,14 @@ begin
             Benable <= 1;
             read_en <= 0;
 
-            ALUsel <= 5'b00110;
+            if (funct3 == 3'b000 || funct3 == 3'b001)
+            begin
+                ALUsel <= 5'b00110;
+            end
+            else if (funct3 == 3'b100 || funct3 == 3'b101)
+            begin
+                ALUsel <= 5'b01011;
+            end
             secondRead <= 0;
         end
         if (ALUcomplete_sync && tempAddress == 0 && state == 3'b001)
@@ -979,6 +986,40 @@ begin
                     state <= 3'b110;
                 end
             end
+            3'b100: //Case if <
+            begin
+                if (ALURes == 32'b00000000000000000000000000000001)
+                begin
+                    Asel <= 2'b10; //Select program counter
+                    Bsel <= 2'b10; //Select imm value
+                    Aenable <= 1;
+                    Benable <= 1;
+                    ALUsel <= 5'b00000; //Select add
+                    state <= 3'b011;
+                end
+                else
+                begin
+                    ALUsel <= 5'b11111; 
+                    state <= 3'b110;
+                end
+            end
+            3'b101: //Case if >=
+            begin
+                if (ALURes == 32'b00000000000000000000000000000000)
+                begin
+                    Asel <= 2'b10; //Select program counter
+                    Bsel <= 2'b10; //Select imm value
+                    Aenable <= 1;
+                    Benable <= 1;
+                    ALUsel <= 5'b00000; //Select add
+                    state <= 3'b011;
+                end
+                else
+                begin
+                    ALUsel <= 5'b11111; 
+                    state <= 3'b110;
+                end
+            end
             endcase
         end
 
@@ -1002,7 +1043,14 @@ begin
             Aenable <= 1;
             Benable <= 1;
             read_en <= 0;
-            ALUsel <= 5'b00110;
+            if (funct3 == 3'b000 || funct3 == 3'b001)
+            begin
+                ALUsel <= 5'b00110;
+            end
+            else if (funct3 == 3'b100 || funct3 == 3'b101)
+            begin
+                ALUsel <= 5'b01011;
+            end
         end
         else if (state == 3'b010)
         begin

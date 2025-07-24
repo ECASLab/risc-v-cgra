@@ -135,14 +135,23 @@ dadda_16_pipelined mutiplier (
                ALU_Out <= A ^ B;
                ALUcomplete <= 1;
             end
-            5'b01011: // Logical nor
+            5'b01011: // Branch if less than or if more than or equal to
             begin
-               ALU_Out <= ~(A | B);
-               ALUcomplete <= 1;
+               //ALU_Out <= ~(A | B); If needed nor
+               if (A < B)
+               begin
+                  ALU_Out <= 32'b00000000000000000000000000000001;;
+                  ALUcomplete <= 1;
+               end
+               else
+               begin
+                  ALU_Out <= 32'b00000000000000000000000000000000;;
+                  ALUcomplete <= 1;
+               end
             end
-            5'b01100: // Logical nand 
+            5'b01100: // Nand
             begin
-               ALU_Out <= ~(A & B);
+               //ALU_Out <= ~(A & B); If needed nand
                ALUcomplete <= 1;
             end
             5'b01101: // SLTU

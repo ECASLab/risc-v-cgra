@@ -1198,6 +1198,76 @@ initial begin
     AmuxIn = 32'b0;
     BmuxIn = 32'b0;
     reset = 1;
+
+    #10; //New case added
+    $display ("##############################################################################");
+    $display ("############### Start of branch if less than ###################");
+    $display ("##############################################################################");
+    reset = 0;
+    PCin = 29; // Program counter input
+    instruction = 32'b1011001_01010_10101_100_11001_1100011; //12 bit imm value, rs1 = 10101, rs2 = 01010, funct3 = 100,  op = 99
+    mem_ack = 0; // Memory acknowledgment signal
+    data_Ready = 0; // Data ready signal
+            
+    #20;
+    data_Ready = 1;
+    AmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into A mux  
+    BmuxIn = 32'b01000001000000010000000011001010; // Data from bus to be loaded into B mux
+
+    #10;
+    data_Ready = 0;
+
+    #70;
+    //Expected result: 11111111111111111111101101010101
+    if (PCout == 32'b11111111111111111111101101010101) 
+    begin
+        $display ("Result as expected");
+    end
+
+    #10;
+    // Initialize inputs
+    PCin = 32'b0;
+    instruction = 32'b0;
+    mem_ack = 0;
+    data_Ready = 0;
+    AmuxIn = 32'b0;
+    BmuxIn = 32'b0;
+    reset = 1;
+
+    #10; //New case added
+    $display ("##############################################################################");
+    $display ("############### Start of branch if greater than or equal to ##################");
+    $display ("##############################################################################");
+    reset = 0;
+    PCin = 29; // Program counter input
+    instruction = 32'b1011001_01010_10101_101_11001_1100011; //12 bit imm value, rs1 = 10101, rs2 = 01010, funct3 = 101,  op = 99
+    mem_ack = 0; // Memory acknowledgment signal
+    data_Ready = 0; // Data ready signal
+            
+    #20;
+    data_Ready = 1;
+    AmuxIn = 32'b01000001000000010000000011001001; // Data from bus to be loaded into A mux  
+    BmuxIn = 32'b01000001000000010000000011001000; // Data from bus to be loaded into B mux
+
+    #10;
+    data_Ready = 0;
+
+    #70;
+    //Expected result: 11111111111111111111101101010101
+    if (PCout == 32'b11111111111111111111101101010101) 
+    begin
+        $display ("Result as expected");
+    end
+
+    #10;
+    // Initialize inputs
+    PCin = 32'b0;
+    instruction = 32'b0;
+    mem_ack = 0;
+    data_Ready = 0;
+    AmuxIn = 32'b0;
+    BmuxIn = 32'b0;
+    reset = 1;
     
 
     #10; //Thirtyfirst case ALU operands
