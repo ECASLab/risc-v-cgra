@@ -802,19 +802,26 @@ begin
             state <= 3'b011;
             ALUsel <= 5'b11111;
             secondRead <= 1;
+            $display("Getting to second read for Rs2 with rs2: %b", rs2);
             Benable <= 1;
             rs2Out <= rs2;
-            read_en <= 1;
+            //read_en <= 1;
             reg_select <= 1; //Selects both registers rs1 and rs2 to pull data from *will only use rs2
             Bsel <= 2'b01; //Select data from local bus at B operand (rs2)
         end
 
-        if (dataReady_sync && tempAddress != 0 && state == 3'b011)
+        if (state == 3'b011)
+        begin
+            //read_en <= 1;
+            state <= 3'b100;
+        end
+
+        if (dataReady_sync && tempAddress != 0 && state == 3'b100)
         begin
             $display("Received second data");
             $display("Temp address: %b", tempAddress);
             read_en <= 0;
-            state <= 3'b100;
+            state <= 3'b101;
             Osel <= 2'b00;
             case(funct3)
             3'b000: //Store byte
@@ -838,10 +845,10 @@ begin
             endcase
         end
 
-        if (ALUcomplete && state == 3'b100)
+        if (ALUcomplete && state == 3'b101)
         begin
             $display("Completed selection of bits");
-            state <= 3'b101;
+            state <= 3'b110;
             mem_address <= tempAddress; //Use the calculated destination address to store the value
             mem_write <= 1; //Indicates that value at output will be stored at mem_address
             execution_complete <= 1;
@@ -867,11 +874,15 @@ begin
             secondRead <= 1;
             Benable <= 1;
             rs2Out <= rs2;
-            read_en <= 1;
+            //read_en <= 1;
             reg_select <= 1; //Selects both registers rs1 and rs2 to pull data from *will only use rs2
             Bsel <= 2'b01; //Select data from local bus at B operand (rs2)
         end
         else if (state == 3'b100)
+        begin
+            read_en <= 1;
+        end
+        else if (state == 3'b101)
         begin
             read_en <= 0;
             Osel <= 2'b00;
@@ -892,7 +903,7 @@ begin
                 end
             endcase
         end
-        else if (state == 3'b101)
+        else if (state == 3'b110)
         begin
             mem_address <= tempAddress; //Use the calculated destination address to store the value
             mem_write <= 0; //Indicates that value at output will be stored at mem_address. Reset after sent

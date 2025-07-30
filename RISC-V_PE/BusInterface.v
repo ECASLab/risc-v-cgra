@@ -258,12 +258,15 @@ module bus_interface (
                     read_enBus <= read_enPE;
                     $display("Registers to be read are rs1: %d and rs2: %d ", rs1OutPE, rs2OutPE);
                     reg_selectBus <= reg_selectPE;
+                    currentReadEn = 0;
                 end
                 bus_request <= 0; // Clear the request once granted
                 active <= 1;
             end
             else if (active) begin
                 $display("Bus access is active");
+                currentReadEn = 0;
+                extraTime = 1;
                 read_enBus <= 0;
                 mem_readBus <= 0;
                 //mem_writeBus <= 0;
@@ -315,7 +318,6 @@ module bus_interface (
                         currentRdWrite = 0;
                         $display("At end of operation, dataStore is %b and rdOut is %b", result_inPE, rdOutPE);
                     end
-                    //currentRdWrite <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
                     extraTime <= extraTime + 1;
@@ -324,14 +326,11 @@ module bus_interface (
                     mem_readBus <= mem_readPE;
                     mem_writeBus <= mem_writePE;
                     rd_writeBus <= rd_writeRec;
-                    $display("rd write in bus interface: %b", rd_writeRec);
                     branch_execBus <= branch_exec;
                 end
                 if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
                     active <= 0;
-                    //rdOutBus <= 0;
-                    //data_Store <= 0;
                     dataReadyRec <= 0;
                     rd_writeRec <= 0;
                     mem_ackRec <= 0;
