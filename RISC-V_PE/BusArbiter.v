@@ -1,26 +1,41 @@
 module bus_arbiter (
-    input clk,
-    input reset,
-    input [3:0] req,       // Request signals from the PEs. 
-    output reg [3:0] grant // Grant signals for the PEs
+    input        clk,
+    input        reset,
+    input  [3:0] req,       // Request signals from the PEs
+    output reg [3:0] grant  // Grant signals to the PEs
 );
-    reg [1:0] current;     // Keeps track of which PE has the current priority. Scale for more PEs
+    reg [1:0] current;      // Points to current priority slot
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            grant <= 4'b0000;
+            grant   <= 4'b0000;
             current <= 2'b00;
         end else begin
+            // Default: no grant if no request
+            grant <= 4'b0000;
+
+            // Rotating priority arbitration
             case (current)
-                2'b00: grant <= req[0] ? 4'b0001 : (req[1] ? 4'b0010 : (req[2] ? 4'b0100 : (req[3] ? 4'b1000 : 4'b0000)));
-                2'b01: grant <= req[1] ? 4'b0010 : (req[2] ? 4'b0100 : (req[3] ? 4'b1000 : (req[0] ? 4'b0001 : 4'b0000)));
-                2'b10: grant <= req[2] ? 4'b0100 : (req[3] ? 4'b1000 : (req[0] ? 4'b0001 : (req[1] ? 4'b0010 : 4'b0000)));
-                2'b11: grant <= req[3] ? 4'b1000 : (req[0] ? 4'b0001 : (req[1] ? 4'b0010 : (req[2] ? 4'b0100 : 4'b0000)));
+                2'b00: if (req[0]) grant <= 4'b0001;
+                       else if (req[1]) grant <= 4'b0010;
+                       else if (req[2]) grant <= 4'b0100;
+                       else if (req[3]) grant <= 4'b1000;
+                2'b01: if (req[1]) grant <= 4'b0010;
+                       else if (req[2]) grant <= 4'b0100;
+                       else if (req[3]) grant <= 4'b1000;
+                       else if (req[0]) grant <= 4'b0001;
+                2'b10: if (req[2]) grant <= 4'b0100;
+                       else if (req[3]) grant <= 4'b1000;
+                       else if (req[0]) grant <= 4'b0001;
+                       else if (req[1]) grant <= 4'b0010;
+                2'b11: if (req[3]) grant <= 4'b1000;
+                       else if (req[0]) grant <= 4'b0001;
+                       else if (req[1]) grant <= 4'b0010;
+                       else if (req[2]) grant <= 4'b0100;
             endcase
 
-            if (req[current]) begin
-                current <= current + 1;
-            end
+            // Always rotate current to avoid lock
+            current <= current + 1;
         end
     end
 endmodule

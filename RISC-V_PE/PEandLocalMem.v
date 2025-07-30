@@ -65,7 +65,7 @@ module MemPE (
     //Instantiate the interface
     register_system localMem (
         .clk(clk),
-        //.reset(reset)       Need to check if reset signal connected together will erase memory
+        .reset(1'b0),       //Need to check if reset signal connected together will erase memory
         .selRD(rd),
         .selRS1(rs1),
         .selRS2(rs2),

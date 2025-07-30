@@ -68,6 +68,7 @@ module register_system (
     always @(posedge clk ) begin
         if (rdwrite == 1)
         begin
+            $display("Data will be written at register: %b", selRD);
             case (selRD)    
             5'b00000: reg_enable[0] = 1;
             5'b00001: reg_enable[1] = 1; 

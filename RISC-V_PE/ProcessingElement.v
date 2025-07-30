@@ -171,7 +171,7 @@ module processing_element (
     );
 
     mux3_1 muxB (
-        .in_1(rs2), 
+        .in_1(32'b0), 
         .in_2(BmuxIn), 
         .in_3(immvalue),
         .sel(Bsel), 

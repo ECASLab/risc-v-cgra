@@ -69,15 +69,30 @@ module bus_interface (
 
     //Storage signals
     reg dataReadyRec; //Stores a dataReady signal received
+    reg mem_ackRec; //Stores a mem_ack signal received
     reg rd_writeRec; //Stores a rdWrite signal received
     reg [31:0] AmuxStore; //Storage of signal read
     reg [31:0] BmuxStore; //Storage of signal read
     reg AmuxStored;
     reg BmuxStored;
+    reg MemDataStored;
+    reg [31:0] memDataStore; //Storage of global memData
 
     //Optional for later if synchronization is causing trouble
     reg mem_ackSync;
     reg data_ReadySync;
+
+    function all_known;
+        input [31:0] signal;
+        integer i;
+        begin
+            all_known = 1;
+            for (i = 0; i < 32; i = i + 1) begin
+                if (signal[i] === 1'bx || signal[i] === 1'bz)
+                    all_known = 0;
+            end
+        end
+    endfunction
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
@@ -116,11 +131,14 @@ module bus_interface (
             execution_completeSync <= 0;
             branch_execSync <= 0;
             dataReadyRec <= 0;
+            mem_ackRec <= 0;
             rd_writeRec <= 0;
             AmuxStore <= 0;
             BmuxStore <= 0;
             AmuxStored <= 0;
             BmuxStored <= 0;
+            memDataStore <= 0;
+            MemDataStored <= 0;
         end else begin
             //Synchronizing signals with clock
             read_enSync <= read_enPE;
@@ -133,10 +151,32 @@ module bus_interface (
             if (data_ReadyBus == 1)
             begin
                 dataReadyRec <= 1;
+                if (!AmuxStored && all_known(AmuxBus) && currentReadEn) begin
+                    AmuxStore  <= AmuxBus;
+                    AmuxStored <= 1;
+                    $display("Entered AmuxStore");
+                end
+
+                // Store BmuxBus once when it's valid
+                if (!BmuxStored && all_known(BmuxBus) && currentReadEn) begin
+                    BmuxStore  <= BmuxBus;
+                    BmuxStored <= 1;
+                    $display("Entered BmuxStore");
+                end
             end
             if (rd_writePE == 1)
             begin
                 rd_writeRec <= 1;
+            end
+            if (mem_ackBus == 1)
+            begin
+                mem_ackRec <= 1;
+                // Store memData once when it's valid
+                if (!MemDataStored && all_known(mem_ackBus) && currentMemRead) begin
+                    memDataStore  <= memData;
+                    MemDataStored <= 1;
+                    $display("Entered memData Store with global mem data %b", memData);
+                end
             end
 
             //$display("At the start of the cycle, AmuxBus: %b and BmuxBus: %b", AmuxBus, BmuxBus);
@@ -196,6 +236,7 @@ module bus_interface (
                     mem_addressBus <= mem_addressPE;
                     mem_writeBus <= mem_writePE;
                     result_outBus <= result_inPE;
+                    $display("Memory address to write is %b and data to be written is %b", mem_addressPE, result_inPE);
                 end
                 if (currentMemRead)
                 begin
@@ -205,7 +246,7 @@ module bus_interface (
                 if (currentRdWrite)
                 begin 
                     rdOutBus <= rdOutPE; //Select for local memory write
-                    //$display("Rd out: %b", rdOutPE);
+                    $display("Rd out: %b", rdOutPE);
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
                     $display("Data to be stored: %b", result_inPE);
@@ -222,28 +263,19 @@ module bus_interface (
                 active <= 1;
             end
             else if (active) begin
-                if (!AmuxStored && (^AmuxBus === ^AmuxBus)) begin
-                    AmuxStore  <= AmuxBus;
-                    AmuxStored <= 1;
-                    $display("Entered AmuxStore");
-                end
-
-                // Store BmuxBus once when it's valid
-                if (!BmuxStored && (^BmuxBus === ^BmuxBus)) begin
-                    BmuxStore  <= BmuxBus;
-                    BmuxStored <= 1;
-                end
-
                 $display("Bus access is active");
                 read_enBus <= 0;
                 mem_readBus <= 0;
                 //mem_writeBus <= 0;
                 //rd_writeBus <= 0;
-                if (mem_ackBus) //Only when memRead
+
+                if (mem_ackRec) //Only when memRead
                 begin
                     $display("received mem ack");
-                    memDataPE <= memData;
-                    mem_ackPE <= mem_ackBus;
+                    $display("Data to be stored from global mem: %b", memDataStore);
+                    memDataPE <= memDataStore;
+                    mem_ackPE <= mem_ackRec;
+                    MemDataStored <= 0;
                     currentMemRead <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
@@ -276,7 +308,14 @@ module bus_interface (
                     mem_addressBus <= mem_addressPE;
                     execution_completeBus <= execution_completePE;
                     currentMemWrite <= 0;
-                    currentRdWrite <= 0;
+                    if (currentRdWrite)
+                    begin
+                        data_Store <= result_inPE;
+                        rdOutBus <= rdOutPE;
+                        currentRdWrite = 0;
+                        $display("At end of operation, dataStore is %b and rdOut is %b", result_inPE, rdOutPE);
+                    end
+                    //currentRdWrite <= 0;
                     bus_request <= 0;
                     deactivate <= 1;
                     extraTime <= extraTime + 1;
@@ -291,10 +330,11 @@ module bus_interface (
                 if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
                     active <= 0;
+                    //rdOutBus <= 0;
+                    //data_Store <= 0;
                     dataReadyRec <= 0;
                     rd_writeRec <= 0;
-                    //AmuxStore <= 32'bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
-                    //BmuxStore <= 32'bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
+                    mem_ackRec <= 0;
                     $display("No longer active");
                     data_ReadyPE <= data_ReadyBus;
                     mem_ackPE <= mem_ackBus;
@@ -305,12 +345,10 @@ module bus_interface (
             end
             else if (extraTime != 0 && extraTime <= 5'b11111)
             begin
-                $display("Needs extra time: %b", extraTime);
-                if (extraTime == 4'b010 && secondRead != 3'b111)
+                //$display("Needs extra time: %b", extraTime);
+                if (extraTime == 5'b00010 && secondRead != 3'b111)
                 begin
                     extraTime <= 0;
-                    //AmuxStored <= 0;
-                    //BmuxStored <= 0;
                 end
                 else if (extraTime == 5'b11111) 
                 begin

@@ -66,7 +66,7 @@ module MemPE_tb;
     PCin = 0;
     instructionBus = 32'h00000000;
     mem_ackBus = 0;
-    memData = 32'h00000000;
+    //memData = 32'hxxxxxxxx;
 
     #10;
     reset = 0;
@@ -100,7 +100,7 @@ module MemPE_tb;
     #10
     mem_ackBus = 0;
 
-    #40 // waiting for rdWrite
+    #50 // waiting for rdWrite
 
     grant = 1;
 
@@ -115,7 +115,7 @@ module MemPE_tb;
     PCin = 0;
     instructionBus = 32'h00000000;
     mem_ackBus = 0;
-    memData = 32'h00000000;
+    //memData = 32'h00000000;
 
     #10;
     reset = 0;
@@ -213,7 +213,7 @@ module MemPE_tb;
     PCin = 0;
     instructionBus = 32'h00000000;
     mem_ackBus = 0;
-    memData = 32'h00000000;
+    //memData = 32'h00000000;
 
     #10;
     reset = 0;
@@ -237,7 +237,7 @@ module MemPE_tb;
     #10 
     //data_ReadyBus = 0;
 
-    #70 //Waiting for rdWrite signal
+    #80 //Waiting for rdWrite signal
 
     grant = 1;
 
