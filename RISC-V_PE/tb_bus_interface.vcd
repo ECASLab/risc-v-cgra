@@ -1,5 +1,5 @@
 $date
-	Thu Jun  5 19:03:29 2025
+	Fri Aug  1 08:54:05 2025
 $end
 $version
 	Icarus Verilog
@@ -33,65 +33,93 @@ $var reg 1 6 clk $end
 $var reg 1 7 data_ReadyBus $end
 $var reg 1 8 execution_completePE $end
 $var reg 1 9 grant $end
-$var reg 32 : memData [31:0] $end
-$var reg 1 ; mem_ackBus $end
-$var reg 32 < mem_addressPE [31:0] $end
-$var reg 1 = mem_readPE $end
-$var reg 1 > mem_writePE $end
-$var reg 5 ? rdOutPE [4:0] $end
-$var reg 1 @ rd_writePE $end
-$var reg 1 A read_enPE $end
-$var reg 1 B reg_selectPE $end
-$var reg 1 C reset $end
-$var reg 32 D result_inPE [31:0] $end
-$var reg 5 E rs1OutPE [4:0] $end
-$var reg 5 F rs2OutPE [4:0] $end
+$var reg 2 : id [1:0] $end
+$var reg 32 ; memData [31:0] $end
+$var reg 1 < mem_ackBus $end
+$var reg 32 = mem_addressPE [31:0] $end
+$var reg 1 > mem_readPE $end
+$var reg 1 ? mem_writePE $end
+$var reg 5 @ rdOutPE [4:0] $end
+$var reg 1 A rd_writePE $end
+$var reg 1 B read_enPE $end
+$var reg 1 C reg_selectPE $end
+$var reg 1 D reset $end
+$var reg 32 E result_inPE [31:0] $end
+$var reg 5 F rs1OutPE [4:0] $end
+$var reg 5 G rs2OutPE [4:0] $end
 $scope module uut $end
-$var wire 32 G AmuxBus [31:0] $end
-$var wire 32 H BmuxBus [31:0] $end
-$var wire 32 I PCoutPE [31:0] $end
+$var wire 32 H AmuxBus [31:0] $end
+$var wire 32 I BmuxBus [31:0] $end
+$var wire 32 J PCoutPE [31:0] $end
+$var wire 1 K branch_exec $end
 $var wire 1 6 clk $end
 $var wire 1 7 data_ReadyBus $end
 $var wire 1 8 execution_completePE $end
 $var wire 1 9 grant $end
-$var wire 32 J memData [31:0] $end
-$var wire 1 ; mem_ackBus $end
-$var wire 32 K mem_addressPE [31:0] $end
-$var wire 1 = mem_readPE $end
-$var wire 1 > mem_writePE $end
-$var wire 5 L rdOutPE [4:0] $end
-$var wire 1 @ rd_writePE $end
-$var wire 1 A read_enPE $end
-$var wire 1 B reg_selectPE $end
-$var wire 1 C reset $end
-$var wire 32 M result_inPE [31:0] $end
-$var wire 5 N rs1OutPE [4:0] $end
-$var wire 5 O rs2OutPE [4:0] $end
-$var reg 32 P AmuxPE [31:0] $end
-$var reg 32 Q BmuxPE [31:0] $end
-$var reg 32 R PCoutBus [31:0] $end
-$var reg 1 S active $end
+$var wire 2 L id [1:0] $end
+$var wire 32 M memData [31:0] $end
+$var wire 1 < mem_ackBus $end
+$var wire 32 N mem_addressPE [31:0] $end
+$var wire 1 > mem_readPE $end
+$var wire 1 ? mem_writePE $end
+$var wire 5 O rdOutPE [4:0] $end
+$var wire 1 A rd_writePE $end
+$var wire 1 B read_enPE $end
+$var wire 1 C reg_selectPE $end
+$var wire 1 D reset $end
+$var wire 32 P result_inPE [31:0] $end
+$var wire 5 Q rs1OutPE [4:0] $end
+$var wire 5 R rs2OutPE [4:0] $end
+$var wire 3 S secondRead [2:0] $end
+$var reg 32 T AmuxPE [31:0] $end
+$var reg 32 U AmuxStore [31:0] $end
+$var reg 1 V AmuxStored $end
+$var reg 32 W BmuxPE [31:0] $end
+$var reg 32 X BmuxStore [31:0] $end
+$var reg 1 Y BmuxStored $end
+$var reg 1 Z MemDataStored $end
+$var reg 32 [ PCoutBus [31:0] $end
+$var reg 1 \ active $end
+$var reg 1 ] branch_execBus $end
+$var reg 1 ^ branch_execSync $end
 $var reg 1 / bus_request $end
-$var reg 1 T currentExecComplete $end
-$var reg 1 U currentMemRead $end
-$var reg 1 V currentMemWrite $end
-$var reg 1 W currentRdWrite $end
-$var reg 1 X currentReadEn $end
+$var reg 1 _ currentBranchExec $end
+$var reg 1 ` currentExecComplete $end
+$var reg 1 a currentJump $end
+$var reg 1 b currentMemRead $end
+$var reg 1 c currentMemWrite $end
+$var reg 1 d currentRdWrite $end
+$var reg 1 e currentReadEn $end
+$var reg 1 f dataReadyRec $end
 $var reg 1 . data_ReadyPE $end
-$var reg 32 Y data_Store [31:0] $end
+$var reg 32 g data_Store [31:0] $end
+$var reg 1 h deactivate $end
 $var reg 1 - execution_completeBus $end
-$var reg 32 Z memDataPE [31:0] $end
+$var reg 1 i execution_completeSync $end
+$var reg 5 j extraTime [4:0] $end
+$var reg 32 k memDataPE [31:0] $end
+$var reg 32 l memDataStore [31:0] $end
 $var reg 1 + mem_ackPE $end
-$var reg 32 [ mem_addressBus [31:0] $end
+$var reg 1 m mem_ackRec $end
+$var reg 32 n mem_addressBus [31:0] $end
 $var reg 1 ) mem_readBus $end
+$var reg 1 o mem_readSync $end
 $var reg 1 ( mem_writeBus $end
-$var reg 5 \ rdOutBus [4:0] $end
+$var reg 1 p mem_writeSync $end
+$var reg 5 q rdOutBus [4:0] $end
+$var reg 1 r rdWriteSync $end
 $var reg 1 & rd_writeBus $end
+$var reg 1 s rd_writeRec $end
 $var reg 1 % read_enBus $end
+$var reg 1 t read_enSync $end
 $var reg 1 $ reg_selectBus $end
-$var reg 32 ] result_outBus [31:0] $end
-$var reg 5 ^ rs1OutBus [4:0] $end
-$var reg 5 _ rs2OutBus [4:0] $end
+$var reg 32 u result_outBus [31:0] $end
+$var reg 5 v rs1OutBus [4:0] $end
+$var reg 5 w rs2OutBus [4:0] $end
+$scope function all_known $end
+$var reg 32 x signal [31:0] $end
+$var integer 32 y i [31:0] $end
+$upscope $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
@@ -100,44 +128,70 @@ $dumpall
 $end
 #0
 $dumpvars
-b0 _
-b0 ^
-b0 ]
-b0 \
+bx y
+bx x
+b0 w
+b0 v
+b0 u
+0t
+0s
+0r
+b0 q
+0p
+0o
+b0 n
+0m
+b0 l
+b0 k
+b0 j
+0i
+0h
+bx g
+0f
+0e
+0d
+0c
+0b
+xa
+0`
+x_
+0^
+0]
+0\
 b0 [
-b0 Z
-bx Y
-0X
-0W
+0Z
+0Y
+b0 X
+b0 W
 0V
-0U
-0T
-0S
+b0 U
+b0 T
+bz S
 b0 R
 b0 Q
 b0 P
 b0 O
 b0 N
-b0 M
+bx M
 b0 L
-b0 K
-bx J
-b0 I
+zK
+b0 J
+bx I
 bx H
-bx G
+b0 G
 b0 F
 b0 E
-b0 D
-1C
+1D
+0C
 0B
 0A
-0@
-b0 ?
+b0 @
+0?
 0>
-0=
-b0 <
-0;
-bx :
+b0 =
+0<
+bx ;
+b0 :
 09
 x8
 07
@@ -168,35 +222,38 @@ $end
 16
 #10000
 06
-1>
-b10010001101000101011001111000 D
-b10010001101000101011001111000 M
-b10101010101110111100110011011101 <
-b10101010101110111100110011011101 K
-0C
+1?
+b10010001101000101011001111000 E
+b10010001101000101011001111000 P
+b10101010101110111100110011011101 =
+b10101010101110111100110011011101 N
+0D
 #15000
-1V
+1c
 1/
+z^
+xi
+1p
 16
 #20000
 06
 19
 #25000
-1S
+1\
 0/
 b10010001101000101011001111000 #
-b10010001101000101011001111000 ]
+b10010001101000101011001111000 u
 1(
 b10101010101110111100110011011101 *
-b10101010101110111100110011011101 [
+b10101010101110111100110011011101 n
 16
 #30000
 06
 09
-0>
+0?
 #35000
-0V
-0S
+0p
+b1 j
 16
 #40000
 06

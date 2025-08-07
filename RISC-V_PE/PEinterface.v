@@ -12,6 +12,7 @@ module PE_system (
     input        mem_ackBus, //Memory acknowledgment signal coming from the global memory
     input        data_ReadyBus, //register read complete
     input [31:0] memData,      //Data coming from global memory
+    input [1:0] id,           //Unique id to identify the PE in the bus
     output [31:0] mem_addressBus,  //mem_Address sent to bus for global memory
     output [31:0] result_outBus,   //result_out sent to bus
     output [31:0] PCoutBus,        //new program counter to be sent to the controller
@@ -70,6 +71,7 @@ module PE_system (
         .rs1Out(rs1OutPE),       // Register Address to be read
         .rs2Out(rs2OutPE),      
         .rdOut(rdOutPE),
+        .id(id),
         .rdWrite(rd_writePE),
         .mem_write(mem_writePE),
         .result_out(result_inPE),  // Output selected from output mux
@@ -96,6 +98,7 @@ module PE_system (
         .rd_writePE(rd_writePE),
         .read_enPE(read_enPE),
         .AmuxPE(AmuxPE),
+        .id(id),
         .BmuxPE(BmuxPE),
         .memDataPE(memDataPE),
         .mem_ackPE(mem_ackPE),

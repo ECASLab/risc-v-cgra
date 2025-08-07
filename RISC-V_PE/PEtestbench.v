@@ -12,6 +12,7 @@ reg [31:0] AmuxIn;
 reg [31:0] BmuxIn;
 reg [31:0] memData;
 reg        reset;
+reg [1:0] id;
 wire [31:0] mem_address;
 wire reg_select;
 wire mem_read;
@@ -48,6 +49,7 @@ processing_element uut (
     .result_out(result_out),
     .PCout(PCout),
     .read_en(read_en),
+    .id(id),
     .reset(reset),
     .execution_complete(execution_complete),
     .memData(memData),

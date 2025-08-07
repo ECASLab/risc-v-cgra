@@ -36,6 +36,7 @@ module MemPE (
     //Instantiate the PE Interface
     PE_system PEInt(
         .clk(clk),
+        .id(2'b00),
         .reset(reset),
         .PCin(PCin),         // Program counter coming from bus, into muxA and into controller
         .grant(grant),

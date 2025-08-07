@@ -205,7 +205,7 @@ module MemPE_tb;
     #10
     grant = 0;
 
-    #30
+    #0
 
     // Initialize signals
     reset = 1;

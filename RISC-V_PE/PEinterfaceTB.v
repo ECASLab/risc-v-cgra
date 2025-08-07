@@ -14,6 +14,7 @@ module tb_PE_system;
     reg mem_ackBus;        // Memory acknowledgment signal from the bus
     reg data_ReadyBus;     // Register read complete signal from local memory
     reg [31:0] memData;    // Data from global memory
+    reg [1:0] id;
 
     // Outputs from the PE_system
     wire [31:0] mem_addressBus;  // Memory address sent to bus for global memory
@@ -38,6 +39,7 @@ module tb_PE_system;
         .reset(reset),
         .grant(grant),
         .PCin(PCin),
+        .id(id),
         .instructionBus(instructionBus),
         .AmuxBus(AmuxBus),
         .BmuxBus(BmuxBus),
@@ -87,6 +89,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'b0;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -144,6 +147,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -198,6 +202,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -238,6 +243,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -281,6 +287,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -311,6 +318,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -354,6 +362,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
@@ -384,6 +393,7 @@ module tb_PE_system;
         mem_ackBus = 0;
         data_ReadyBus = 0;
         memData = 32'h00000000;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 

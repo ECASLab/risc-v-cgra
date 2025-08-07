@@ -16,6 +16,7 @@ module processing_element (
     input [31:0] BmuxIn,       // Data from bus local memory to be loaded into B mux
     input [31:0] memData,      // Data from global memory to be loaded to A mux
     input        reset,
+    input [1:0] id,            // Unique id for the PE
     output [31:0] mem_address, // Address for memory operations (store)
     output reg_select,         // Signal to select proper register to read
     output mem_read,           // Memory read signal     

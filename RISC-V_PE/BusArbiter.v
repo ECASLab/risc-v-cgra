@@ -1,4 +1,4 @@
-module bus_arbiter (
+module bus_arbiter #(parameter NUM_PE = 4)(
     input        clk,
     input        reset,
     input  [3:0] req,       // Request signals from the PEs

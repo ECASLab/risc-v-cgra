@@ -16,6 +16,7 @@ module bus_interface (
     input       execution_completePE,
     input       branch_exec,
     input [2:0] secondRead,
+    input [1:0] id,              //PE id
 
     //Outputs to the PE
     output reg [31:0] AmuxPE,    //Data being sent to A mux input 2
@@ -154,14 +155,14 @@ module bus_interface (
                 if (!AmuxStored && all_known(AmuxBus) && currentReadEn) begin
                     AmuxStore  <= AmuxBus;
                     AmuxStored <= 1;
-                    $display("Entered AmuxStore");
+                    $display("ID: %d. Entered AmuxStore", id);
                 end
 
                 // Store BmuxBus once when it's valid
                 if (!BmuxStored && all_known(BmuxBus) && currentReadEn) begin
                     BmuxStore  <= BmuxBus;
                     BmuxStored <= 1;
-                    $display("Entered BmuxStore");
+                    $display("ID: %d. Entered BmuxStore, id");
                 end
             end
             if (rd_writePE == 1)
@@ -175,7 +176,7 @@ module bus_interface (
                 if (!MemDataStored && all_known(mem_ackBus) && currentMemRead) begin
                     memDataStore  <= memData;
                     MemDataStored <= 1;
-                    $display("Entered memData Store with global mem data %b", memData);
+                    $display("ID: %d. Entered memData Store with global mem data %b", id, memData);
                 end
             end
 
@@ -183,43 +184,43 @@ module bus_interface (
             //$display("At the start of the cycle, AmuxStore: %b and BmuxStore: %b", AmuxStore, BmuxStore);
 
             if ((mem_readPE || mem_writePE || rd_writePE || read_enPE || branch_exec) && !active && (extraTime==0)) begin
-                $display("Signal received to request bus");
+                $display("ID: %d. Signal received to request bus", id);
                 bus_request <= 1; // Request the bus
-                $display("Signals: Mem_Read %b | Mem_Write %b | RD_Write %b | Read_En %b | Branch %b", mem_readPE, mem_writePE, rd_writePE, read_enPE, branch_exec);
+                $display("ID: %d. Signals: Mem_Read %b | Mem_Write %b | RD_Write %b | Read_En %b | Branch %b", id, mem_readPE, mem_writePE, rd_writePE, read_enPE, branch_exec);
                 if (read_enPE)
                 begin
-                    $display("Local memory read");
+                    $display("ID: %d. Local memory read", id);
                     currentReadEn <= 1;
                 end
                 else if (branch_exec && rd_writePE)
                 begin
-                    $display("Jump and link requested");
+                    $display("ID: %d. Jump and link requested", id);
                     currentJump <= 1;
                 end
                 else if (rd_writePE)
                 begin
-                    $display("Received rdWrite");
+                    $display("ID: %d. Received rdWrite", id);
                     currentRdWrite <= 1;
                 end
                 else if (mem_writePE)
                 begin
-                    $display("Global memory write");
+                    $display("ID: %d. Global memory write", id);
                     currentMemWrite <= 1;
                 end
                 else if (mem_readPE)
                 begin
-                    $display("Received signal to read from global memory");
+                    $display("ID: %d. Received signal to read from global memory", id);
                     currentMemRead <= 1;
                 end
                 else if (branch_exec)
                 begin
-                    $display("Branching request");
+                    $display("ID: %d. Branching request", id);
                     currentExecComplete <= 1;
                 end
                 
             end
             if (grant) begin
-                $display ("Access granted");
+                $display ("ID: %d. Access granted", id);
                 if (currentBranchExec)
                 begin
                     PCoutBus <= PCoutPE;
@@ -236,7 +237,7 @@ module bus_interface (
                     mem_addressBus <= mem_addressPE;
                     mem_writeBus <= mem_writePE;
                     result_outBus <= result_inPE;
-                    $display("Memory address to write is %b and data to be written is %b", mem_addressPE, result_inPE);
+                    $display("ID: %d. Memory address to write is %b and data to be written is %b", id, mem_addressPE, result_inPE);
                 end
                 if (currentMemRead)
                 begin
@@ -246,17 +247,17 @@ module bus_interface (
                 if (currentRdWrite)
                 begin 
                     rdOutBus <= rdOutPE; //Select for local memory write
-                    $display("Rd out: %b", rdOutPE);
+                    $display("ID: %d. Rd out: %b", id, rdOutPE);
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
-                    $display("Data to be stored: %b", result_inPE);
+                    $display("ID: %d. Data to be stored: %b", id, result_inPE);
                 end
                 if (currentReadEn)
                 begin
                     rs1OutBus <= rs1OutPE;
                     rs2OutBus <= rs2OutPE;
                     read_enBus <= read_enPE;
-                    $display("Registers to be read are rs1: %d and rs2: %d ", rs1OutPE, rs2OutPE);
+                    $display("ID: %d. Registers to be read are rs1: %d and rs2: %d ", id, rs1OutPE, rs2OutPE);
                     reg_selectBus <= reg_selectPE;
                     currentReadEn = 0;
                 end
@@ -264,7 +265,7 @@ module bus_interface (
                 active <= 1;
             end
             else if (active) begin
-                $display("Bus access is active");
+                $display("ID: %d. Bus access is active", id);
                 currentReadEn = 0;
                 extraTime = 1;
                 read_enBus <= 0;
@@ -274,8 +275,8 @@ module bus_interface (
 
                 if (mem_ackRec) //Only when memRead
                 begin
-                    $display("received mem ack");
-                    $display("Data to be stored from global mem: %b", memDataStore);
+                    $display("ID: %d. received mem ack", id);
+                    $display("ID: %d. Data to be stored from global mem: %b", id, memDataStore);
                     memDataPE <= memDataStore;
                     mem_ackPE <= mem_ackRec;
                     MemDataStored <= 0;
@@ -289,12 +290,12 @@ module bus_interface (
                 end
                 else if (dataReadyRec) //Only when reading local memory. Received at least once the dataReady signal
                 begin
-                    $display ("Data from local memory is ready");
+                    $display ("ID: %d. Data from local memory is ready", id);
                     AmuxPE <= AmuxStore;
                     BmuxPE <= BmuxStore;
                     AmuxStored <= 0;
                     BmuxStored <= 0;
-                    $display("Data being sent to PE is Amux: %b and Bmux: %b", AmuxStore, BmuxStore);
+                    $display("ID: %d. Data being sent to PE is Amux: %b and Bmux: %b", id, AmuxStore, BmuxStore);
                     data_ReadyPE <= dataReadyRec;
                     currentReadEn <= 0;
                     bus_request <= 0;
@@ -306,7 +307,7 @@ module bus_interface (
                 end
                 else if (execution_completePE) //Will happen at write operations 
                 begin
-                    $display("Execution Completed");
+                    $display("ID: %d. Execution Completed", id);
                     result_outBus <= result_inPE;
                     mem_addressBus <= mem_addressPE;
                     execution_completeBus <= execution_completePE;
@@ -316,7 +317,7 @@ module bus_interface (
                         data_Store <= result_inPE;
                         rdOutBus <= rdOutPE;
                         currentRdWrite = 0;
-                        $display("At end of operation, dataStore is %b and rdOut is %b", result_inPE, rdOutPE);
+                        $display("ID: %d. At end of operation, dataStore is %b and rdOut is %b", id, result_inPE, rdOutPE);
                     end
                     bus_request <= 0;
                     deactivate <= 1;
@@ -334,7 +335,7 @@ module bus_interface (
                     dataReadyRec <= 0;
                     rd_writeRec <= 0;
                     mem_ackRec <= 0;
-                    $display("No longer active");
+                    $display("ID: %d. No longer active", id);
                     data_ReadyPE <= data_ReadyBus;
                     mem_ackPE <= mem_ackBus;
                     execution_completeBus <= execution_completePE;

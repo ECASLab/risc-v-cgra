@@ -20,6 +20,7 @@ module tb_bus_interface;
     reg rd_writePE;
     reg read_enPE;
     reg execution_completePE;
+    reg [1:0] id;
 
     // Outputs to the PE
     wire [31:0] AmuxPE;
@@ -71,6 +72,7 @@ module tb_bus_interface;
         .data_ReadyPE(data_ReadyPE),
         .bus_request(bus_request),
         .grant(grant),
+        .id(id),
         .mem_addressBus(mem_addressBus),
         .result_outBus(result_outBus),
         .PCoutBus(PCoutBus),
@@ -123,6 +125,7 @@ module tb_bus_interface;
         read_enPE = 0;
         mem_ackBus = 0;
         data_ReadyBus = 0;
+        id = 2'b00;
 
         #10 reset = 0; // Release reset
 
