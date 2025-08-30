@@ -25,6 +25,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
 
     // Internal signals for the interconnections
     wire [NUM_PE-1:0] bus_request;        // Bus request signals from PEs
+    wire [NUM_PE-1:0] working;
     wire [NUM_PE-1:0] grant;              // Grant signals from arbiter to PEs
 
     // Internal signals
@@ -52,6 +53,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
         .clk(clk),
         .reset(reset),
         .req(bus_request),
+        .working(working),
         .grant(grant)
     );
 
@@ -63,6 +65,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
 
     MemoryMux #(NUM_PE) localMemMux (
         .grant_bus(grant),
+        .working(working),
         .rs1_flat(rs1),
         .rs2_flat(rs2),
         .rd_flat(rd),
@@ -121,6 +124,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
             //assign result_mux[i*32 +: 32] = (mem_write[i]) ? mem_write_data_global : result_out; // Conditional operation
             wire grant_i = grant[i];
             wire bus_request_i;
+            wire working_i;
 
             PE_system pe_intf (
                 .clk(clk),
@@ -145,12 +149,14 @@ module local_bus_top #(parameter NUM_PE = 4)(
                 .rd_writeBus(rd_write[i]),
                 .read_enBus(read_en[i]),
                 .bus_request(bus_request_i),
+                .working(working_i),
                 .execution_complete(execution_complete[i]),
                 .data_Store(dataStore[i*32 +: 32]),
                 .branch_exec(branch_exec[i]),
                 .id(i[1:0])
             );
             assign bus_request[i] = bus_request_i;
+            assign working[i] = working_i;
         end
     endgenerate
 

@@ -6,6 +6,7 @@ module MemoryMux_tb;
     parameter NUM_PE = 4;
 
     reg  [NUM_PE-1:0] grant_bus;
+    reg  [NUM_PE-1:0] working;
     reg  [NUM_PE*5-1:0] rs1_flat, rs2_flat, rd_flat;
     reg  [NUM_PE-1:0] reg_select_flat, rd_write_flat, read_en_flat;
     reg  [NUM_PE*32-1:0] dataStore_flat;
@@ -30,6 +31,7 @@ module MemoryMux_tb;
 
     MemoryMux #(NUM_PE) uut (
         .grant_bus(grant_bus),
+        .working(working),
         .rs1_flat(rs1_flat),
         .rs2_flat(rs2_flat),
         .rd_flat(rd_flat),

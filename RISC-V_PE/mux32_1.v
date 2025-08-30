@@ -129,7 +129,7 @@ module mux32_1 (
                 data_out2 = 32'bxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx;
             end
             regComplete <= 1;
-            $display("Sent dataReady");
+            //$display("Sent dataReady");
         end
 
         else

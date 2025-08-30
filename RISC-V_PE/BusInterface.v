@@ -27,6 +27,7 @@ module bus_interface (
 
     //Signals to/from the bus
     output reg bus_request,    //Request signal sent to the arbiter
+    output reg working,        //Indicates the bus is in use
     input      grant,      //Grant signal from the arbiter
     output reg [31:0] mem_addressBus,  //mem_Address sent to bus for global memory
     output reg [31:0] result_outBus,   //result_out sent to bus
@@ -220,6 +221,7 @@ module bus_interface (
                 
             end
             if (grant) begin
+                working <= 1;
                 $display ("ID: %d. Access granted", id);
                 if (currentBranchExec)
                 begin
@@ -332,6 +334,7 @@ module bus_interface (
                 if (deactivate && !data_ReadyBus && !mem_ackBus)
                 begin
                     active <= 0;
+                    working <= 0;
                     dataReadyRec <= 0;
                     rd_writeRec <= 0;
                     mem_ackRec <= 0;

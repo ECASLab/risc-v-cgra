@@ -3,6 +3,7 @@ module MemoryMux #(
 )(
     //Inputs from PE to route to local mem
     input  [NUM_PE-1:0] grant_bus,
+    input  [NUM_PE-1:0] working,
     input  [NUM_PE*5-1:0] rs1_flat,
     input  [NUM_PE*5-1:0] rs2_flat,
     input  [NUM_PE*5-1:0] rd_flat,
@@ -66,8 +67,10 @@ module MemoryMux #(
         mem_write = 0;
         result_out = 0;
 
+        //$display("PE currently using the bus is: %b", working);
+
         for (i = 0; i < NUM_PE; i = i + 1) begin
-            if (grant_bus[i]) begin
+            if (working[i]) begin
                 rs1        = rs1_flat[i*5 +: 5];
                 rs2        = rs2_flat[i*5 +: 5];
                 rd         = rd_flat[i*5 +: 5];

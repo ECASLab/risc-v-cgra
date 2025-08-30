@@ -47,48 +47,55 @@ module local_bus_top_tb;
     always #5 clk = ~clk; // 10ns clock period
 
     initial begin
-        // Initialize inputs
+        // Dump waveform for debugging
+        $dumpfile("tb_LocalBusNoController.vcd");
+        $dumpvars(0, local_bus_top_tb);
+
+        // Monitor outputs
+        $monitor("Time: %0dns | mem_address_global: %b | result_out: %b | mem_write_data_global: %b | mem_write_global: %b | mem_read_global: %b | execution_complete: %b | branch_exec: %b | PCout: %b", 
+                 $time, mem_address_global, result_out, mem_write_data_global, mem_write_global, mem_read_global, execution_complete, branch_exec, PCout);
+
+        $display("Starting Local Bus testbench...");
+        
+        // Initialize signals
         reset = 1;
         PCin = 0;
-        instructions = 0;
+        instructions = 32'h00000000;
         mem_ack_global = 0;
-        mem_data_global = 32'h12345678;
 
-        // Hold reset for a few cycles
-        #20;
+        #10;
         reset = 0;
 
-        // Stimulate PC and instruction inputs
-        PCin = {
-            32'h00000010,
-            32'h00000020,
-            32'h00000030,
-            32'h00000040
-        };
+        // Step 1: Write 4 local registers at a time
+        $display ("##############################################################################");
+        $display ("###################### Loading 4 non dependent values ########################");
+        $display ("##############################################################################");
+        instructions = 128'h00020283_00020203_00020183_00020103; // Load to registers 2, 3, 4 and 5
+        PCin = 128'h00000003_00000002_00000001_00000000;
 
-        instructions = {
-            32'hA0000001, // Dummy opcodes
-            32'hA0000002,
-            32'hA0000003,
-            32'hA0000004
-        };
+        #40
 
-        // Simulate global memory acknowledgment
-        #30;
-        mem_ack_global = 1;
+        #10
 
-        // Observe outputs
-        #50;
-        $display("Global Mem Address: %h", mem_address_global);
-        $display("Global Write Data: %h", mem_write_data_global);
-        $display("Global Read Signal: %b", mem_read_global);
-        $display("Global Write Signal: %b", mem_write_global);
-        $display("Execution Complete Flags: %b", execution_complete);
-        $display("Branch Exec Flags: %b", branch_exec);
-        $display("PCout[0]: %h", PCout[0*32 +: 32]);
+        #100
+
+        //#30 // waiting for mem_read signal
+
+        //#10
+
+        //#10 //Need to sync grant signal with mem data or store the received memData
+        //mem_data_global = 32'b00000000000000001000000000000010;
+        //mem_ack_global = 1;
+
+        //#10
+        //mem_ack_global = 0;
+
+        //#40 // waiting for rdWrite
+
+        //#10
 
         // Finish simulation
-        #50;
+        //#50;
         $finish;
     end
 

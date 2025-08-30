@@ -1,5 +1,5 @@
 $date
-	Mon Apr 21 19:33:16 2025
+	Sat Aug 30 12:08:20 2025
 $end
 $version
 	Icarus Verilog
@@ -12,23 +12,29 @@ $var wire 4 ! grant [3:0] $end
 $var reg 1 " clk $end
 $var reg 4 # req [3:0] $end
 $var reg 1 $ reset $end
+$var reg 4 % working [3:0] $end
 $scope module uut $end
 $var wire 1 " clk $end
-$var wire 4 % req [3:0] $end
+$var wire 4 & req [3:0] $end
 $var wire 1 $ reset $end
-$var reg 2 & current [1:0] $end
-$var reg 4 ' grant [3:0] $end
+$var wire 4 ' working [3:0] $end
+$var parameter 32 ( NUM_PE $end
+$var reg 2 ) current [1:0] $end
+$var reg 4 * grant [3:0] $end
 $upscope $end
 $upscope $end
 $enddefinitions $end
 $comment Show the parameter values. $end
 $dumpall
+b100 (
 $end
 #0
 $dumpvars
-b0 '
+b0 *
+b0 )
+bx '
 b0 &
-b0 %
+bx %
 1$
 b0 #
 0"
@@ -38,101 +44,156 @@ $end
 1"
 #10000
 0"
+b0 %
+b0 '
 0$
 #15000
+b1 )
 1"
 #20000
 0"
 b1 #
-b1 %
-#25000
 b1 &
+#25000
+b10 )
 b1 !
-b1 '
+b1 *
 1"
 #30000
 0"
 b0 #
-b0 %
+b0 &
 #35000
+b11 )
 b0 !
-b0 '
+b0 *
 1"
 #40000
 0"
 b1010 #
-b1010 %
+b1010 &
 #45000
-b10 &
-b10 !
-b10 '
+b0 )
+b1000 !
+b1000 *
 1"
 #50000
 0"
 b100 #
-b100 %
+b100 &
 #55000
-b11 &
+b1 )
 b100 !
-b100 '
+b100 *
 1"
 #60000
 0"
 b10 #
-b10 %
+b10 &
 #65000
+b10 )
 b10 !
-b10 '
+b10 *
 1"
 #70000
 0"
 b1111 #
-b1111 %
+b1111 &
 #75000
-b0 &
-b1000 !
-b1000 '
+b11 )
+b100 !
+b100 *
 1"
 #80000
 0"
 b0 #
-b0 %
+b0 &
 #85000
+b0 )
 b0 !
-b0 '
+b0 *
 1"
 #90000
 0"
 b1 #
-b1 %
-#95000
 b1 &
+#95000
+b1 )
 b1 !
-b1 '
+b1 *
 1"
 #100000
 0"
 #105000
+b10 )
+b1 !
+b1 *
 1"
 #110000
 0"
 #115000
+b11 )
+b1 !
+b1 *
 1"
 #120000
 0"
 #125000
+b0 )
+b1 !
+b1 *
 1"
 #130000
 0"
 #135000
+b1 )
+b1 !
+b1 *
 1"
 #140000
 0"
+b1 %
+b1 '
 b0 #
-b0 %
+b0 &
 #145000
+b10 )
 b0 !
-b0 '
+b0 *
 1"
 #150000
+0"
+b10 #
+b10 &
+#155000
+b11 )
+1"
+#160000
+0"
+#165000
+b0 )
+1"
+#170000
+0"
+#175000
+b1 )
+1"
+#180000
+0"
+#185000
+b10 )
+1"
+#190000
+0"
+#195000
+b11 )
+1"
+#200000
+0"
+b0 #
+b0 &
+#205000
+b0 )
+1"
+#210000
 0"

@@ -8,6 +8,7 @@ module tb_bus_arbiter;
     reg clk;
     reg reset;
     reg [3:0] req;         // Request signals from PEs
+    reg [3:0] working;     // Signal to indicate bus is in use
     wire [3:0] grant;      // Grant signals from arbiter
 
     // Instantiate the arbiter module
@@ -15,6 +16,7 @@ module tb_bus_arbiter;
         .clk(clk),
         .reset(reset),
         .req(req),
+        .working(working),
         .grant(grant)
     );
 
@@ -41,6 +43,7 @@ module tb_bus_arbiter;
         #10 reset = 0; // Release reset
 
         // Test Case 1: Single PE requests (PE 0)
+        working = 4'b0000;
         #10 req = 4'b0001; // PE 0 requests access
         #10 req = 4'b0000; // Clear request
 
@@ -59,6 +62,11 @@ module tb_bus_arbiter;
 
         // Test Case 6: Persistent request (PE 0 keeps requesting access)
         #10 req = 4'b0001; // PE 0 requests access again
+        #50 req = 4'b0000; // Clear request
+
+        // Test Case 7: PE requests access but previous is still using bus
+        working = 4'b0001;
+        #10 req = 4'b0010; // PE 0 requests access again
         #50 req = 4'b0000; // Clear request
 
         // End simulation

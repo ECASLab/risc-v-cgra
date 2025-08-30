@@ -25,6 +25,7 @@ module PE_system (
     output       rd_writeBus,      //Signal to write to local memory
     output       read_enBus,
     output       bus_request,    //Request signal sent to the arbiter
+    output       working,        //Signal sent to arbiter to indicate bus is in use
     output       execution_complete,
     output [31:0] data_Store,      //data_in for local memory
     output       branch_exec       //Indicates a branch operation is complete
@@ -105,6 +106,7 @@ module PE_system (
         .data_ReadyPE(data_ReadyPE),
         .bus_request(bus_request),
         .grant(grant),
+        .working(working),
         .mem_addressBus(mem_addressBus),
         .result_outBus(result_outBus),
         .PCoutBus(PCoutBus),

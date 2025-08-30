@@ -1,7 +1,8 @@
 module bus_arbiter #(parameter NUM_PE = 4)(
     input        clk,
     input        reset,
-    input  [3:0] req,       // Request signals from the PEs
+    input  [NUM_PE-1:0] req,       // Request signals from the PEs
+    input  [NUM_PE-1:0] working,  // Signal indicating access to bus is being used
     output reg [3:0] grant  // Grant signals to the PEs
 );
     reg [1:0] current;      // Points to current priority slot
@@ -14,24 +15,27 @@ module bus_arbiter #(parameter NUM_PE = 4)(
             // Default: no grant if no request
             grant <= 4'b0000;
 
+            $display("Request status is: %b", req);
+            $display("Current use of bus is %b", working);
+
             // Rotating priority arbitration
             case (current)
-                2'b00: if (req[0]) grant <= 4'b0001;
-                       else if (req[1]) grant <= 4'b0010;
-                       else if (req[2]) grant <= 4'b0100;
-                       else if (req[3]) grant <= 4'b1000;
-                2'b01: if (req[1]) grant <= 4'b0010;
-                       else if (req[2]) grant <= 4'b0100;
-                       else if (req[3]) grant <= 4'b1000;
-                       else if (req[0]) grant <= 4'b0001;
-                2'b10: if (req[2]) grant <= 4'b0100;
-                       else if (req[3]) grant <= 4'b1000;
-                       else if (req[0]) grant <= 4'b0001;
-                       else if (req[1]) grant <= 4'b0010;
+                2'b00: if (req[0] && working == 0) grant <= 4'b0001;
+                       else if (req[1] && working == 0) grant <= 4'b0010;
+                       else if (req[2] && working == 0) grant <= 4'b0100;
+                       else if (req[3] && working == 0) grant <= 4'b1000;
+                2'b01: if (req[1] && working == 0) grant <= 4'b0010;
+                       else if (req[2] && working == 0) grant <= 4'b0100;
+                       else if (req[3] && working == 0) grant <= 4'b1000;
+                       else if (req[0] && working == 0) grant <= 4'b0001;
+                2'b10: if (req[2] && working == 0) grant <= 4'b0100;
+                       else if (req[3] && working == 0) grant <= 4'b1000;
+                       else if (req[0] && working == 0) grant <= 4'b0001;
+                       else if (req[1] && working == 0) grant <= 4'b0010;
                 2'b11: if (req[3]) grant <= 4'b1000;
-                       else if (req[0]) grant <= 4'b0001;
-                       else if (req[1]) grant <= 4'b0010;
-                       else if (req[2]) grant <= 4'b0100;
+                       else if (req[0] && working == 0) grant <= 4'b0001;
+                       else if (req[1] && working == 0) grant <= 4'b0010;
+                       else if (req[2] && working == 0) grant <= 4'b0100;
             endcase
 
             // Always rotate current to avoid lock
