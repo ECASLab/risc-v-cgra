@@ -28,6 +28,7 @@ module bus_interface (
     //Signals to/from the bus
     output reg bus_request,    //Request signal sent to the arbiter
     output reg working,        //Indicates the bus is in use
+    output reg muxSel,         //Select signal for the memory mux
     input      grant,      //Grant signal from the arbiter
     output reg [31:0] mem_addressBus,  //mem_Address sent to bus for global memory
     output reg [31:0] result_outBus,   //result_out sent to bus
@@ -141,6 +142,7 @@ module bus_interface (
             BmuxStored <= 0;
             memDataStore <= 0;
             MemDataStored <= 0;
+            muxSel <= 0;
         end else begin
             //Synchronizing signals with clock
             read_enSync <= read_enPE;
@@ -226,10 +228,12 @@ module bus_interface (
                 if (currentBranchExec)
                 begin
                     PCoutBus <= PCoutPE;
+                    muxSel <= 1;
                 end
                 if (currentJump)
                 begin
                     PCoutBus <= PCoutPE;
+                    muxSel <= 1;
                     rdOutBus <= rdOutPE; //Forward select for local memory write
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
@@ -237,6 +241,7 @@ module bus_interface (
                 if (currentMemWrite)
                 begin
                     mem_addressBus <= mem_addressPE;
+                    muxSel <= 1;
                     mem_writeBus <= mem_writePE;
                     result_outBus <= result_inPE;
                     $display("ID: %d. Memory address to write is %b and data to be written is %b", id, mem_addressPE, result_inPE);
@@ -244,11 +249,13 @@ module bus_interface (
                 if (currentMemRead)
                 begin
                     mem_addressBus <= result_inPE; //Address is calculated from ALU
+                    muxSel <= 1;
                     mem_readBus <= mem_readPE;
                 end
                 if (currentRdWrite)
                 begin 
                     rdOutBus <= rdOutPE; //Select for local memory write
+                    muxSel <= 1;
                     $display("ID: %d. Rd out: %b", id, rdOutPE);
                     rd_writeBus <= rd_writePE;
                     data_Store <= result_inPE; //Result from ALU to be written in rd
@@ -259,6 +266,7 @@ module bus_interface (
                     rs1OutBus <= rs1OutPE;
                     rs2OutBus <= rs2OutPE;
                     read_enBus <= read_enPE;
+                    muxSel <= 1;
                     $display("ID: %d. Registers to be read are rs1: %d and rs2: %d ", id, rs1OutPE, rs2OutPE);
                     reg_selectBus <= reg_selectPE;
                     currentReadEn = 0;
@@ -268,6 +276,7 @@ module bus_interface (
             end
             else if (active) begin
                 $display("ID: %d. Bus access is active", id);
+                muxSel <= 0;
                 currentReadEn = 0;
                 extraTime = 1;
                 read_enBus <= 0;
@@ -348,7 +357,7 @@ module bus_interface (
             end
             else if (extraTime != 0 && extraTime <= 5'b11111)
             begin
-                //$display("Needs extra time: %b", extraTime);
+                $display("Needs extra time: %b", extraTime);
                 if (extraTime == 5'b00010 && secondRead != 3'b111)
                 begin
                     extraTime <= 0;

@@ -32,6 +32,7 @@ module tb_bus_interface;
     // Signals to/from the bus
     wire bus_request;
     wire working;
+    wire muxSel;
     reg grant;
     wire [31:0] mem_addressBus;
     wire [31:0] result_outBus;
@@ -73,6 +74,7 @@ module tb_bus_interface;
         .data_ReadyPE(data_ReadyPE),
         .bus_request(bus_request),
         .working(working),
+        .muxSel(muxSel),
         .grant(grant),
         .id(id),
         .mem_addressBus(mem_addressBus),

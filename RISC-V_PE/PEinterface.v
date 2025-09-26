@@ -26,6 +26,7 @@ module PE_system (
     output       read_enBus,
     output       bus_request,    //Request signal sent to the arbiter
     output       working,        //Signal sent to arbiter to indicate bus is in use
+    output       muxSel,         //Signal to select memory mux values
     output       execution_complete,
     output [31:0] data_Store,      //data_in for local memory
     output       branch_exec       //Indicates a branch operation is complete
@@ -107,6 +108,7 @@ module PE_system (
         .bus_request(bus_request),
         .grant(grant),
         .working(working),
+        .muxSel(muxSel),
         .mem_addressBus(mem_addressBus),
         .result_outBus(result_outBus),
         .PCoutBus(PCoutBus),
@@ -130,5 +132,11 @@ module PE_system (
         .branch_execBus(branch_exec),
         .secondRead(secondRead)
     );
+
+    always @(posedge clk) begin
+        begin
+            //$display("This is the rs1Out sent to the bus: %b and read_en: %b", rs1OutBus, read_enBus);
+        end
+    end
 endmodule
 

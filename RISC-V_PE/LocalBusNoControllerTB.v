@@ -73,11 +73,9 @@ module local_bus_top_tb;
         instructions = 128'h00020283_00020203_00020183_00020103; // Load to registers 2, 3, 4 and 5
         PCin = 128'h00000003_00000002_00000001_00000000;
 
-        #40
+        #70
 
-        #10
-
-        #100
+        #50
 
         //#30 // waiting for mem_read signal
 

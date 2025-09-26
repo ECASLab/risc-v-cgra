@@ -70,34 +70,68 @@ module MemoryMux_tb;
 
     initial begin
         // Initialize inputs
-        grant_bus = 4'b0001; // Grant PE 0
+        $display("##### First grant is 0 #####");
+        grant_bus = 4'b0000; // No grant
         rs1_flat = {15'd0, 5'd1}; // PE 0 rs1 = 1
         rs2_flat = {15'd0, 5'd2};
-        rd_flat  = {15'd0, 5'd3};
+        //rd_flat  = {15'd0, 5'd3};
         reg_select_flat = 4'b0001;
-        rd_write_flat   = 4'b0001;
-        read_en_flat    = 4'b0001;
-        dataStore_flat  = {96'd0, 32'hDEADBEEF};
+        //rd_write_flat   = 4'b0001;
+        //read_en_flat    = 4'b0001;
+        //dataStore_flat  = {96'd0, 32'hDEADBEEF};
 
-        mem_address_flat    = {96'd0, 32'hA0000000};
-        mem_write_data_flat = {96'd0, 32'hCAFEBABE};
-        mem_read_flat       = 4'b0001;
-        mem_write_flat      = 4'b0001;
+        //mem_address_flat    = {96'd0, 32'hA0000000};
+        //mem_write_data_flat = {96'd0, 32'hCAFEBABE};
+        //mem_read_flat       = 4'b0001;
+        //mem_write_flat      = 4'b0001;
 
-        data_out1 = 32'h11111111;
-        data_out2 = 32'h22222222;
-        regComplete = 1;
-        mem_ack_global = 1;
-        mem_data_global = 32'h33333333;
+        //data_out1 = 32'h11111111;
+        //data_out2 = 32'h22222222;
+        //regComplete = 1;
+        //mem_ack_global = 1;
+        //mem_data_global = 32'h33333333;
 
         #10;
+        $display("##### Grant is asserted #####");
+        grant_bus = 4'b0001;
+
+        read_en_flat    = 4'b0001;
 
         $display("Selected rs1: %d", rs1);
-        $display("Selected dataStore: %h", dataStore);
-        $display("Global mem address: %h", mem_address);
-        $display("Global mem write data: %h", mem_write_data);
         $display("Aop[0]: %h", Aop[0*32 +: 32]);
-        $display("mem_data[0]: %h", mem_data[0*32 +: 32]);
+        $display("Data Ready: %b", dataReady);
+        //$display("Selected dataStore: %h", dataStore);
+        //$display("Global mem address: %h", mem_address);
+        //$display("Global mem write data: %h", mem_write_data);
+        
+        //$display("mem_data[0]: %h", mem_data[0*32 +: 32]);
+
+
+        #10;
+        $display("##### Grant is back to 0 #####");
+        grant_bus = 4'b0000;
+        read_en_flat    = 4'b0000;
+        $display("Selected rs1: %d", rs1);
+        $display("Aop[0]: %h", Aop[0*32 +: 32]);
+        $display("Data Ready: %b", dataReady);
+        data_out1 = 32'h11111111;
+        data_out2 = 32'h22222222;
+
+        #10;
+        $display("##### Grant for receiving data #####");
+        grant_bus = 4'b0001;
+        regComplete = 1;
+        $display("Selected rs1: %d", rs1);
+        $display("Aop[0]: %h", Aop[0*32 +: 32]);
+        $display("Data Ready: %b", dataReady);
+
+        #10;
+        $display("##### Last grant deasserted #####");
+        grant_bus = 4'b0000;
+        regComplete = 1;
+        $display("Selected rs1: %d", rs1);
+        $display("Aop[0]: %h", Aop[0*32 +: 32]);
+        $display("Data Ready: %b", dataReady);
 
         #10 $finish;
     end

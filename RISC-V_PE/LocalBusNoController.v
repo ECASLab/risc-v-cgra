@@ -26,6 +26,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
     // Internal signals for the interconnections
     wire [NUM_PE-1:0] bus_request;        // Bus request signals from PEs
     wire [NUM_PE-1:0] working;
+    wire [NUM_PE-1:0] muxSel;
     wire [NUM_PE-1:0] grant;              // Grant signals from arbiter to PEs
 
     // Internal signals
@@ -48,6 +49,9 @@ module local_bus_top #(parameter NUM_PE = 4)(
     wire [NUM_PE-1:0] mem_read;
     wire [NUM_PE*32-1:0] result_out_flat;
 
+    reg [3:0] granted_index;
+    reg       dataReady_index;
+
     // Arbiter
     bus_arbiter #(NUM_PE) arb (
         .clk(clk),
@@ -64,7 +68,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
     assign mem_write_data_global = mem_write_global ? result_out : 0;
 
     MemoryMux #(NUM_PE) localMemMux (
-        .grant_bus(grant),
+        .grant_bus(muxSel),
         .working(working),
         .rs1_flat(rs1),
         .rs2_flat(rs2),
@@ -83,7 +87,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
         .dataStore(dataStore_mux),
         .data_out1(data_out1_mux),
         .data_out2(data_out2_mux),
-        .regComplete(regComplete_mux),
+        .regComplete(dataReady_index),
         .Aop(Aop),
         .Bop(Bop),
         .result_out(result_out),
@@ -125,6 +129,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
             wire grant_i = grant[i];
             wire bus_request_i;
             wire working_i;
+            wire muxSel_i;
 
             PE_system pe_intf (
                 .clk(clk),
@@ -150,6 +155,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
                 .read_enBus(read_en[i]),
                 .bus_request(bus_request_i),
                 .working(working_i),
+                .muxSel(muxSel_i),
                 .execution_complete(execution_complete[i]),
                 .data_Store(dataStore[i*32 +: 32]),
                 .branch_exec(branch_exec[i]),
@@ -157,7 +163,22 @@ module local_bus_top #(parameter NUM_PE = 4)(
             );
             assign bus_request[i] = bus_request_i;
             assign working[i] = working_i;
+            assign muxSel[i] = muxSel_i;
         end
     endgenerate
+
+    //reg [3:0] temp; 
+
+    always @(posedge clk or posedge reset) begin
+        if (reset)
+        begin
+            granted_index <= 0;
+            dataReady_index <= 0;
+        end
+        else begin
+            dataReady_index <= regComplete_mux; //Delay the signal sent to the mux
+            $display("This is the dataReady_index: %b", dataReady_index);
+        end
+    end
 
 endmodule

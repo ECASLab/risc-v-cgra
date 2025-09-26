@@ -30,6 +30,7 @@ module tb_PE_system;
     wire read_enBus;             // Signal to read from local memory
     wire bus_request;            // Request signal sent to arbiter
     wire working;
+    wire muxSel;
     wire execution_complete;
     wire branch_exec;
     wire [31:0] data_Store;
@@ -60,6 +61,7 @@ module tb_PE_system;
         .read_enBus(read_enBus),
         .bus_request(bus_request),
         .working(working),
+        .muxSel(muxSel),
         .execution_complete(execution_complete),
         .branch_exec(branch_exec),
         .data_Store(data_Store)
