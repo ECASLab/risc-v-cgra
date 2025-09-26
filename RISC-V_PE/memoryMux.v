@@ -55,6 +55,7 @@ module MemoryMux #(
     integer i;
     reg [3:0] granted;
     reg regCompleted;
+    reg memAcked;
     always @(*) begin
         rs1        = 5'd0;
         rs2        = 5'd0;
@@ -78,9 +79,10 @@ module MemoryMux #(
 
         granted = grant_bus;
         regCompleted = regComplete;
+        memAcked = mem_ack_global;
 
-        $display("Grant/Select value: %b", granted);
-        $display("Data out 1 received: %b and regComplete received: %b", data_out1, regCompleted);
+        //$display("Grant/Select value: %b", granted);
+        //$display("Data out 1 received: %b and regComplete received: %b", data_out1, regCompleted);
         
         for (i = 0; i < NUM_PE; i = i + 1) begin
             //$display("Value of i: %d and value of NUM_PE: %d and value of grant: %b", i, NUM_PE, granted);
@@ -88,7 +90,7 @@ module MemoryMux #(
                 $display("I entered the grant in the memory mux");
                 if (read_en_flat[i]) begin
                     rs1        = rs1_flat[i*5 +: 5];
-                    $display("RS1 signal is %b", rs1);
+                    //$display("RS1 signal is %b", rs1);
                     rs2        = rs2_flat[i*5 +: 5];
                     reg_select = reg_select_flat[i];
                     read_en    = read_en_flat[i];
@@ -105,25 +107,31 @@ module MemoryMux #(
                 end
                 else if (mem_read_flat[i]) begin
                     mem_address = mem_address_flat[i*32 +: 32];
+                    $display("ID%d Entered memory read request with mem_address %b", i, mem_address);
                     mem_read = mem_read_flat[i];
                 end
-                else if (mem_ack_global) begin
+                /* else if (mem_ack_global) begin
                     mem_data[i*32 +: 32] = mem_data_global;
                     mem_ack[i] = mem_ack_global;
-                end
+                end */
                 result_out = result_out_flat[i*32 +: 32];
             end
 
             if (working[i] && regCompleted) begin
                 Aop[i*32 +: 32] = data_out1;
-                $display("A opperand: %b", data_out1);
+                //$display("A opperand: %b", data_out1);
                 Bop[i*32 +: 32] = data_out2;
                 dataReady[i] = regCompleted;
+            end
+            else if (working[i] && memAcked) begin
+                mem_data[i*32 +: 32] = mem_data_global;
+                mem_ack[i] = memAcked;
             end
         end
         
         granted = 4'b0;
         regCompleted = 0;
+        memAcked = 0;
     end
 
 endmodule

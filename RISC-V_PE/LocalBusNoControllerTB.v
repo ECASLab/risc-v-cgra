@@ -75,9 +75,40 @@ module local_bus_top_tb;
 
         #70
 
-        #50
+        #360
+        $display("When sending the global data the time is",$time);
 
-        //#30 // waiting for mem_read signal
+        mem_data_global = 32'b00000000000000001000000000000010;
+        mem_ack_global = 1;
+
+        #10
+        mem_ack_global = 0;
+
+        #80
+        $display("When sending the second global data the time is",$time);
+        mem_data_global = 32'b00000000000000001000000000000011;
+        mem_ack_global = 1;
+
+        #10
+        mem_ack_global = 0;
+
+        #90 // waiting for mem_read signal
+        $display("When sending the third global data the time is",$time);
+        mem_data_global = 32'b00000000000000001000000000000100;
+        mem_ack_global = 1;
+
+        #10
+        mem_ack_global = 0;
+
+        #160
+        $display("When sending the fourth global data the time is",$time);
+        mem_data_global = 32'b00000000000000001000000000000101;
+        mem_ack_global = 1;
+
+        #10
+        mem_ack_global = 0;
+
+        #220
 
         //#10
 

@@ -177,7 +177,7 @@ module local_bus_top #(parameter NUM_PE = 4)(
         end
         else begin
             dataReady_index <= regComplete_mux; //Delay the signal sent to the mux
-            $display("This is the dataReady_index: %b", dataReady_index);
+            //$display("This is the dataReady_index: %b", dataReady_index);
         end
     end
 

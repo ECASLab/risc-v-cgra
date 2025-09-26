@@ -70,8 +70,8 @@ module register_system (
         begin
             $display("RS1 received is: %b", selRS1);
         end
-        $display("Register complete status: %b", regComplete);
-        $display("Data out 1: %b", data_out1);
+        //$display("Register complete status: %b", regComplete);
+        //$display("Data out 1: %b", data_out1);
         if (rdwrite == 1)
         begin
             $display("Data will be written at register: %b", selRD);

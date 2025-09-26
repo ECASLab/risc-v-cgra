@@ -249,6 +249,7 @@ module bus_interface (
                 if (currentMemRead)
                 begin
                     mem_addressBus <= result_inPE; //Address is calculated from ALU
+                    $display("ID: %d. Requesting a read from memory address: %b and working value is %b", id, mem_addressBus, working);
                     muxSel <= 1;
                     mem_readBus <= mem_readPE;
                 end
@@ -267,7 +268,7 @@ module bus_interface (
                     rs2OutBus <= rs2OutPE;
                     read_enBus <= read_enPE;
                     muxSel <= 1;
-                    $display("ID: %d. Registers to be read are rs1: %d and rs2: %d ", id, rs1OutPE, rs2OutPE);
+                    $display("ID: %d. Registers to be read are rs1: %d and rs2: %d and working value is %b ", id, rs1OutPE, rs2OutPE, working);
                     reg_selectBus <= reg_selectPE;
                     currentReadEn = 0;
                 end
@@ -275,7 +276,7 @@ module bus_interface (
                 active <= 1;
             end
             else if (active) begin
-                $display("ID: %d. Bus access is active", id);
+                $display("ID: %d. Bus access is active and working value is %b", id, working);
                 muxSel <= 0;
                 currentReadEn = 0;
                 extraTime = 1;
@@ -345,6 +346,7 @@ module bus_interface (
                     active <= 0;
                     working <= 0;
                     dataReadyRec <= 0;
+                    currentMemRead <= 0;
                     rd_writeRec <= 0;
                     mem_ackRec <= 0;
                     $display("ID: %d. No longer active", id);
