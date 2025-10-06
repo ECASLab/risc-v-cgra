@@ -1,0 +1,26 @@
+# Generar todos los .elf
+make
+
+# Generar todos los .s
+make asm
+
+# Generar todos los desensamblados
+make disasm
+
+# Solo instance_ESTATICO.elf
+make instance_elf
+
+# Solo instance_ESTATICO.s
+make instance_asm
+
+# Solo multiply_ESTATICO.elf
+make multiply_elf
+
+# Solo multiply_ESTATICO.s
+make multiply_asm
+
+# Limpiar todo
+make clean
+
+# Ver ayuda
+make help

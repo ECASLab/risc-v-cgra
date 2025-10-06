@@ -1,0 +1,26 @@
+# Generar todos los .elf
+make
+
+# Generar todos los .s (assembly sin ensamblar) (genera los comandos lla no soportados por ISA)
+make asm
+
+# Generar todos los desensamblados (cambia instr lla por equivalente expandida)
+make disasm
+
+# Solo instance_CUSTOM.elf
+make instance_elf
+
+# Solo instance_CUSTOM.s
+make instance_asm
+
+# Solo multiply_CUSTOM.elf
+make multiply_elf
+
+# Solo multiply_CUSTOM.s
+make multiply_asm
+
+# Limpiar todo
+make clean
+
+# Ver ayuda
+make help
