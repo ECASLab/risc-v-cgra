@@ -1,10 +1,10 @@
-// Procesing element top module
-`include "Control.v"
-`include "decoder.v"
-`include "ALU.v"
-`include "mux2_1.v"
-`include "mux3_1.v"
-`include "reg.v"
+// Procesing element top module. Designed to work for the Local Bus/Cluster module. To test only the PE, remove the ../../ProcessingElement from the include
+`include "../../ProcessingElement/Control.v"
+`include "../../ProcessingElement/decoder.v"
+`include "../../ProcessingElement/ALU.v"
+`include "../../ProcessingElement/mux2_1.v"
+`include "../../ProcessingElement/mux3_1.v"
+`include "../../ProcessingElement/reg.v"
 
 module processing_element (
     input clk,

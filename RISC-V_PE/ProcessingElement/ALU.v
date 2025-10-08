@@ -1,11 +1,11 @@
 //Modelo de la ALU de 32 bits para procesamiento de las funciones
 //`define DEBUG
 
-`include "Subtraction.v"
-`include "dadda_16_pipelined.v"
-`include "dadda_8_pipelined.v"
-`include "csa_dadda.v"
-`include "HA.v"
+`include "../../ProcessingElement/Subtraction.v"
+`include "../../ProcessingElement/dadda_16_pipelined.v"
+`include "../../ProcessingElement/dadda_8_pipelined.v"
+`include "../../ProcessingElement/csa_dadda.v"
+`include "../../ProcessingElement/HA.v"
 
 module alu(
            input        clk,      // Clock input

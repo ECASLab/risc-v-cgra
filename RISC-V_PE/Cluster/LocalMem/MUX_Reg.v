@@ -1,5 +1,5 @@
-`include "mux3_1.v"
-`include "reg.v"
+`include "../../ProcessingElement/mux3_1.v"
+`include "../../ProcessingElement/reg.v"
 
 //Module combining mux and registers
 

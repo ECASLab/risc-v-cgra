@@ -1,6 +1,6 @@
-`include "mux32_1.v"
-`include "demux1_32.v"
-`include "Datareg.v"
+`include "../LocalMem/mux32_1.v"
+`include "../LocalMem/demux1_32.v"
+`include "../LocalMem/Datareg.v"
 
 
 module register_system (

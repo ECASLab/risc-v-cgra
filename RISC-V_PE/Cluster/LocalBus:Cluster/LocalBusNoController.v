@@ -1,6 +1,6 @@
-`include "BusArbiter.v"
-`include "PEInterface.v"
-`include "DataRegs.v"
+`include "../Arbiter/BusArbiter.v"
+`include "../PE:Interface/PEInterface.v"
+`include "../LocalMem/DataRegs.v"
 `include "memoryMux.v"
 
 

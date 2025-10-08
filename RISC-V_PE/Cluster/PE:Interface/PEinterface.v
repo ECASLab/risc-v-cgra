@@ -1,5 +1,5 @@
-`include "BusInterface.v"
-`include "ProcessingElement.v"
+`include "../PE:Interface/BusInterface.v"
+`include "../../ProcessingElement/ProcessingElement.v"
 
 module PE_system (
     input clk,

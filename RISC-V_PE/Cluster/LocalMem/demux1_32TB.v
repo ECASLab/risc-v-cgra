@@ -34,6 +34,10 @@ module tb_demux1_32;
         $dumpfile("tb_demux1_32.vcd");
         $dumpvars(0, tb_demux1_32);
 
+         $monitor("Time: %0dns | out_1: %h | out_2: %h | out_3: %h | out_4: %h | out_5: %h | out_6: %h | out_7: %h | out_8: %h | out_9: %h | out_10: %h | out_11: %h | out_12: %h | out_13: %h", 
+                 $time, out_1, out_2, out_3, out_4, out_5, out_6, out_7, out_8, out_9, out_10, out_11, out_12, out_13);
+
+
         // Test all selection lines
         data_in = 32'hA5A5A5A5; // Example data pattern
         sel = 0; // Initialize selection
