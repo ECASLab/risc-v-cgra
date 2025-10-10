@@ -1,0 +1,116 @@
+`include "Cluster4.v"
+
+module local_bus_top_tb;
+
+    parameter NUM_PE = 4;
+
+    // Clock and reset
+    reg clk;
+    reg reset;
+
+    // Inputs to local_bus_top
+    reg [NUM_PE*32-1:0] PCin;
+    reg [NUM_PE*32-1:0] instructions;
+    reg [NUM_PE-1:0] mem_ack_global;
+    reg [NUM_PE*32-1:0] mem_data_global;
+
+    // Outputs from local_bus_top
+    wire [NUM_PE*32-1:0] mem_address_global;
+    wire [NUM_PE*32-1:0] result_out;
+    wire [NUM_PE*32-1:0] mem_write_data_global;
+    wire [NUM_PE*32-1:0] PCout;
+    wire [NUM_PE-1:0] mem_write_global;
+    wire [NUM_PE-1:0] mem_read_global;
+    wire [NUM_PE-1:0] execution_complete;
+    wire [NUM_PE-1:0] branch_exec;
+
+    // Instantiate the DUT
+    local_bus_top #(NUM_PE) dut (
+        .clk(clk),
+        .reset(reset),
+        .PCin(PCin),
+        .instructions(instructions),
+        .mem_ack_global(mem_ack_global),
+        .mem_data_global(mem_data_global),
+        .mem_address_global(mem_address_global),
+        .result_out(result_out),
+        .mem_write_data_global(mem_write_data_global),
+        .PCout(PCout),
+        .mem_write_global(mem_write_global),
+        .mem_read_global(mem_read_global),
+        .execution_complete(execution_complete),
+        .branch_exec(branch_exec)
+    );
+
+    // Clock generation
+    initial clk = 0;
+    always #5 clk = ~clk; // 10ns clock period
+
+    initial begin
+        // Dump waveform for debugging
+        $dumpfile("tb_cluster4.vcd");
+        $dumpvars(0, local_bus_top_tb);
+
+        // Monitor outputs
+        $monitor("Time: %0dns | mem_address_global: %b | result_out: %b | mem_write_data_global: %b | mem_write_global: %b | mem_read_global: %b | execution_complete: %b | branch_exec: %b | PCout: %b", 
+                 $time, mem_address_global, result_out, mem_write_data_global, mem_write_global, mem_read_global, execution_complete, branch_exec, PCout);
+
+        $display("Starting Local Bus testbench...");
+        
+        // Initialize signals
+        reset = 1;
+        PCin = 0;
+        instructions = 32'h00000000;
+        mem_ack_global = 0;
+
+        #10;
+        reset = 0;
+
+        // Step 1: Write 4 local registers at a time
+        $display ("##############################################################################");
+        $display ("###################### Loading 4 non dependent values ########################");
+        $display ("##############################################################################");
+        instructions = 128'h00020283_00020203_00020183_00020103; // Load to registers 2, 3, 4 and 5
+        PCin = 128'h00000003_00000002_00000001_00000000;
+
+        #70
+
+        #360
+        $display("When sending the global data the time is",$time);
+
+        //mem_data_global = 32'b00000000000000001000000000000010;
+        //mem_ack_global = 1;
+
+        //#10
+        //mem_ack_global = 0;
+
+        //#80
+        //$display("When sending the second global data the time is",$time);
+        //mem_data_global = 32'b00000000000000001000000000000011;
+        //mem_ack_global = 1;
+
+        //#10
+        //mem_ack_global = 0;
+
+        //#90 // waiting for mem_read signal
+        //$display("When sending the third global data the time is",$time);
+        //mem_data_global = 32'b00000000000000001000000000000100;
+        //mem_ack_global = 1;
+
+        //#10
+        //mem_ack_global = 0;
+
+        //#160
+        //$display("When sending the fourth global data the time is",$time);
+        //mem_data_global = 32'b00000000000000001000000000000101;
+        //mem_ack_global = 1;
+
+        //#10
+        //mem_ack_global = 0;
+
+        //#220
+
+        $finish;
+    end
+
+endmodule

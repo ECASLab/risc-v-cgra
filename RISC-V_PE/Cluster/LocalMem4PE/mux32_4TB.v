@@ -10,13 +10,13 @@ module mux32_4_tb;
     reg [31:0] in_25, in_26, in_27, in_28, in_29, in_30, in_31, in_32;
 
     reg [4:0] sel0, sel1, sel2, sel3, sel4, sel5, sel6, sel7;
-    reg       read_en;
+    reg       read_en0, read_en1, read_en2, read_en3;
     reg       reg_select0, reg_select1, reg_select2, reg_select3;
 
     // Outputs
     wire [31:0] data_out0, data_out1, data_out2, data_out3;
     wire [31:0] data_out4, data_out5, data_out6, data_out7;
-    wire        regComplete;
+    wire        regComplete0, regComplete1, regComplete2, regComplete3;
 
     // DUT
     mux32_4 dut (
@@ -30,11 +30,11 @@ module mux32_4_tb;
         .in_29(in_29), .in_30(in_30), .in_31(in_31), .in_32(in_32),
         .sel0(sel0), .sel1(sel1), .sel2(sel2), .sel3(sel3),
         .sel4(sel4), .sel5(sel5), .sel6(sel6), .sel7(sel7),
-        .read_en(read_en),
+        .read_en0(read_en0), .read_en1(read_en1), .read_en2(read_en2), .read_en3(read_en3),
         .reg_select0(reg_select0), .reg_select1(reg_select1), .reg_select2(reg_select2), .reg_select3(reg_select3),
         .data_out0(data_out0), .data_out1(data_out1), .data_out2(data_out2), .data_out3(data_out3),
         .data_out4(data_out4), .data_out5(data_out5), .data_out6(data_out6), .data_out7(data_out7),
-        .regComplete(regComplete)
+        .regComplete0(regComplete0), .regComplete1(regComplete1), .regComplete2(regComplete2), .regComplete3(regComplete3)
     );
 
     initial begin
@@ -64,7 +64,10 @@ module mux32_4_tb;
         sel6 = 5'd6;  // PE3 rs1
         sel7 = 5'd7;  // PE3 rs2
 
-        read_en = 1;
+        read_en0 = 1;
+        read_en1 = 1;
+        read_en2 = 1;
+        read_en3 = 1;
 
         #10;
 
@@ -78,7 +81,7 @@ module mux32_4_tb;
         $display("PE3 rs1: %h", data_out6);
         $display("PE3 rs2: %h", data_out7);
 
-        read_en = 0;
+        read_en0 = 0;
 
         #10;
         

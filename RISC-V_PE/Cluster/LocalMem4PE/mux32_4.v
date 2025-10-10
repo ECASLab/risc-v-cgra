@@ -41,7 +41,10 @@ module mux32_4 (
     input      [4:0]  sel6,
     input      [4:0]  sel7,
 
-    input             read_en,
+    input             read_en0,
+    input             read_en1,
+    input             read_en2,
+    input             read_en3,
     input             reg_select0,
     input             reg_select1,
     input             reg_select2,
@@ -56,36 +59,58 @@ module mux32_4 (
     output reg [31:0] data_out6,
     output reg [31:0] data_out7,
 
-    output reg        regComplete
+    output reg        regComplete0,
+    output reg        regComplete1,
+    output reg        regComplete2,
+    output reg        regComplete3
 );
     always @(*) begin
-        regComplete = 0;
+        regComplete0 = 0;
+        regComplete1 = 0;
+        regComplete2 = 0;
+        regComplete3 = 0;
 
-        if (read_en) begin
+        if (read_en0) begin
             data_out0 = select(sel0);
-            data_out2 = select(sel2);
-            data_out4 = select(sel4);
-            data_out6 = select(sel6);
             if (reg_select0) begin
                 data_out1 = select(sel1);
             end
+            regComplete0 = 1;
+        end
+        else begin
+            data_out0 = 32'hXXXXXXXX;
+            data_out1 = 32'hXXXXXXXX;
+        end
+        if (read_en1) begin
+            data_out2 = select(sel2);
             if (reg_select1) begin
                 data_out3 = select(sel3);
             end
+            regComplete1 = 1;
+        end
+        else begin
+            data_out2 = 32'hXXXXXXXX;
+            data_out3 = 32'hXXXXXXXX;
+        end
+        if (read_en2) begin
+            data_out4 = select(sel4);
             if (reg_select2) begin
                 data_out5 = select(sel5);
             end
+            regComplete2 = 1;
+        end
+        else begin
+            data_out4 = 32'hXXXXXXXX;
+            data_out5 = 32'hXXXXXXXX;
+        end
+        if (read_en3) begin
+            data_out6 = select(sel6);
             if (reg_select3) begin
                 data_out7 = select(sel7);
             end
-            regComplete = 1;
-        end else begin
-            data_out0 = 32'hXXXXXXXX;
-            data_out1 = 32'hXXXXXXXX;
-            data_out2 = 32'hXXXXXXXX;
-            data_out3 = 32'hXXXXXXXX;
-            data_out4 = 32'hXXXXXXXX;
-            data_out5 = 32'hXXXXXXXX;
+            regComplete3 = 1;
+        end
+        else begin
             data_out6 = 32'hXXXXXXXX;
             data_out7 = 32'hXXXXXXXX;
         end

@@ -42,29 +42,29 @@ module tb_bus_arbiter;
         req = 4'b0000; // No requests initially
         #10 reset = 0; // Release reset
 
-        // Test Case 1: Single PE requests (PE 0)
+        $display("Test Case 1: Single PE requests (PE 0)");
         working = 4'b0000;
         #10 req = 4'b0001; // PE 0 requests access
         #10 req = 4'b0000; // Clear request
 
-        // Test Case 2: Multiple requests (PE 1 and PE 3)
+        $display("Test Case 2: Multiple requests (PE 1 and PE 3)");
         #10 req = 4'b1010; // PE 1 and PE 3 request access
 
-        // Test Case 3: Sequential requests
+        $display("Test Case 3: Sequential requests");
         #10 req = 4'b0100; // PE 2 requests access
         #10 req = 4'b0010; // PE 1 requests access
 
-        // Test Case 4: All PEs request access
+        $display("Test Case 4: All PEs request access");
         #10 req = 4'b1111; // All PEs request access
 
-        // Test Case 5: No requests
+        $display("Test Case 5: No requests");
         #10 req = 4'b0000; // No PEs request access
 
-        // Test Case 6: Persistent request (PE 0 keeps requesting access)
+        $display("Test Case 6: Persistent request (PE 0 keeps requesting access)");
         #10 req = 4'b0001; // PE 0 requests access again
         #50 req = 4'b0000; // Clear request
 
-        // Test Case 7: PE requests access but previous is still using bus
+        $display("Test Case 7: PE requests access but previous is still using bus");
         working = 4'b0001;
         #10 req = 4'b0010; // PE 0 requests access again
         #50 req = 4'b0000; // Clear request

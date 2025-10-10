@@ -1,5 +1,5 @@
-`include "mux32_4.v"
-`include "demux4_32.v"
+`include "../LocalMem4PE/mux32_4.v"
+`include "../LocalMem4PE/demux4_32.v"
 `include "../LocalMem/Datareg.v"
 
 
@@ -10,16 +10,16 @@ module register_system (
     // 4 write channels
     input [31:0] data_in0, data_in1, data_in2, data_in3,
     input [4:0]  selRD0, selRD1, selRD2, selRD3,
-    input        rdwrite,  // global write enable
-    input       reg_select0, reg_select1, reg_select2, reg_select3,   // Allows to select only 1 reg to read (0) or both (1) 
-    input read_en,                      // Read enable for output
+    input        rdwrite0, rdwrite1, rdwrite2, rdwrite3,  // write enable
+    input        reg_select0, reg_select1, reg_select2, reg_select3,   // Allows to select only 1 reg to read (0) or both (1) 
+    input        read_en0, read_en1, read_en2, read_en3,  // Read enable for output
     // 8 read selectors
     input [4:0]  selRS0, selRS1, selRS2, selRS3,
     input [4:0]  selRS4, selRS5, selRS6, selRS7,
     // 8 read outputs
     output wire [31:0] data_out0, data_out1, data_out2, data_out3,
     output wire [31:0] data_out4, data_out5, data_out6, data_out7,
-    output wire        regComplete      // Indicates read operation is complete *dataReady
+    output wire        regComplete0, regComplete1, regComplete2, regComplete3  // Indicates read operation is complete *dataReady
 );
 
     // Internal wires and registers
@@ -32,13 +32,13 @@ module register_system (
     reg         reg_enable[31:0];            // Enable for each register
 
     demux4_32 demux (
-        .data_in0(rdwrite ? data_in0 : 32'b0),
+        .data_in0(rdwrite0 ? data_in0 : 32'b0),
         .sel0(selRD0),
-        .data_in1(rdwrite ? data_in1 : 32'b0),
+        .data_in1(rdwrite1 ? data_in1 : 32'b0),
         .sel1(selRD1),
-        .data_in2(rdwrite ? data_in2 : 32'b0),
+        .data_in2(rdwrite2 ? data_in2 : 32'b0),
         .sel2(selRD2),
-        .data_in3(rdwrite ? data_in3 : 32'b0),
+        .data_in3(rdwrite3 ? data_in3 : 32'b0),
         .sel3(selRD3),
         .out0(demux_out[0]), .out1(demux_out[1]), .out2(demux_out[2]), .out3(demux_out[3]),
         .out4(demux_out[4]), .out5(demux_out[5]), .out6(demux_out[6]), .out7(demux_out[7]),
@@ -76,15 +76,15 @@ module register_system (
         .in_29(reg_out[28]), .in_30(reg_out[29]), .in_31(reg_out[30]), .in_32(reg_out[31]),
         .sel0(selRS0), .sel1(selRS1), .sel2(selRS2), .sel3(selRS3),
         .sel4(selRS4), .sel5(selRS5), .sel6(selRS6), .sel7(selRS7),
-        .read_en(read_en),
+        .read_en0(read_en0), .read_en1(read_en1), .read_en2(read_en2), .read_en3(read_en3),
         .data_out0(data_out0), .data_out1(data_out1), .data_out2(data_out2), .data_out3(data_out3),
         .data_out4(data_out4), .data_out5(data_out5), .data_out6(data_out6), .data_out7(data_out7),
-        .regComplete(regComplete),
+        .regComplete0(regComplete0), .regComplete1(regComplete1), .regComplete2(regComplete2), .regComplete3(regComplete3),
         .reg_select0(reg_select0), .reg_select1(reg_select1), .reg_select2(reg_select2), .reg_select3(reg_select3) 
     );
 
     always @(posedge clk) begin
-        if (rdwrite == 1)
+        if (rdwrite0 == 1)
         begin 
             case (selRD0)    
             5'b00000: reg_enable[0] = 1;
@@ -120,6 +120,8 @@ module register_system (
             5'b11110: reg_enable[30] = 1;
             5'b11111: reg_enable[31] = 1;
             endcase
+        end
+        if (rdwrite1 == 1) begin
             case (selRD1)    
             5'b00000: reg_enable[0] = 1;
             5'b00001: reg_enable[1] = 1; 
@@ -154,6 +156,8 @@ module register_system (
             5'b11110: reg_enable[30] = 1;
             5'b11111: reg_enable[31] = 1;
             endcase
+        end
+        if (rdwrite2 == 1) begin
             case (selRD2)    
             5'b00000: reg_enable[0] = 1;
             5'b00001: reg_enable[1] = 1; 
@@ -188,6 +192,8 @@ module register_system (
             5'b11110: reg_enable[30] = 1;
             5'b11111: reg_enable[31] = 1;
             endcase
+        end
+        if (rdwrite3 == 1) begin
             case (selRD3)    
             5'b00000: reg_enable[0] = 1;
             5'b00001: reg_enable[1] = 1; 
@@ -223,7 +229,7 @@ module register_system (
             5'b11111: reg_enable[31] = 1;
             endcase
         end
-        else
+        if (rdwrite0 == 0 && rdwrite1 == 0 && rdwrite2 == 0 && rdwrite3 == 0)
         begin
             reg_enable[0] = 0;
             reg_enable[1] = 0; 
