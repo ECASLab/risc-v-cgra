@@ -1,101 +1,85 @@
 `include "ClusterControl.v"
 `timescale 1ns / 1ps
 
-module tb_cluster_controller;
 
-    // Testbench signals
-    reg clk;                        // Clock signal
-    reg reset;                      // Reset signal
-    reg [127:0] instruction_mem;    // Instructions from instruction memory (4 instructions)
-    reg [127:0] PCoutPE;            // Program counter outputs from PEs
-    reg [3:0] execution_complete;
+module tb_cluster_instruction_controller;
+
+    parameter NUM_PE = 4;
+    parameter WIDTH = 32;
+
+    reg clk;
+    reg reset;
+    reg [NUM_PE*WIDTH-1:0] instruction;
     reg last_instruction;
-    wire [31:0] PCsIM;             // Program counters sent to instruction memory
-    wire [3:0] InstReadEn;          // Read enable signals for instruction memory
-    wire [127:0] PCinPE;            // Program counters sent to PEs
-    wire [127:0] instruction_outPE; // Instructions loaded into PEs
+    reg [NUM_PE*WIDTH-1:0] PCout;
+    reg [NUM_PE-1:0] execution_complete;
 
-    // Instantiate the cluster_controller
-    cluster_controller uut (
+    wire [NUM_PE-1:0] read_enable;
+    wire [NUM_PE*WIDTH-1:0] PC;
+    wire [NUM_PE*WIDTH-1:0] PCin;
+    wire [NUM_PE*WIDTH-1:0] instructions;
+    wire done;
+
+    cluster_instruction_controller #(NUM_PE) dut (
         .clk(clk),
         .reset(reset),
-        .instruction_mem(instruction_mem),
-        .PCsIM(PCsIM),
-        .InstReadEn(InstReadEn),
-        .PCinPE(PCinPE),
-        .instruction_outPE(instruction_outPE),
-        .PCoutPE(PCoutPE),
+        .read_enable(read_enable),
+        .PC(PC),
+        .instruction(instruction),
+        .last_instruction(last_instruction),
+        .PCin(PCin),
+        .instructions(instructions),
+        .PCout(PCout),
         .execution_complete(execution_complete),
-        .last_instruction(last_instruction)
+        .done(done)
     );
 
     // Clock generation
+    always #5 clk = ~clk;
+
     initial begin
+        $display("Starting cluster_instruction_controller testbench...");
         clk = 0;
-        forever #5 clk = ~clk; // Clock period = 10 time units
-    end
-
-    // Testbench logic
-    initial begin
-        // Dump waveform for debugging
-        $dumpfile("tb_cluster_controller.vcd");
-        $dumpvars(0, tb_cluster_controller);
-
-        // Monitor outputs
-        $monitor("Time: %0dns | PCsIM: %h | InstReadEn: %b | PCinPE: %h | instruction_outPE: %h", 
-                 $time, PCsIM, InstReadEn, PCinPE, instruction_outPE);
-
-
-        // Initialize signals
         reset = 1;
-        instruction_mem = 128'b0;
-
-        #10 reset = 0; // Release reset
-
-        #10; //Give time for PCsIM and InstReadEn to load
-
-        // Test Case 1: Initial instruction fetch
-        instruction_mem = {32'h2BB81A3, 32'hC5F0B3, 32'h40C580B3, 32'h235AB83}; // 4 RISC-V instructions
-        #10; // Allow time for fetch
-        execution_complete = 4'b0001;
-        PCoutPE = 127'h00000000000000000000000000000000;
-
-        #10;
-
-
-        // Test Case 2: Dependency-free instructions
-        instruction_mem = {32'b00000000101001001000010110110011, 32'b00000000011100110000010000110011, 32'b00000000010000010000001010110011, 32'b00000000000100000000000110110011}; // No dependencies
-        
-        #10;
+        instruction = 0;
+        last_instruction = 0;
+        PCout = 0;
         execution_complete = 0;
+        #10;
 
-        #10; // Allow time for PE execution
+        reset = 0;
+
+        // Cycle 1: All PEs start at PC = 0
+        instruction = {4{32'hDEADBEEF}};
+        PCout = {4{32'd0}};
+        execution_complete = 4'b0000;
+        #10;
+
+        // Cycle 2: Sequential increment
+        instruction = {4{32'hCAFEBABE}};
+        PCout = {32'd1, 32'd1, 32'd1, 32'd1};
+        #10;
+
+        // Cycle 3: PE2 branches to PC=5
+        instruction = {4{32'hFEEDFACE}};
+        PCout = {32'd2, 32'd2, 32'd5, 32'd2};
+        #10;
+
+        // Cycle 4: PE0 and PE3 complete
+        execution_complete = 4'b1001;
+        instruction = {4{32'hBAADF00D}};
+        PCout = {32'd3, 32'd3, 32'd6, 32'd3};
+        #10;
+
+        // Cycle 5: All complete, last instruction
         execution_complete = 4'b1111;
-        PCoutPE = 127'h00000004000000030000000200000001;
-
-        #10; //Allow time to propagate
-
-        // Test Case 3: Instructions with dependencies
-        instruction_mem = {32'h00b002b3, 32'h00c00333, 32'h00d004b3, 32'h00e005b3}; // RAW and WAW dependencies
         last_instruction = 1;
-        
+        instruction = {4{32'hFFFFFFFF}};
+        PCout = {32'd4, 32'd4, 32'd7, 32'd4};
         #10;
-        execution_complete = 0;
 
-        #10;
-        execution_complete = 4'b1111;
-        PCoutPE = 127'h00000008000000070000000600000005;
-
-        
-        #30; // Allow time for processing
-        execution_complete = 0;
-
-        // Test Case 4: Reset the controller
-        reset = 1;
-        #10 reset = 0;
-
-        // End simulation
-        #10 $finish;
+        $display("Final done signal: %b", done);
+        $display("Testbench complete.");
+        $finish;
     end
-
 endmodule

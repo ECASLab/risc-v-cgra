@@ -1,59 +1,61 @@
 `include "InstructionMem.v"
 `timescale 1ns / 1ps
 
+
 module tb_instruction_memory;
 
-    reg clk;
-    reg [3:0] read_enable;
-    reg [31:0] pc;       // Program counter
-    wire [127:0] instruction; // Fetched instructions
+    parameter NUM_PE = 4;
+    parameter WIDTH = 32;
 
-    // Instantiate the instruction memory
-    instruction_memory uut (
+    reg clk;
+    reg reset;
+    reg [NUM_PE-1:0] read_enable;
+    reg [NUM_PE*WIDTH-1:0] PC;
+    wire [NUM_PE*WIDTH-1:0] instruction;
+    wire last_instruction;
+
+    instruction_memory #(NUM_PE) dut (
         .clk(clk),
+        .reset(reset),
         .read_enable(read_enable),
-        .PC(pc),
-        .instruction(instruction)
+        .PC(PC),
+        .instruction(instruction),
+        .last_instruction(last_instruction)
     );
 
     // Clock generation
+    always #5 clk = ~clk;
+
     initial begin
+        $display("Starting instruction memory testbench...");
         clk = 0;
-        forever #5 clk = ~clk; // Clock period = 10 time units
-    end
-
-    // Testbench logic
-    initial begin
-
-        $monitor("Time: %0dns | Instruction 1: %h | Instruction 2: %h | Instruction 3: %h | Instruction 4: %h", 
-                 $time, instruction[31:0], instruction[63:32], instruction[95:64], instruction[127:96]);
-
-        // Initialize signals
-        pc = 32'b0;             // Initialize PC to 0
-        read_enable = 4'b0000;   // No PEs reading initially
-        #10 read_enable = 4'b1111; // Enable all PEs for reading
-
-        // Assign program counters for the 4 PEs
-        pc = 32'd0;       // PE 0: Address 0
-
-        #10; // Allow some cycles for the memory to fetch instructions
-
-        // Update program counters
-        pc = 32'd4;       // PE 0: Address 4
-
-        #10; // Allow some cycles for the memory to fetch instructions
-
-        // Disable some PEs from reading
-        read_enable = 4'b1010;  // Enable only PE 1 and PE 3
+        reset = 1;
+        read_enable = 0;
+        PC = 0;
         #10;
 
-        // Update program counters for enabled PEs
-        pc = 32'd8;      // PE 1: Address 8
+        reset = 0;
 
-        #10; // Allow cycles for updated reads
+        // Test 1: All PEs read from PC = 0, 1, 2, 3
+        read_enable = 4'b1111;
+        PC = {32'd3, 32'd2, 32'd1, 32'd0}; // PE3=3, PE2=2, PE1=1, PE0=0
+        #10;
 
-        // Finish simulation
-        #20 $finish;
+        // Test 2: Only PE1 and PE3 read
+        read_enable = 4'b1010;
+        PC = {32'd4, 32'd0, 32'd1, 32'd2}; // PE3=4, PE2=0, PE1=1, PE0=2
+        #10;
+
+        // Test 3: All read PC = 4 (last instruction)
+        read_enable = 4'b1111;
+        PC = {4{32'd4}};
+        #10;
+
+        // Test 4: No read
+        read_enable = 4'b0000;
+        #10;
+
+        $display("Testbench complete.");
+        $finish;
     end
-
 endmodule

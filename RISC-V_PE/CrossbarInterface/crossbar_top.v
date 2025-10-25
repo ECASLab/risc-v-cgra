@@ -1,3 +1,12 @@
+`include "crossbarArbiter.v"
+`include "Crossbar.v"
+`include "input_mux.v"
+`include "mux_control.v"
+`include "output_demux.v"
+`include "ownership_tracker.v"
+`include "pipeline_register.v"
+`include "timeout_monitor.v"
+
 module crossbar_top #(parameter N = 4, WIDTH = 32)(
     input clk,
     input rst,
