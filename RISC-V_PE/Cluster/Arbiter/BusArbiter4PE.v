@@ -18,6 +18,7 @@ module bus_arbiter4 #(parameter NUM_PE = 4)(
         current    <= 2'b00;
     end else begin
         $display("Request status is: %b", req);
+        $display("Grant pending is: %b", grant_pending);
         $display("Current use of bus is %b for current %b", working, current);
 
         // Default: no grant if no request
@@ -25,7 +26,7 @@ module bus_arbiter4 #(parameter NUM_PE = 4)(
 
         // Try to grant access based on rotating priority
         for (i = 0; i < NUM_PE; i = i + 1) begin
-            if (req[i] && !working[i]) begin
+            if (req[i]) begin
                 grant_pending[i] <= 1'b1;
             end
         end

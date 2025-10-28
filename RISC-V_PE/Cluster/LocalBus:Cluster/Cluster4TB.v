@@ -1,4 +1,5 @@
 `timescale 1ns / 1ps
+`include "Cluster4.v"
 
 module local_bus_top_tb;
 
@@ -45,6 +46,8 @@ module local_bus_top_tb;
         .execution_complete(execution_complete),
         .branch_exec(branch_exec)
     );
+    integer active_count;
+    integer i;
     
     // Clock generation
     initial begin
@@ -103,9 +106,9 @@ module local_bus_top_tb;
             
             // Check for parallel memory access
             if ((mem_read_global | mem_write_global) != 0) begin
-                integer active_count = 0;
+                active_count = 0;
                 $display("\nActive Memory Operations:");
-                for (integer i = 0; i < NUM_PE; i = i + 1) begin
+                for (i = 0; i < NUM_PE; i = i + 1) begin
                     if (mem_read_global[i] || mem_write_global[i]) begin
                         active_count = active_count + 1;
                         $display("  PE[%0d]: %s | Address: 0x%08h", 
@@ -143,7 +146,7 @@ module local_bus_top_tb;
             
             // Display results
             $display("\n--- PE Outputs ---");
-            for (integer i = 0; i < NUM_PE; i = i + 1) begin
+            for (i = 0; i < NUM_PE; i = i + 1) begin
                 $display("PE[%0d]: Result=0x%08h | PC_out=0x%08h", 
                     i, 
                     result_out[i*32 +: 32],
@@ -302,8 +305,8 @@ module local_bus_top_tb;
 
     
     // Waveform dump
-    initial begin
-        $dumpfilb   $dumpvars(0, local_bus_top_tb);
-    end
+    //initial begin
+    //    $dumpfilb   $dumpvars(0, local_bus_top_tb);
+    //end
 
 endmodule

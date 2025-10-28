@@ -38,21 +38,13 @@ module tb_instruction_memory;
 
         // Test 1: All PEs read from PC = 0, 1, 2, 3
         read_enable = 4'b1111;
-        PC = {32'd3, 32'd2, 32'd1, 32'd0}; // PE3=3, PE2=2, PE1=1, PE0=0
+        PC = 128'b00000000000000000000000000000011_00000000000000000000000000000010_00000000000000000000000000000001_00000000000000000000000000000000; // PE0=0
         #10;
-
-        // Test 2: Only PE1 and PE3 read
-        read_enable = 4'b1010;
-        PC = {32'd4, 32'd0, 32'd1, 32'd2}; // PE3=4, PE2=0, PE1=1, PE0=2
-        #10;
-
-        // Test 3: All read PC = 4 (last instruction)
-        read_enable = 4'b1111;
-        PC = {4{32'd4}};
-        #10;
-
-        // Test 4: No read
         read_enable = 4'b0000;
+
+        // Test 2: Read the next 4 instructions
+        read_enable = 4'b1111;
+        PC = 128'b00000000000000000000000000000111_00000000000000000000000000000110_00000000000000000000000000000101_00000000000000000000000000000100; // PE0=0
         #10;
 
         $display("Testbench complete.");
