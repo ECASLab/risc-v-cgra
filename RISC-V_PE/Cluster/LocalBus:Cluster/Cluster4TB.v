@@ -28,6 +28,8 @@ module local_bus_top_tb;
     integer cycle_count;
     integer parallel_access_count;
     integer total_memory_accesses;
+    integer i;
+    integer active_count;
     
     // DUT instantiation
     local_bus_top #(.NUM_PE(NUM_PE)) dut (
@@ -46,8 +48,6 @@ module local_bus_top_tb;
         .execution_complete(execution_complete),
         .branch_exec(branch_exec)
     );
-    integer active_count;
-    integer i;
     
     // Clock generation
     initial begin

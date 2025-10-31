@@ -15,12 +15,16 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
     input [NUM_PE-1:0] execution_complete,
 
     // Global controller signal
-    output reg done
+    output reg done,
+
+    //Instruction dispatcher
+    input program_loaded
 );
 
     reg [31:0] pc_array [NUM_PE-1:0];
     reg branch_detected;
     reg [31:0] branch_target;
+    reg executing;
     integer i;
 
     always @(posedge clk or posedge reset) begin
@@ -35,10 +39,17 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
             branch_target <= 0;
             PC <= 0;
             PCin <= 0;
+            executing <= 0;
         end else begin
-            branch_detected <= 0;
-            branch_target <= 0;
-            if (&execution_complete && !done) begin
+
+            if (!executing && program_loaded) begin
+                executing <= 1;
+                $display("Cluster controller: Program loaded, starting execution.");
+            end
+
+            if (executing && &execution_complete && !done) begin
+                branch_detected <= 0;
+                branch_target <= 0;
                 // Compute next PC values
                 for (i = 0; i < NUM_PE; i = i + 1) begin
                     $display("PC out is %h whle pc_array is %h", PCout[i*32 +: 32], pc_array[i]);

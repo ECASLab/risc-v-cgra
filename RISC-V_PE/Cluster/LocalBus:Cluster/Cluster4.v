@@ -1,6 +1,6 @@
-`include "../Arbiter/BusArbiter4PE.v"
-`include "../PE:Interface/PEinterface.v"
-`include "../LocalMem4PE/dataRegs4.v"
+`include "../Cluster/Arbiter/BusArbiter4PE.v"
+`include "../Cluster/PE:Interface/PEinterface.v"
+`include "../Cluster/LocalMem4PE/dataRegs4.v"
 
 
 module local_bus_top #(parameter NUM_PE = 4)(

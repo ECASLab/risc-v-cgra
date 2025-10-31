@@ -1,6 +1,6 @@
-`include "../LocalMem4PE/mux32_4.v"
-`include "../LocalMem4PE/demux4_32.v"
-`include "../LocalMem/Datareg.v"
+`include "../Cluster/LocalMem4PE/mux32_4.v"
+`include "../Cluster/LocalMem4PE/demux4_32.v"
+`include "../Cluster/LocalMem/Datareg.v"
 
 
 module register_system (

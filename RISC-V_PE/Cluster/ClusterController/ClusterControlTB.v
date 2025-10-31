@@ -7,6 +7,7 @@ module tb_cluster_instruction_controller;
 
     reg clk;
     reg reset;
+    reg program_loaded;
     reg [NUM_PE*32-1:0] instruction;
     reg last_instruction;
     reg [NUM_PE*32-1:0] PCout;
@@ -21,6 +22,7 @@ module tb_cluster_instruction_controller;
     cluster_instruction_controller #(NUM_PE) dut (
         .clk(clk),
         .reset(reset),
+        .program_loaded(program_loaded),
         .read_enable(read_enable),
         .PC(PC),
         .instruction(instruction),
@@ -36,14 +38,13 @@ module tb_cluster_instruction_controller;
     always #5 clk = ~clk;
 
     initial begin
-
-        $monitor("Time: %0dns | ReadEn: %b | PC: %h | PCin: %h | Instructions: %h", 
-                 $time, read_enable, PC, PCin, instructions);
-
+        $monitor("Time: %0dns | ReadEn: %b | PC: %h | PCin: %h | Instructions: %h | Done: %b", 
+                 $time, read_enable, PC, PCin, instructions, done);
 
         $display("Starting cluster_instruction_controller testbench...");
         clk = 0;
         reset = 1;
+        program_loaded = 0;
         instruction = 0;
         last_instruction = 0;
         PCout = 0;
@@ -51,6 +52,11 @@ module tb_cluster_instruction_controller;
         #10;
 
         reset = 0;
+
+        // Simulate loading phase
+        #20;
+        program_loaded = 1;
+        $display("Program loaded signal asserted.");
 
         // Cycle 1: Initial dispatch
         instruction = {
@@ -62,7 +68,7 @@ module tb_cluster_instruction_controller;
         };
         #10;
 
-        // Cycle 2: PE2 branches to PC=10
+        // Cycle 2: PE1 branches to PC=10
         instruction = {
             32'hAAAA0004, 32'hBBBB0005, 32'hCCCC0006, 32'hDDDD0007
         };
@@ -79,11 +85,12 @@ module tb_cluster_instruction_controller;
         PCout = {
             32'd13, 32'd12, 32'd11, 32'd10
         };
+        execution_complete = 4'b1111;
         #10;
 
         // Cycle 4: Sequential
         instruction = {
-            32'hAAAA0004, 32'hBBBB0005, 32'hCCCC0006, 32'hDDDD0007
+            32'hAAAA000E, 32'hBBBB000F, 32'hCCCC0010, 32'hDDDD0011
         };
         PCout = {
             32'd17, 32'd16, 32'd15, 32'd14
@@ -97,4 +104,3 @@ module tb_cluster_instruction_controller;
         $finish;
     end
 endmodule
-
