@@ -17,9 +17,9 @@ module bus_arbiter4 #(parameter NUM_PE = 4)(
         grant_pending <= 4'b0000;
         current    <= 2'b00;
     end else begin
-        $display("Request status is: %b", req);
-        $display("Grant pending is: %b", grant_pending);
-        $display("Current use of bus is %b for current %b", working, current);
+        if (req != 0) $display("LocalArbiter: Request status is: %b", req);
+        //$display("Grant pending is: %b", grant_pending);
+        //$display("Current use of bus is %b for current %b", working, current);
 
         // Default: no grant if no request
         grant <= 4'b0000;
@@ -28,6 +28,9 @@ module bus_arbiter4 #(parameter NUM_PE = 4)(
         for (i = 0; i < NUM_PE; i = i + 1) begin
             if (req[i]) begin
                 grant_pending[i] <= 1'b1;
+            end
+            if (working[i] == 1) begin
+                grant_pending[i] <= 1'b0;
             end
         end
 
@@ -39,7 +42,7 @@ module bus_arbiter4 #(parameter NUM_PE = 4)(
 
         // Rotate priority every cycle
         current <= current + 1;
+        end
     end
-end
 
 endmodule

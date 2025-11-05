@@ -15,6 +15,7 @@ module local_bus_control #(parameter NUM_PE = 4)(
     input [31:0] write_data,
     input [31:0] write_address,
     input cluster_select,
+    input [1:0] Clusterid,
 
     output [NUM_PE*32-1:0] mem_address_global, // Addresses to read from global mem
     output [NUM_PE*32-1:0] result_out,         // Result from PE output *Might be an internal signal
@@ -32,6 +33,7 @@ module local_bus_control #(parameter NUM_PE = 4)(
     wire [NUM_PE*32-1:0] instructions;  //To PE cluster
     wire [NUM_PE*32-1:0] PCout; //From PE cluster
     wire [NUM_PE-1:0] execution_complete; //From PE cluster
+    wire IREnableExt;
 
 
     // Controller
@@ -45,6 +47,7 @@ module local_bus_control #(parameter NUM_PE = 4)(
         .PCin(PCin),
         .instructions(instructions),
         .PCout(PCout),
+        .IREnableExt(IREnableExt),
         .execution_complete(execution_complete),
         .done(done),
         .program_loaded(program_loaded)
@@ -68,6 +71,7 @@ module local_bus_control #(parameter NUM_PE = 4)(
         .clk(clk),
         .reset(reset),
         .PCin(PCin),
+        .Clusterid(Clusterid),
         .instructions(instructions),
         .mem_ack_global(mem_ack_global),
         .mem_data_global(mem_data_global),
@@ -75,10 +79,19 @@ module local_bus_control #(parameter NUM_PE = 4)(
         .result_out(result_out),
         .mem_write_data_global(mem_write_data_global),
         .PCout(PCout),
+        .IREnableExt(IREnableExt),
         .mem_write_global(mem_write_global),
         .mem_read_global(mem_read_global),
         .execution_complete(execution_complete),
         .branch_exec(branch_exec)
     );
+
+    always @(posedge clk) begin
+        begin
+            //if (IREnableExt != 0) begin
+                //$display("Enabled instruction received at Local Bus");
+            //end
+        end
+    end
 
 endmodule

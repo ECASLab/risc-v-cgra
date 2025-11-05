@@ -16,6 +16,10 @@ module global_memory #(parameter NUM_PE = 4, parameter DEPTH = 256)(
     integer i;
     reg [31:0] addr_i;
 
+    initial begin
+        $readmemh("mem_init.hex", memory_array);
+    end
+    
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             mem_read_data <= 0;

@@ -13,6 +13,7 @@ module PE_system (
     input        data_ReadyBus, //register read complete
     input [31:0] memData,      //Data coming from global memory
     input [1:0] id,           //Unique id to identify the PE in the bus
+    input IREnableExt,
     output [31:0] mem_addressBus,  //mem_Address sent to bus for global memory
     output [31:0] result_outBus,   //result_out sent to bus
     output [31:0] PCoutBus,        //new program counter to be sent to the controller
@@ -74,6 +75,7 @@ module PE_system (
         .rs2Out(rs2OutPE),      
         .rdOut(rdOutPE),
         .id(id),
+        .IREnableExt(IREnableExt),
         .rdWrite(rd_writePE),
         .mem_write(mem_writePE),
         .result_out(result_inPE),  // Output selected from output mux
@@ -135,7 +137,9 @@ module PE_system (
 
     always @(posedge clk) begin
         begin
-            //$display("This is the rs1Out sent to the bus: %b and read_en: %b", rs1OutBus, read_enBus);
+            if (instructionBus != 0) begin
+                //$display("PE%d This is the instruction received: %h ", id, instructionBus);
+            end
         end
     end
 endmodule

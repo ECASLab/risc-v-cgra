@@ -11,6 +11,7 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
     // Cluster interface
     output reg [NUM_PE*32-1:0] PCin,
     output reg [NUM_PE*32-1:0] instructions,
+    output reg IREnableExt,
     input [NUM_PE*32-1:0] PCout,
     input [NUM_PE-1:0] execution_complete,
 
@@ -25,6 +26,7 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
     reg branch_detected;
     reg [31:0] branch_target;
     reg executing;
+    reg done_pending;
     integer i;
 
     always @(posedge clk or posedge reset) begin
@@ -40,14 +42,34 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
             PC <= 0;
             PCin <= 0;
             executing <= 0;
+            IREnableExt <= 0;
         end else begin
-
+            //$display("Executing value: %b with execution complete: %b and done: %b", executing, execution_complete, done);
             if (!executing && program_loaded) begin
                 executing <= 1;
                 $display("Cluster controller: Program loaded, starting execution.");
             end
 
-            if (executing && &execution_complete && !done) begin
+            if (executing && execution_complete==0 && !done) begin
+                //$display("Entered execution part of controller");
+
+                // Drive PC and PCin to instruction memory and cluster
+                for (i = 0; i < NUM_PE; i = i + 1) begin
+                    PC[i*32 +: 32]   <= pc_array[i];
+                    PCin[i*32 +: 32] <= pc_array[i];
+                end
+
+                read_enable <= {NUM_PE{1'b1}};
+                instructions <= instruction;
+                IREnableExt <= 1;
+
+                if (last_instruction) begin
+                    done_pending = 1;
+                    read_enable <= 0;
+                    //$display("Entered through first case: All instructions have been read");
+                end
+            end else if (executing && !done) begin
+                //Branch can only happen after first execution (PCout has been calculated)
                 branch_detected <= 0;
                 branch_target <= 0;
                 // Compute next PC values
@@ -79,14 +101,24 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
 
                 read_enable <= {NUM_PE{1'b1}};
                 instructions <= instruction;
+                IREnableExt <= 1;
 
                 if (last_instruction) begin
-                    done = 1;
+                    done_pending = 1;
+                    read_enable <= 0;
                     $display("All instructions have been read");
                 end
+
             end else begin
                 read_enable <= 0;
             end
+
+            if (execution_complete == 4'b1111 & done_pending == 1) begin
+                done <= 1;
+                read_enable <= 0;
+                IREnableExt <= 0;
+            end
+
         end
     end
 endmodule

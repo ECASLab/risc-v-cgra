@@ -37,7 +37,7 @@ module instruction_memory_dynamic #(parameter NUM_PE = 4, parameter DEPTH = 256,
             end
 
             // Handle instruction read
-            last_instruction <= 0;
+            //last_instruction <= 0;
             for (i = 0; i < NUM_PE; i = i + 1) begin
                 pc_i = PC[i*32 +: 32];
                 if (read_enable[i] && pc_i < NUM_INSTRUCTIONS && !last_instruction) begin

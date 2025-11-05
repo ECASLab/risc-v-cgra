@@ -10,6 +10,8 @@ module local_bus_top #(parameter NUM_PE = 4)(
     input [NUM_PE*32-1:0] instructions,    // Instructions received by the interface controller
     input [NUM_PE-1:0] mem_ack_global,  // Coming from global memory
     input [NUM_PE*32-1:0] mem_data_global, // Data being read from global mem
+    input [1:0] Clusterid, //Unique id for cluster
+    input IREnableExt,
     
     output [NUM_PE*32-1:0] mem_address_global, // Addresses to read from global mem
     output [NUM_PE*32-1:0] result_out,         // Result from PE output *Might be an internal signal
@@ -139,7 +141,8 @@ module local_bus_top #(parameter NUM_PE = 4)(
                 .execution_complete(execution_complete[i]),
                 .data_Store(dataStore[i*32 +: 32]),
                 .branch_exec(branch_exec[i]),
-                .id(i[1:0])
+                .id(i[1:0]),
+                .IREnableExt(IREnableExt)
             );
             assign bus_request[i] = bus_request_i;
             assign working[i] = working_i;
@@ -155,6 +158,9 @@ module local_bus_top #(parameter NUM_PE = 4)(
             //dataReady_index <= 0;
         end
         else begin
+            //if (instructions != 0) begin
+            //    $display("Received instructions: %h", instructions);
+            //end
             //dataReady_index[0] <= regComplete0; //Delay the signal sent to the mux
             //$display("This is the dataReady_index: %b", dataReady_index);
         end

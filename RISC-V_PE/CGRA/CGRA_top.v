@@ -93,7 +93,7 @@ module cgra_top #(
     );
 
     // === Instruction Dispatcher ===
-    global_instruction_dispatcher #(.NUM_CLUSTERS(NUM_CLUSTERS), .INSTR_PER_CLUSTER(16)) dispatcher (
+    global_instruction_dispatcher #(.NUM_CLUSTERS(NUM_CLUSTERS), .INSTR_PER_CLUSTER(4)) dispatcher (
         .clk(clk),
         .reset(reset),
         .write_enable(write_enable_dispatch),
@@ -111,6 +111,7 @@ module cgra_top #(
             local_bus_control #(.NUM_PE(NUM_PE)) cluster (
                 .clk(clk),
                 .reset(reset),
+                .Clusterid(c[1:0]),
                 .mem_ack_global(mem_ack_all[c*NUM_PE +: NUM_PE]),
                 .mem_data_global(mem_data_all[c*NUM_PE*32 +: NUM_PE*32]),
                 .program_loaded(program_loaded[c]),

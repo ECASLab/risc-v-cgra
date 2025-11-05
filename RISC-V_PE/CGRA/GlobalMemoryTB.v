@@ -66,6 +66,14 @@ module tb_global_memory;
         $display("Read data (empty): %h", mem_read_data);
         $display("Ack: %b", mem_ack);
 
+        // Cycle 4: Read from preloaded addresses (should be 0)
+        mem_address = {32'd4, 32'd3, 32'd2, 32'd1};
+        mem_read = 4'b1111;
+        #10;
+
+        $display("Read data (preloaded): %h", mem_read_data);
+        $display("Ack: %b", mem_ack);
+
         $display("Testbench complete.");
         $finish;
     end

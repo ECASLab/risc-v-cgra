@@ -17,6 +17,7 @@ module processing_element (
     input [31:0] memData,      // Data from global memory to be loaded to A mux
     input        reset,
     input [1:0] id,            // Unique id for the PE
+    input IREnableExt,         //Signal to start executing instructions
     output [31:0] mem_address, // Address for memory operations (store)
     output reg_select,         // Signal to select proper register to read
     output mem_read,           // Memory read signal     
@@ -131,7 +132,7 @@ module processing_element (
     Register regIR (
         .clock(clk),
         .reset(reg_reset),
-        .r_enable(IRenable), 
+        .r_enable(IREnableExt), 
         .data_in(instruction), 
         .data_out(instructionIn)
     );  
@@ -186,5 +187,16 @@ module processing_element (
         .sel(Osel),  
         .data_out(result_out)  // Output message register.
     );
+
+    always @(posedge clk) begin
+        begin
+            if (instruction != 0) begin
+                $display("PE%d This is the instruction received at PE level: %h ", id, instruction);
+            end
+            if (instructionIn != 0) begin
+                $display("PE%d This is the instruction received at controller level: %h ", id, instructionIn);
+            end
+        end
+    end
 
 endmodule

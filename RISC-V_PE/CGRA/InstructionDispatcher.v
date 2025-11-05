@@ -1,6 +1,6 @@
 module global_instruction_dispatcher #(
     parameter NUM_CLUSTERS = 4,
-    parameter INSTR_PER_CLUSTER = 16
+    parameter INSTR_PER_CLUSTER = 4
 )(
     input clk,
     input reset,

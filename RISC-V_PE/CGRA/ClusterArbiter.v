@@ -21,9 +21,9 @@ module cluster_mem_arbiter #(parameter NUM_CLUSTERS = 4)(
         bus_locked <= 1'b0;
         release_wait <= 1'b0;
     end else begin
-        $display("Request status is: %b", req);
-        $display("Current use of bus is %b for current %b", working, current);
-        $display("Value of grant pending: %b and bus locked %b and bus owner %b", grant_pending, bus_locked, bus_owner);
+        if (req != 0) $display("GlobalArbiter: Request status is: %b", req);
+        //$display("Current use of bus is %b for current %b", working, current);
+        //$display("Value of grant pending: %b and bus locked %b and bus owner %b", grant_pending, bus_locked, bus_owner);
 
         // Default: no grant if no request
         grant <= 4'b0000;

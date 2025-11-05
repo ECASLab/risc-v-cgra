@@ -24,6 +24,7 @@ module tb_cgra_top;
     always #5 clk = ~clk;
 
     initial begin
+
         $display("Starting CGRA top-level testbench...");
         clk = 0;
         reset = 1;
