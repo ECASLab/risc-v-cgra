@@ -2,100 +2,89 @@
 
 `timescale 1ns / 1ps
 
-module tb_cluster_arbiter;
+module tb_cluster_mem_arbiter;
 
-    // Testbench signals
+    parameter NUM_CLUSTERS = 4;
+
     reg clk;
     reg reset;
-    reg [3:0] req;         // Request signals from Clusters
-    reg [3:0] working;     // Signal to indicate bus is in use
-    wire [3:0] grant;      // Grant signals from arbiter
+    reg [NUM_CLUSTERS-1:0] req_read;
+    reg [NUM_CLUSTERS-1:0] req_write;
+    reg [NUM_CLUSTERS-1:0] working;
 
-    // Instantiate the arbiter module
-    cluster_mem_arbiter uut (
+    wire [NUM_CLUSTERS-1:0] grant_read;
+    wire [NUM_CLUSTERS-1:0] grant_write;
+
+    cluster_mem_arbiter #(.NUM_CLUSTERS(NUM_CLUSTERS)) dut (
         .clk(clk),
         .reset(reset),
-        .req(req),
+        .req_read(req_read),
+        .req_write(req_write),
         .working(working),
-        .grant(grant)
+        .grant_read(grant_read),
+        .grant_write(grant_write)
     );
 
     // Clock generation
+    always #5 clk = ~clk;
+
     initial begin
+        $dumpfile("arbiter_test.vcd");
+        $dumpvars(0, tb_cluster_mem_arbiter);
+
         clk = 0;
-        forever #5 clk = ~clk; // Clock Period = 10 time units
-    end
-
-    // Testbench logic
-    initial begin
-        // Dump waveform for debugging
-        $dumpfile("tb_cluster_arbiter.vcd");
-        $dumpvars(0, tb_cluster_arbiter);
-
-        // Monitor outputs
-        $monitor("Time: %0dns | grant: %b", 
-                 $time, grant);
-
-
-        // Initialize signals
         reset = 1;
-        req = 4'b0000; // No requests initially
-        #10 reset = 0; // Release reset
+        req_read = 0;
+        req_write = 0;
+        working = 0;
 
-        $display("Test Case 1: Single Cluster requests (Cluster 0)");
-        working = 4'b0000;
-        #10 req = 4'b0001; // Cluster 0 requests access
-        #10 //req = 4'b0000; // Clear request
+        #10;
+        reset = 0;
+
+        // === Cycle 1: Cluster 0 requests read ===
+        req_read = 4'b0001;
+        #20;
+        $display("Cycle 1 at %t: grant_read = %b, grant_write = %b", $time, grant_read, grant_write);
         working = 4'b0001;
+        #10;
 
-        #10 req = 4'b0000;
-
-        #20 //give time to propagate
+        // === Cycle 2: Cluster 1 requests write ===
+        req_read = 0;
+        req_write = 4'b0010;
+        #10;
         working = 4'b0000;
-        #10
-        $display ("End of first case");
+        #40;
+        $display("Cycle 2 at %t: grant_read = %b, grant_write = %b", $time, grant_read, grant_write);
+        working = 4'b0010;
+        #10;
 
-        $display("Test Case 2: Multiple requests (Cluster 1 and Cluster 3)");
-        #10 req = 4'b1010; // Cluster 1 and Cluster 3 request access
-        #10 working = 4'b1000;
-        #10 req = 4'b0000;
-
-        #20 working = 4'b0000;
-        #10
-        $display("End of second case");
-
-        $display("Test Case 3: Sequential requests");
-        #10 req = 4'b0100; // Cluster 2 requests access
-        #10 req = 4'b0010; // Cluster 1 requests access
+        // === Cycle 3: Cluster 2 requests read, Cluster 3 requests write ===
+        req_read = 4'b0100;
+        req_write = 4'b1000;
+        #10;
+        working = 4'b0000;
+        #40;
+        $display("Cycle 3 at %t: grant_read = %b, grant_write = %b", $time, grant_read, grant_write);
         working = 4'b0100;
+        #10;
 
-        #20 working = 4'b0000;
-        #10 working = 4'b0010;
-        #10 req = 4'b0000;
-        #20 working = 4'b0000;
-        #10
-        $display("End of third case");
+        // === Release bus still write request ===
+        working = 0;
+        req_read = 4'b0000;
+        #40;
+        $display("Cycle %t: grant_read = %b, grant_write = %b", $time, grant_read, grant_write);
+        working = 4'b1000;
+        #10;
+        working = 0;
 
-        $display("Test Case 4: All Clusters request access");
-        #10 req = 4'b1111; // All Clusters request access
-        #10 working = 4'b0001; //Check to see which gets granted_index
+        // === Cycle 5: All clusters idle ===
+        req_read = 0;
+        req_write = 0;
+        #40;
+        $display("Cycle 5 at %t: grant_read = %b, grant_write = %b", $time, grant_read, grant_write);
 
-        #20 working = 4'b0000;
-
-        $display("Test Case 5: No requests");
-        #10 req = 4'b0000; // No Clusters request access
-
-        $display("Test Case 6: Persistent request (Cluster 0 keeps requesting access)");
-        #10 req = 4'b0001; // Cluster 0 requests access again
-        #50 req = 4'b0000; // Clear request
-
-        $display("Test Case 7: Cluster requests access but previous is still using bus");
-        working = 4'b0001;
-        #10 req = 4'b0010; // Cluster 0 requests access again
-        #50 req = 4'b0000; // Clear request
-
-        // End simulation
-        #10 $finish;
+        #20;
+        $finish;
     end
 
 endmodule

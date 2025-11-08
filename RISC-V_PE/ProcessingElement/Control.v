@@ -71,6 +71,15 @@ reg mem_ack_sync;
 reg ALURes_sync;
 reg [2:0] state; //State machine
 
+reg [6:0] storedOP; //Store operation from decoder
+reg [2:0] storedFunct3; //Store funct3 from decoder
+reg [6:0] storedFunct7; //Store funct7 from decoder
+reg [4:0]  storedrs1;
+reg [4:0]  storedrs2;
+reg [4:0]  storedrd;
+reg [11:0] storedimm12;
+reg [19:0] storedimmhi;
+
 
 // Function definition 
     function [31:0] sign_extend;
@@ -114,7 +123,14 @@ initial begin
     state = 3'b0;
     branch_exec = 0;
     secondRead = 0;
-    //req = 0;
+    storedOP = 0;
+    storedFunct3 = 0;
+    storedFunct7 = 0;
+    storedimm12 = 0;
+    storedimmhi = 0;
+    storedrs1 = 0;
+    storedrs2 = 0;
+    storedrd = 0;
 end
 
 always @(posedge clk or posedge reset) 
@@ -149,18 +165,39 @@ begin
         state <= 3'b0;
         branch_exec <= 0;
         secondRead <= 0;
+
+        storedOP <= 0;
+        storedFunct3 <= 0;
+        storedFunct7 <= 0;
+        storedimm12 <= 0;
+        storedimmhi <= 0;
+        storedrs1 <= 0;
+        storedrs2 <= 0;
+        storedrd <= 0;
     
         reg_reset <= 0;
         IRenable <= 1;
     end
     else
     begin
+        if (decodeComplete != 0)
+        begin
+            storedOP <= op;
+            storedFunct3 <= funct3;
+            storedFunct7 <= funct7;
+            storedimm12 <= imm12;
+            storedimmhi <= immhi;
+            storedrd <= rd;
+            storedrs1 <= rs1;
+            storedrs2 <= rs2;
+        end
+        //$display("Op value is: %b", storedOP);
         dataReady_sync <= dataReady;
         ALUcomplete_sync <= ALUcomplete;
         mem_ack_sync <= mem_ack;
         ALURes_sync <= ALURes;
 
-    case(op)
+    case(storedOP)
     7'b0000011: // Op code 3 is load operations
     begin
         if (state == 0)
@@ -174,18 +211,18 @@ begin
             execution_complete <= 0;
             secondRead <= 3'b001;
 
-            rs1Out <= rs1;
+            rs1Out <= storedrs1;
             reg_select <= 0; //Selects only rs1 value to pull
             read_en <= 1;
         end 
 
-        if (dataReady_sync && state == 3'b0)
+        if (dataReady_sync && state == 0)
         begin
             state = 3'b001;
             read_en <= 0;
             secondRead <= 0;
             Asel <= 2'b01; // Select data from local bus as A input
-            immvalue <= sign_extend(imm12);
+            immvalue <= sign_extend(storedimm12);
             Bsel <= 2'b10; //Select immidiate value as B input
             Aenable <= 1;
             Benable <= 1;
@@ -199,9 +236,10 @@ begin
 
         if (ALUcomplete_sync && state == 3'b001)
         begin
-            $display("Completed addition of address");
+            $display("Completed addition of address and value is %b", ALURes);
             state <= 3'b010;
             mem_read <= 1; //Send signal for memory read
+            mem_address <= ALURes; 
             Aenable <= 0;
             Benable <= 0;
             Asel <= 2'b00; //Select data from global memory as A input
@@ -211,12 +249,14 @@ begin
 
         if (mem_ack_sync && state == 3'b010) //After acknowledge signal has been received
         begin
+            $display("PE received the acknowledge signal");
             state <= 3'b011;
             mem_read <= 0;
             secondRead <= 0;
-            case (funct3)
+            case (storedFunct3)
             3'b000: // Load byte sign extended
                 begin
+                $display("Entered sign extended byte load");
                 ALUsel <= 5'b10000; // Select take byte sign extended from ALU
                 Osel <= 2'b00; //Select output from ALU
                 end
@@ -243,8 +283,9 @@ begin
         end 
         if (ALUcomplete_sync && state == 3'b011)
         begin
+            $display("Completed extraction of bits");
             state <= 3'b100;
-            rdOut <= rd; 
+            rdOut <= storedrd; 
             rdWrite <= 1; //Send signal to write output value into rd register
             execution_complete <= 1;
         end
@@ -253,7 +294,7 @@ begin
         begin
             read_en <= 0;
             Asel <= 2'b01; // Select data from local bus as A input
-            immvalue <= sign_extend(imm12);
+            immvalue <= sign_extend(storedimm12);
             Bsel <= 2'b10; //Select immidiate value as B input
             Aenable <= 1;
             Benable <= 1;
@@ -275,7 +316,7 @@ begin
         else if (state == 3'b011)
         begin
             mem_read <= 0;
-            case (funct3)
+            case (storedFunct3)
             3'b000: // Load byte sign extended
                 begin
                 ALUsel <= 5'b10000; // Select take byte sign extended from ALU
@@ -304,7 +345,7 @@ begin
         end 
         else if (state == 3'b100)
         begin
-            rdOut <= rd; 
+            rdOut <= storedrd; 
             rdWrite <= 0; //Send signal to write output value into rd register
             execution_complete <= 1;
         end         
@@ -319,7 +360,7 @@ begin
             mem_read <= 0;
             Aenable <= 0;
             Benable <= 0;
-            rs1Out <= rs1;
+            rs1Out <= storedrs1;
             reg_select <= 0;
             read_en <= 1;
             reg_reset <= 0;
@@ -334,13 +375,13 @@ begin
             secondRead <= 0;
             read_en <= 0;
             Asel <= 2'b01; //Select data comming from bus
-            tempimmvalue = sign_extend(imm12);
+            tempimmvalue = sign_extend(storedimm12);
             Bsel <= 2'b10; //Select immidiate value as B input
             // Enable registers to load value
             Aenable <= 1; 
             Benable <= 1;
 
-            case(funct3)
+            case(storedFunct3)
             3'b000: //Add immidiate
             begin
                 //Select ALU to add values
@@ -350,7 +391,7 @@ begin
 
             3'b001: //Shift left
             begin
-                immvalue <= {27'b000000000000000000000000000, imm12[4:0]};
+                immvalue <= {27'b000000000000000000000000000, storedimm12[4:0]};
 
                 ALUsel <= 5'b00100;
             end
@@ -378,7 +419,7 @@ begin
 
             3'b101: //Shift right logical or arithmetic
             begin
-                immvalue <= {27'b000000000000000000000000000, imm12[4:0]};
+                immvalue <= {27'b000000000000000000000000000, storedimm12[4:0]};
 
                 case(tempimmvalue[11:5])
                 7'b0000000: //Logical shift right
@@ -415,7 +456,7 @@ begin
             $display("ALU operation complete");
             state <= 3'b010;
             Osel <= 2'b00;
-            rdOut <= rd;
+            rdOut <= storedrd;
             rdWrite <= 1;
             execution_complete <= 1;
             //complete_operation(2'b00,rd);
@@ -424,13 +465,13 @@ begin
         if (state == 3'b001)
         begin
             Asel <= 2'b01; //Select data comming from bus
-            tempimmvalue = sign_extend(imm12);
+            tempimmvalue = sign_extend(storedimm12);
             Bsel <= 2'b10; //Select immidiate value as B input
             // Enable registers to load value
             Aenable <= 1; 
             Benable <= 1;
 
-            case(funct3)
+            case(storedFunct3)
             3'b000: //Add immidiate
             begin
                 //Select ALU to add values
@@ -440,7 +481,7 @@ begin
 
             3'b001: //Shift left
             begin
-                immvalue <= {27'b000000000000000000000000000, imm12[4:0]};
+                immvalue <= {27'b000000000000000000000000000, storedimm12[4:0]};
 
                 ALUsel <= 5'b00100;
             end
@@ -468,7 +509,7 @@ begin
 
             3'b101: //Shift right logical or arithmetic
             begin
-                immvalue <= {27'b000000000000000000000000000, imm12[4:0]};
+                immvalue <= {27'b000000000000000000000000000, storedimm12[4:0]};
 
                 case(tempimmvalue[11:5])
                 7'b0000000: //Logical shift right
@@ -516,8 +557,8 @@ begin
             Aenable <= 0;
             Benable <= 0;
             PCout <= PCin; // By default, retain the same PC value
-            rs1Out <= rs1;
-            rs2Out <= rs2;
+            rs1Out <= storedrs1;
+            rs2Out <= storedrs2;
             reg_select <= 1;
             read_en <= 1;
             reg_reset <= 0;
@@ -537,14 +578,14 @@ begin
             Aenable <= 1; 
             Benable <= 1;
 
-            case(funct3)
+            case(storedFunct3)
             3'b000: //Add, substract, multiply
             begin
-                if (funct7 == 7'b0000000) begin
+                if (storedFunct7 == 7'b0000000) begin
                     ALUsel <= 5'b00000; // Add
-                end else if (funct7 == 7'b0100000) begin
+                end else if (storedFunct7 == 7'b0100000) begin
                     ALUsel <= 5'b00001; // Subtract
-                end else if (funct7 == 7'b0000001) begin
+                end else if (storedFunct7 == 7'b0000001) begin
                     $display("Selected multiplication");
                     secondRead <= 3'b111;
                     ALUsel <= 5'b00010; //multiply
@@ -588,7 +629,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-                case(funct7)
+                case(storedFunct7)
                 7'b0000000: //Logical shift right
                 begin
                     ALUsel <= 5'b00101;
@@ -635,14 +676,14 @@ begin
             Aenable <= 1; 
             Benable <= 1;
 
-            case(funct3)
+            case(storedFunct3)
             3'b000: //Add, substract, multiply
             begin
-                if (funct7 == 7'b0000000) begin
+                if (storedFunct7 == 7'b0000000) begin
                     ALUsel <= 5'b00000; // Add
-                end else if (funct7 == 7'b0100000) begin
+                end else if (storedFunct7 == 7'b0100000) begin
                     ALUsel <= 5'b00001; // Subtract
-                end else if (funct7 == 7'b0000001) begin
+                end else if (storedFunct7 == 7'b0000001) begin
                     ALUsel <= 5'b00010; //multiply
                 end
             end
@@ -684,7 +725,7 @@ begin
                 // Enable registers to load value
                 Aenable <= 1; 
                 Benable <= 1;
-                case(funct7)
+                case(storedFunct7)
                 7'b0000000: //Logical shift right
                 begin
                     ALUsel <= 5'b00101;
@@ -733,7 +774,7 @@ begin
             execution_complete <= 0;
 
             reg_reset <= 0;
-            tempimmvalue = {immhi, 12'b000000000000};
+            tempimmvalue = {storedimmhi, 12'b000000000000};
             immvalue <= tempimmvalue;
             Bsel <= 2'b10; //Select immidiate value as B input
             // Enable registers to load value
@@ -746,7 +787,7 @@ begin
         if (tempimmvalue != 0 && state == 3'b0) //After acknowledge signal has been received
         begin
             state <= 3'b001;
-            rdOut <= rd; 
+            rdOut <= storedrd; 
             rdWrite <= 1; //Send signal to write output value into rd register
             execution_complete <= 1;
         end
@@ -767,10 +808,10 @@ begin
             rdWrite <= 0;
             PCout <= PCin; // By default, retain the same PC value
             execution_complete <= 0;
-            immvalue <= sign_extend(imm12);
+            immvalue <= sign_extend(storedimm12);
             reg_reset <= 1;
             reg_reset <= 0;
-            rs1Out <= rs1;
+            rs1Out <= storedrs1;
             reg_select <= 0; //Selects data only from rs1 to pull 
             Asel <= 2'b01; //Select data from bus local memory
             Bsel <= 2'b10; //Select immidiate value as B input
@@ -804,7 +845,7 @@ begin
             secondRead <= 1;
             $display("Getting to second read for Rs2 with rs2: %b", rs2);
             Benable <= 1;
-            rs2Out <= rs2;
+            rs2Out <= storedrs2;
             //read_en <= 1;
             reg_select <= 1; //Selects both registers rs1 and rs2 to pull data from *will only use rs2
             Bsel <= 2'b01; //Select data from local bus at B operand (rs2)
@@ -823,7 +864,7 @@ begin
             read_en <= 0;
             state <= 3'b101;
             Osel <= 2'b00;
-            case(funct3)
+            case(storedFunct3)
             3'b000: //Store byte
                 begin
                     $display("This is a store byte case");
@@ -873,7 +914,7 @@ begin
             ALUsel <= 5'b11111;
             secondRead <= 1;
             Benable <= 1;
-            rs2Out <= rs2;
+            rs2Out <= storedrs2;
             //read_en <= 1;
             reg_select <= 1; //Selects both registers rs1 and rs2 to pull data from *will only use rs2
             Bsel <= 2'b01; //Select data from local bus at B operand (rs2)
@@ -886,7 +927,7 @@ begin
         begin
             read_en <= 0;
             Osel <= 2'b00;
-            case(funct3)
+            case(storedFunct3)
             3'b000: //Store byte
                 begin
                     ALUsel = 5'b10111; //Take only lower byte of rs2 value
@@ -926,14 +967,14 @@ begin
             Osel <= 2'b11;
             reg_reset <= 1;
             reg_reset <= 0;
-            rs1Out <= rs1;
-            rs2Out <= rs2;
+            rs1Out <= storedrs1;
+            rs2Out <= storedrs2;
             reg_select <= 1; //Selects both registers to pull
             read_en <= 1;
             Asel = 2'b01; //Select data from bus local mem
             Bsel <= 2'b01; //Select data from bus local mem
             ALUsel <= 5'b11111;
-            tempimmvalue = sign_extend(imm12);
+            tempimmvalue = sign_extend(storedimm12);
             immvalue <= {tempimmvalue[30:0], 1'b0};
 
             Aenable <= 1;
@@ -948,11 +989,11 @@ begin
             Benable <= 1;
             read_en <= 0;
 
-            if (funct3 == 3'b000 || funct3 == 3'b001)
+            if (storedFunct3 == 3'b000 || storedFunct3 == 3'b001)
             begin
                 ALUsel <= 5'b00110;
             end
-            else if (funct3 == 3'b100 || funct3 == 3'b101)
+            else if (storedFunct3 == 3'b100 || storedFunct3 == 3'b101)
             begin
                 ALUsel <= 5'b01011;
             end
@@ -962,7 +1003,7 @@ begin
         begin
             state <= 3'b010;
             ALUsel = 5'b11111;
-            case (funct3)
+            case (storedFunct3)
             3'b000: //Case if =
             begin
                 if (ALURes == 32'b00000000000000000000000000000001)
@@ -1054,11 +1095,11 @@ begin
             Aenable <= 1;
             Benable <= 1;
             read_en <= 0;
-            if (funct3 == 3'b000 || funct3 == 3'b001)
+            if (storedFunct3 == 3'b000 || storedFunct3 == 3'b001)
             begin
                 ALUsel <= 5'b00110;
             end
-            else if (funct3 == 3'b100 || funct3 == 3'b101)
+            else if (storedFunct3 == 3'b100 || storedFunct3 == 3'b101)
             begin
                 ALUsel <= 5'b01011;
             end
@@ -1112,7 +1153,7 @@ begin
             reg_reset <= 0;
             Asel = 2'b10; //Select PC
             Bsel <= 2'b10; //Select immvalue
-            tempimmvalue = (immhi[19] == 0) ? {12'b0, immhi} : {12'b111111111111, immhi};
+            tempimmvalue = (storedimmhi[19] == 0) ? {12'b0, storedimmhi} : {12'b111111111111, storedimmhi};
             immvalue <= {tempimmvalue[30:0], 1'b0};
 
             Aenable <= 1;
@@ -1129,7 +1170,7 @@ begin
         begin
             state <= 3'b011;
             PCout <= ALURes;
-            rdOut <= rd;
+            rdOut <= storedrd;
             Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
         end
 
@@ -1142,7 +1183,7 @@ begin
             PCout <= ALURes;
             branch_exec <= 1;
             execution_complete <= 1;
-            rdOut <= rd;
+            rdOut <= storedrd;
             rdWrite <= 1;
             Osel = 2'b01; //Select A reg (PCin) as output *ommiting for now the + 4
         end

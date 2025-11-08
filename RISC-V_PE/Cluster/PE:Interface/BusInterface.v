@@ -248,8 +248,8 @@ module bus_interface (
                 end
                 if (currentMemRead)
                 begin
-                    mem_addressBus <= result_inPE; //Address is calculated from ALU
-                    $display("ID: %d. Requesting a read from memory address: %b and working value is %b", id, mem_addressBus, working);
+                    mem_addressBus <= mem_addressPE; //Address is calculated from ALU
+                    $display("ID: %d. Requesting a read from memory address: %b and working value is %b", id, mem_addressPE, working);
                     muxSel <= 1;
                     mem_readBus <= mem_readPE;
                 end
@@ -279,6 +279,7 @@ module bus_interface (
                 $display("ID: %d. Bus access is active and working value is %b", id, working);
                 muxSel <= 0;
                 currentReadEn = 0;
+                currentMemRead = 0;
                 extraTime = 1;
                 read_enBus <= 0;
                 mem_readBus <= 0;

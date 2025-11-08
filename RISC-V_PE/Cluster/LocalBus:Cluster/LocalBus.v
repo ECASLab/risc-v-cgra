@@ -1,6 +1,6 @@
-`include "../Cluster/ClusterController/ClusterControl.v"
-`include "../Cluster/InstructionMem/InstructionMemDynamic.v"
-`include "../Cluster/LocalBus:Cluster/Cluster4.v"
+`include "../../Cluster/ClusterController/ClusterControl.v"
+`include "../../Cluster/InstructionMem/InstructionMemDynamic.v"
+`include "../../Cluster/LocalBus:Cluster/Cluster4.v"
 
 
 module local_bus_control #(parameter NUM_PE = 4)(
@@ -88,9 +88,9 @@ module local_bus_control #(parameter NUM_PE = 4)(
 
     always @(posedge clk) begin
         begin
-            //if (IREnableExt != 0) begin
+            if (IREnableExt != 0) begin
                 //$display("Enabled instruction received at Local Bus");
-            //end
+            end
         end
     end
 

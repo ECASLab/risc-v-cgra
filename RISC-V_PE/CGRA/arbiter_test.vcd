@@ -1,0 +1,277 @@
+$date
+	Sat Nov  8 16:11:28 2025
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ps
+$end
+$scope module tb_cluster_mem_arbiter $end
+$var wire 4 ! grant_write [3:0] $end
+$var wire 4 " grant_read [3:0] $end
+$var parameter 32 # NUM_CLUSTERS $end
+$var reg 1 $ clk $end
+$var reg 4 % req_read [3:0] $end
+$var reg 4 & req_write [3:0] $end
+$var reg 1 ' reset $end
+$var reg 4 ( working [3:0] $end
+$scope module dut $end
+$var wire 1 $ clk $end
+$var wire 4 ) req_read [3:0] $end
+$var wire 4 * req_write [3:0] $end
+$var wire 1 ' reset $end
+$var wire 4 + working [3:0] $end
+$var parameter 32 , NUM_CLUSTERS $end
+$var reg 1 - bus_locked $end
+$var reg 2 . bus_owner [1:0] $end
+$var reg 2 / current [1:0] $end
+$var reg 4 0 grant_pending_read [3:0] $end
+$var reg 4 1 grant_pending_write [3:0] $end
+$var reg 4 2 grant_read [3:0] $end
+$var reg 4 3 grant_write [3:0] $end
+$var reg 1 4 last_granted_type $end
+$var reg 1 5 release_wait $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+$comment Show the parameter values. $end
+$dumpall
+b100 ,
+b100 #
+$end
+#0
+$dumpvars
+05
+04
+b0 3
+b0 2
+b0 1
+b0 0
+b0 /
+b0 .
+0-
+b0 +
+b0 *
+b0 )
+b0 (
+1'
+b0 &
+b0 %
+0$
+b0 "
+b0 !
+$end
+#5000
+1$
+#10000
+0$
+b1 %
+b1 )
+0'
+#15000
+b1 /
+b1 0
+1$
+#20000
+0$
+#25000
+b10 /
+b0 0
+1-
+b1 "
+b1 2
+1$
+#30000
+0$
+b1 (
+b1 +
+#35000
+b11 /
+b0 "
+b0 2
+1$
+#40000
+0$
+b10 &
+b10 *
+b0 %
+b0 )
+#45000
+b0 /
+1$
+#50000
+0$
+b0 (
+b0 +
+#55000
+b1 /
+15
+1$
+#60000
+0$
+#65000
+b10 /
+05
+0-
+1$
+#70000
+0$
+#75000
+b11 /
+b10 1
+1$
+#80000
+0$
+#85000
+b0 /
+b0 1
+1-
+14
+b1 .
+b10 !
+b10 3
+1$
+#90000
+0$
+b10 (
+b10 +
+#95000
+b1 /
+b0 !
+b0 3
+1$
+#100000
+0$
+b1000 &
+b1000 *
+b100 %
+b100 )
+#105000
+b10 /
+1$
+#110000
+0$
+b0 (
+b0 +
+#115000
+b11 /
+15
+1$
+#120000
+0$
+#125000
+b0 /
+05
+0-
+1$
+#130000
+0$
+#135000
+b1 /
+b1000 1
+b100 0
+1$
+#140000
+0$
+#145000
+b10 /
+b0 1
+b0 0
+1-
+04
+b10 .
+b100 "
+b100 2
+1$
+#150000
+0$
+b100 (
+b100 +
+#155000
+b11 /
+b0 "
+b0 2
+1$
+#160000
+0$
+b0 %
+b0 )
+b0 (
+b0 +
+#165000
+b0 /
+15
+1$
+#170000
+0$
+#175000
+b1 /
+05
+0-
+1$
+#180000
+0$
+#185000
+b10 /
+b1000 1
+1$
+#190000
+0$
+#195000
+b11 /
+b0 1
+1-
+14
+b11 .
+b1000 !
+b1000 3
+1$
+#200000
+0$
+b1000 (
+b1000 +
+#205000
+b0 /
+b0 !
+b0 3
+1$
+#210000
+0$
+b0 &
+b0 *
+b0 (
+b0 +
+#215000
+b1 /
+15
+1$
+#220000
+0$
+#225000
+b10 /
+05
+0-
+1$
+#230000
+0$
+#235000
+b11 /
+1$
+#240000
+0$
+#245000
+b0 /
+1$
+#250000
+0$
+#255000
+b1 /
+1$
+#260000
+0$
+#265000
+b10 /
+1$
+#270000
+0$

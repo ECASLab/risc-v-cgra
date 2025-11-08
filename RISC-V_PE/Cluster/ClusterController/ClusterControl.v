@@ -44,7 +44,6 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
             executing <= 0;
             IREnableExt <= 0;
         end else begin
-            //$display("Executing value: %b with execution complete: %b and done: %b", executing, execution_complete, done);
             if (!executing && program_loaded) begin
                 executing <= 1;
                 $display("Cluster controller: Program loaded, starting execution.");
@@ -116,7 +115,7 @@ module cluster_instruction_controller #(parameter NUM_PE = 4)(
             if (execution_complete == 4'b1111 & done_pending == 1) begin
                 done <= 1;
                 read_enable <= 0;
-                IREnableExt <= 0;
+                //IREnableExt <= 0;
             end
 
         end

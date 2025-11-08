@@ -16,7 +16,6 @@ output reg [19:0] immhi; //immidiate value for U and J type instructions
 output reg        decodeComplete;
 
 
-
 always @(*) begin
     // Extract opcode
     op <= instruction [6:0];
@@ -93,6 +92,13 @@ always @(*) begin
     end
 
     endmodule
+
+
+
+
+
+
+
 
 
 

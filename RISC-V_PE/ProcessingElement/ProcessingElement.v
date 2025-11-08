@@ -1,10 +1,10 @@
 // Procesing element top module. Designed to work for the Local Bus/Cluster module. To test only the PE, remove the ../../ProcessingElement from the include
-`include "../ProcessingElement/Control.v"
-`include "../ProcessingElement/decoder.v"
-`include "../ProcessingElement/ALU.v"
-`include "../ProcessingElement/mux2_1.v"
-`include "../ProcessingElement/mux3_1.v"
-`include "../ProcessingElement/reg.v"
+`include "../../ProcessingElement/Control.v"
+`include "../../ProcessingElement/decoder.v"
+`include "../../ProcessingElement/ALU.v"
+`include "../../ProcessingElement/mux2_1.v"
+`include "../../ProcessingElement/mux3_1.v"
+`include "../../ProcessingElement/reg.v"
 
 module processing_element (
     input clk,
@@ -190,11 +190,11 @@ module processing_element (
 
     always @(posedge clk) begin
         begin
-            if (instruction != 0) begin
-                $display("PE%d This is the instruction received at PE level: %h ", id, instruction);
+            if (AmuxIn != 0) begin
+                $display("PE%d Value into Amux: %h ", id, AmuxIn);
             end
-            if (instructionIn != 0) begin
-                $display("PE%d This is the instruction received at controller level: %h ", id, instructionIn);
+            if (data_Ready != 0) begin
+                //$display("PE%d Received the data ready into the PE", id);
             end
         end
     end

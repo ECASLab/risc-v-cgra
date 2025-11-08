@@ -5,8 +5,9 @@ module global_memory_mux #(
     input clk,
     input reset,
 
-    // Arbiter grant signal
-    input [NUM_CLUSTERS-1:0] grant,
+    // Arbiter grant signals
+    input [NUM_CLUSTERS-1:0] grant_read,
+    input [NUM_CLUSTERS-1:0] grant_write,
 
     // Cluster inputs to global memory
     input [NUM_CLUSTERS*NUM_PE*32-1:0] mem_address_in,
@@ -41,16 +42,17 @@ module global_memory_mux #(
         mem_ack_out            = 0;
 
         for (i = 0; i < NUM_CLUSTERS; i = i + 1) begin
-            if (grant[i]) begin
-                // Forward cluster[i] signals to global memory
-                mem_address_global     = mem_address_in[i*NUM_PE*32 +: NUM_PE*32];
-                mem_write_data_global  = mem_write_data_in[i*NUM_PE*32 +: NUM_PE*32];
-                mem_read_global        = mem_read_in[i*NUM_PE +: NUM_PE];
-                mem_write_global       = mem_write_in[i*NUM_PE +: NUM_PE];
+            if (grant_read[i]) begin
+                mem_address_global = mem_address_in[i*NUM_PE*32 +: NUM_PE*32];
+                mem_read_global    = mem_read_in[i*NUM_PE +: NUM_PE];
 
-                // Route global memory response back to cluster[i]
                 mem_data_out[i*NUM_PE*32 +: NUM_PE*32] = mem_data_global;
                 mem_ack_out[i*NUM_PE +: NUM_PE]        = mem_ack_global;
+            end
+            else if (grant_write[i]) begin
+                mem_address_global    = mem_address_in[i*NUM_PE*32 +: NUM_PE*32];
+                mem_write_data_global = mem_write_data_in[i*NUM_PE*32 +: NUM_PE*32];
+                mem_write_global      = mem_write_in[i*NUM_PE +: NUM_PE];
             end
         end
     end

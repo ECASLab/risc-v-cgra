@@ -15,9 +15,11 @@ module cgra_top #(
 );
 
     // === Arbiter Signals ===
-    wire [NUM_CLUSTERS-1:0] req;
+    wire [NUM_CLUSTERS-1:0] req_read;
+    wire [NUM_CLUSTERS-1:0] req_write;
     wire [NUM_CLUSTERS-1:0] working;
-    wire [NUM_CLUSTERS-1:0] grant;
+    wire [NUM_CLUSTERS-1:0] grant_read;
+    wire [NUM_CLUSTERS-1:0] grant_write;
 
     // === Dispatcher Signals ===
     wire [NUM_CLUSTERS-1:0] write_enable_dispatch;
@@ -49,23 +51,27 @@ module cgra_top #(
     cluster_mem_arbiter #(.NUM_CLUSTERS(NUM_CLUSTERS)) arbiter (
         .clk(clk),
         .reset(reset),
-        .req(req),
+        .req_read(req_read),
+        .req_write(req_write),
         .working(working),
-        .grant(grant)
+        .grant_read(grant_read),
+        .grant_write(grant_write)
     );
 
     // === Request Interface ===
     cluster_request_interface #(.NUM_CLUSTERS(NUM_CLUSTERS), .NUM_PE(NUM_PE)) req_if (
         .mem_read_all(mem_read_all),
         .mem_write_all(mem_write_all),
-        .req(req)
+        .req_read(req_read),
+        .req_write(req_write)
     );
 
     // === Memory Mux ===
     global_memory_mux #(.NUM_CLUSTERS(NUM_CLUSTERS), .NUM_PE(NUM_PE)) mux (
         .clk(clk),
         .reset(reset),
-        .grant(grant),
+        .grant_read(grant_read),
+        .grant_write(grant_write),
         .mem_address_in(mem_address_all),
         .mem_write_data_in(mem_write_data_all),
         .mem_read_in(mem_read_all),

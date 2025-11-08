@@ -17,7 +17,7 @@ module bus_arbiter4 #(parameter NUM_PE = 4)(
         grant_pending <= 4'b0000;
         current    <= 2'b00;
     end else begin
-        if (req != 0) $display("LocalArbiter: Request status is: %b", req);
+        //if (req != 0) $display("LocalArbiter: Request status is: %b", req);
         //$display("Grant pending is: %b", grant_pending);
         //$display("Current use of bus is %b for current %b", working, current);
 
