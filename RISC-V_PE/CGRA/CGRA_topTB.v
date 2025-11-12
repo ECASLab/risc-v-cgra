@@ -36,17 +36,20 @@ module tb_cgra_top;
         wait (dut.dispatch_done);
         $display("Instruction dispatch complete.");
 
+
+        #500;
+
         // Wait for all clusters to signal done
-        wait (&dut.done_all);
-        $display("All clusters completed execution.");
+        //wait (&dut.done_all);
+        //$display("All clusters completed execution.");
 
         // Observe memory transactions
-        #50;
-        $display("Global memory address: %h", dut.mem_address_global);
-        $display("Global memory write data: %h", dut.mem_write_data_global);
-        $display("Global memory read data: %h", dut.mem_data_global);
-        $display("Global memory read enable: %b", dut.mem_read_global);
-        $display("Global memory write enable: %b", dut.mem_write_global);
+        //#50;
+        //$display("Global memory address: %h", dut.mem_address_global);
+        //$display("Global memory write data: %h", dut.mem_write_data_global);
+        //$display("Global memory read data: %h", dut.mem_data_global);
+        //$display("Global memory read enable: %b", dut.mem_read_global);
+        //$display("Global memory write enable: %b", dut.mem_write_global);
 
         $display("Testbench complete.");
         $finish;

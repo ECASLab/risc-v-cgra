@@ -62,14 +62,12 @@ module cgra_top #(
     cluster_request_interface #(.NUM_CLUSTERS(NUM_CLUSTERS), .NUM_PE(NUM_PE)) req_if (
         .mem_read_all(mem_read_all),
         .mem_write_all(mem_write_all),
-        .req_read(req_read),
-        .req_write(req_write)
+        .read_req(req_read),
+        .write_req(req_write)
     );
 
     // === Memory Mux ===
     global_memory_mux #(.NUM_CLUSTERS(NUM_CLUSTERS), .NUM_PE(NUM_PE)) mux (
-        .clk(clk),
-        .reset(reset),
         .grant_read(grant_read),
         .grant_write(grant_write),
         .mem_address_in(mem_address_all),

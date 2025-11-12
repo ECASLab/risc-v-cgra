@@ -14,15 +14,15 @@ module tb_bus_interface_test_top;
     wire [NUM_PE*32-1:0] mem_data_global;
     wire [NUM_PE*32-1:0] mem_address_global;
     wire [NUM_PE*32-1:0] mem_write_data_global;
+    wire [NUM_PE-1:0] mem_read_global;
+    wire [NUM_PE-1:0] mem_write_global;
     wire [NUM_PE-1:0] branch_exec;
     wire [NUM_PE*32-1:0] result_out;
     wire done;
-    wire [NUM_CLUSTERS-1:0] grant_read;
-    wire [NUM_CLUSTERS-1:0] grant_write;
 
     // Dummy memory response
-    assign mem_ack_global = (|dut.mem_read_global) ? {NUM_PE{1'b1}} : {NUM_PE{1'b0}};
-    assign mem_data_global = (|dut.mem_read_global) ? {NUM_PE{32'hCAFEBABE}} : {NUM_PE{32'h00000000}};
+    assign mem_ack_global = (|mem_read_global) ? {NUM_PE{1'b1}} : {NUM_PE{1'b0}};
+    assign mem_data_global = (|mem_read_global) ? {NUM_PE{32'hCAFEBABE}} : {NUM_PE{32'h00000000}};
 
     bus_interface_test_top #(
         .NUM_CLUSTERS(NUM_CLUSTERS),
@@ -35,20 +35,17 @@ module tb_bus_interface_test_top;
         .mem_data_global(mem_data_global),
         .mem_address_global(mem_address_global),
         .mem_write_data_global(mem_write_data_global),
+        .mem_read_global(mem_read_global),
+        .mem_write_global(mem_write_global),
         .branch_exec(branch_exec),
         .result_out(result_out),
-        .done(done),
-        .grant_read(grant_read),
-        .grant_write(grant_write)
+        .done(done)
     );
 
     // Clock generation
     always #5 clk = ~clk;
 
     initial begin
-        $monitor("Time: %0dns | mem_address: %h | grant_read: %b | grant_write: %b",
-                 $time, mem_address_global, grant_read, grant_write);
-
         $display("Starting testbench for bus_interface_test_top...");
         clk = 0;
         reset = 1;
@@ -59,12 +56,18 @@ module tb_bus_interface_test_top;
         wait (dut.program_loaded);
         $display("Program loaded into cluster.");
 
-        // Wait for memory requests and observe arbitration
-        #350;
+        // Observe mux behavior
+        $display("Time(ns) | mem_read | mem_write | mem_address_global | mem_write_data_global ");
+        $monitor("%8dns |     %b     |   %b    | %h | %h",
+                 $time, mem_read_global, mem_write_global,
+                 mem_address_global, mem_write_data_global);
+
+        // Wait for memory activity
+        #500;
 
         if (done) $display("Cluster execution complete.");
 
-        #70;
+        #50;
         $display("Execution complete at time %t", $time);
         $finish;
     end

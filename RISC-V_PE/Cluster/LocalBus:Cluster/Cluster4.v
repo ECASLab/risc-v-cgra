@@ -1,6 +1,6 @@
-`include "../../Cluster/Arbiter/BusArbiter4PE.v"
-`include "../../Cluster/PE:Interface/PEinterface.v"
-`include "../../Cluster/LocalMem4PE/dataRegs4.v"
+`include "../Cluster/Arbiter/BusArbiter4PE.v"
+`include "../Cluster/PE:Interface/PEinterface.v"
+`include "../Cluster/LocalMem4PE/dataRegs4.v"
 
 
 module local_bus_top #(parameter NUM_PE = 4)(
@@ -158,9 +158,9 @@ module local_bus_top #(parameter NUM_PE = 4)(
             //dataReady_index <= 0;
         end
         else begin
-            //if (instructions != 0) begin
-            //    $display("Received instructions: %h", instructions);
-            //end
+            if (mem_data_global != 0) begin
+                //$display("At cluster level, mem_data received is %h", mem_data_global);
+            end
             //dataReady_index[0] <= regComplete0; //Delay the signal sent to the mux
             //$display("This is the dataReady_index: %b", dataReady_index);
         end

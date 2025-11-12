@@ -16,7 +16,7 @@ module global_instruction_dispatcher #(
     integer cluster_id, instr_id;
 
     initial begin
-        $readmemh("global_program_test.hex", global_instruction_memory);
+        $readmemh("global_program.hex", global_instruction_memory);
     end
 
     parameter IDLE     = 2'b00;

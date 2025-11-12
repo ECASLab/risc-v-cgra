@@ -1,5 +1,5 @@
-`include "../../Cluster/PE:Interface/BusInterface.v"
-`include "../../ProcessingElement/ProcessingElement.v"
+`include "../Cluster/PE:Interface/BusInterface.v"
+`include "../ProcessingElement/ProcessingElement.v"
 
 module PE_system (
     input clk,
@@ -137,8 +137,8 @@ module PE_system (
 
     always @(posedge clk) begin
         begin
-            if (data_ReadyBus != 0) begin
-                //$display("PE%d RECEIVED DATA READY SIGNAL FROM LOCAL MEM", id);
+            if (memData != 0) begin
+                $display("PE%d Data received at interface level %h", id, memData);
             end
             if (data_ReadyPE != 0) begin
                 $display("DATA READY SENT TO PE%d with AmuxPE: %h", id, AmuxPE);

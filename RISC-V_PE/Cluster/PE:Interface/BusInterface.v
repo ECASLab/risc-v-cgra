@@ -175,12 +175,19 @@ module bus_interface (
             if (mem_ackBus == 1)
             begin
                 mem_ackRec <= 1;
+                //$display ("At bus interface, received the acknowledge");
+                //$display ("MemDataStored is %b, mem_readPE is %b", MemDataStored, mem_readPE);
                 // Store memData once when it's valid
-                if (!MemDataStored && all_known(mem_ackBus) && currentMemRead) begin
+                if (!MemDataStored && all_known(mem_ackBus) && mem_readPE) begin
                     memDataStore  <= memData;
                     MemDataStored <= 1;
                     $display("ID: %d. Entered memData Store with global mem data %b", id, memData);
                 end
+            end
+
+            if (memData != 0)
+            begin
+                //$display("Mem data read at bus interface is %h", memData);
             end
 
             //$display("At the start of the cycle, AmuxBus: %b and BmuxBus: %b", AmuxBus, BmuxBus);
