@@ -1,0 +1,44 @@
+hardware:
+  cluster:
+    default_size: 4              # PEs por cluster
+    max_size: 16                 # Escalable según necesidad
+    topology: "mesh2d_shared_bus"
+
+  processing_elements:
+    type: "RISC-V RV32IM"
+    homogeneous: true            # Todos los PEs son iguales
+
+    # Basado en Figura 3.1
+    components:
+      - ALU: true
+      - Multiplier: true         # Incluido en RV32IM
+      - Decoder: true
+      - Controller: true
+      - Registers: [A, B, IR]    # Registros internos del PE
+
+  memory:
+    local_shared:
+      num_registers: 32
+      register_width: 32         # bits
+      access_type: "shared"      # Todos los PEs comparten
+
+    instruction_memory:
+      capacity: 255
+      scalable: true
+      format: "hex"              # instructions.hex
+
+  interconnect:
+    local_bus:
+      type: "shared_bus"
+      arbitration: "round_robin"
+
+    # Para futuro: NoC global entre clusters
+    global_noc:
+      enabled: false             # Trabajo futuro
+
+  arbiter:
+    policy: "round_robin"        # Política: round_robin, priority, fair_share
+    fairness: true
+    priority_levels: 1           # Todos iguales por ahora
+    grant_latency: 1             # Ciclos para obtener grant (Sección 4.1)
+    contention_penalty: 1        # Penalización por contención

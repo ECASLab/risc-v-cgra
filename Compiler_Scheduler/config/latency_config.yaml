@@ -1,0 +1,72 @@
+# Basado en los diagramas de flujo de la tesis (Capítulo 4)
+
+operation_latencies:
+  load_operations:
+    LB: 3
+    LH: 3
+    LW: 3
+    LBU: 3
+    LHU: 3
+
+  store_operations:
+    SB: 5
+    SH: 5
+    SW: 5
+
+  alu_operations:
+    # ALU con 2 registros
+    ADD: 2
+    SUB: 2
+    AND: 2
+    OR: 2
+    XOR: 2
+    SLL: 2
+    SRL: 2
+    SRA: 2
+    SLT: 2
+    SLTU: 2
+
+    # ALU con inmediato
+    ADDI: 2
+    ANDI: 2
+    ORI: 2
+    XORI: 2
+    SLLI: 2
+    SRLI: 2
+    SRAI: 2
+    SLTI: 2
+    SLTIU: 2
+
+    # Multiplicación (asumiendo mayor latencia)
+    MULTIPLY: 4
+
+  control_operations:
+    # Branch
+    BEQ: 3
+    BNE: 3
+    BLT: 3
+    BGE: 3
+    BLTU: 3
+    BGEU: 3
+
+    # Jump
+    JAL: 3
+    JALR: 3
+
+  special_operations:
+    LUI: 1    # Carga inmediata simple
+    AUIPC: 2
+
+# Latencias de acceso a memoria
+memory_access:
+  local_registers:
+    read: 1     # Acceso directo
+    write: 1
+
+  instruction_memory:
+    fetch: 1    # Lectura directa
+
+# Latencias de arbitraje
+bus_arbitration:
+  grant_latency: 1     # Round-robin por ciclo
+  contention_penalty: 1 # Espera si bus ocupado
