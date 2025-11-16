@@ -17,60 +17,72 @@ VLIWGenerator::VLIWGenerator(const Scheduler& scheduler,
     initializeRegisterMappings();
 }
 
-// Inicializa el mapeo de mnemonicos RISC-V a opcodes binarios de 6 bits
+// Inicializa el mapeo de mnemonicos RISC-V a opcodes binarios de 7 bits según ISA estándar
 // Input: ninguno
 // Output: opcode_map_ poblado con todos los mnemonicos soportados
 void VLIWGenerator::initializeOpcodeMappings() {
-    opcode_map_["nop"]    = 0x00;
+    // NOP (implementado como ADDI x0, x0, 0)
+    opcode_map_["nop"]    = 0x13;  // 0010011 (I-type)
     
-    opcode_map_["addi"]   = 0x01;
-    opcode_map_["slti"]   = 0x02;
-    opcode_map_["sltiu"]  = 0x03;
-    opcode_map_["xori"]   = 0x04;
-    opcode_map_["ori"]    = 0x05;
-    opcode_map_["andi"]   = 0x06;
-    opcode_map_["slli"]   = 0x07;
-    opcode_map_["srli"]   = 0x08;
-    opcode_map_["srai"]   = 0x09;
+    // I-Type: 0010011 (addi, slti, sltiu, xori, ori, andi, slli, srli, srai)
+    opcode_map_["addi"]   = 0x13;  // 0010011
+    opcode_map_["slti"]   = 0x13;  // 0010011
+    opcode_map_["sltiu"]  = 0x13;  // 0010011
+    opcode_map_["xori"]   = 0x13;  // 0010011
+    opcode_map_["ori"]    = 0x13;  // 0010011
+    opcode_map_["andi"]   = 0x13;  // 0010011
+    opcode_map_["slli"]   = 0x13;  // 0010011
+    opcode_map_["srli"]   = 0x13;  // 0010011
+    opcode_map_["srai"]   = 0x13;  // 0010011
     
-    opcode_map_["add"]    = 0x10;
-    opcode_map_["sub"]    = 0x11;
-    opcode_map_["sll"]    = 0x12;
-    opcode_map_["slt"]    = 0x13;
-    opcode_map_["sltu"]   = 0x14;
-    opcode_map_["xor"]    = 0x15;
-    opcode_map_["srl"]    = 0x16;
-    opcode_map_["sra"]    = 0x17;
-    opcode_map_["or"]     = 0x18;
-    opcode_map_["and"]    = 0x19;
+    // R-Type: 0110011 (add, sub, sll, slt, sltu, xor, srl, sra, or, and, multiply)
+    opcode_map_["add"]    = 0x33;  // 0110011
+    opcode_map_["sub"]    = 0x33;  // 0110011
+    opcode_map_["sll"]    = 0x33;  // 0110011
+    opcode_map_["slt"]    = 0x33;  // 0110011
+    opcode_map_["sltu"]   = 0x33;  // 0110011
+    opcode_map_["xor"]    = 0x33;  // 0110011
+    opcode_map_["srl"]    = 0x33;  // 0110011
+    opcode_map_["sra"]    = 0x33;  // 0110011
+    opcode_map_["or"]     = 0x33;  // 0110011
+    opcode_map_["and"]    = 0x33;  // 0110011
+    opcode_map_["mul"]    = 0x33;  // 0110011
+    opcode_map_["mulh"]   = 0x33;  // 0110011
+    opcode_map_["mulhsu"] = 0x33;  // 0110011
+    opcode_map_["mulhu"]  = 0x33;  // 0110011
+    opcode_map_["multiply"] = 0x33;  // 0110011
     
-    opcode_map_["mul"]    = 0x20;
-    opcode_map_["mulh"]   = 0x21;
-    opcode_map_["mulhsu"] = 0x22;
-    opcode_map_["mulhu"]  = 0x23;
-    opcode_map_["multiply"] = 0x20;
+    // I-Type Load: 0000011 (lw, lh, lhu, lb, lbu)
+    opcode_map_["lw"]     = 0x03;  // 0000011
+    opcode_map_["lh"]     = 0x03;  // 0000011
+    opcode_map_["lhu"]    = 0x03;  // 0000011
+    opcode_map_["lb"]     = 0x03;  // 0000011
+    opcode_map_["lbu"]    = 0x03;  // 0000011
     
-    opcode_map_["lw"]     = 0x24;
-    opcode_map_["lh"]     = 0x25;
-    opcode_map_["lhu"]    = 0x26;
-    opcode_map_["lb"]     = 0x27;
-    opcode_map_["lbu"]    = 0x28;
-    opcode_map_["sw"]     = 0x29;
-    opcode_map_["sh"]     = 0x2A;
-    opcode_map_["sb"]     = 0x2B;
+    // S-Type: 0100011 (sw, sh, sb)
+    opcode_map_["sw"]     = 0x23;  // 0100011
+    opcode_map_["sh"]     = 0x23;  // 0100011
+    opcode_map_["sb"]     = 0x23;  // 0100011
     
-    opcode_map_["beq"]    = 0x30;
-    opcode_map_["bne"]    = 0x31;
-    opcode_map_["blt"]    = 0x32;
-    opcode_map_["bge"]    = 0x33;
-    opcode_map_["bltu"]   = 0x34;
-    opcode_map_["bgeu"]   = 0x35;
+    // B-Type: 1100011 (beq, bne, blt, bge, bltu, bgeu)
+    opcode_map_["beq"]    = 0x63;  // 1100011
+    opcode_map_["bne"]    = 0x63;  // 1100011
+    opcode_map_["blt"]    = 0x63;  // 1100011
+    opcode_map_["bge"]    = 0x63;  // 1100011
+    opcode_map_["bltu"]   = 0x63;  // 1100011
+    opcode_map_["bgeu"]   = 0x63;  // 1100011
     
-    opcode_map_["jal"]    = 0x36;
-    opcode_map_["jalr"]   = 0x37;
+    // J-Type: 1101111 (jal)
+    opcode_map_["jal"]    = 0x6F;  // 1101111
     
-    opcode_map_["lui"]    = 0x38;
-    opcode_map_["auipc"]  = 0x39;
+    // I-Type: 1100111 (jalr)
+    opcode_map_["jalr"]   = 0x67;  // 1100111
+    
+    // U-Type: 0110111 (lui)
+    opcode_map_["lui"]    = 0x37;  // 0110111
+    
+    // U-Type: 0010111 (auipc)
+    opcode_map_["auipc"]  = 0x17;  // 0010111
 }
 
 // Inicializa el mapeo de nombres de registros a números de 5 bits (0-31)
@@ -118,14 +130,14 @@ void VLIWGenerator::initializeRegisterMappings() {
 
 // Obtiene el opcode binario para un mnemonico RISC-V
 // Input: mnemonic (nombre de la operación, ej: "add", "lw")
-// Output: opcode de 6 bits (0-63) o 0x00 si desconocido
+// Output: opcode de 7 bits (0-127) según ISA estándar o 0x13 (ADDI/NOP) si desconocido
 uint8_t VLIWGenerator::getOpcode(const std::string& mnemonic) const {
     auto it = opcode_map_.find(mnemonic);
     if (it != opcode_map_.end()) {
         return it->second;
     }
-    Logger::warning("Opcode desconocido: " + mnemonic + ", usando NOP");
-    return 0x00;
+    Logger::warning("Opcode desconocido: " + mnemonic + ", usando NOP (ADDI)");
+    return 0x13;  // ADDI x0, x0, 0 (NOP)
 }
 
 // Obtiene el número de registro (0-31) para un nombre
@@ -145,14 +157,77 @@ uint8_t VLIWGenerator::getRegisterNumber(const std::string& reg_name) const {
     return 0;
 }
 
+// Obtiene funct3 para una instrucción según el ISA
+uint8_t VLIWGenerator::getFunct3(const std::string& mnemonic) const {
+    // I-Type arithmetic/logic
+    if (mnemonic == "addi") return 0x0;
+    if (mnemonic == "slti") return 0x2;
+    if (mnemonic == "sltiu") return 0x3;
+    if (mnemonic == "xori") return 0x4;
+    if (mnemonic == "ori") return 0x6;
+    if (mnemonic == "andi") return 0x7;
+    if (mnemonic == "slli") return 0x1;
+    if (mnemonic == "srli") return 0x5;
+    if (mnemonic == "srai") return 0x5;
+    
+    // R-Type
+    if (mnemonic == "add" || mnemonic == "sub") return 0x0;
+    if (mnemonic == "sll") return 0x1;
+    if (mnemonic == "slt") return 0x2;
+    if (mnemonic == "sltu") return 0x3;
+    if (mnemonic == "xor") return 0x4;
+    if (mnemonic == "srl" || mnemonic == "sra") return 0x5;
+    if (mnemonic == "or") return 0x6;
+    if (mnemonic == "and") return 0x7;
+    if (mnemonic == "mul" || mnemonic == "multiply") return 0x0;
+    if (mnemonic == "mulh") return 0x1;
+    if (mnemonic == "mulhsu") return 0x2;
+    if (mnemonic == "mulhu") return 0x3;
+    
+    // Load
+    if (mnemonic == "lb") return 0x0;
+    if (mnemonic == "lh") return 0x1;
+    if (mnemonic == "lw") return 0x2;
+    if (mnemonic == "lbu") return 0x4;
+    if (mnemonic == "lhu") return 0x5;
+    
+    // Store
+    if (mnemonic == "sb") return 0x0;
+    if (mnemonic == "sh") return 0x1;
+    if (mnemonic == "sw") return 0x2;
+    
+    // Branch
+    if (mnemonic == "beq") return 0x0;
+    if (mnemonic == "bne") return 0x1;
+    if (mnemonic == "blt") return 0x4;
+    if (mnemonic == "bge") return 0x5;
+    if (mnemonic == "bltu") return 0x6;
+    if (mnemonic == "bgeu") return 0x7;
+    
+    // JALR
+    if (mnemonic == "jalr") return 0x0;
+    
+    return 0x0;
+}
+
+// Obtiene funct7 para una instrucción R-Type según el ISA
+uint8_t VLIWGenerator::getFunct7(const std::string& mnemonic) const {
+    if (mnemonic == "sub") return 0x20;
+    if (mnemonic == "sra") return 0x20;
+    if (mnemonic == "srai") return 0x20;
+    if (mnemonic == "mul" || mnemonic == "multiply" || 
+        mnemonic == "mulh" || mnemonic == "mulhsu" || mnemonic == "mulhu") return 0x01;
+    return 0x00;
+}
+
 // Retorna codificación de NOP (todos los bits en 0)
 uint32_t VLIWGenerator::encodeNOP() const {
     return 0x00000000;
 }
 
-// Codifica una instrucción RISC-V a 32 bits según formato VLIW
+// Codifica una instrucción RISC-V a 32 bits según formato ISA estándar
 // Input: sched_inst (instrucción planificada con ID, PE, ciclo)
-// Output: palabra de 32 bits con opcode, registros e inmediato
+// Output: palabra de 32 bits en formato R, I, S, B, U o J según tipo
 uint32_t VLIWGenerator::encodeInstruction(const ScheduledInstruction& sched_inst) const {
     const auto& instructions = parser_.getInstructions();
     if (sched_inst.instruction_id >= static_cast<int>(instructions.size())) {
@@ -161,26 +236,87 @@ uint32_t VLIWGenerator::encodeInstruction(const ScheduledInstruction& sched_inst
     }
     
     const Instruction& inst = instructions[sched_inst.instruction_id];
+    std::string mnemonic = inst.getOpcode();
     
     uint32_t encoding = 0;
+    uint8_t opcode = getOpcode(mnemonic) & 0x7F;  // 7 bits
+    uint8_t funct3 = getFunct3(mnemonic) & 0x7;   // 3 bits
+    uint8_t funct7 = getFunct7(mnemonic) & 0x7F;  // 7 bits
     
-    uint8_t opcode = getOpcode(inst.getOpcode());
-    encoding |= (static_cast<uint32_t>(opcode & 0x3F) << 26);
+    uint8_t rd = getRegisterNumber(inst.getRd()) & 0x1F;
+    uint8_t rs1 = getRegisterNumber(inst.getRs1()) & 0x1F;
+    uint8_t rs2 = getRegisterNumber(inst.getRs2()) & 0x1F;
+    int32_t imm = inst.hasImmediateValue() ? inst.getImmediate() : 0;
     
-    if (!inst.isBranchOperation() && !inst.isStoreOperation()) {
-        uint8_t rd = getRegisterNumber(inst.getRd());
-        encoding |= (static_cast<uint32_t>(rd & 0x1F) << 21);
+    // Opcode siempre en bits [6:0]
+    encoding |= static_cast<uint32_t>(opcode);
+    
+    // R-Type: funct7[31:25] | rs2[24:20] | rs1[19:15] | funct3[14:12] | rd[11:7] | opcode[6:0]
+    if (opcode == 0x33) {  // R-Type
+        encoding |= (static_cast<uint32_t>(rd) << 7);
+        encoding |= (static_cast<uint32_t>(funct3) << 12);
+        encoding |= (static_cast<uint32_t>(rs1) << 15);
+        encoding |= (static_cast<uint32_t>(rs2) << 20);
+        encoding |= (static_cast<uint32_t>(funct7) << 25);
     }
-    
-    uint8_t rs1 = getRegisterNumber(inst.getRs1());
-    encoding |= (static_cast<uint32_t>(rs1 & 0x1F) << 16);
-    
-    uint8_t rs2 = getRegisterNumber(inst.getRs2());
-    encoding |= (static_cast<uint32_t>(rs2 & 0x1F) << 11);
-    
-    if (inst.hasImmediateValue()) {
-        int16_t imm = static_cast<int16_t>(inst.getImmediate());
-        encoding |= (static_cast<uint32_t>(imm & 0x7FF));
+    // I-Type: imm[31:20] | rs1[19:15] | funct3[14:12] | rd[11:7] | opcode[6:0]
+    else if (opcode == 0x13 || opcode == 0x03 || opcode == 0x67) {  // I-Type (ALU, Load, JALR)
+        encoding |= (static_cast<uint32_t>(rd) << 7);
+        encoding |= (static_cast<uint32_t>(funct3) << 12);
+        encoding |= (static_cast<uint32_t>(rs1) << 15);
+        
+        // Para shifts inmediatos, funct7 va en bits [31:25] y shamt en [24:20]
+        if (mnemonic == "slli" || mnemonic == "srli" || mnemonic == "srai") {
+            uint32_t shamt = imm & 0x1F;
+            encoding |= (shamt << 20);
+            encoding |= (static_cast<uint32_t>(funct7) << 25);
+        } else {
+            // Inmediato de 12 bits con signo
+            uint32_t imm12 = static_cast<uint32_t>(imm) & 0xFFF;
+            encoding |= (imm12 << 20);
+        }
+    }
+    // S-Type: imm[11:5][31:25] | rs2[24:20] | rs1[19:15] | funct3[14:12] | imm[4:0][11:7] | opcode[6:0]
+    else if (opcode == 0x23) {  // S-Type (Store)
+        uint32_t imm_4_0 = static_cast<uint32_t>(imm) & 0x1F;
+        uint32_t imm_11_5 = (static_cast<uint32_t>(imm) >> 5) & 0x7F;
+        
+        encoding |= (imm_4_0 << 7);
+        encoding |= (static_cast<uint32_t>(funct3) << 12);
+        encoding |= (static_cast<uint32_t>(rs1) << 15);
+        encoding |= (static_cast<uint32_t>(rs2) << 20);
+        encoding |= (imm_11_5 << 25);
+    }
+    // B-Type: imm[12|10:5][31:25] | rs2[24:20] | rs1[19:15] | funct3[14:12] | imm[4:1|11][11:7] | opcode[6:0]
+    else if (opcode == 0x63) {  // B-Type (Branch)
+        uint32_t imm_u = static_cast<uint32_t>(imm);
+        uint32_t imm_11 = (imm_u >> 11) & 0x1;
+        uint32_t imm_4_1 = (imm_u >> 1) & 0xF;
+        uint32_t imm_10_5 = (imm_u >> 5) & 0x3F;
+        uint32_t imm_12 = (imm_u >> 12) & 0x1;
+        
+        encoding |= ((imm_11 << 7) | (imm_4_1 << 8));
+        encoding |= (static_cast<uint32_t>(funct3) << 12);
+        encoding |= (static_cast<uint32_t>(rs1) << 15);
+        encoding |= (static_cast<uint32_t>(rs2) << 20);
+        encoding |= ((imm_10_5 << 25) | (imm_12 << 31));
+    }
+    // U-Type: imm[31:12] | rd[11:7] | opcode[6:0]
+    else if (opcode == 0x37 || opcode == 0x17) {  // U-Type (LUI, AUIPC)
+        encoding |= (static_cast<uint32_t>(rd) << 7);
+        uint32_t imm_31_12 = (static_cast<uint32_t>(imm) >> 12) & 0xFFFFF;
+        encoding |= (imm_31_12 << 12);
+    }
+    // J-Type: imm[20|10:1|11|19:12][31:12] | rd[11:7] | opcode[6:0]
+    else if (opcode == 0x6F) {  // J-Type (JAL)
+        encoding |= (static_cast<uint32_t>(rd) << 7);
+        uint32_t imm_u = static_cast<uint32_t>(imm);
+        uint32_t imm_19_12 = (imm_u >> 12) & 0xFF;
+        uint32_t imm_11 = (imm_u >> 11) & 0x1;
+        uint32_t imm_10_1 = (imm_u >> 1) & 0x3FF;
+        uint32_t imm_20 = (imm_u >> 20) & 0x1;
+        
+        encoding |= ((imm_19_12 << 12) | (imm_11 << 20) | (imm_10_1 << 21) | (imm_20 << 31));
     }
     
     return encoding;
@@ -247,7 +383,7 @@ void VLIWGenerator::generate() {
     Logger::info("Generadas " + std::to_string(vliw_instructions_.size()) + " palabras VLIW de 128 bits");
 }
 
-// Decodifica palabra de 32 bits a string assembly legible
+// Decodifica palabra de 32 bits a string assembly legible según ISA estándar
 // Input: encoding (palabra de 32 bits codificada)
 // Output: string con instrucción en formato assembly
 std::string VLIWGenerator::decodeToString(uint32_t encoding) const {
@@ -259,18 +395,70 @@ std::string VLIWGenerator::decodeToString(uint32_t encoding) const {
     uint8_t rd = extractRd(encoding);
     uint8_t rs1 = extractRs1(encoding);
     uint8_t rs2 = extractRs2(encoding);
+    uint8_t funct3 = (encoding >> 12) & 0x7;
+    uint8_t funct7 = (encoding >> 25) & 0x7F;
     int16_t imm = extractImmediate(encoding);
     
     std::string mnemonic = "unknown";
-    for (const auto& pair : opcode_map_) {
-        if (pair.second == opcode) {
-            mnemonic = pair.first;
-            break;
-        }
-    }
     
-    bool is_branch = (opcode >= 0x30 && opcode <= 0x35);
-    bool is_store = (opcode >= 0x29 && opcode <= 0x2B);
+    // Determinar el mnemonic basado en opcode, funct3 y funct7
+    if (opcode == 0x33) {  // R-Type
+        if (funct7 == 0x00) {
+            if (funct3 == 0x0) mnemonic = "add";
+            else if (funct3 == 0x1) mnemonic = "sll";
+            else if (funct3 == 0x2) mnemonic = "slt";
+            else if (funct3 == 0x3) mnemonic = "sltu";
+            else if (funct3 == 0x4) mnemonic = "xor";
+            else if (funct3 == 0x5) mnemonic = "srl";
+            else if (funct3 == 0x6) mnemonic = "or";
+            else if (funct3 == 0x7) mnemonic = "and";
+        } else if (funct7 == 0x20) {
+            if (funct3 == 0x0) mnemonic = "sub";
+            else if (funct3 == 0x5) mnemonic = "sra";
+        } else if (funct7 == 0x01) {
+            if (funct3 == 0x0) mnemonic = "mul";
+            else if (funct3 == 0x1) mnemonic = "mulh";
+            else if (funct3 == 0x2) mnemonic = "mulhsu";
+            else if (funct3 == 0x3) mnemonic = "mulhu";
+        }
+    } else if (opcode == 0x13) {  // I-Type ALU
+        if (funct3 == 0x0) mnemonic = "addi";
+        else if (funct3 == 0x2) mnemonic = "slti";
+        else if (funct3 == 0x3) mnemonic = "sltiu";
+        else if (funct3 == 0x4) mnemonic = "xori";
+        else if (funct3 == 0x6) mnemonic = "ori";
+        else if (funct3 == 0x7) mnemonic = "andi";
+        else if (funct3 == 0x1) mnemonic = "slli";
+        else if (funct3 == 0x5) {
+            if (funct7 == 0x00) mnemonic = "srli";
+            else if (funct7 == 0x20) mnemonic = "srai";
+        }
+    } else if (opcode == 0x03) {  // Load
+        if (funct3 == 0x0) mnemonic = "lb";
+        else if (funct3 == 0x1) mnemonic = "lh";
+        else if (funct3 == 0x2) mnemonic = "lw";
+        else if (funct3 == 0x4) mnemonic = "lbu";
+        else if (funct3 == 0x5) mnemonic = "lhu";
+    } else if (opcode == 0x23) {  // Store
+        if (funct3 == 0x0) mnemonic = "sb";
+        else if (funct3 == 0x1) mnemonic = "sh";
+        else if (funct3 == 0x2) mnemonic = "sw";
+    } else if (opcode == 0x63) {  // Branch
+        if (funct3 == 0x0) mnemonic = "beq";
+        else if (funct3 == 0x1) mnemonic = "bne";
+        else if (funct3 == 0x4) mnemonic = "blt";
+        else if (funct3 == 0x5) mnemonic = "bge";
+        else if (funct3 == 0x6) mnemonic = "bltu";
+        else if (funct3 == 0x7) mnemonic = "bgeu";
+    } else if (opcode == 0x6F) {
+        mnemonic = "jal";
+    } else if (opcode == 0x67) {
+        mnemonic = "jalr";
+    } else if (opcode == 0x37) {
+        mnemonic = "lui";
+    } else if (opcode == 0x17) {
+        mnemonic = "auipc";
+    }
     
     std::string rd_name = "x" + std::to_string(rd);
     std::string rs1_name = "x" + std::to_string(rs1);
@@ -285,60 +473,103 @@ std::string VLIWGenerator::decodeToString(uint32_t encoding) const {
     std::ostringstream oss;
     oss << mnemonic;
     
-    // B-Type: beq rs1, rs2, offset (NO rd)
-    // S-Type: sw rs2, offset(rs1) (NO rd)
-    if (is_branch) {
-        oss << " rs1=" << rs1_name << " rs2=" << rs2_name;
-        if (imm != 0) {
-            oss << " offset=" << imm;
-        }
-    } else if (is_store) {
-        oss << " rs2=" << rs2_name << " rs1=" << rs1_name;
-        if (imm != 0) {
-            oss << " offset=" << imm;
-        }
-    } else {
-        // I, R, J, U types: tienen rd
-        oss << " rd=" << rd_name << " rs1=" << rs1_name;
-        
-        // R-Type y algunas I-Type usan rs2
-        if (rs2 != 0 || (opcode >= 0x10 && opcode <= 0x23)) {
-            oss << " rs2=" << rs2_name;
-        }
-        
-        // Mostrar inmediato si es relevante
-        if (imm != 0 || (opcode >= 0x01 && opcode <= 0x09) || (opcode >= 0x24 && opcode <= 0x28)) {
-            oss << " imm=" << imm;
-        }
+    // B-Type: beq rs1, rs2, offset
+    if (opcode == 0x63) {
+        oss << " " << rs1_name << ", " << rs2_name << ", " << imm;
+    }
+    // S-Type: sw rs2, offset(rs1)
+    else if (opcode == 0x23) {
+        oss << " " << rs2_name << ", " << imm << "(" << rs1_name << ")";
+    }
+    // Load I-Type: lw rd, offset(rs1)
+    else if (opcode == 0x03) {
+        oss << " " << rd_name << ", " << imm << "(" << rs1_name << ")";
+    }
+    // U-Type: lui rd, imm
+    else if (opcode == 0x37 || opcode == 0x17) {
+        oss << " " << rd_name << ", " << imm;
+    }
+    // J-Type: jal rd, offset
+    else if (opcode == 0x6F) {
+        oss << " " << rd_name << ", " << imm;
+    }
+    // JALR: jalr rd, offset(rs1)
+    else if (opcode == 0x67) {
+        oss << " " << rd_name << ", " << imm << "(" << rs1_name << ")";
+    }
+    // R-Type: add rd, rs1, rs2
+    else if (opcode == 0x33) {
+        oss << " " << rd_name << ", " << rs1_name << ", " << rs2_name;
+    }
+    // I-Type ALU: addi rd, rs1, imm
+    else if (opcode == 0x13) {
+        oss << " " << rd_name << ", " << rs1_name << ", " << imm;
     }
     
     return oss.str();
 }
 
 uint8_t VLIWGenerator::extractOpcode(uint32_t encoding) const {
-    return (encoding >> 26) & 0x3F;
+    return encoding & 0x7F;  // bits [6:0]
 }
 
 uint8_t VLIWGenerator::extractRd(uint32_t encoding) const {
-    return (encoding >> 21) & 0x1F;
+    return (encoding >> 7) & 0x1F;  // bits [11:7]
 }
 
 uint8_t VLIWGenerator::extractRs1(uint32_t encoding) const {
-    return (encoding >> 16) & 0x1F;
+    return (encoding >> 15) & 0x1F;  // bits [19:15]
 }
 
 uint8_t VLIWGenerator::extractRs2(uint32_t encoding) const {
-    return (encoding >> 11) & 0x1F;
+    return (encoding >> 20) & 0x1F;  // bits [24:20]
 }
 
 int16_t VLIWGenerator::extractImmediate(uint32_t encoding) const {
-    // Extraer 11 bits y extender signo
-    uint16_t imm = encoding & 0x7FF;
-    // Extender signo de 11 bits a 16 bits
-    if (imm & 0x400) {  // Bit 10 es el signo
-        imm |= 0xF800;  // Extender con 1s
+    uint8_t opcode = extractOpcode(encoding);
+    
+    // I-Type: bits [31:20]
+    if (opcode == 0x13 || opcode == 0x03 || opcode == 0x67) {
+        int32_t imm = static_cast<int32_t>(encoding) >> 20;  // Sign extend
+        return static_cast<int16_t>(imm & 0xFFF);
     }
-    return static_cast<int16_t>(imm);
+    // S-Type: bits [31:25][11:7]
+    else if (opcode == 0x23) {
+        int32_t imm_11_5 = (encoding >> 25) & 0x7F;
+        int32_t imm_4_0 = (encoding >> 7) & 0x1F;
+        int32_t imm = (imm_11_5 << 5) | imm_4_0;
+        // Sign extend from bit 11
+        if (imm & 0x800) imm |= 0xFFFFF000;
+        return static_cast<int16_t>(imm);
+    }
+    // B-Type: bits [31][7][30:25][11:8] << 1
+    else if (opcode == 0x63) {
+        int32_t imm_12 = (encoding >> 31) & 0x1;
+        int32_t imm_11 = (encoding >> 7) & 0x1;
+        int32_t imm_10_5 = (encoding >> 25) & 0x3F;
+        int32_t imm_4_1 = (encoding >> 8) & 0xF;
+        int32_t imm = (imm_12 << 12) | (imm_11 << 11) | (imm_10_5 << 5) | (imm_4_1 << 1);
+        // Sign extend from bit 12
+        if (imm & 0x1000) imm |= 0xFFFFE000;
+        return static_cast<int16_t>(imm);
+    }
+    // U-Type: bits [31:12]
+    else if (opcode == 0x37 || opcode == 0x17) {
+        return static_cast<int16_t>((encoding >> 12) & 0xFFFFF);
+    }
+    // J-Type: bits [31][19:12][20][30:21] << 1
+    else if (opcode == 0x6F) {
+        int32_t imm_20 = (encoding >> 31) & 0x1;
+        int32_t imm_19_12 = (encoding >> 12) & 0xFF;
+        int32_t imm_11 = (encoding >> 20) & 0x1;
+        int32_t imm_10_1 = (encoding >> 21) & 0x3FF;
+        int32_t imm = (imm_20 << 20) | (imm_19_12 << 12) | (imm_11 << 11) | (imm_10_1 << 1);
+        // Sign extend from bit 20
+        if (imm & 0x100000) imm |= 0xFFE00000;
+        return static_cast<int16_t>(imm);
+    }
+    
+    return 0;
 }
 
 void VLIWGenerator::saveBinaryFile(const std::string& filename) const {
@@ -369,7 +600,8 @@ void VLIWGenerator::saveHexFileConcatenated(const std::string& filename) const {
     
     file << "# VLIW Instruction Memory (128 bits = 32 bits × 4 PEs)\n";
     file << "# Format: [PE3:PE2:PE1:PE0] (PE0 = LSB, PE3 = MSB) - CONCATENATED\n";
-    file << "# Each PE instruction: [Opcode(6):Rd(5):Rs1(5):Rs2(5):Imm(11)]\n";
+    file << "# Each PE instruction: 32-bit RISC-V ISA Standard Format\n";
+    file << "# Opcode is in bits [6:0], format varies by type (R/I/S/B/U/J)\n";
     file << "#\n";
     file << "# Total VLIW words: " << vliw_instructions_.size() << "\n";
     file << "#\n\n";
@@ -398,7 +630,8 @@ void VLIWGenerator::saveHexFileSeparated(const std::string& filename) const {
     
     file << "# VLIW Instruction Memory (128 bits = 32 bits × 4 PEs)\n";
     file << "# Format: One instruction per line - SEPARATED\n";
-    file << "# Each PE instruction: [Opcode(6):Rd(5):Rs1(5):Rs2(5):Imm(11)]\n";
+    file << "# Each PE instruction: 32-bit RISC-V ISA Standard Format\n";
+    file << "# Opcode is in bits [6:0], format varies by type (R/I/S/B/U/J)\n";
     file << "#\n";
     file << "# Total VLIW words: " << vliw_instructions_.size() << "\n";
     file << "# Total instructions: " << (vliw_instructions_.size() * 4) << "\n";
@@ -456,7 +689,13 @@ void VLIWGenerator::saveDetailedFile(const std::string& filename) const {
     
     file << "Configuration:\n";
     file << "  VLIW Width: 128 bits (4 PEs × 32 bits)\n";
-    file << "  PE Encoding: 32 bits [Opcode(6):Rd(5):Rs1(5):Rs2(5):Imm(11)]\n";
+    file << "  PE Encoding: 32 bits RISC-V ISA Standard Format\n";
+    file << "    R-Type: [31:25]=funct7 [24:20]=rs2 [19:15]=rs1 [14:12]=funct3 [11:7]=rd [6:0]=opcode\n";
+    file << "    I-Type: [31:20]=imm[11:0] [19:15]=rs1 [14:12]=funct3 [11:7]=rd [6:0]=opcode\n";
+    file << "    S-Type: [31:25]=imm[11:5] [24:20]=rs2 [19:15]=rs1 [14:12]=funct3 [11:7]=imm[4:0] [6:0]=opcode\n";
+    file << "    B-Type: [31]=imm[12] [30:25]=imm[10:5] [24:20]=rs2 [19:15]=rs1 [14:12]=funct3 [11:8]=imm[4:1] [7]=imm[11] [6:0]=opcode\n";
+    file << "    U-Type: [31:12]=imm[31:12] [11:7]=rd [6:0]=opcode\n";
+    file << "    J-Type: [31]=imm[20] [30:21]=imm[10:1] [20]=imm[11] [19:12]=imm[19:12] [11:7]=rd [6:0]=opcode\n";
     file << "  Bit Layout: [PE3(127:96):PE2(95:64):PE1(63:32):PE0(31:0)]\n";
     file << "  Total Words: " << vliw_instructions_.size() << "\n\n";
     
@@ -584,12 +823,15 @@ void VLIWGenerator::printStatistics() const {
     
     std::cout << "VLIW Configuration:\n";
     std::cout << "  Word Width: 128 bits (4 PEs × 32 bits)\n";
-    std::cout << "  PE Instruction Format: 32 bits\n";
-    std::cout << "    [31:26] Opcode (6 bits)\n";
-    std::cout << "    [25:21] Rd (5 bits)\n";
-    std::cout << "    [20:16] Rs1 (5 bits)\n";
-    std::cout << "    [15:11] Rs2 (5 bits)\n";
-    std::cout << "    [10:0]  Immediate (11 bits)\n\n";
+    std::cout << "  PE Instruction Format: RISC-V ISA Standard 32-bit\n";
+    std::cout << "    Opcode: [6:0] (7 bits)\n";
+    std::cout << "    Format varies by instruction type:\n";
+    std::cout << "      R-Type: funct7[31:25] rs2[24:20] rs1[19:15] funct3[14:12] rd[11:7] op[6:0]\n";
+    std::cout << "      I-Type: imm[31:20] rs1[19:15] funct3[14:12] rd[11:7] op[6:0]\n";
+    std::cout << "      S-Type: imm[31:25] rs2[24:20] rs1[19:15] funct3[14:12] imm[11:7] op[6:0]\n";
+    std::cout << "      B-Type: imm[12|10:5][31:25] rs2[24:20] rs1[19:15] funct3[14:12] imm[4:1|11][11:7] op[6:0]\n";
+    std::cout << "      U-Type: imm[31:12] rd[11:7] op[6:0]\n";
+    std::cout << "      J-Type: imm[20|10:1|11|19:12][31:12] rd[11:7] op[6:0]\n\n";
     
     std::cout << "Generated Code:\n";
     std::cout << "  Total VLIW Words: " << stats.total_vliw_words << "\n";
@@ -626,7 +868,9 @@ void VLIWGenerator::saveAssemblyFile(const std::string& filename) const {
     file << "# Instruction Width: 128 bits (32 bits per PE)\n";
     file << "# Format: PE0 (LSB) | PE1 | PE2 | PE3 (MSB)\n";
     file << "#\n";
-    file << "# Encoding: [Opcode(6):Rd(5):Rs1(5):Rs2(5):Imm(11)]\n";
+    file << "# Encoding: RISC-V ISA Standard 32-bit Format\n";
+    file << "# - Opcode in bits [6:0] (7 bits)\n";
+    file << "# - Format varies by instruction type (R/I/S/B/U/J)\n";
     file << "#\n\n";
     
     file << ".section .text\n";

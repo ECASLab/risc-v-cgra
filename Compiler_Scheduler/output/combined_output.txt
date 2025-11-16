@@ -1,0 +1,4381 @@
+-----------------------
+phase1_cfg.txt
+
+# Control Flow Graph
+# Total bloques: 43
+
+BB0 [0-9]
+  Predecesores: [BB24, BB25, BB26]
+  Sucesores: [BB1]
+  Instrucciones: 10
+
+    [Line 3] addi
+    [Line 4] sw
+    [Line 5] addi
+    [Line 6] sw
+    [Line 7] sw
+    [Line 8] sw
+    [Line 9] sw
+    [Line 10] lw
+    [Line 11] addi rd=a5 rs1=zero imm=10
+    [Line 12] bne
+
+BB1 [10-12]
+  Predecesores: [BB0]
+  Sucesores: [BB2]
+  Instrucciones: 3
+
+    [Line 13] lw
+    [Line 14] addi rd=a5 rs1=zero imm=10
+    [Line 15] beq
+
+BB2 [13-16]
+  Predecesores: [BB1]
+  Sucesores: [BB10]
+  Instrucciones: 4
+
+    [Line 17] addi rd=a5 rs1=zero imm=-1
+    [Line 18] sw
+    [Line 19] lw
+    [Line 20] jal rd=zero label=.L9
+
+BB3 [17-24]
+  Predecesores: []
+  Sucesores: [BB8]
+  Instrucciones: 8
+
+    [Line 22] lw
+    [Line 23] lw
+    [Line 24] sw
+    [Line 25] lw
+    [Line 26] lw
+    [Line 27] sw
+    [Line 28] sw
+    [Line 29] jal rd=zero label=.L5
+
+BB4 [25-26]
+  Predecesores: []
+  Sucesores: [BB6]
+  Instrucciones: 2
+
+    [Line 31] sw
+    [Line 32] jal rd=zero label=.L6
+
+BB5 [27-40]
+  Predecesores: []
+  Sucesores: [BB6]
+  Instrucciones: 14
+
+    [Line 34] lw
+    [Line 35] lw
+    [Line 36] addi rd=a5 rs1=a4 imm=0
+    [Line 37] slli
+    [Line 38] add
+    [Line 39] slli
+    [Line 40] lw
+    [Line 41] add
+    [Line 42] slli
+    [Line 43] add
+    [Line 44] sw
+    [Line 45] lw
+    [Line 46] addi
+    [Line 47] sw
+
+BB6 [41-43]
+  Predecesores: [BB4, BB5]
+  Sucesores: [BB7]
+  Instrucciones: 3
+
+    [Line 49] lw
+    [Line 50] lw
+    [Line 51] bltu
+
+BB7 [44-46]
+  Predecesores: [BB6]
+  Sucesores: [BB8]
+  Instrucciones: 3
+
+    [Line 52] lw
+    [Line 53] addi
+    [Line 54] sw
+
+BB8 [47-49]
+  Predecesores: [BB3, BB7]
+  Sucesores: [BB9]
+  Instrucciones: 3
+
+    [Line 56] lw
+    [Line 57] lw
+    [Line 58] bltu
+
+BB9 [50-50]
+  Predecesores: [BB8]
+  Sucesores: [BB10]
+  Instrucciones: 1
+
+    [Line 59] lw
+
+BB10 [51-54]
+  Predecesores: [BB2, BB9]
+  Sucesores: []
+  Instrucciones: 4
+
+    [Line 61] addi rd=a0 rs1=a5 imm=0
+    [Line 62] lw
+    [Line 63] addi
+    [Line 64] jalr rd=zero rs1=ra imm=0
+
+BB11 [55-66]
+  Predecesores: [BB37]
+  Sucesores: [BB12]
+  Instrucciones: 12
+
+    [Line 66] addi
+    [Line 67] sw
+    [Line 68] addi
+    [Line 69] sw
+    [Line 70] sw
+    [Line 71] sw
+    [Line 72] sw
+    [Line 73] lw
+    [Line 74] lw
+    [Line 75] lw
+    [Line 76] lw
+    [Line 77] bne
+
+BB12 [67-71]
+  Predecesores: [BB11]
+  Sucesores: [BB13]
+  Instrucciones: 5
+
+    [Line 78] lw
+    [Line 79] lw
+    [Line 80] lw
+    [Line 81] lw
+    [Line 82] bne
+
+BB13 [72-76]
+  Predecesores: [BB12]
+  Sucesores: [BB14]
+  Instrucciones: 5
+
+    [Line 83] lw
+    [Line 84] lw
+    [Line 85] lw
+    [Line 86] lw
+    [Line 87] bne
+
+BB14 [77-81]
+  Predecesores: [BB13]
+  Sucesores: [BB15]
+  Instrucciones: 5
+
+    [Line 88] lw
+    [Line 89] lw
+    [Line 90] lw
+    [Line 91] lw
+    [Line 92] beq
+
+BB15 [82-85]
+  Predecesores: [BB14]
+  Sucesores: [BB23]
+  Instrucciones: 4
+
+    [Line 94] addi rd=a5 rs1=zero imm=-1
+    [Line 95] sw
+    [Line 96] lw
+    [Line 97] jal rd=zero label=.L18
+
+BB16 [86-87]
+  Predecesores: []
+  Sucesores: [BB21]
+  Instrucciones: 2
+
+    [Line 99] sw
+    [Line 100] jal rd=zero label=.L14
+
+BB17 [88-89]
+  Predecesores: []
+  Sucesores: [BB19]
+  Instrucciones: 2
+
+    [Line 102] sw
+    [Line 103] jal rd=zero label=.L15
+
+BB18 [90-126]
+  Predecesores: []
+  Sucesores: [BB19]
+  Instrucciones: 37
+
+    [Line 105] lw
+    [Line 106] lw
+    [Line 107] addi rd=a5 rs1=a4 imm=0
+    [Line 108] slli
+    [Line 109] add
+    [Line 110] slli
+    [Line 111] lw
+    [Line 112] add
+    [Line 113] slli
+    [Line 114] add
+    [Line 115] lw
+    [Line 116] lw
+    [Line 117] lw
+    [Line 118] addi rd=a5 rs1=a4 imm=0
+    [Line 119] slli
+    [Line 120] add
+    [Line 121] slli
+    [Line 122] lw
+    [Line 123] add
+    [Line 124] slli
+    [Line 125] add
+    [Line 126] lw
+    [Line 127] add
+    [Line 128] lw
+    [Line 129] lw
+    [Line 130] addi rd=a5 rs1=a4 imm=0
+    [Line 131] slli
+    [Line 132] add
+    [Line 133] slli
+    [Line 134] lw
+    [Line 135] add
+    [Line 136] slli
+    [Line 137] add
+    [Line 138] sw
+    [Line 139] lw
+    [Line 140] addi
+    [Line 141] sw
+
+BB19 [127-130]
+  Predecesores: [BB17, BB18]
+  Sucesores: [BB20]
+  Instrucciones: 4
+
+    [Line 143] lw
+    [Line 144] lw
+    [Line 145] lw
+    [Line 146] bltu
+
+BB20 [131-133]
+  Predecesores: [BB19]
+  Sucesores: [BB21]
+  Instrucciones: 3
+
+    [Line 147] lw
+    [Line 148] addi
+    [Line 149] sw
+
+BB21 [134-137]
+  Predecesores: [BB16, BB20]
+  Sucesores: [BB22]
+  Instrucciones: 4
+
+    [Line 151] lw
+    [Line 152] lw
+    [Line 153] lw
+    [Line 154] bltu
+
+BB22 [138-138]
+  Predecesores: [BB21]
+  Sucesores: [BB23]
+  Instrucciones: 1
+
+    [Line 155] lw
+
+BB23 [139-142]
+  Predecesores: [BB15, BB22]
+  Sucesores: []
+  Instrucciones: 4
+
+    [Line 157] addi rd=a0 rs1=a5 imm=0
+    [Line 158] lw
+    [Line 159] addi
+    [Line 160] jalr rd=zero rs1=ra imm=0
+
+BB24 [143-153]
+  Predecesores: []
+  Sucesores: [BB0]
+  Instrucciones: 11
+
+    [Line 162] addi
+    [Line 163] sw
+    [Line 164] sw
+    [Line 165] addi
+    [Line 166] addi rd=a5 rs1=zero imm=10
+    [Line 167] sw
+    [Line 168] addi
+    [Line 169] lw
+    [Line 170] lw
+    [Line 171] addi rd=a0 rs1=a5 imm=0
+    [Line 172] jal rd=ra label=int_matrix_init
+
+BB25 [154-160]
+  Predecesores: []
+  Sucesores: [BB0]
+  Instrucciones: 7
+
+    [Line 173] addi rd=a5 rs1=a0 imm=0
+    [Line 174] sw
+    [Line 175] addi
+    [Line 176] lw
+    [Line 177] lw
+    [Line 178] addi rd=a0 rs1=a5 imm=0
+    [Line 179] jal rd=ra label=int_matrix_init
+
+BB26 [161-167]
+  Predecesores: []
+  Sucesores: [BB0]
+  Instrucciones: 7
+
+    [Line 180] addi rd=a5 rs1=a0 imm=0
+    [Line 181] sw
+    [Line 182] addi
+    [Line 183] lw
+    [Line 184] lw
+    [Line 185] addi rd=a0 rs1=a5 imm=0
+    [Line 186] jal rd=ra label=int_matrix_init
+
+BB27 [168-171]
+  Predecesores: []
+  Sucesores: [BB28]
+  Instrucciones: 4
+
+    [Line 187] addi rd=a5 rs1=a0 imm=0
+    [Line 188] sw
+    [Line 189] lw
+    [Line 190] bne
+
+BB28 [172-173]
+  Predecesores: [BB27]
+  Sucesores: [BB29]
+  Instrucciones: 2
+
+    [Line 191] lw
+    [Line 192] bne
+
+BB29 [174-175]
+  Predecesores: [BB28]
+  Sucesores: [BB30]
+  Instrucciones: 2
+
+    [Line 193] lw
+    [Line 194] beq
+
+BB30 [176-177]
+  Predecesores: [BB29]
+  Sucesores: [BB42]
+  Instrucciones: 2
+
+    [Line 196] addi rd=a5 rs1=zero imm=-1
+    [Line 197] jal rd=zero label=.L28
+
+BB31 [178-179]
+  Predecesores: []
+  Sucesores: [BB36]
+  Instrucciones: 2
+
+    [Line 199] sw
+    [Line 200] jal rd=zero label=.L23
+
+BB32 [180-181]
+  Predecesores: []
+  Sucesores: [BB34]
+  Instrucciones: 2
+
+    [Line 202] sw
+    [Line 203] jal rd=zero label=.L24
+
+BB33 [182-208]
+  Predecesores: []
+  Sucesores: [BB34]
+  Instrucciones: 27
+
+    [Line 205] lw
+    [Line 206] addi rd=a5 rs1=a4 imm=0
+    [Line 207] slli
+    [Line 208] add
+    [Line 209] slli
+    [Line 210] lw
+    [Line 211] add
+    [Line 212] slli
+    [Line 213] addi
+    [Line 214] add
+    [Line 215] addi rd=a4 rs1=zero imm=1
+    [Line 216] sw
+    [Line 217] lw
+    [Line 218] addi rd=a5 rs1=a4 imm=0
+    [Line 219] slli
+    [Line 220] add
+    [Line 221] slli
+    [Line 222] lw
+    [Line 223] add
+    [Line 224] slli
+    [Line 225] addi
+    [Line 226] add
+    [Line 227] addi rd=a4 rs1=zero imm=1
+    [Line 228] sw
+    [Line 229] lw
+    [Line 230] addi
+    [Line 231] sw
+
+BB34 [209-211]
+  Predecesores: [BB32, BB33]
+  Sucesores: [BB35]
+  Instrucciones: 3
+
+    [Line 233] lw
+    [Line 234] lw
+    [Line 235] bltu
+
+BB35 [212-214]
+  Predecesores: [BB34]
+  Sucesores: [BB36]
+  Instrucciones: 3
+
+    [Line 236] lw
+    [Line 237] addi
+    [Line 238] sw
+
+BB36 [215-217]
+  Predecesores: [BB31, BB35]
+  Sucesores: [BB37]
+  Instrucciones: 3
+
+    [Line 240] lw
+    [Line 241] lw
+    [Line 242] bltu
+
+BB37 [218-224]
+  Predecesores: [BB36]
+  Sucesores: [BB11]
+  Instrucciones: 7
+
+    [Line 243] addi
+    [Line 244] addi
+    [Line 245] addi
+    [Line 246] addi rd=a2 rs1=a3 imm=0
+    [Line 247] addi rd=a1 rs1=a4 imm=0
+    [Line 248] addi rd=a0 rs1=a5 imm=0
+    [Line 249] jal rd=ra label=int_matrix_sum
+
+BB38 [225-228]
+  Predecesores: []
+  Sucesores: [BB39]
+  Instrucciones: 4
+
+    [Line 250] addi rd=a5 rs1=a0 imm=0
+    [Line 251] sw
+    [Line 252] lw
+    [Line 253] bne
+
+BB39 [229-231]
+  Predecesores: [BB38]
+  Sucesores: [BB40]
+  Instrucciones: 3
+
+    [Line 254] lw
+    [Line 255] addi rd=a5 rs1=zero imm=2
+    [Line 256] bne
+
+BB40 [232-233]
+  Predecesores: [BB39]
+  Sucesores: [BB42]
+  Instrucciones: 2
+
+    [Line 257] addi rd=a5 rs1=zero imm=0
+    [Line 258] jal rd=zero label=.L28
+
+BB41 [234-234]
+  Predecesores: []
+  Sucesores: [BB42]
+  Instrucciones: 1
+
+    [Line 260] addi rd=a5 rs1=zero imm=-1
+
+BB42 [235-239]
+  Predecesores: [BB30, BB40, BB41]
+  Sucesores: []
+  Instrucciones: 5
+
+    [Line 262] addi rd=a0 rs1=a5 imm=0
+    [Line 263] lw
+    [Line 264] lw
+    [Line 265] addi
+    [Line 266] jalr rd=zero rs1=ra imm=0
+
+
+-----------------------
+phase1_instructions.txt
+
+# Instrucciones parseadas: 240
+
+[0] [Line 3] addi
+[1] [Line 4] sw
+[2] [Line 5] addi
+[3] [Line 6] sw
+[4] [Line 7] sw
+[5] [Line 8] sw
+[6] [Line 9] sw
+[7] [Line 10] lw
+[8] [Line 11] addi rd=a5 rs1=zero imm=10
+[9] [Line 12] bne
+[10] [Line 13] lw
+[11] [Line 14] addi rd=a5 rs1=zero imm=10
+[12] [Line 15] beq
+[13] [Line 17] addi rd=a5 rs1=zero imm=-1
+[14] [Line 18] sw
+[15] [Line 19] lw
+[16] [Line 20] jal rd=zero label=.L9
+[17] [Line 22] lw
+[18] [Line 23] lw
+[19] [Line 24] sw
+[20] [Line 25] lw
+[21] [Line 26] lw
+[22] [Line 27] sw
+[23] [Line 28] sw
+[24] [Line 29] jal rd=zero label=.L5
+[25] [Line 31] sw
+[26] [Line 32] jal rd=zero label=.L6
+[27] [Line 34] lw
+[28] [Line 35] lw
+[29] [Line 36] addi rd=a5 rs1=a4 imm=0
+[30] [Line 37] slli
+[31] [Line 38] add
+[32] [Line 39] slli
+[33] [Line 40] lw
+[34] [Line 41] add
+[35] [Line 42] slli
+[36] [Line 43] add
+[37] [Line 44] sw
+[38] [Line 45] lw
+[39] [Line 46] addi
+[40] [Line 47] sw
+[41] [Line 49] lw
+[42] [Line 50] lw
+[43] [Line 51] bltu
+[44] [Line 52] lw
+[45] [Line 53] addi
+[46] [Line 54] sw
+[47] [Line 56] lw
+[48] [Line 57] lw
+[49] [Line 58] bltu
+[50] [Line 59] lw
+[51] [Line 61] addi rd=a0 rs1=a5 imm=0
+[52] [Line 62] lw
+[53] [Line 63] addi
+[54] [Line 64] jalr rd=zero rs1=ra imm=0
+[55] [Line 66] addi
+[56] [Line 67] sw
+[57] [Line 68] addi
+[58] [Line 69] sw
+[59] [Line 70] sw
+[60] [Line 71] sw
+[61] [Line 72] sw
+[62] [Line 73] lw
+[63] [Line 74] lw
+[64] [Line 75] lw
+[65] [Line 76] lw
+[66] [Line 77] bne
+[67] [Line 78] lw
+[68] [Line 79] lw
+[69] [Line 80] lw
+[70] [Line 81] lw
+[71] [Line 82] bne
+[72] [Line 83] lw
+[73] [Line 84] lw
+[74] [Line 85] lw
+[75] [Line 86] lw
+[76] [Line 87] bne
+[77] [Line 88] lw
+[78] [Line 89] lw
+[79] [Line 90] lw
+[80] [Line 91] lw
+[81] [Line 92] beq
+[82] [Line 94] addi rd=a5 rs1=zero imm=-1
+[83] [Line 95] sw
+[84] [Line 96] lw
+[85] [Line 97] jal rd=zero label=.L18
+[86] [Line 99] sw
+[87] [Line 100] jal rd=zero label=.L14
+[88] [Line 102] sw
+[89] [Line 103] jal rd=zero label=.L15
+[90] [Line 105] lw
+[91] [Line 106] lw
+[92] [Line 107] addi rd=a5 rs1=a4 imm=0
+[93] [Line 108] slli
+[94] [Line 109] add
+[95] [Line 110] slli
+[96] [Line 111] lw
+[97] [Line 112] add
+[98] [Line 113] slli
+[99] [Line 114] add
+[100] [Line 115] lw
+[101] [Line 116] lw
+[102] [Line 117] lw
+[103] [Line 118] addi rd=a5 rs1=a4 imm=0
+[104] [Line 119] slli
+[105] [Line 120] add
+[106] [Line 121] slli
+[107] [Line 122] lw
+[108] [Line 123] add
+[109] [Line 124] slli
+[110] [Line 125] add
+[111] [Line 126] lw
+[112] [Line 127] add
+[113] [Line 128] lw
+[114] [Line 129] lw
+[115] [Line 130] addi rd=a5 rs1=a4 imm=0
+[116] [Line 131] slli
+[117] [Line 132] add
+[118] [Line 133] slli
+[119] [Line 134] lw
+[120] [Line 135] add
+[121] [Line 136] slli
+[122] [Line 137] add
+[123] [Line 138] sw
+[124] [Line 139] lw
+[125] [Line 140] addi
+[126] [Line 141] sw
+[127] [Line 143] lw
+[128] [Line 144] lw
+[129] [Line 145] lw
+[130] [Line 146] bltu
+[131] [Line 147] lw
+[132] [Line 148] addi
+[133] [Line 149] sw
+[134] [Line 151] lw
+[135] [Line 152] lw
+[136] [Line 153] lw
+[137] [Line 154] bltu
+[138] [Line 155] lw
+[139] [Line 157] addi rd=a0 rs1=a5 imm=0
+[140] [Line 158] lw
+[141] [Line 159] addi
+[142] [Line 160] jalr rd=zero rs1=ra imm=0
+[143] [Line 162] addi
+[144] [Line 163] sw
+[145] [Line 164] sw
+[146] [Line 165] addi
+[147] [Line 166] addi rd=a5 rs1=zero imm=10
+[148] [Line 167] sw
+[149] [Line 168] addi
+[150] [Line 169] lw
+[151] [Line 170] lw
+[152] [Line 171] addi rd=a0 rs1=a5 imm=0
+[153] [Line 172] jal rd=ra label=int_matrix_init
+[154] [Line 173] addi rd=a5 rs1=a0 imm=0
+[155] [Line 174] sw
+[156] [Line 175] addi
+[157] [Line 176] lw
+[158] [Line 177] lw
+[159] [Line 178] addi rd=a0 rs1=a5 imm=0
+[160] [Line 179] jal rd=ra label=int_matrix_init
+[161] [Line 180] addi rd=a5 rs1=a0 imm=0
+[162] [Line 181] sw
+[163] [Line 182] addi
+[164] [Line 183] lw
+[165] [Line 184] lw
+[166] [Line 185] addi rd=a0 rs1=a5 imm=0
+[167] [Line 186] jal rd=ra label=int_matrix_init
+[168] [Line 187] addi rd=a5 rs1=a0 imm=0
+[169] [Line 188] sw
+[170] [Line 189] lw
+[171] [Line 190] bne
+[172] [Line 191] lw
+[173] [Line 192] bne
+[174] [Line 193] lw
+[175] [Line 194] beq
+[176] [Line 196] addi rd=a5 rs1=zero imm=-1
+[177] [Line 197] jal rd=zero label=.L28
+[178] [Line 199] sw
+[179] [Line 200] jal rd=zero label=.L23
+[180] [Line 202] sw
+[181] [Line 203] jal rd=zero label=.L24
+[182] [Line 205] lw
+[183] [Line 206] addi rd=a5 rs1=a4 imm=0
+[184] [Line 207] slli
+[185] [Line 208] add
+[186] [Line 209] slli
+[187] [Line 210] lw
+[188] [Line 211] add
+[189] [Line 212] slli
+[190] [Line 213] addi
+[191] [Line 214] add
+[192] [Line 215] addi rd=a4 rs1=zero imm=1
+[193] [Line 216] sw
+[194] [Line 217] lw
+[195] [Line 218] addi rd=a5 rs1=a4 imm=0
+[196] [Line 219] slli
+[197] [Line 220] add
+[198] [Line 221] slli
+[199] [Line 222] lw
+[200] [Line 223] add
+[201] [Line 224] slli
+[202] [Line 225] addi
+[203] [Line 226] add
+[204] [Line 227] addi rd=a4 rs1=zero imm=1
+[205] [Line 228] sw
+[206] [Line 229] lw
+[207] [Line 230] addi
+[208] [Line 231] sw
+[209] [Line 233] lw
+[210] [Line 234] lw
+[211] [Line 235] bltu
+[212] [Line 236] lw
+[213] [Line 237] addi
+[214] [Line 238] sw
+[215] [Line 240] lw
+[216] [Line 241] lw
+[217] [Line 242] bltu
+[218] [Line 243] addi
+[219] [Line 244] addi
+[220] [Line 245] addi
+[221] [Line 246] addi rd=a2 rs1=a3 imm=0
+[222] [Line 247] addi rd=a1 rs1=a4 imm=0
+[223] [Line 248] addi rd=a0 rs1=a5 imm=0
+[224] [Line 249] jal rd=ra label=int_matrix_sum
+[225] [Line 250] addi rd=a5 rs1=a0 imm=0
+[226] [Line 251] sw
+[227] [Line 252] lw
+[228] [Line 253] bne
+[229] [Line 254] lw
+[230] [Line 255] addi rd=a5 rs1=zero imm=2
+[231] [Line 256] bne
+[232] [Line 257] addi rd=a5 rs1=zero imm=0
+[233] [Line 258] jal rd=zero label=.L28
+[234] [Line 260] addi rd=a5 rs1=zero imm=-1
+[235] [Line 262] addi rd=a0 rs1=a5 imm=0
+[236] [Line 263] lw
+[237] [Line 264] lw
+[238] [Line 265] addi
+[239] [Line 266] jalr rd=zero rs1=ra imm=0
+
+# Labels encontrados: 25
+.L11 @ instrucción 82
+.L12 @ instrucción 86
+.L14 @ instrucción 134
+.L15 @ instrucción 127
+.L16 @ instrucción 90
+.L17 @ instrucción 88
+.L18 @ instrucción 139
+.L2 @ instrucción 13
+.L20 @ instrucción 176
+.L21 @ instrucción 178
+.L23 @ instrucción 215
+.L24 @ instrucción 209
+.L25 @ instrucción 182
+.L26 @ instrucción 180
+.L27 @ instrucción 234
+.L28 @ instrucción 235
+.L3 @ instrucción 17
+.L5 @ instrucción 47
+.L6 @ instrucción 41
+.L7 @ instrucción 27
+.L8 @ instrucción 25
+.L9 @ instrucción 51
+int_matrix_init @ instrucción 0
+int_matrix_sum @ instrucción 55
+main @ instrucción 143
+
+-----------------------
+phase1_loops.txt
+
+# Loops Detectados
+# Total: 0
+
+
+-----------------------
+phase2_critical_path.txt
+
+# Critical Path Analysis
+
+Critical Path Length: 188 cycles
+Nodes on Critical Path: 38
+Average Parallelism (ILP): 1.2766
+
+## Critical Path Nodes:
+Node 1 [Instr 1]: sw
+  EST: 0, LST: 0, Slack: 0
+Node 3 [Instr 3]: sw
+  EST: 5, LST: 5, Slack: 0
+Node 4 [Instr 4]: sw
+  EST: 10, LST: 10, Slack: 0
+Node 5 [Instr 5]: sw
+  EST: 15, LST: 15, Slack: 0
+Node 6 [Instr 6]: sw
+  EST: 20, LST: 20, Slack: 0
+Node 14 [Instr 14]: sw
+  EST: 25, LST: 25, Slack: 0
+Node 19 [Instr 19]: sw
+  EST: 30, LST: 30, Slack: 0
+Node 22 [Instr 22]: sw
+  EST: 35, LST: 35, Slack: 0
+Node 23 [Instr 23]: sw
+  EST: 40, LST: 40, Slack: 0
+Node 25 [Instr 25]: sw
+  EST: 45, LST: 45, Slack: 0
+Node 37 [Instr 37]: sw
+  EST: 50, LST: 50, Slack: 0
+Node 40 [Instr 40]: sw
+  EST: 55, LST: 55, Slack: 0
+Node 46 [Instr 46]: sw
+  EST: 60, LST: 60, Slack: 0
+Node 56 [Instr 56]: sw
+  EST: 65, LST: 65, Slack: 0
+Node 58 [Instr 58]: sw
+  EST: 70, LST: 70, Slack: 0
+Node 59 [Instr 59]: sw
+  EST: 75, LST: 75, Slack: 0
+Node 60 [Instr 60]: sw
+  EST: 80, LST: 80, Slack: 0
+Node 61 [Instr 61]: sw
+  EST: 85, LST: 85, Slack: 0
+Node 83 [Instr 83]: sw
+  EST: 90, LST: 90, Slack: 0
+Node 86 [Instr 86]: sw
+  EST: 95, LST: 95, Slack: 0
+Node 88 [Instr 88]: sw
+  EST: 100, LST: 100, Slack: 0
+Node 123 [Instr 123]: sw
+  EST: 105, LST: 105, Slack: 0
+Node 126 [Instr 126]: sw
+  EST: 110, LST: 110, Slack: 0
+Node 133 [Instr 133]: sw
+  EST: 115, LST: 115, Slack: 0
+Node 144 [Instr 144]: sw
+  EST: 120, LST: 120, Slack: 0
+Node 145 [Instr 145]: sw
+  EST: 125, LST: 125, Slack: 0
+Node 148 [Instr 148]: sw
+  EST: 130, LST: 130, Slack: 0
+Node 155 [Instr 155]: sw
+  EST: 135, LST: 135, Slack: 0
+Node 162 [Instr 162]: sw
+  EST: 140, LST: 140, Slack: 0
+Node 169 [Instr 169]: sw
+  EST: 145, LST: 145, Slack: 0
+Node 178 [Instr 178]: sw
+  EST: 150, LST: 150, Slack: 0
+Node 180 [Instr 180]: sw
+  EST: 155, LST: 155, Slack: 0
+Node 193 [Instr 193]: sw
+  EST: 160, LST: 160, Slack: 0
+Node 205 [Instr 205]: sw
+  EST: 165, LST: 165, Slack: 0
+Node 208 [Instr 208]: sw
+  EST: 170, LST: 170, Slack: 0
+Node 214 [Instr 214]: sw
+  EST: 175, LST: 175, Slack: 0
+Node 226 [Instr 226]: sw
+  EST: 180, LST: 180, Slack: 0
+Node 227 [Instr 227]: lw
+  EST: 185, LST: 185, Slack: 0
+
+-----------------------
+phase2_dependencies.txt
+
+# Dependency Analysis
+# Total dependencies: 1786
+
+## Dependencias por tipo:
+RAW: 14
+WAR: 18
+WAW: 28
+MEMORY: 1726
+
+## Lista de dependencias:
+Instr[29] -> Instr[51] (RAW on a5)
+Instr[115] -> Instr[139] (RAW on a5)
+Instr[147] -> Instr[152] (RAW on a5)
+Instr[152] -> Instr[154] (RAW on a0)
+Instr[154] -> Instr[159] (RAW on a5)
+Instr[159] -> Instr[161] (RAW on a0)
+Instr[161] -> Instr[166] (RAW on a5)
+Instr[166] -> Instr[168] (RAW on a0)
+Instr[192] -> Instr[195] (RAW on a4)
+Instr[204] -> Instr[222] (RAW on a4)
+Instr[195] -> Instr[223] (RAW on a5)
+Instr[223] -> Instr[225] (RAW on a0)
+Instr[234] -> Instr[235] (RAW on a5)
+Instr[224] -> Instr[239] (RAW on ra)
+Instr[51] -> Instr[82] (WAR on a5)
+Instr[139] -> Instr[147] (WAR on a5)
+Instr[54] -> Instr[153] (WAR on ra)
+Instr[142] -> Instr[153] (WAR on ra)
+Instr[152] -> Instr[154] (WAR on a5)
+Instr[154] -> Instr[159] (WAR on a0)
+Instr[159] -> Instr[161] (WAR on a5)
+Instr[161] -> Instr[166] (WAR on a0)
+Instr[166] -> Instr[168] (WAR on a5)
+Instr[29] -> Instr[192] (WAR on a4)
+Instr[92] -> Instr[192] (WAR on a4)
+Instr[103] -> Instr[192] (WAR on a4)
+Instr[115] -> Instr[192] (WAR on a4)
+Instr[183] -> Instr[192] (WAR on a4)
+Instr[195] -> Instr[204] (WAR on a4)
+Instr[168] -> Instr[223] (WAR on a0)
+Instr[223] -> Instr[225] (WAR on a5)
+Instr[225] -> Instr[235] (WAR on a0)
+Instr[8] -> Instr[11] (WAW on a5)
+Instr[11] -> Instr[13] (WAW on a5)
+Instr[13] -> Instr[29] (WAW on a5)
+Instr[29] -> Instr[82] (WAW on a5)
+Instr[82] -> Instr[92] (WAW on a5)
+Instr[92] -> Instr[103] (WAW on a5)
+Instr[103] -> Instr[115] (WAW on a5)
+Instr[51] -> Instr[139] (WAW on a0)
+Instr[115] -> Instr[147] (WAW on a5)
+Instr[139] -> Instr[152] (WAW on a0)
+Instr[147] -> Instr[154] (WAW on a5)
+Instr[152] -> Instr[159] (WAW on a0)
+Instr[153] -> Instr[160] (WAW on ra)
+Instr[154] -> Instr[161] (WAW on a5)
+Instr[159] -> Instr[166] (WAW on a0)
+Instr[160] -> Instr[167] (WAW on ra)
+Instr[161] -> Instr[168] (WAW on a5)
+Instr[168] -> Instr[176] (WAW on a5)
+Instr[176] -> Instr[183] (WAW on a5)
+Instr[183] -> Instr[195] (WAW on a5)
+Instr[192] -> Instr[204] (WAW on a4)
+Instr[166] -> Instr[223] (WAW on a0)
+Instr[167] -> Instr[224] (WAW on ra)
+Instr[195] -> Instr[225] (WAW on a5)
+Instr[225] -> Instr[230] (WAW on a5)
+Instr[230] -> Instr[232] (WAW on a5)
+Instr[232] -> Instr[234] (WAW on a5)
+Instr[223] -> Instr[235] (WAW on a0)
+Instr[1] -> Instr[7] (MEMORY on memory)
+Instr[1] -> Instr[10] (MEMORY on memory)
+Instr[1] -> Instr[15] (MEMORY on memory)
+Instr[1] -> Instr[17] (MEMORY on memory)
+Instr[1] -> Instr[18] (MEMORY on memory)
+Instr[1] -> Instr[20] (MEMORY on memory)
+Instr[1] -> Instr[21] (MEMORY on memory)
+Instr[1] -> Instr[27] (MEMORY on memory)
+Instr[1] -> Instr[28] (MEMORY on memory)
+Instr[1] -> Instr[33] (MEMORY on memory)
+Instr[1] -> Instr[38] (MEMORY on memory)
+Instr[1] -> Instr[41] (MEMORY on memory)
+Instr[1] -> Instr[42] (MEMORY on memory)
+Instr[1] -> Instr[44] (MEMORY on memory)
+Instr[1] -> Instr[47] (MEMORY on memory)
+Instr[1] -> Instr[48] (MEMORY on memory)
+Instr[1] -> Instr[50] (MEMORY on memory)
+Instr[1] -> Instr[52] (MEMORY on memory)
+Instr[1] -> Instr[62] (MEMORY on memory)
+Instr[1] -> Instr[63] (MEMORY on memory)
+Instr[1] -> Instr[64] (MEMORY on memory)
+Instr[1] -> Instr[65] (MEMORY on memory)
+Instr[1] -> Instr[67] (MEMORY on memory)
+Instr[1] -> Instr[68] (MEMORY on memory)
+Instr[1] -> Instr[69] (MEMORY on memory)
+Instr[1] -> Instr[70] (MEMORY on memory)
+Instr[1] -> Instr[72] (MEMORY on memory)
+Instr[1] -> Instr[73] (MEMORY on memory)
+Instr[1] -> Instr[74] (MEMORY on memory)
+Instr[1] -> Instr[75] (MEMORY on memory)
+Instr[1] -> Instr[77] (MEMORY on memory)
+Instr[1] -> Instr[78] (MEMORY on memory)
+Instr[1] -> Instr[79] (MEMORY on memory)
+Instr[1] -> Instr[80] (MEMORY on memory)
+Instr[1] -> Instr[84] (MEMORY on memory)
+Instr[1] -> Instr[90] (MEMORY on memory)
+Instr[1] -> Instr[91] (MEMORY on memory)
+Instr[1] -> Instr[96] (MEMORY on memory)
+Instr[1] -> Instr[100] (MEMORY on memory)
+Instr[1] -> Instr[101] (MEMORY on memory)
+Instr[1] -> Instr[102] (MEMORY on memory)
+Instr[1] -> Instr[107] (MEMORY on memory)
+Instr[1] -> Instr[111] (MEMORY on memory)
+Instr[1] -> Instr[113] (MEMORY on memory)
+Instr[1] -> Instr[114] (MEMORY on memory)
+Instr[1] -> Instr[119] (MEMORY on memory)
+Instr[1] -> Instr[124] (MEMORY on memory)
+Instr[1] -> Instr[127] (MEMORY on memory)
+Instr[1] -> Instr[128] (MEMORY on memory)
+Instr[1] -> Instr[129] (MEMORY on memory)
+Instr[1] -> Instr[131] (MEMORY on memory)
+Instr[1] -> Instr[134] (MEMORY on memory)
+Instr[1] -> Instr[135] (MEMORY on memory)
+Instr[1] -> Instr[136] (MEMORY on memory)
+Instr[1] -> Instr[138] (MEMORY on memory)
+Instr[1] -> Instr[140] (MEMORY on memory)
+Instr[1] -> Instr[150] (MEMORY on memory)
+Instr[1] -> Instr[151] (MEMORY on memory)
+Instr[1] -> Instr[157] (MEMORY on memory)
+Instr[1] -> Instr[158] (MEMORY on memory)
+Instr[1] -> Instr[164] (MEMORY on memory)
+Instr[1] -> Instr[165] (MEMORY on memory)
+Instr[1] -> Instr[170] (MEMORY on memory)
+Instr[1] -> Instr[172] (MEMORY on memory)
+Instr[1] -> Instr[174] (MEMORY on memory)
+Instr[1] -> Instr[182] (MEMORY on memory)
+Instr[1] -> Instr[187] (MEMORY on memory)
+Instr[1] -> Instr[194] (MEMORY on memory)
+Instr[1] -> Instr[199] (MEMORY on memory)
+Instr[1] -> Instr[206] (MEMORY on memory)
+Instr[1] -> Instr[209] (MEMORY on memory)
+Instr[1] -> Instr[210] (MEMORY on memory)
+Instr[1] -> Instr[212] (MEMORY on memory)
+Instr[1] -> Instr[215] (MEMORY on memory)
+Instr[1] -> Instr[216] (MEMORY on memory)
+Instr[1] -> Instr[227] (MEMORY on memory)
+Instr[1] -> Instr[229] (MEMORY on memory)
+Instr[1] -> Instr[236] (MEMORY on memory)
+Instr[1] -> Instr[237] (MEMORY on memory)
+Instr[3] -> Instr[7] (MEMORY on memory)
+Instr[3] -> Instr[10] (MEMORY on memory)
+Instr[3] -> Instr[15] (MEMORY on memory)
+Instr[3] -> Instr[17] (MEMORY on memory)
+Instr[3] -> Instr[18] (MEMORY on memory)
+Instr[3] -> Instr[20] (MEMORY on memory)
+Instr[3] -> Instr[21] (MEMORY on memory)
+Instr[3] -> Instr[27] (MEMORY on memory)
+Instr[3] -> Instr[28] (MEMORY on memory)
+Instr[3] -> Instr[33] (MEMORY on memory)
+Instr[3] -> Instr[38] (MEMORY on memory)
+Instr[3] -> Instr[41] (MEMORY on memory)
+Instr[3] -> Instr[42] (MEMORY on memory)
+Instr[3] -> Instr[44] (MEMORY on memory)
+Instr[3] -> Instr[47] (MEMORY on memory)
+Instr[3] -> Instr[48] (MEMORY on memory)
+Instr[3] -> Instr[50] (MEMORY on memory)
+Instr[3] -> Instr[52] (MEMORY on memory)
+Instr[3] -> Instr[62] (MEMORY on memory)
+Instr[3] -> Instr[63] (MEMORY on memory)
+Instr[3] -> Instr[64] (MEMORY on memory)
+Instr[3] -> Instr[65] (MEMORY on memory)
+Instr[3] -> Instr[67] (MEMORY on memory)
+Instr[3] -> Instr[68] (MEMORY on memory)
+Instr[3] -> Instr[69] (MEMORY on memory)
+Instr[3] -> Instr[70] (MEMORY on memory)
+Instr[3] -> Instr[72] (MEMORY on memory)
+Instr[3] -> Instr[73] (MEMORY on memory)
+Instr[3] -> Instr[74] (MEMORY on memory)
+Instr[3] -> Instr[75] (MEMORY on memory)
+Instr[3] -> Instr[77] (MEMORY on memory)
+Instr[3] -> Instr[78] (MEMORY on memory)
+Instr[3] -> Instr[79] (MEMORY on memory)
+Instr[3] -> Instr[80] (MEMORY on memory)
+Instr[3] -> Instr[84] (MEMORY on memory)
+Instr[3] -> Instr[90] (MEMORY on memory)
+Instr[3] -> Instr[91] (MEMORY on memory)
+Instr[3] -> Instr[96] (MEMORY on memory)
+Instr[3] -> Instr[100] (MEMORY on memory)
+Instr[3] -> Instr[101] (MEMORY on memory)
+Instr[3] -> Instr[102] (MEMORY on memory)
+Instr[3] -> Instr[107] (MEMORY on memory)
+Instr[3] -> Instr[111] (MEMORY on memory)
+Instr[3] -> Instr[113] (MEMORY on memory)
+Instr[3] -> Instr[114] (MEMORY on memory)
+Instr[3] -> Instr[119] (MEMORY on memory)
+Instr[3] -> Instr[124] (MEMORY on memory)
+Instr[3] -> Instr[127] (MEMORY on memory)
+Instr[3] -> Instr[128] (MEMORY on memory)
+Instr[3] -> Instr[129] (MEMORY on memory)
+Instr[3] -> Instr[131] (MEMORY on memory)
+Instr[3] -> Instr[134] (MEMORY on memory)
+Instr[3] -> Instr[135] (MEMORY on memory)
+Instr[3] -> Instr[136] (MEMORY on memory)
+Instr[3] -> Instr[138] (MEMORY on memory)
+Instr[3] -> Instr[140] (MEMORY on memory)
+Instr[3] -> Instr[150] (MEMORY on memory)
+Instr[3] -> Instr[151] (MEMORY on memory)
+Instr[3] -> Instr[157] (MEMORY on memory)
+Instr[3] -> Instr[158] (MEMORY on memory)
+Instr[3] -> Instr[164] (MEMORY on memory)
+Instr[3] -> Instr[165] (MEMORY on memory)
+Instr[3] -> Instr[170] (MEMORY on memory)
+Instr[3] -> Instr[172] (MEMORY on memory)
+Instr[3] -> Instr[174] (MEMORY on memory)
+Instr[3] -> Instr[182] (MEMORY on memory)
+Instr[3] -> Instr[187] (MEMORY on memory)
+Instr[3] -> Instr[194] (MEMORY on memory)
+Instr[3] -> Instr[199] (MEMORY on memory)
+Instr[3] -> Instr[206] (MEMORY on memory)
+Instr[3] -> Instr[209] (MEMORY on memory)
+Instr[3] -> Instr[210] (MEMORY on memory)
+Instr[3] -> Instr[212] (MEMORY on memory)
+Instr[3] -> Instr[215] (MEMORY on memory)
+Instr[3] -> Instr[216] (MEMORY on memory)
+Instr[3] -> Instr[227] (MEMORY on memory)
+Instr[3] -> Instr[229] (MEMORY on memory)
+Instr[3] -> Instr[236] (MEMORY on memory)
+Instr[3] -> Instr[237] (MEMORY on memory)
+Instr[4] -> Instr[7] (MEMORY on memory)
+Instr[4] -> Instr[10] (MEMORY on memory)
+Instr[4] -> Instr[15] (MEMORY on memory)
+Instr[4] -> Instr[17] (MEMORY on memory)
+Instr[4] -> Instr[18] (MEMORY on memory)
+Instr[4] -> Instr[20] (MEMORY on memory)
+Instr[4] -> Instr[21] (MEMORY on memory)
+Instr[4] -> Instr[27] (MEMORY on memory)
+Instr[4] -> Instr[28] (MEMORY on memory)
+Instr[4] -> Instr[33] (MEMORY on memory)
+Instr[4] -> Instr[38] (MEMORY on memory)
+Instr[4] -> Instr[41] (MEMORY on memory)
+Instr[4] -> Instr[42] (MEMORY on memory)
+Instr[4] -> Instr[44] (MEMORY on memory)
+Instr[4] -> Instr[47] (MEMORY on memory)
+Instr[4] -> Instr[48] (MEMORY on memory)
+Instr[4] -> Instr[50] (MEMORY on memory)
+Instr[4] -> Instr[52] (MEMORY on memory)
+Instr[4] -> Instr[62] (MEMORY on memory)
+Instr[4] -> Instr[63] (MEMORY on memory)
+Instr[4] -> Instr[64] (MEMORY on memory)
+Instr[4] -> Instr[65] (MEMORY on memory)
+Instr[4] -> Instr[67] (MEMORY on memory)
+Instr[4] -> Instr[68] (MEMORY on memory)
+Instr[4] -> Instr[69] (MEMORY on memory)
+Instr[4] -> Instr[70] (MEMORY on memory)
+Instr[4] -> Instr[72] (MEMORY on memory)
+Instr[4] -> Instr[73] (MEMORY on memory)
+Instr[4] -> Instr[74] (MEMORY on memory)
+Instr[4] -> Instr[75] (MEMORY on memory)
+Instr[4] -> Instr[77] (MEMORY on memory)
+Instr[4] -> Instr[78] (MEMORY on memory)
+Instr[4] -> Instr[79] (MEMORY on memory)
+Instr[4] -> Instr[80] (MEMORY on memory)
+Instr[4] -> Instr[84] (MEMORY on memory)
+Instr[4] -> Instr[90] (MEMORY on memory)
+Instr[4] -> Instr[91] (MEMORY on memory)
+Instr[4] -> Instr[96] (MEMORY on memory)
+Instr[4] -> Instr[100] (MEMORY on memory)
+Instr[4] -> Instr[101] (MEMORY on memory)
+Instr[4] -> Instr[102] (MEMORY on memory)
+Instr[4] -> Instr[107] (MEMORY on memory)
+Instr[4] -> Instr[111] (MEMORY on memory)
+Instr[4] -> Instr[113] (MEMORY on memory)
+Instr[4] -> Instr[114] (MEMORY on memory)
+Instr[4] -> Instr[119] (MEMORY on memory)
+Instr[4] -> Instr[124] (MEMORY on memory)
+Instr[4] -> Instr[127] (MEMORY on memory)
+Instr[4] -> Instr[128] (MEMORY on memory)
+Instr[4] -> Instr[129] (MEMORY on memory)
+Instr[4] -> Instr[131] (MEMORY on memory)
+Instr[4] -> Instr[134] (MEMORY on memory)
+Instr[4] -> Instr[135] (MEMORY on memory)
+Instr[4] -> Instr[136] (MEMORY on memory)
+Instr[4] -> Instr[138] (MEMORY on memory)
+Instr[4] -> Instr[140] (MEMORY on memory)
+Instr[4] -> Instr[150] (MEMORY on memory)
+Instr[4] -> Instr[151] (MEMORY on memory)
+Instr[4] -> Instr[157] (MEMORY on memory)
+Instr[4] -> Instr[158] (MEMORY on memory)
+Instr[4] -> Instr[164] (MEMORY on memory)
+Instr[4] -> Instr[165] (MEMORY on memory)
+Instr[4] -> Instr[170] (MEMORY on memory)
+Instr[4] -> Instr[172] (MEMORY on memory)
+Instr[4] -> Instr[174] (MEMORY on memory)
+Instr[4] -> Instr[182] (MEMORY on memory)
+Instr[4] -> Instr[187] (MEMORY on memory)
+Instr[4] -> Instr[194] (MEMORY on memory)
+Instr[4] -> Instr[199] (MEMORY on memory)
+Instr[4] -> Instr[206] (MEMORY on memory)
+Instr[4] -> Instr[209] (MEMORY on memory)
+Instr[4] -> Instr[210] (MEMORY on memory)
+Instr[4] -> Instr[212] (MEMORY on memory)
+Instr[4] -> Instr[215] (MEMORY on memory)
+Instr[4] -> Instr[216] (MEMORY on memory)
+Instr[4] -> Instr[227] (MEMORY on memory)
+Instr[4] -> Instr[229] (MEMORY on memory)
+Instr[4] -> Instr[236] (MEMORY on memory)
+Instr[4] -> Instr[237] (MEMORY on memory)
+Instr[5] -> Instr[7] (MEMORY on memory)
+Instr[5] -> Instr[10] (MEMORY on memory)
+Instr[5] -> Instr[15] (MEMORY on memory)
+Instr[5] -> Instr[17] (MEMORY on memory)
+Instr[5] -> Instr[18] (MEMORY on memory)
+Instr[5] -> Instr[20] (MEMORY on memory)
+Instr[5] -> Instr[21] (MEMORY on memory)
+Instr[5] -> Instr[27] (MEMORY on memory)
+Instr[5] -> Instr[28] (MEMORY on memory)
+Instr[5] -> Instr[33] (MEMORY on memory)
+Instr[5] -> Instr[38] (MEMORY on memory)
+Instr[5] -> Instr[41] (MEMORY on memory)
+Instr[5] -> Instr[42] (MEMORY on memory)
+Instr[5] -> Instr[44] (MEMORY on memory)
+Instr[5] -> Instr[47] (MEMORY on memory)
+Instr[5] -> Instr[48] (MEMORY on memory)
+Instr[5] -> Instr[50] (MEMORY on memory)
+Instr[5] -> Instr[52] (MEMORY on memory)
+Instr[5] -> Instr[62] (MEMORY on memory)
+Instr[5] -> Instr[63] (MEMORY on memory)
+Instr[5] -> Instr[64] (MEMORY on memory)
+Instr[5] -> Instr[65] (MEMORY on memory)
+Instr[5] -> Instr[67] (MEMORY on memory)
+Instr[5] -> Instr[68] (MEMORY on memory)
+Instr[5] -> Instr[69] (MEMORY on memory)
+Instr[5] -> Instr[70] (MEMORY on memory)
+Instr[5] -> Instr[72] (MEMORY on memory)
+Instr[5] -> Instr[73] (MEMORY on memory)
+Instr[5] -> Instr[74] (MEMORY on memory)
+Instr[5] -> Instr[75] (MEMORY on memory)
+Instr[5] -> Instr[77] (MEMORY on memory)
+Instr[5] -> Instr[78] (MEMORY on memory)
+Instr[5] -> Instr[79] (MEMORY on memory)
+Instr[5] -> Instr[80] (MEMORY on memory)
+Instr[5] -> Instr[84] (MEMORY on memory)
+Instr[5] -> Instr[90] (MEMORY on memory)
+Instr[5] -> Instr[91] (MEMORY on memory)
+Instr[5] -> Instr[96] (MEMORY on memory)
+Instr[5] -> Instr[100] (MEMORY on memory)
+Instr[5] -> Instr[101] (MEMORY on memory)
+Instr[5] -> Instr[102] (MEMORY on memory)
+Instr[5] -> Instr[107] (MEMORY on memory)
+Instr[5] -> Instr[111] (MEMORY on memory)
+Instr[5] -> Instr[113] (MEMORY on memory)
+Instr[5] -> Instr[114] (MEMORY on memory)
+Instr[5] -> Instr[119] (MEMORY on memory)
+Instr[5] -> Instr[124] (MEMORY on memory)
+Instr[5] -> Instr[127] (MEMORY on memory)
+Instr[5] -> Instr[128] (MEMORY on memory)
+Instr[5] -> Instr[129] (MEMORY on memory)
+Instr[5] -> Instr[131] (MEMORY on memory)
+Instr[5] -> Instr[134] (MEMORY on memory)
+Instr[5] -> Instr[135] (MEMORY on memory)
+Instr[5] -> Instr[136] (MEMORY on memory)
+Instr[5] -> Instr[138] (MEMORY on memory)
+Instr[5] -> Instr[140] (MEMORY on memory)
+Instr[5] -> Instr[150] (MEMORY on memory)
+Instr[5] -> Instr[151] (MEMORY on memory)
+Instr[5] -> Instr[157] (MEMORY on memory)
+Instr[5] -> Instr[158] (MEMORY on memory)
+Instr[5] -> Instr[164] (MEMORY on memory)
+Instr[5] -> Instr[165] (MEMORY on memory)
+Instr[5] -> Instr[170] (MEMORY on memory)
+Instr[5] -> Instr[172] (MEMORY on memory)
+Instr[5] -> Instr[174] (MEMORY on memory)
+Instr[5] -> Instr[182] (MEMORY on memory)
+Instr[5] -> Instr[187] (MEMORY on memory)
+Instr[5] -> Instr[194] (MEMORY on memory)
+Instr[5] -> Instr[199] (MEMORY on memory)
+Instr[5] -> Instr[206] (MEMORY on memory)
+Instr[5] -> Instr[209] (MEMORY on memory)
+Instr[5] -> Instr[210] (MEMORY on memory)
+Instr[5] -> Instr[212] (MEMORY on memory)
+Instr[5] -> Instr[215] (MEMORY on memory)
+Instr[5] -> Instr[216] (MEMORY on memory)
+Instr[5] -> Instr[227] (MEMORY on memory)
+Instr[5] -> Instr[229] (MEMORY on memory)
+Instr[5] -> Instr[236] (MEMORY on memory)
+Instr[5] -> Instr[237] (MEMORY on memory)
+Instr[6] -> Instr[7] (MEMORY on memory)
+Instr[6] -> Instr[10] (MEMORY on memory)
+Instr[6] -> Instr[15] (MEMORY on memory)
+Instr[6] -> Instr[17] (MEMORY on memory)
+Instr[6] -> Instr[18] (MEMORY on memory)
+Instr[6] -> Instr[20] (MEMORY on memory)
+Instr[6] -> Instr[21] (MEMORY on memory)
+Instr[6] -> Instr[27] (MEMORY on memory)
+Instr[6] -> Instr[28] (MEMORY on memory)
+Instr[6] -> Instr[33] (MEMORY on memory)
+Instr[6] -> Instr[38] (MEMORY on memory)
+Instr[6] -> Instr[41] (MEMORY on memory)
+Instr[6] -> Instr[42] (MEMORY on memory)
+Instr[6] -> Instr[44] (MEMORY on memory)
+Instr[6] -> Instr[47] (MEMORY on memory)
+Instr[6] -> Instr[48] (MEMORY on memory)
+Instr[6] -> Instr[50] (MEMORY on memory)
+Instr[6] -> Instr[52] (MEMORY on memory)
+Instr[6] -> Instr[62] (MEMORY on memory)
+Instr[6] -> Instr[63] (MEMORY on memory)
+Instr[6] -> Instr[64] (MEMORY on memory)
+Instr[6] -> Instr[65] (MEMORY on memory)
+Instr[6] -> Instr[67] (MEMORY on memory)
+Instr[6] -> Instr[68] (MEMORY on memory)
+Instr[6] -> Instr[69] (MEMORY on memory)
+Instr[6] -> Instr[70] (MEMORY on memory)
+Instr[6] -> Instr[72] (MEMORY on memory)
+Instr[6] -> Instr[73] (MEMORY on memory)
+Instr[6] -> Instr[74] (MEMORY on memory)
+Instr[6] -> Instr[75] (MEMORY on memory)
+Instr[6] -> Instr[77] (MEMORY on memory)
+Instr[6] -> Instr[78] (MEMORY on memory)
+Instr[6] -> Instr[79] (MEMORY on memory)
+Instr[6] -> Instr[80] (MEMORY on memory)
+Instr[6] -> Instr[84] (MEMORY on memory)
+Instr[6] -> Instr[90] (MEMORY on memory)
+Instr[6] -> Instr[91] (MEMORY on memory)
+Instr[6] -> Instr[96] (MEMORY on memory)
+Instr[6] -> Instr[100] (MEMORY on memory)
+Instr[6] -> Instr[101] (MEMORY on memory)
+Instr[6] -> Instr[102] (MEMORY on memory)
+Instr[6] -> Instr[107] (MEMORY on memory)
+Instr[6] -> Instr[111] (MEMORY on memory)
+Instr[6] -> Instr[113] (MEMORY on memory)
+Instr[6] -> Instr[114] (MEMORY on memory)
+Instr[6] -> Instr[119] (MEMORY on memory)
+Instr[6] -> Instr[124] (MEMORY on memory)
+Instr[6] -> Instr[127] (MEMORY on memory)
+Instr[6] -> Instr[128] (MEMORY on memory)
+Instr[6] -> Instr[129] (MEMORY on memory)
+Instr[6] -> Instr[131] (MEMORY on memory)
+Instr[6] -> Instr[134] (MEMORY on memory)
+Instr[6] -> Instr[135] (MEMORY on memory)
+Instr[6] -> Instr[136] (MEMORY on memory)
+Instr[6] -> Instr[138] (MEMORY on memory)
+Instr[6] -> Instr[140] (MEMORY on memory)
+Instr[6] -> Instr[150] (MEMORY on memory)
+Instr[6] -> Instr[151] (MEMORY on memory)
+Instr[6] -> Instr[157] (MEMORY on memory)
+Instr[6] -> Instr[158] (MEMORY on memory)
+Instr[6] -> Instr[164] (MEMORY on memory)
+Instr[6] -> Instr[165] (MEMORY on memory)
+Instr[6] -> Instr[170] (MEMORY on memory)
+Instr[6] -> Instr[172] (MEMORY on memory)
+Instr[6] -> Instr[174] (MEMORY on memory)
+Instr[6] -> Instr[182] (MEMORY on memory)
+Instr[6] -> Instr[187] (MEMORY on memory)
+Instr[6] -> Instr[194] (MEMORY on memory)
+Instr[6] -> Instr[199] (MEMORY on memory)
+Instr[6] -> Instr[206] (MEMORY on memory)
+Instr[6] -> Instr[209] (MEMORY on memory)
+Instr[6] -> Instr[210] (MEMORY on memory)
+Instr[6] -> Instr[212] (MEMORY on memory)
+Instr[6] -> Instr[215] (MEMORY on memory)
+Instr[6] -> Instr[216] (MEMORY on memory)
+Instr[6] -> Instr[227] (MEMORY on memory)
+Instr[6] -> Instr[229] (MEMORY on memory)
+Instr[6] -> Instr[236] (MEMORY on memory)
+Instr[6] -> Instr[237] (MEMORY on memory)
+Instr[14] -> Instr[15] (MEMORY on memory)
+Instr[14] -> Instr[17] (MEMORY on memory)
+Instr[14] -> Instr[18] (MEMORY on memory)
+Instr[14] -> Instr[20] (MEMORY on memory)
+Instr[14] -> Instr[21] (MEMORY on memory)
+Instr[14] -> Instr[27] (MEMORY on memory)
+Instr[14] -> Instr[28] (MEMORY on memory)
+Instr[14] -> Instr[33] (MEMORY on memory)
+Instr[14] -> Instr[38] (MEMORY on memory)
+Instr[14] -> Instr[41] (MEMORY on memory)
+Instr[14] -> Instr[42] (MEMORY on memory)
+Instr[14] -> Instr[44] (MEMORY on memory)
+Instr[14] -> Instr[47] (MEMORY on memory)
+Instr[14] -> Instr[48] (MEMORY on memory)
+Instr[14] -> Instr[50] (MEMORY on memory)
+Instr[14] -> Instr[52] (MEMORY on memory)
+Instr[14] -> Instr[62] (MEMORY on memory)
+Instr[14] -> Instr[63] (MEMORY on memory)
+Instr[14] -> Instr[64] (MEMORY on memory)
+Instr[14] -> Instr[65] (MEMORY on memory)
+Instr[14] -> Instr[67] (MEMORY on memory)
+Instr[14] -> Instr[68] (MEMORY on memory)
+Instr[14] -> Instr[69] (MEMORY on memory)
+Instr[14] -> Instr[70] (MEMORY on memory)
+Instr[14] -> Instr[72] (MEMORY on memory)
+Instr[14] -> Instr[73] (MEMORY on memory)
+Instr[14] -> Instr[74] (MEMORY on memory)
+Instr[14] -> Instr[75] (MEMORY on memory)
+Instr[14] -> Instr[77] (MEMORY on memory)
+Instr[14] -> Instr[78] (MEMORY on memory)
+Instr[14] -> Instr[79] (MEMORY on memory)
+Instr[14] -> Instr[80] (MEMORY on memory)
+Instr[14] -> Instr[84] (MEMORY on memory)
+Instr[14] -> Instr[90] (MEMORY on memory)
+Instr[14] -> Instr[91] (MEMORY on memory)
+Instr[14] -> Instr[96] (MEMORY on memory)
+Instr[14] -> Instr[100] (MEMORY on memory)
+Instr[14] -> Instr[101] (MEMORY on memory)
+Instr[14] -> Instr[102] (MEMORY on memory)
+Instr[14] -> Instr[107] (MEMORY on memory)
+Instr[14] -> Instr[111] (MEMORY on memory)
+Instr[14] -> Instr[113] (MEMORY on memory)
+Instr[14] -> Instr[114] (MEMORY on memory)
+Instr[14] -> Instr[119] (MEMORY on memory)
+Instr[14] -> Instr[124] (MEMORY on memory)
+Instr[14] -> Instr[127] (MEMORY on memory)
+Instr[14] -> Instr[128] (MEMORY on memory)
+Instr[14] -> Instr[129] (MEMORY on memory)
+Instr[14] -> Instr[131] (MEMORY on memory)
+Instr[14] -> Instr[134] (MEMORY on memory)
+Instr[14] -> Instr[135] (MEMORY on memory)
+Instr[14] -> Instr[136] (MEMORY on memory)
+Instr[14] -> Instr[138] (MEMORY on memory)
+Instr[14] -> Instr[140] (MEMORY on memory)
+Instr[14] -> Instr[150] (MEMORY on memory)
+Instr[14] -> Instr[151] (MEMORY on memory)
+Instr[14] -> Instr[157] (MEMORY on memory)
+Instr[14] -> Instr[158] (MEMORY on memory)
+Instr[14] -> Instr[164] (MEMORY on memory)
+Instr[14] -> Instr[165] (MEMORY on memory)
+Instr[14] -> Instr[170] (MEMORY on memory)
+Instr[14] -> Instr[172] (MEMORY on memory)
+Instr[14] -> Instr[174] (MEMORY on memory)
+Instr[14] -> Instr[182] (MEMORY on memory)
+Instr[14] -> Instr[187] (MEMORY on memory)
+Instr[14] -> Instr[194] (MEMORY on memory)
+Instr[14] -> Instr[199] (MEMORY on memory)
+Instr[14] -> Instr[206] (MEMORY on memory)
+Instr[14] -> Instr[209] (MEMORY on memory)
+Instr[14] -> Instr[210] (MEMORY on memory)
+Instr[14] -> Instr[212] (MEMORY on memory)
+Instr[14] -> Instr[215] (MEMORY on memory)
+Instr[14] -> Instr[216] (MEMORY on memory)
+Instr[14] -> Instr[227] (MEMORY on memory)
+Instr[14] -> Instr[229] (MEMORY on memory)
+Instr[14] -> Instr[236] (MEMORY on memory)
+Instr[14] -> Instr[237] (MEMORY on memory)
+Instr[19] -> Instr[20] (MEMORY on memory)
+Instr[19] -> Instr[21] (MEMORY on memory)
+Instr[19] -> Instr[27] (MEMORY on memory)
+Instr[19] -> Instr[28] (MEMORY on memory)
+Instr[19] -> Instr[33] (MEMORY on memory)
+Instr[19] -> Instr[38] (MEMORY on memory)
+Instr[19] -> Instr[41] (MEMORY on memory)
+Instr[19] -> Instr[42] (MEMORY on memory)
+Instr[19] -> Instr[44] (MEMORY on memory)
+Instr[19] -> Instr[47] (MEMORY on memory)
+Instr[19] -> Instr[48] (MEMORY on memory)
+Instr[19] -> Instr[50] (MEMORY on memory)
+Instr[19] -> Instr[52] (MEMORY on memory)
+Instr[19] -> Instr[62] (MEMORY on memory)
+Instr[19] -> Instr[63] (MEMORY on memory)
+Instr[19] -> Instr[64] (MEMORY on memory)
+Instr[19] -> Instr[65] (MEMORY on memory)
+Instr[19] -> Instr[67] (MEMORY on memory)
+Instr[19] -> Instr[68] (MEMORY on memory)
+Instr[19] -> Instr[69] (MEMORY on memory)
+Instr[19] -> Instr[70] (MEMORY on memory)
+Instr[19] -> Instr[72] (MEMORY on memory)
+Instr[19] -> Instr[73] (MEMORY on memory)
+Instr[19] -> Instr[74] (MEMORY on memory)
+Instr[19] -> Instr[75] (MEMORY on memory)
+Instr[19] -> Instr[77] (MEMORY on memory)
+Instr[19] -> Instr[78] (MEMORY on memory)
+Instr[19] -> Instr[79] (MEMORY on memory)
+Instr[19] -> Instr[80] (MEMORY on memory)
+Instr[19] -> Instr[84] (MEMORY on memory)
+Instr[19] -> Instr[90] (MEMORY on memory)
+Instr[19] -> Instr[91] (MEMORY on memory)
+Instr[19] -> Instr[96] (MEMORY on memory)
+Instr[19] -> Instr[100] (MEMORY on memory)
+Instr[19] -> Instr[101] (MEMORY on memory)
+Instr[19] -> Instr[102] (MEMORY on memory)
+Instr[19] -> Instr[107] (MEMORY on memory)
+Instr[19] -> Instr[111] (MEMORY on memory)
+Instr[19] -> Instr[113] (MEMORY on memory)
+Instr[19] -> Instr[114] (MEMORY on memory)
+Instr[19] -> Instr[119] (MEMORY on memory)
+Instr[19] -> Instr[124] (MEMORY on memory)
+Instr[19] -> Instr[127] (MEMORY on memory)
+Instr[19] -> Instr[128] (MEMORY on memory)
+Instr[19] -> Instr[129] (MEMORY on memory)
+Instr[19] -> Instr[131] (MEMORY on memory)
+Instr[19] -> Instr[134] (MEMORY on memory)
+Instr[19] -> Instr[135] (MEMORY on memory)
+Instr[19] -> Instr[136] (MEMORY on memory)
+Instr[19] -> Instr[138] (MEMORY on memory)
+Instr[19] -> Instr[140] (MEMORY on memory)
+Instr[19] -> Instr[150] (MEMORY on memory)
+Instr[19] -> Instr[151] (MEMORY on memory)
+Instr[19] -> Instr[157] (MEMORY on memory)
+Instr[19] -> Instr[158] (MEMORY on memory)
+Instr[19] -> Instr[164] (MEMORY on memory)
+Instr[19] -> Instr[165] (MEMORY on memory)
+Instr[19] -> Instr[170] (MEMORY on memory)
+Instr[19] -> Instr[172] (MEMORY on memory)
+Instr[19] -> Instr[174] (MEMORY on memory)
+Instr[19] -> Instr[182] (MEMORY on memory)
+Instr[19] -> Instr[187] (MEMORY on memory)
+Instr[19] -> Instr[194] (MEMORY on memory)
+Instr[19] -> Instr[199] (MEMORY on memory)
+Instr[19] -> Instr[206] (MEMORY on memory)
+Instr[19] -> Instr[209] (MEMORY on memory)
+Instr[19] -> Instr[210] (MEMORY on memory)
+Instr[19] -> Instr[212] (MEMORY on memory)
+Instr[19] -> Instr[215] (MEMORY on memory)
+Instr[19] -> Instr[216] (MEMORY on memory)
+Instr[19] -> Instr[227] (MEMORY on memory)
+Instr[19] -> Instr[229] (MEMORY on memory)
+Instr[19] -> Instr[236] (MEMORY on memory)
+Instr[19] -> Instr[237] (MEMORY on memory)
+Instr[22] -> Instr[27] (MEMORY on memory)
+Instr[22] -> Instr[28] (MEMORY on memory)
+Instr[22] -> Instr[33] (MEMORY on memory)
+Instr[22] -> Instr[38] (MEMORY on memory)
+Instr[22] -> Instr[41] (MEMORY on memory)
+Instr[22] -> Instr[42] (MEMORY on memory)
+Instr[22] -> Instr[44] (MEMORY on memory)
+Instr[22] -> Instr[47] (MEMORY on memory)
+Instr[22] -> Instr[48] (MEMORY on memory)
+Instr[22] -> Instr[50] (MEMORY on memory)
+Instr[22] -> Instr[52] (MEMORY on memory)
+Instr[22] -> Instr[62] (MEMORY on memory)
+Instr[22] -> Instr[63] (MEMORY on memory)
+Instr[22] -> Instr[64] (MEMORY on memory)
+Instr[22] -> Instr[65] (MEMORY on memory)
+Instr[22] -> Instr[67] (MEMORY on memory)
+Instr[22] -> Instr[68] (MEMORY on memory)
+Instr[22] -> Instr[69] (MEMORY on memory)
+Instr[22] -> Instr[70] (MEMORY on memory)
+Instr[22] -> Instr[72] (MEMORY on memory)
+Instr[22] -> Instr[73] (MEMORY on memory)
+Instr[22] -> Instr[74] (MEMORY on memory)
+Instr[22] -> Instr[75] (MEMORY on memory)
+Instr[22] -> Instr[77] (MEMORY on memory)
+Instr[22] -> Instr[78] (MEMORY on memory)
+Instr[22] -> Instr[79] (MEMORY on memory)
+Instr[22] -> Instr[80] (MEMORY on memory)
+Instr[22] -> Instr[84] (MEMORY on memory)
+Instr[22] -> Instr[90] (MEMORY on memory)
+Instr[22] -> Instr[91] (MEMORY on memory)
+Instr[22] -> Instr[96] (MEMORY on memory)
+Instr[22] -> Instr[100] (MEMORY on memory)
+Instr[22] -> Instr[101] (MEMORY on memory)
+Instr[22] -> Instr[102] (MEMORY on memory)
+Instr[22] -> Instr[107] (MEMORY on memory)
+Instr[22] -> Instr[111] (MEMORY on memory)
+Instr[22] -> Instr[113] (MEMORY on memory)
+Instr[22] -> Instr[114] (MEMORY on memory)
+Instr[22] -> Instr[119] (MEMORY on memory)
+Instr[22] -> Instr[124] (MEMORY on memory)
+Instr[22] -> Instr[127] (MEMORY on memory)
+Instr[22] -> Instr[128] (MEMORY on memory)
+Instr[22] -> Instr[129] (MEMORY on memory)
+Instr[22] -> Instr[131] (MEMORY on memory)
+Instr[22] -> Instr[134] (MEMORY on memory)
+Instr[22] -> Instr[135] (MEMORY on memory)
+Instr[22] -> Instr[136] (MEMORY on memory)
+Instr[22] -> Instr[138] (MEMORY on memory)
+Instr[22] -> Instr[140] (MEMORY on memory)
+Instr[22] -> Instr[150] (MEMORY on memory)
+Instr[22] -> Instr[151] (MEMORY on memory)
+Instr[22] -> Instr[157] (MEMORY on memory)
+Instr[22] -> Instr[158] (MEMORY on memory)
+Instr[22] -> Instr[164] (MEMORY on memory)
+Instr[22] -> Instr[165] (MEMORY on memory)
+Instr[22] -> Instr[170] (MEMORY on memory)
+Instr[22] -> Instr[172] (MEMORY on memory)
+Instr[22] -> Instr[174] (MEMORY on memory)
+Instr[22] -> Instr[182] (MEMORY on memory)
+Instr[22] -> Instr[187] (MEMORY on memory)
+Instr[22] -> Instr[194] (MEMORY on memory)
+Instr[22] -> Instr[199] (MEMORY on memory)
+Instr[22] -> Instr[206] (MEMORY on memory)
+Instr[22] -> Instr[209] (MEMORY on memory)
+Instr[22] -> Instr[210] (MEMORY on memory)
+Instr[22] -> Instr[212] (MEMORY on memory)
+Instr[22] -> Instr[215] (MEMORY on memory)
+Instr[22] -> Instr[216] (MEMORY on memory)
+Instr[22] -> Instr[227] (MEMORY on memory)
+Instr[22] -> Instr[229] (MEMORY on memory)
+Instr[22] -> Instr[236] (MEMORY on memory)
+Instr[22] -> Instr[237] (MEMORY on memory)
+Instr[23] -> Instr[27] (MEMORY on memory)
+Instr[23] -> Instr[28] (MEMORY on memory)
+Instr[23] -> Instr[33] (MEMORY on memory)
+Instr[23] -> Instr[38] (MEMORY on memory)
+Instr[23] -> Instr[41] (MEMORY on memory)
+Instr[23] -> Instr[42] (MEMORY on memory)
+Instr[23] -> Instr[44] (MEMORY on memory)
+Instr[23] -> Instr[47] (MEMORY on memory)
+Instr[23] -> Instr[48] (MEMORY on memory)
+Instr[23] -> Instr[50] (MEMORY on memory)
+Instr[23] -> Instr[52] (MEMORY on memory)
+Instr[23] -> Instr[62] (MEMORY on memory)
+Instr[23] -> Instr[63] (MEMORY on memory)
+Instr[23] -> Instr[64] (MEMORY on memory)
+Instr[23] -> Instr[65] (MEMORY on memory)
+Instr[23] -> Instr[67] (MEMORY on memory)
+Instr[23] -> Instr[68] (MEMORY on memory)
+Instr[23] -> Instr[69] (MEMORY on memory)
+Instr[23] -> Instr[70] (MEMORY on memory)
+Instr[23] -> Instr[72] (MEMORY on memory)
+Instr[23] -> Instr[73] (MEMORY on memory)
+Instr[23] -> Instr[74] (MEMORY on memory)
+Instr[23] -> Instr[75] (MEMORY on memory)
+Instr[23] -> Instr[77] (MEMORY on memory)
+Instr[23] -> Instr[78] (MEMORY on memory)
+Instr[23] -> Instr[79] (MEMORY on memory)
+Instr[23] -> Instr[80] (MEMORY on memory)
+Instr[23] -> Instr[84] (MEMORY on memory)
+Instr[23] -> Instr[90] (MEMORY on memory)
+Instr[23] -> Instr[91] (MEMORY on memory)
+Instr[23] -> Instr[96] (MEMORY on memory)
+Instr[23] -> Instr[100] (MEMORY on memory)
+Instr[23] -> Instr[101] (MEMORY on memory)
+Instr[23] -> Instr[102] (MEMORY on memory)
+Instr[23] -> Instr[107] (MEMORY on memory)
+Instr[23] -> Instr[111] (MEMORY on memory)
+Instr[23] -> Instr[113] (MEMORY on memory)
+Instr[23] -> Instr[114] (MEMORY on memory)
+Instr[23] -> Instr[119] (MEMORY on memory)
+Instr[23] -> Instr[124] (MEMORY on memory)
+Instr[23] -> Instr[127] (MEMORY on memory)
+Instr[23] -> Instr[128] (MEMORY on memory)
+Instr[23] -> Instr[129] (MEMORY on memory)
+Instr[23] -> Instr[131] (MEMORY on memory)
+Instr[23] -> Instr[134] (MEMORY on memory)
+Instr[23] -> Instr[135] (MEMORY on memory)
+Instr[23] -> Instr[136] (MEMORY on memory)
+Instr[23] -> Instr[138] (MEMORY on memory)
+Instr[23] -> Instr[140] (MEMORY on memory)
+Instr[23] -> Instr[150] (MEMORY on memory)
+Instr[23] -> Instr[151] (MEMORY on memory)
+Instr[23] -> Instr[157] (MEMORY on memory)
+Instr[23] -> Instr[158] (MEMORY on memory)
+Instr[23] -> Instr[164] (MEMORY on memory)
+Instr[23] -> Instr[165] (MEMORY on memory)
+Instr[23] -> Instr[170] (MEMORY on memory)
+Instr[23] -> Instr[172] (MEMORY on memory)
+Instr[23] -> Instr[174] (MEMORY on memory)
+Instr[23] -> Instr[182] (MEMORY on memory)
+Instr[23] -> Instr[187] (MEMORY on memory)
+Instr[23] -> Instr[194] (MEMORY on memory)
+Instr[23] -> Instr[199] (MEMORY on memory)
+Instr[23] -> Instr[206] (MEMORY on memory)
+Instr[23] -> Instr[209] (MEMORY on memory)
+Instr[23] -> Instr[210] (MEMORY on memory)
+Instr[23] -> Instr[212] (MEMORY on memory)
+Instr[23] -> Instr[215] (MEMORY on memory)
+Instr[23] -> Instr[216] (MEMORY on memory)
+Instr[23] -> Instr[227] (MEMORY on memory)
+Instr[23] -> Instr[229] (MEMORY on memory)
+Instr[23] -> Instr[236] (MEMORY on memory)
+Instr[23] -> Instr[237] (MEMORY on memory)
+Instr[25] -> Instr[27] (MEMORY on memory)
+Instr[25] -> Instr[28] (MEMORY on memory)
+Instr[25] -> Instr[33] (MEMORY on memory)
+Instr[25] -> Instr[38] (MEMORY on memory)
+Instr[25] -> Instr[41] (MEMORY on memory)
+Instr[25] -> Instr[42] (MEMORY on memory)
+Instr[25] -> Instr[44] (MEMORY on memory)
+Instr[25] -> Instr[47] (MEMORY on memory)
+Instr[25] -> Instr[48] (MEMORY on memory)
+Instr[25] -> Instr[50] (MEMORY on memory)
+Instr[25] -> Instr[52] (MEMORY on memory)
+Instr[25] -> Instr[62] (MEMORY on memory)
+Instr[25] -> Instr[63] (MEMORY on memory)
+Instr[25] -> Instr[64] (MEMORY on memory)
+Instr[25] -> Instr[65] (MEMORY on memory)
+Instr[25] -> Instr[67] (MEMORY on memory)
+Instr[25] -> Instr[68] (MEMORY on memory)
+Instr[25] -> Instr[69] (MEMORY on memory)
+Instr[25] -> Instr[70] (MEMORY on memory)
+Instr[25] -> Instr[72] (MEMORY on memory)
+Instr[25] -> Instr[73] (MEMORY on memory)
+Instr[25] -> Instr[74] (MEMORY on memory)
+Instr[25] -> Instr[75] (MEMORY on memory)
+Instr[25] -> Instr[77] (MEMORY on memory)
+Instr[25] -> Instr[78] (MEMORY on memory)
+Instr[25] -> Instr[79] (MEMORY on memory)
+Instr[25] -> Instr[80] (MEMORY on memory)
+Instr[25] -> Instr[84] (MEMORY on memory)
+Instr[25] -> Instr[90] (MEMORY on memory)
+Instr[25] -> Instr[91] (MEMORY on memory)
+Instr[25] -> Instr[96] (MEMORY on memory)
+Instr[25] -> Instr[100] (MEMORY on memory)
+Instr[25] -> Instr[101] (MEMORY on memory)
+Instr[25] -> Instr[102] (MEMORY on memory)
+Instr[25] -> Instr[107] (MEMORY on memory)
+Instr[25] -> Instr[111] (MEMORY on memory)
+Instr[25] -> Instr[113] (MEMORY on memory)
+Instr[25] -> Instr[114] (MEMORY on memory)
+Instr[25] -> Instr[119] (MEMORY on memory)
+Instr[25] -> Instr[124] (MEMORY on memory)
+Instr[25] -> Instr[127] (MEMORY on memory)
+Instr[25] -> Instr[128] (MEMORY on memory)
+Instr[25] -> Instr[129] (MEMORY on memory)
+Instr[25] -> Instr[131] (MEMORY on memory)
+Instr[25] -> Instr[134] (MEMORY on memory)
+Instr[25] -> Instr[135] (MEMORY on memory)
+Instr[25] -> Instr[136] (MEMORY on memory)
+Instr[25] -> Instr[138] (MEMORY on memory)
+Instr[25] -> Instr[140] (MEMORY on memory)
+Instr[25] -> Instr[150] (MEMORY on memory)
+Instr[25] -> Instr[151] (MEMORY on memory)
+Instr[25] -> Instr[157] (MEMORY on memory)
+Instr[25] -> Instr[158] (MEMORY on memory)
+Instr[25] -> Instr[164] (MEMORY on memory)
+Instr[25] -> Instr[165] (MEMORY on memory)
+Instr[25] -> Instr[170] (MEMORY on memory)
+Instr[25] -> Instr[172] (MEMORY on memory)
+Instr[25] -> Instr[174] (MEMORY on memory)
+Instr[25] -> Instr[182] (MEMORY on memory)
+Instr[25] -> Instr[187] (MEMORY on memory)
+Instr[25] -> Instr[194] (MEMORY on memory)
+Instr[25] -> Instr[199] (MEMORY on memory)
+Instr[25] -> Instr[206] (MEMORY on memory)
+Instr[25] -> Instr[209] (MEMORY on memory)
+Instr[25] -> Instr[210] (MEMORY on memory)
+Instr[25] -> Instr[212] (MEMORY on memory)
+Instr[25] -> Instr[215] (MEMORY on memory)
+Instr[25] -> Instr[216] (MEMORY on memory)
+Instr[25] -> Instr[227] (MEMORY on memory)
+Instr[25] -> Instr[229] (MEMORY on memory)
+Instr[25] -> Instr[236] (MEMORY on memory)
+Instr[25] -> Instr[237] (MEMORY on memory)
+Instr[37] -> Instr[38] (MEMORY on memory)
+Instr[37] -> Instr[41] (MEMORY on memory)
+Instr[37] -> Instr[42] (MEMORY on memory)
+Instr[37] -> Instr[44] (MEMORY on memory)
+Instr[37] -> Instr[47] (MEMORY on memory)
+Instr[37] -> Instr[48] (MEMORY on memory)
+Instr[37] -> Instr[50] (MEMORY on memory)
+Instr[37] -> Instr[52] (MEMORY on memory)
+Instr[37] -> Instr[62] (MEMORY on memory)
+Instr[37] -> Instr[63] (MEMORY on memory)
+Instr[37] -> Instr[64] (MEMORY on memory)
+Instr[37] -> Instr[65] (MEMORY on memory)
+Instr[37] -> Instr[67] (MEMORY on memory)
+Instr[37] -> Instr[68] (MEMORY on memory)
+Instr[37] -> Instr[69] (MEMORY on memory)
+Instr[37] -> Instr[70] (MEMORY on memory)
+Instr[37] -> Instr[72] (MEMORY on memory)
+Instr[37] -> Instr[73] (MEMORY on memory)
+Instr[37] -> Instr[74] (MEMORY on memory)
+Instr[37] -> Instr[75] (MEMORY on memory)
+Instr[37] -> Instr[77] (MEMORY on memory)
+Instr[37] -> Instr[78] (MEMORY on memory)
+Instr[37] -> Instr[79] (MEMORY on memory)
+Instr[37] -> Instr[80] (MEMORY on memory)
+Instr[37] -> Instr[84] (MEMORY on memory)
+Instr[37] -> Instr[90] (MEMORY on memory)
+Instr[37] -> Instr[91] (MEMORY on memory)
+Instr[37] -> Instr[96] (MEMORY on memory)
+Instr[37] -> Instr[100] (MEMORY on memory)
+Instr[37] -> Instr[101] (MEMORY on memory)
+Instr[37] -> Instr[102] (MEMORY on memory)
+Instr[37] -> Instr[107] (MEMORY on memory)
+Instr[37] -> Instr[111] (MEMORY on memory)
+Instr[37] -> Instr[113] (MEMORY on memory)
+Instr[37] -> Instr[114] (MEMORY on memory)
+Instr[37] -> Instr[119] (MEMORY on memory)
+Instr[37] -> Instr[124] (MEMORY on memory)
+Instr[37] -> Instr[127] (MEMORY on memory)
+Instr[37] -> Instr[128] (MEMORY on memory)
+Instr[37] -> Instr[129] (MEMORY on memory)
+Instr[37] -> Instr[131] (MEMORY on memory)
+Instr[37] -> Instr[134] (MEMORY on memory)
+Instr[37] -> Instr[135] (MEMORY on memory)
+Instr[37] -> Instr[136] (MEMORY on memory)
+Instr[37] -> Instr[138] (MEMORY on memory)
+Instr[37] -> Instr[140] (MEMORY on memory)
+Instr[37] -> Instr[150] (MEMORY on memory)
+Instr[37] -> Instr[151] (MEMORY on memory)
+Instr[37] -> Instr[157] (MEMORY on memory)
+Instr[37] -> Instr[158] (MEMORY on memory)
+Instr[37] -> Instr[164] (MEMORY on memory)
+Instr[37] -> Instr[165] (MEMORY on memory)
+Instr[37] -> Instr[170] (MEMORY on memory)
+Instr[37] -> Instr[172] (MEMORY on memory)
+Instr[37] -> Instr[174] (MEMORY on memory)
+Instr[37] -> Instr[182] (MEMORY on memory)
+Instr[37] -> Instr[187] (MEMORY on memory)
+Instr[37] -> Instr[194] (MEMORY on memory)
+Instr[37] -> Instr[199] (MEMORY on memory)
+Instr[37] -> Instr[206] (MEMORY on memory)
+Instr[37] -> Instr[209] (MEMORY on memory)
+Instr[37] -> Instr[210] (MEMORY on memory)
+Instr[37] -> Instr[212] (MEMORY on memory)
+Instr[37] -> Instr[215] (MEMORY on memory)
+Instr[37] -> Instr[216] (MEMORY on memory)
+Instr[37] -> Instr[227] (MEMORY on memory)
+Instr[37] -> Instr[229] (MEMORY on memory)
+Instr[37] -> Instr[236] (MEMORY on memory)
+Instr[37] -> Instr[237] (MEMORY on memory)
+Instr[40] -> Instr[41] (MEMORY on memory)
+Instr[40] -> Instr[42] (MEMORY on memory)
+Instr[40] -> Instr[44] (MEMORY on memory)
+Instr[40] -> Instr[47] (MEMORY on memory)
+Instr[40] -> Instr[48] (MEMORY on memory)
+Instr[40] -> Instr[50] (MEMORY on memory)
+Instr[40] -> Instr[52] (MEMORY on memory)
+Instr[40] -> Instr[62] (MEMORY on memory)
+Instr[40] -> Instr[63] (MEMORY on memory)
+Instr[40] -> Instr[64] (MEMORY on memory)
+Instr[40] -> Instr[65] (MEMORY on memory)
+Instr[40] -> Instr[67] (MEMORY on memory)
+Instr[40] -> Instr[68] (MEMORY on memory)
+Instr[40] -> Instr[69] (MEMORY on memory)
+Instr[40] -> Instr[70] (MEMORY on memory)
+Instr[40] -> Instr[72] (MEMORY on memory)
+Instr[40] -> Instr[73] (MEMORY on memory)
+Instr[40] -> Instr[74] (MEMORY on memory)
+Instr[40] -> Instr[75] (MEMORY on memory)
+Instr[40] -> Instr[77] (MEMORY on memory)
+Instr[40] -> Instr[78] (MEMORY on memory)
+Instr[40] -> Instr[79] (MEMORY on memory)
+Instr[40] -> Instr[80] (MEMORY on memory)
+Instr[40] -> Instr[84] (MEMORY on memory)
+Instr[40] -> Instr[90] (MEMORY on memory)
+Instr[40] -> Instr[91] (MEMORY on memory)
+Instr[40] -> Instr[96] (MEMORY on memory)
+Instr[40] -> Instr[100] (MEMORY on memory)
+Instr[40] -> Instr[101] (MEMORY on memory)
+Instr[40] -> Instr[102] (MEMORY on memory)
+Instr[40] -> Instr[107] (MEMORY on memory)
+Instr[40] -> Instr[111] (MEMORY on memory)
+Instr[40] -> Instr[113] (MEMORY on memory)
+Instr[40] -> Instr[114] (MEMORY on memory)
+Instr[40] -> Instr[119] (MEMORY on memory)
+Instr[40] -> Instr[124] (MEMORY on memory)
+Instr[40] -> Instr[127] (MEMORY on memory)
+Instr[40] -> Instr[128] (MEMORY on memory)
+Instr[40] -> Instr[129] (MEMORY on memory)
+Instr[40] -> Instr[131] (MEMORY on memory)
+Instr[40] -> Instr[134] (MEMORY on memory)
+Instr[40] -> Instr[135] (MEMORY on memory)
+Instr[40] -> Instr[136] (MEMORY on memory)
+Instr[40] -> Instr[138] (MEMORY on memory)
+Instr[40] -> Instr[140] (MEMORY on memory)
+Instr[40] -> Instr[150] (MEMORY on memory)
+Instr[40] -> Instr[151] (MEMORY on memory)
+Instr[40] -> Instr[157] (MEMORY on memory)
+Instr[40] -> Instr[158] (MEMORY on memory)
+Instr[40] -> Instr[164] (MEMORY on memory)
+Instr[40] -> Instr[165] (MEMORY on memory)
+Instr[40] -> Instr[170] (MEMORY on memory)
+Instr[40] -> Instr[172] (MEMORY on memory)
+Instr[40] -> Instr[174] (MEMORY on memory)
+Instr[40] -> Instr[182] (MEMORY on memory)
+Instr[40] -> Instr[187] (MEMORY on memory)
+Instr[40] -> Instr[194] (MEMORY on memory)
+Instr[40] -> Instr[199] (MEMORY on memory)
+Instr[40] -> Instr[206] (MEMORY on memory)
+Instr[40] -> Instr[209] (MEMORY on memory)
+Instr[40] -> Instr[210] (MEMORY on memory)
+Instr[40] -> Instr[212] (MEMORY on memory)
+Instr[40] -> Instr[215] (MEMORY on memory)
+Instr[40] -> Instr[216] (MEMORY on memory)
+Instr[40] -> Instr[227] (MEMORY on memory)
+Instr[40] -> Instr[229] (MEMORY on memory)
+Instr[40] -> Instr[236] (MEMORY on memory)
+Instr[40] -> Instr[237] (MEMORY on memory)
+Instr[46] -> Instr[47] (MEMORY on memory)
+Instr[46] -> Instr[48] (MEMORY on memory)
+Instr[46] -> Instr[50] (MEMORY on memory)
+Instr[46] -> Instr[52] (MEMORY on memory)
+Instr[46] -> Instr[62] (MEMORY on memory)
+Instr[46] -> Instr[63] (MEMORY on memory)
+Instr[46] -> Instr[64] (MEMORY on memory)
+Instr[46] -> Instr[65] (MEMORY on memory)
+Instr[46] -> Instr[67] (MEMORY on memory)
+Instr[46] -> Instr[68] (MEMORY on memory)
+Instr[46] -> Instr[69] (MEMORY on memory)
+Instr[46] -> Instr[70] (MEMORY on memory)
+Instr[46] -> Instr[72] (MEMORY on memory)
+Instr[46] -> Instr[73] (MEMORY on memory)
+Instr[46] -> Instr[74] (MEMORY on memory)
+Instr[46] -> Instr[75] (MEMORY on memory)
+Instr[46] -> Instr[77] (MEMORY on memory)
+Instr[46] -> Instr[78] (MEMORY on memory)
+Instr[46] -> Instr[79] (MEMORY on memory)
+Instr[46] -> Instr[80] (MEMORY on memory)
+Instr[46] -> Instr[84] (MEMORY on memory)
+Instr[46] -> Instr[90] (MEMORY on memory)
+Instr[46] -> Instr[91] (MEMORY on memory)
+Instr[46] -> Instr[96] (MEMORY on memory)
+Instr[46] -> Instr[100] (MEMORY on memory)
+Instr[46] -> Instr[101] (MEMORY on memory)
+Instr[46] -> Instr[102] (MEMORY on memory)
+Instr[46] -> Instr[107] (MEMORY on memory)
+Instr[46] -> Instr[111] (MEMORY on memory)
+Instr[46] -> Instr[113] (MEMORY on memory)
+Instr[46] -> Instr[114] (MEMORY on memory)
+Instr[46] -> Instr[119] (MEMORY on memory)
+Instr[46] -> Instr[124] (MEMORY on memory)
+Instr[46] -> Instr[127] (MEMORY on memory)
+Instr[46] -> Instr[128] (MEMORY on memory)
+Instr[46] -> Instr[129] (MEMORY on memory)
+Instr[46] -> Instr[131] (MEMORY on memory)
+Instr[46] -> Instr[134] (MEMORY on memory)
+Instr[46] -> Instr[135] (MEMORY on memory)
+Instr[46] -> Instr[136] (MEMORY on memory)
+Instr[46] -> Instr[138] (MEMORY on memory)
+Instr[46] -> Instr[140] (MEMORY on memory)
+Instr[46] -> Instr[150] (MEMORY on memory)
+Instr[46] -> Instr[151] (MEMORY on memory)
+Instr[46] -> Instr[157] (MEMORY on memory)
+Instr[46] -> Instr[158] (MEMORY on memory)
+Instr[46] -> Instr[164] (MEMORY on memory)
+Instr[46] -> Instr[165] (MEMORY on memory)
+Instr[46] -> Instr[170] (MEMORY on memory)
+Instr[46] -> Instr[172] (MEMORY on memory)
+Instr[46] -> Instr[174] (MEMORY on memory)
+Instr[46] -> Instr[182] (MEMORY on memory)
+Instr[46] -> Instr[187] (MEMORY on memory)
+Instr[46] -> Instr[194] (MEMORY on memory)
+Instr[46] -> Instr[199] (MEMORY on memory)
+Instr[46] -> Instr[206] (MEMORY on memory)
+Instr[46] -> Instr[209] (MEMORY on memory)
+Instr[46] -> Instr[210] (MEMORY on memory)
+Instr[46] -> Instr[212] (MEMORY on memory)
+Instr[46] -> Instr[215] (MEMORY on memory)
+Instr[46] -> Instr[216] (MEMORY on memory)
+Instr[46] -> Instr[227] (MEMORY on memory)
+Instr[46] -> Instr[229] (MEMORY on memory)
+Instr[46] -> Instr[236] (MEMORY on memory)
+Instr[46] -> Instr[237] (MEMORY on memory)
+Instr[56] -> Instr[62] (MEMORY on memory)
+Instr[56] -> Instr[63] (MEMORY on memory)
+Instr[56] -> Instr[64] (MEMORY on memory)
+Instr[56] -> Instr[65] (MEMORY on memory)
+Instr[56] -> Instr[67] (MEMORY on memory)
+Instr[56] -> Instr[68] (MEMORY on memory)
+Instr[56] -> Instr[69] (MEMORY on memory)
+Instr[56] -> Instr[70] (MEMORY on memory)
+Instr[56] -> Instr[72] (MEMORY on memory)
+Instr[56] -> Instr[73] (MEMORY on memory)
+Instr[56] -> Instr[74] (MEMORY on memory)
+Instr[56] -> Instr[75] (MEMORY on memory)
+Instr[56] -> Instr[77] (MEMORY on memory)
+Instr[56] -> Instr[78] (MEMORY on memory)
+Instr[56] -> Instr[79] (MEMORY on memory)
+Instr[56] -> Instr[80] (MEMORY on memory)
+Instr[56] -> Instr[84] (MEMORY on memory)
+Instr[56] -> Instr[90] (MEMORY on memory)
+Instr[56] -> Instr[91] (MEMORY on memory)
+Instr[56] -> Instr[96] (MEMORY on memory)
+Instr[56] -> Instr[100] (MEMORY on memory)
+Instr[56] -> Instr[101] (MEMORY on memory)
+Instr[56] -> Instr[102] (MEMORY on memory)
+Instr[56] -> Instr[107] (MEMORY on memory)
+Instr[56] -> Instr[111] (MEMORY on memory)
+Instr[56] -> Instr[113] (MEMORY on memory)
+Instr[56] -> Instr[114] (MEMORY on memory)
+Instr[56] -> Instr[119] (MEMORY on memory)
+Instr[56] -> Instr[124] (MEMORY on memory)
+Instr[56] -> Instr[127] (MEMORY on memory)
+Instr[56] -> Instr[128] (MEMORY on memory)
+Instr[56] -> Instr[129] (MEMORY on memory)
+Instr[56] -> Instr[131] (MEMORY on memory)
+Instr[56] -> Instr[134] (MEMORY on memory)
+Instr[56] -> Instr[135] (MEMORY on memory)
+Instr[56] -> Instr[136] (MEMORY on memory)
+Instr[56] -> Instr[138] (MEMORY on memory)
+Instr[56] -> Instr[140] (MEMORY on memory)
+Instr[56] -> Instr[150] (MEMORY on memory)
+Instr[56] -> Instr[151] (MEMORY on memory)
+Instr[56] -> Instr[157] (MEMORY on memory)
+Instr[56] -> Instr[158] (MEMORY on memory)
+Instr[56] -> Instr[164] (MEMORY on memory)
+Instr[56] -> Instr[165] (MEMORY on memory)
+Instr[56] -> Instr[170] (MEMORY on memory)
+Instr[56] -> Instr[172] (MEMORY on memory)
+Instr[56] -> Instr[174] (MEMORY on memory)
+Instr[56] -> Instr[182] (MEMORY on memory)
+Instr[56] -> Instr[187] (MEMORY on memory)
+Instr[56] -> Instr[194] (MEMORY on memory)
+Instr[56] -> Instr[199] (MEMORY on memory)
+Instr[56] -> Instr[206] (MEMORY on memory)
+Instr[56] -> Instr[209] (MEMORY on memory)
+Instr[56] -> Instr[210] (MEMORY on memory)
+Instr[56] -> Instr[212] (MEMORY on memory)
+Instr[56] -> Instr[215] (MEMORY on memory)
+Instr[56] -> Instr[216] (MEMORY on memory)
+Instr[56] -> Instr[227] (MEMORY on memory)
+Instr[56] -> Instr[229] (MEMORY on memory)
+Instr[56] -> Instr[236] (MEMORY on memory)
+Instr[56] -> Instr[237] (MEMORY on memory)
+Instr[58] -> Instr[62] (MEMORY on memory)
+Instr[58] -> Instr[63] (MEMORY on memory)
+Instr[58] -> Instr[64] (MEMORY on memory)
+Instr[58] -> Instr[65] (MEMORY on memory)
+Instr[58] -> Instr[67] (MEMORY on memory)
+Instr[58] -> Instr[68] (MEMORY on memory)
+Instr[58] -> Instr[69] (MEMORY on memory)
+Instr[58] -> Instr[70] (MEMORY on memory)
+Instr[58] -> Instr[72] (MEMORY on memory)
+Instr[58] -> Instr[73] (MEMORY on memory)
+Instr[58] -> Instr[74] (MEMORY on memory)
+Instr[58] -> Instr[75] (MEMORY on memory)
+Instr[58] -> Instr[77] (MEMORY on memory)
+Instr[58] -> Instr[78] (MEMORY on memory)
+Instr[58] -> Instr[79] (MEMORY on memory)
+Instr[58] -> Instr[80] (MEMORY on memory)
+Instr[58] -> Instr[84] (MEMORY on memory)
+Instr[58] -> Instr[90] (MEMORY on memory)
+Instr[58] -> Instr[91] (MEMORY on memory)
+Instr[58] -> Instr[96] (MEMORY on memory)
+Instr[58] -> Instr[100] (MEMORY on memory)
+Instr[58] -> Instr[101] (MEMORY on memory)
+Instr[58] -> Instr[102] (MEMORY on memory)
+Instr[58] -> Instr[107] (MEMORY on memory)
+Instr[58] -> Instr[111] (MEMORY on memory)
+Instr[58] -> Instr[113] (MEMORY on memory)
+Instr[58] -> Instr[114] (MEMORY on memory)
+Instr[58] -> Instr[119] (MEMORY on memory)
+Instr[58] -> Instr[124] (MEMORY on memory)
+Instr[58] -> Instr[127] (MEMORY on memory)
+Instr[58] -> Instr[128] (MEMORY on memory)
+Instr[58] -> Instr[129] (MEMORY on memory)
+Instr[58] -> Instr[131] (MEMORY on memory)
+Instr[58] -> Instr[134] (MEMORY on memory)
+Instr[58] -> Instr[135] (MEMORY on memory)
+Instr[58] -> Instr[136] (MEMORY on memory)
+Instr[58] -> Instr[138] (MEMORY on memory)
+Instr[58] -> Instr[140] (MEMORY on memory)
+Instr[58] -> Instr[150] (MEMORY on memory)
+Instr[58] -> Instr[151] (MEMORY on memory)
+Instr[58] -> Instr[157] (MEMORY on memory)
+Instr[58] -> Instr[158] (MEMORY on memory)
+Instr[58] -> Instr[164] (MEMORY on memory)
+Instr[58] -> Instr[165] (MEMORY on memory)
+Instr[58] -> Instr[170] (MEMORY on memory)
+Instr[58] -> Instr[172] (MEMORY on memory)
+Instr[58] -> Instr[174] (MEMORY on memory)
+Instr[58] -> Instr[182] (MEMORY on memory)
+Instr[58] -> Instr[187] (MEMORY on memory)
+Instr[58] -> Instr[194] (MEMORY on memory)
+Instr[58] -> Instr[199] (MEMORY on memory)
+Instr[58] -> Instr[206] (MEMORY on memory)
+Instr[58] -> Instr[209] (MEMORY on memory)
+Instr[58] -> Instr[210] (MEMORY on memory)
+Instr[58] -> Instr[212] (MEMORY on memory)
+Instr[58] -> Instr[215] (MEMORY on memory)
+Instr[58] -> Instr[216] (MEMORY on memory)
+Instr[58] -> Instr[227] (MEMORY on memory)
+Instr[58] -> Instr[229] (MEMORY on memory)
+Instr[58] -> Instr[236] (MEMORY on memory)
+Instr[58] -> Instr[237] (MEMORY on memory)
+Instr[59] -> Instr[62] (MEMORY on memory)
+Instr[59] -> Instr[63] (MEMORY on memory)
+Instr[59] -> Instr[64] (MEMORY on memory)
+Instr[59] -> Instr[65] (MEMORY on memory)
+Instr[59] -> Instr[67] (MEMORY on memory)
+Instr[59] -> Instr[68] (MEMORY on memory)
+Instr[59] -> Instr[69] (MEMORY on memory)
+Instr[59] -> Instr[70] (MEMORY on memory)
+Instr[59] -> Instr[72] (MEMORY on memory)
+Instr[59] -> Instr[73] (MEMORY on memory)
+Instr[59] -> Instr[74] (MEMORY on memory)
+Instr[59] -> Instr[75] (MEMORY on memory)
+Instr[59] -> Instr[77] (MEMORY on memory)
+Instr[59] -> Instr[78] (MEMORY on memory)
+Instr[59] -> Instr[79] (MEMORY on memory)
+Instr[59] -> Instr[80] (MEMORY on memory)
+Instr[59] -> Instr[84] (MEMORY on memory)
+Instr[59] -> Instr[90] (MEMORY on memory)
+Instr[59] -> Instr[91] (MEMORY on memory)
+Instr[59] -> Instr[96] (MEMORY on memory)
+Instr[59] -> Instr[100] (MEMORY on memory)
+Instr[59] -> Instr[101] (MEMORY on memory)
+Instr[59] -> Instr[102] (MEMORY on memory)
+Instr[59] -> Instr[107] (MEMORY on memory)
+Instr[59] -> Instr[111] (MEMORY on memory)
+Instr[59] -> Instr[113] (MEMORY on memory)
+Instr[59] -> Instr[114] (MEMORY on memory)
+Instr[59] -> Instr[119] (MEMORY on memory)
+Instr[59] -> Instr[124] (MEMORY on memory)
+Instr[59] -> Instr[127] (MEMORY on memory)
+Instr[59] -> Instr[128] (MEMORY on memory)
+Instr[59] -> Instr[129] (MEMORY on memory)
+Instr[59] -> Instr[131] (MEMORY on memory)
+Instr[59] -> Instr[134] (MEMORY on memory)
+Instr[59] -> Instr[135] (MEMORY on memory)
+Instr[59] -> Instr[136] (MEMORY on memory)
+Instr[59] -> Instr[138] (MEMORY on memory)
+Instr[59] -> Instr[140] (MEMORY on memory)
+Instr[59] -> Instr[150] (MEMORY on memory)
+Instr[59] -> Instr[151] (MEMORY on memory)
+Instr[59] -> Instr[157] (MEMORY on memory)
+Instr[59] -> Instr[158] (MEMORY on memory)
+Instr[59] -> Instr[164] (MEMORY on memory)
+Instr[59] -> Instr[165] (MEMORY on memory)
+Instr[59] -> Instr[170] (MEMORY on memory)
+Instr[59] -> Instr[172] (MEMORY on memory)
+Instr[59] -> Instr[174] (MEMORY on memory)
+Instr[59] -> Instr[182] (MEMORY on memory)
+Instr[59] -> Instr[187] (MEMORY on memory)
+Instr[59] -> Instr[194] (MEMORY on memory)
+Instr[59] -> Instr[199] (MEMORY on memory)
+Instr[59] -> Instr[206] (MEMORY on memory)
+Instr[59] -> Instr[209] (MEMORY on memory)
+Instr[59] -> Instr[210] (MEMORY on memory)
+Instr[59] -> Instr[212] (MEMORY on memory)
+Instr[59] -> Instr[215] (MEMORY on memory)
+Instr[59] -> Instr[216] (MEMORY on memory)
+Instr[59] -> Instr[227] (MEMORY on memory)
+Instr[59] -> Instr[229] (MEMORY on memory)
+Instr[59] -> Instr[236] (MEMORY on memory)
+Instr[59] -> Instr[237] (MEMORY on memory)
+Instr[60] -> Instr[62] (MEMORY on memory)
+Instr[60] -> Instr[63] (MEMORY on memory)
+Instr[60] -> Instr[64] (MEMORY on memory)
+Instr[60] -> Instr[65] (MEMORY on memory)
+Instr[60] -> Instr[67] (MEMORY on memory)
+Instr[60] -> Instr[68] (MEMORY on memory)
+Instr[60] -> Instr[69] (MEMORY on memory)
+Instr[60] -> Instr[70] (MEMORY on memory)
+Instr[60] -> Instr[72] (MEMORY on memory)
+Instr[60] -> Instr[73] (MEMORY on memory)
+Instr[60] -> Instr[74] (MEMORY on memory)
+Instr[60] -> Instr[75] (MEMORY on memory)
+Instr[60] -> Instr[77] (MEMORY on memory)
+Instr[60] -> Instr[78] (MEMORY on memory)
+Instr[60] -> Instr[79] (MEMORY on memory)
+Instr[60] -> Instr[80] (MEMORY on memory)
+Instr[60] -> Instr[84] (MEMORY on memory)
+Instr[60] -> Instr[90] (MEMORY on memory)
+Instr[60] -> Instr[91] (MEMORY on memory)
+Instr[60] -> Instr[96] (MEMORY on memory)
+Instr[60] -> Instr[100] (MEMORY on memory)
+Instr[60] -> Instr[101] (MEMORY on memory)
+Instr[60] -> Instr[102] (MEMORY on memory)
+Instr[60] -> Instr[107] (MEMORY on memory)
+Instr[60] -> Instr[111] (MEMORY on memory)
+Instr[60] -> Instr[113] (MEMORY on memory)
+Instr[60] -> Instr[114] (MEMORY on memory)
+Instr[60] -> Instr[119] (MEMORY on memory)
+Instr[60] -> Instr[124] (MEMORY on memory)
+Instr[60] -> Instr[127] (MEMORY on memory)
+Instr[60] -> Instr[128] (MEMORY on memory)
+Instr[60] -> Instr[129] (MEMORY on memory)
+Instr[60] -> Instr[131] (MEMORY on memory)
+Instr[60] -> Instr[134] (MEMORY on memory)
+Instr[60] -> Instr[135] (MEMORY on memory)
+Instr[60] -> Instr[136] (MEMORY on memory)
+Instr[60] -> Instr[138] (MEMORY on memory)
+Instr[60] -> Instr[140] (MEMORY on memory)
+Instr[60] -> Instr[150] (MEMORY on memory)
+Instr[60] -> Instr[151] (MEMORY on memory)
+Instr[60] -> Instr[157] (MEMORY on memory)
+Instr[60] -> Instr[158] (MEMORY on memory)
+Instr[60] -> Instr[164] (MEMORY on memory)
+Instr[60] -> Instr[165] (MEMORY on memory)
+Instr[60] -> Instr[170] (MEMORY on memory)
+Instr[60] -> Instr[172] (MEMORY on memory)
+Instr[60] -> Instr[174] (MEMORY on memory)
+Instr[60] -> Instr[182] (MEMORY on memory)
+Instr[60] -> Instr[187] (MEMORY on memory)
+Instr[60] -> Instr[194] (MEMORY on memory)
+Instr[60] -> Instr[199] (MEMORY on memory)
+Instr[60] -> Instr[206] (MEMORY on memory)
+Instr[60] -> Instr[209] (MEMORY on memory)
+Instr[60] -> Instr[210] (MEMORY on memory)
+Instr[60] -> Instr[212] (MEMORY on memory)
+Instr[60] -> Instr[215] (MEMORY on memory)
+Instr[60] -> Instr[216] (MEMORY on memory)
+Instr[60] -> Instr[227] (MEMORY on memory)
+Instr[60] -> Instr[229] (MEMORY on memory)
+Instr[60] -> Instr[236] (MEMORY on memory)
+Instr[60] -> Instr[237] (MEMORY on memory)
+Instr[61] -> Instr[62] (MEMORY on memory)
+Instr[61] -> Instr[63] (MEMORY on memory)
+Instr[61] -> Instr[64] (MEMORY on memory)
+Instr[61] -> Instr[65] (MEMORY on memory)
+Instr[61] -> Instr[67] (MEMORY on memory)
+Instr[61] -> Instr[68] (MEMORY on memory)
+Instr[61] -> Instr[69] (MEMORY on memory)
+Instr[61] -> Instr[70] (MEMORY on memory)
+Instr[61] -> Instr[72] (MEMORY on memory)
+Instr[61] -> Instr[73] (MEMORY on memory)
+Instr[61] -> Instr[74] (MEMORY on memory)
+Instr[61] -> Instr[75] (MEMORY on memory)
+Instr[61] -> Instr[77] (MEMORY on memory)
+Instr[61] -> Instr[78] (MEMORY on memory)
+Instr[61] -> Instr[79] (MEMORY on memory)
+Instr[61] -> Instr[80] (MEMORY on memory)
+Instr[61] -> Instr[84] (MEMORY on memory)
+Instr[61] -> Instr[90] (MEMORY on memory)
+Instr[61] -> Instr[91] (MEMORY on memory)
+Instr[61] -> Instr[96] (MEMORY on memory)
+Instr[61] -> Instr[100] (MEMORY on memory)
+Instr[61] -> Instr[101] (MEMORY on memory)
+Instr[61] -> Instr[102] (MEMORY on memory)
+Instr[61] -> Instr[107] (MEMORY on memory)
+Instr[61] -> Instr[111] (MEMORY on memory)
+Instr[61] -> Instr[113] (MEMORY on memory)
+Instr[61] -> Instr[114] (MEMORY on memory)
+Instr[61] -> Instr[119] (MEMORY on memory)
+Instr[61] -> Instr[124] (MEMORY on memory)
+Instr[61] -> Instr[127] (MEMORY on memory)
+Instr[61] -> Instr[128] (MEMORY on memory)
+Instr[61] -> Instr[129] (MEMORY on memory)
+Instr[61] -> Instr[131] (MEMORY on memory)
+Instr[61] -> Instr[134] (MEMORY on memory)
+Instr[61] -> Instr[135] (MEMORY on memory)
+Instr[61] -> Instr[136] (MEMORY on memory)
+Instr[61] -> Instr[138] (MEMORY on memory)
+Instr[61] -> Instr[140] (MEMORY on memory)
+Instr[61] -> Instr[150] (MEMORY on memory)
+Instr[61] -> Instr[151] (MEMORY on memory)
+Instr[61] -> Instr[157] (MEMORY on memory)
+Instr[61] -> Instr[158] (MEMORY on memory)
+Instr[61] -> Instr[164] (MEMORY on memory)
+Instr[61] -> Instr[165] (MEMORY on memory)
+Instr[61] -> Instr[170] (MEMORY on memory)
+Instr[61] -> Instr[172] (MEMORY on memory)
+Instr[61] -> Instr[174] (MEMORY on memory)
+Instr[61] -> Instr[182] (MEMORY on memory)
+Instr[61] -> Instr[187] (MEMORY on memory)
+Instr[61] -> Instr[194] (MEMORY on memory)
+Instr[61] -> Instr[199] (MEMORY on memory)
+Instr[61] -> Instr[206] (MEMORY on memory)
+Instr[61] -> Instr[209] (MEMORY on memory)
+Instr[61] -> Instr[210] (MEMORY on memory)
+Instr[61] -> Instr[212] (MEMORY on memory)
+Instr[61] -> Instr[215] (MEMORY on memory)
+Instr[61] -> Instr[216] (MEMORY on memory)
+Instr[61] -> Instr[227] (MEMORY on memory)
+Instr[61] -> Instr[229] (MEMORY on memory)
+Instr[61] -> Instr[236] (MEMORY on memory)
+Instr[61] -> Instr[237] (MEMORY on memory)
+Instr[83] -> Instr[84] (MEMORY on memory)
+Instr[83] -> Instr[90] (MEMORY on memory)
+Instr[83] -> Instr[91] (MEMORY on memory)
+Instr[83] -> Instr[96] (MEMORY on memory)
+Instr[83] -> Instr[100] (MEMORY on memory)
+Instr[83] -> Instr[101] (MEMORY on memory)
+Instr[83] -> Instr[102] (MEMORY on memory)
+Instr[83] -> Instr[107] (MEMORY on memory)
+Instr[83] -> Instr[111] (MEMORY on memory)
+Instr[83] -> Instr[113] (MEMORY on memory)
+Instr[83] -> Instr[114] (MEMORY on memory)
+Instr[83] -> Instr[119] (MEMORY on memory)
+Instr[83] -> Instr[124] (MEMORY on memory)
+Instr[83] -> Instr[127] (MEMORY on memory)
+Instr[83] -> Instr[128] (MEMORY on memory)
+Instr[83] -> Instr[129] (MEMORY on memory)
+Instr[83] -> Instr[131] (MEMORY on memory)
+Instr[83] -> Instr[134] (MEMORY on memory)
+Instr[83] -> Instr[135] (MEMORY on memory)
+Instr[83] -> Instr[136] (MEMORY on memory)
+Instr[83] -> Instr[138] (MEMORY on memory)
+Instr[83] -> Instr[140] (MEMORY on memory)
+Instr[83] -> Instr[150] (MEMORY on memory)
+Instr[83] -> Instr[151] (MEMORY on memory)
+Instr[83] -> Instr[157] (MEMORY on memory)
+Instr[83] -> Instr[158] (MEMORY on memory)
+Instr[83] -> Instr[164] (MEMORY on memory)
+Instr[83] -> Instr[165] (MEMORY on memory)
+Instr[83] -> Instr[170] (MEMORY on memory)
+Instr[83] -> Instr[172] (MEMORY on memory)
+Instr[83] -> Instr[174] (MEMORY on memory)
+Instr[83] -> Instr[182] (MEMORY on memory)
+Instr[83] -> Instr[187] (MEMORY on memory)
+Instr[83] -> Instr[194] (MEMORY on memory)
+Instr[83] -> Instr[199] (MEMORY on memory)
+Instr[83] -> Instr[206] (MEMORY on memory)
+Instr[83] -> Instr[209] (MEMORY on memory)
+Instr[83] -> Instr[210] (MEMORY on memory)
+Instr[83] -> Instr[212] (MEMORY on memory)
+Instr[83] -> Instr[215] (MEMORY on memory)
+Instr[83] -> Instr[216] (MEMORY on memory)
+Instr[83] -> Instr[227] (MEMORY on memory)
+Instr[83] -> Instr[229] (MEMORY on memory)
+Instr[83] -> Instr[236] (MEMORY on memory)
+Instr[83] -> Instr[237] (MEMORY on memory)
+Instr[86] -> Instr[90] (MEMORY on memory)
+Instr[86] -> Instr[91] (MEMORY on memory)
+Instr[86] -> Instr[96] (MEMORY on memory)
+Instr[86] -> Instr[100] (MEMORY on memory)
+Instr[86] -> Instr[101] (MEMORY on memory)
+Instr[86] -> Instr[102] (MEMORY on memory)
+Instr[86] -> Instr[107] (MEMORY on memory)
+Instr[86] -> Instr[111] (MEMORY on memory)
+Instr[86] -> Instr[113] (MEMORY on memory)
+Instr[86] -> Instr[114] (MEMORY on memory)
+Instr[86] -> Instr[119] (MEMORY on memory)
+Instr[86] -> Instr[124] (MEMORY on memory)
+Instr[86] -> Instr[127] (MEMORY on memory)
+Instr[86] -> Instr[128] (MEMORY on memory)
+Instr[86] -> Instr[129] (MEMORY on memory)
+Instr[86] -> Instr[131] (MEMORY on memory)
+Instr[86] -> Instr[134] (MEMORY on memory)
+Instr[86] -> Instr[135] (MEMORY on memory)
+Instr[86] -> Instr[136] (MEMORY on memory)
+Instr[86] -> Instr[138] (MEMORY on memory)
+Instr[86] -> Instr[140] (MEMORY on memory)
+Instr[86] -> Instr[150] (MEMORY on memory)
+Instr[86] -> Instr[151] (MEMORY on memory)
+Instr[86] -> Instr[157] (MEMORY on memory)
+Instr[86] -> Instr[158] (MEMORY on memory)
+Instr[86] -> Instr[164] (MEMORY on memory)
+Instr[86] -> Instr[165] (MEMORY on memory)
+Instr[86] -> Instr[170] (MEMORY on memory)
+Instr[86] -> Instr[172] (MEMORY on memory)
+Instr[86] -> Instr[174] (MEMORY on memory)
+Instr[86] -> Instr[182] (MEMORY on memory)
+Instr[86] -> Instr[187] (MEMORY on memory)
+Instr[86] -> Instr[194] (MEMORY on memory)
+Instr[86] -> Instr[199] (MEMORY on memory)
+Instr[86] -> Instr[206] (MEMORY on memory)
+Instr[86] -> Instr[209] (MEMORY on memory)
+Instr[86] -> Instr[210] (MEMORY on memory)
+Instr[86] -> Instr[212] (MEMORY on memory)
+Instr[86] -> Instr[215] (MEMORY on memory)
+Instr[86] -> Instr[216] (MEMORY on memory)
+Instr[86] -> Instr[227] (MEMORY on memory)
+Instr[86] -> Instr[229] (MEMORY on memory)
+Instr[86] -> Instr[236] (MEMORY on memory)
+Instr[86] -> Instr[237] (MEMORY on memory)
+Instr[88] -> Instr[90] (MEMORY on memory)
+Instr[88] -> Instr[91] (MEMORY on memory)
+Instr[88] -> Instr[96] (MEMORY on memory)
+Instr[88] -> Instr[100] (MEMORY on memory)
+Instr[88] -> Instr[101] (MEMORY on memory)
+Instr[88] -> Instr[102] (MEMORY on memory)
+Instr[88] -> Instr[107] (MEMORY on memory)
+Instr[88] -> Instr[111] (MEMORY on memory)
+Instr[88] -> Instr[113] (MEMORY on memory)
+Instr[88] -> Instr[114] (MEMORY on memory)
+Instr[88] -> Instr[119] (MEMORY on memory)
+Instr[88] -> Instr[124] (MEMORY on memory)
+Instr[88] -> Instr[127] (MEMORY on memory)
+Instr[88] -> Instr[128] (MEMORY on memory)
+Instr[88] -> Instr[129] (MEMORY on memory)
+Instr[88] -> Instr[131] (MEMORY on memory)
+Instr[88] -> Instr[134] (MEMORY on memory)
+Instr[88] -> Instr[135] (MEMORY on memory)
+Instr[88] -> Instr[136] (MEMORY on memory)
+Instr[88] -> Instr[138] (MEMORY on memory)
+Instr[88] -> Instr[140] (MEMORY on memory)
+Instr[88] -> Instr[150] (MEMORY on memory)
+Instr[88] -> Instr[151] (MEMORY on memory)
+Instr[88] -> Instr[157] (MEMORY on memory)
+Instr[88] -> Instr[158] (MEMORY on memory)
+Instr[88] -> Instr[164] (MEMORY on memory)
+Instr[88] -> Instr[165] (MEMORY on memory)
+Instr[88] -> Instr[170] (MEMORY on memory)
+Instr[88] -> Instr[172] (MEMORY on memory)
+Instr[88] -> Instr[174] (MEMORY on memory)
+Instr[88] -> Instr[182] (MEMORY on memory)
+Instr[88] -> Instr[187] (MEMORY on memory)
+Instr[88] -> Instr[194] (MEMORY on memory)
+Instr[88] -> Instr[199] (MEMORY on memory)
+Instr[88] -> Instr[206] (MEMORY on memory)
+Instr[88] -> Instr[209] (MEMORY on memory)
+Instr[88] -> Instr[210] (MEMORY on memory)
+Instr[88] -> Instr[212] (MEMORY on memory)
+Instr[88] -> Instr[215] (MEMORY on memory)
+Instr[88] -> Instr[216] (MEMORY on memory)
+Instr[88] -> Instr[227] (MEMORY on memory)
+Instr[88] -> Instr[229] (MEMORY on memory)
+Instr[88] -> Instr[236] (MEMORY on memory)
+Instr[88] -> Instr[237] (MEMORY on memory)
+Instr[123] -> Instr[124] (MEMORY on memory)
+Instr[123] -> Instr[127] (MEMORY on memory)
+Instr[123] -> Instr[128] (MEMORY on memory)
+Instr[123] -> Instr[129] (MEMORY on memory)
+Instr[123] -> Instr[131] (MEMORY on memory)
+Instr[123] -> Instr[134] (MEMORY on memory)
+Instr[123] -> Instr[135] (MEMORY on memory)
+Instr[123] -> Instr[136] (MEMORY on memory)
+Instr[123] -> Instr[138] (MEMORY on memory)
+Instr[123] -> Instr[140] (MEMORY on memory)
+Instr[123] -> Instr[150] (MEMORY on memory)
+Instr[123] -> Instr[151] (MEMORY on memory)
+Instr[123] -> Instr[157] (MEMORY on memory)
+Instr[123] -> Instr[158] (MEMORY on memory)
+Instr[123] -> Instr[164] (MEMORY on memory)
+Instr[123] -> Instr[165] (MEMORY on memory)
+Instr[123] -> Instr[170] (MEMORY on memory)
+Instr[123] -> Instr[172] (MEMORY on memory)
+Instr[123] -> Instr[174] (MEMORY on memory)
+Instr[123] -> Instr[182] (MEMORY on memory)
+Instr[123] -> Instr[187] (MEMORY on memory)
+Instr[123] -> Instr[194] (MEMORY on memory)
+Instr[123] -> Instr[199] (MEMORY on memory)
+Instr[123] -> Instr[206] (MEMORY on memory)
+Instr[123] -> Instr[209] (MEMORY on memory)
+Instr[123] -> Instr[210] (MEMORY on memory)
+Instr[123] -> Instr[212] (MEMORY on memory)
+Instr[123] -> Instr[215] (MEMORY on memory)
+Instr[123] -> Instr[216] (MEMORY on memory)
+Instr[123] -> Instr[227] (MEMORY on memory)
+Instr[123] -> Instr[229] (MEMORY on memory)
+Instr[123] -> Instr[236] (MEMORY on memory)
+Instr[123] -> Instr[237] (MEMORY on memory)
+Instr[126] -> Instr[127] (MEMORY on memory)
+Instr[126] -> Instr[128] (MEMORY on memory)
+Instr[126] -> Instr[129] (MEMORY on memory)
+Instr[126] -> Instr[131] (MEMORY on memory)
+Instr[126] -> Instr[134] (MEMORY on memory)
+Instr[126] -> Instr[135] (MEMORY on memory)
+Instr[126] -> Instr[136] (MEMORY on memory)
+Instr[126] -> Instr[138] (MEMORY on memory)
+Instr[126] -> Instr[140] (MEMORY on memory)
+Instr[126] -> Instr[150] (MEMORY on memory)
+Instr[126] -> Instr[151] (MEMORY on memory)
+Instr[126] -> Instr[157] (MEMORY on memory)
+Instr[126] -> Instr[158] (MEMORY on memory)
+Instr[126] -> Instr[164] (MEMORY on memory)
+Instr[126] -> Instr[165] (MEMORY on memory)
+Instr[126] -> Instr[170] (MEMORY on memory)
+Instr[126] -> Instr[172] (MEMORY on memory)
+Instr[126] -> Instr[174] (MEMORY on memory)
+Instr[126] -> Instr[182] (MEMORY on memory)
+Instr[126] -> Instr[187] (MEMORY on memory)
+Instr[126] -> Instr[194] (MEMORY on memory)
+Instr[126] -> Instr[199] (MEMORY on memory)
+Instr[126] -> Instr[206] (MEMORY on memory)
+Instr[126] -> Instr[209] (MEMORY on memory)
+Instr[126] -> Instr[210] (MEMORY on memory)
+Instr[126] -> Instr[212] (MEMORY on memory)
+Instr[126] -> Instr[215] (MEMORY on memory)
+Instr[126] -> Instr[216] (MEMORY on memory)
+Instr[126] -> Instr[227] (MEMORY on memory)
+Instr[126] -> Instr[229] (MEMORY on memory)
+Instr[126] -> Instr[236] (MEMORY on memory)
+Instr[126] -> Instr[237] (MEMORY on memory)
+Instr[133] -> Instr[134] (MEMORY on memory)
+Instr[133] -> Instr[135] (MEMORY on memory)
+Instr[133] -> Instr[136] (MEMORY on memory)
+Instr[133] -> Instr[138] (MEMORY on memory)
+Instr[133] -> Instr[140] (MEMORY on memory)
+Instr[133] -> Instr[150] (MEMORY on memory)
+Instr[133] -> Instr[151] (MEMORY on memory)
+Instr[133] -> Instr[157] (MEMORY on memory)
+Instr[133] -> Instr[158] (MEMORY on memory)
+Instr[133] -> Instr[164] (MEMORY on memory)
+Instr[133] -> Instr[165] (MEMORY on memory)
+Instr[133] -> Instr[170] (MEMORY on memory)
+Instr[133] -> Instr[172] (MEMORY on memory)
+Instr[133] -> Instr[174] (MEMORY on memory)
+Instr[133] -> Instr[182] (MEMORY on memory)
+Instr[133] -> Instr[187] (MEMORY on memory)
+Instr[133] -> Instr[194] (MEMORY on memory)
+Instr[133] -> Instr[199] (MEMORY on memory)
+Instr[133] -> Instr[206] (MEMORY on memory)
+Instr[133] -> Instr[209] (MEMORY on memory)
+Instr[133] -> Instr[210] (MEMORY on memory)
+Instr[133] -> Instr[212] (MEMORY on memory)
+Instr[133] -> Instr[215] (MEMORY on memory)
+Instr[133] -> Instr[216] (MEMORY on memory)
+Instr[133] -> Instr[227] (MEMORY on memory)
+Instr[133] -> Instr[229] (MEMORY on memory)
+Instr[133] -> Instr[236] (MEMORY on memory)
+Instr[133] -> Instr[237] (MEMORY on memory)
+Instr[144] -> Instr[150] (MEMORY on memory)
+Instr[144] -> Instr[151] (MEMORY on memory)
+Instr[144] -> Instr[157] (MEMORY on memory)
+Instr[144] -> Instr[158] (MEMORY on memory)
+Instr[144] -> Instr[164] (MEMORY on memory)
+Instr[144] -> Instr[165] (MEMORY on memory)
+Instr[144] -> Instr[170] (MEMORY on memory)
+Instr[144] -> Instr[172] (MEMORY on memory)
+Instr[144] -> Instr[174] (MEMORY on memory)
+Instr[144] -> Instr[182] (MEMORY on memory)
+Instr[144] -> Instr[187] (MEMORY on memory)
+Instr[144] -> Instr[194] (MEMORY on memory)
+Instr[144] -> Instr[199] (MEMORY on memory)
+Instr[144] -> Instr[206] (MEMORY on memory)
+Instr[144] -> Instr[209] (MEMORY on memory)
+Instr[144] -> Instr[210] (MEMORY on memory)
+Instr[144] -> Instr[212] (MEMORY on memory)
+Instr[144] -> Instr[215] (MEMORY on memory)
+Instr[144] -> Instr[216] (MEMORY on memory)
+Instr[144] -> Instr[227] (MEMORY on memory)
+Instr[144] -> Instr[229] (MEMORY on memory)
+Instr[144] -> Instr[236] (MEMORY on memory)
+Instr[144] -> Instr[237] (MEMORY on memory)
+Instr[145] -> Instr[150] (MEMORY on memory)
+Instr[145] -> Instr[151] (MEMORY on memory)
+Instr[145] -> Instr[157] (MEMORY on memory)
+Instr[145] -> Instr[158] (MEMORY on memory)
+Instr[145] -> Instr[164] (MEMORY on memory)
+Instr[145] -> Instr[165] (MEMORY on memory)
+Instr[145] -> Instr[170] (MEMORY on memory)
+Instr[145] -> Instr[172] (MEMORY on memory)
+Instr[145] -> Instr[174] (MEMORY on memory)
+Instr[145] -> Instr[182] (MEMORY on memory)
+Instr[145] -> Instr[187] (MEMORY on memory)
+Instr[145] -> Instr[194] (MEMORY on memory)
+Instr[145] -> Instr[199] (MEMORY on memory)
+Instr[145] -> Instr[206] (MEMORY on memory)
+Instr[145] -> Instr[209] (MEMORY on memory)
+Instr[145] -> Instr[210] (MEMORY on memory)
+Instr[145] -> Instr[212] (MEMORY on memory)
+Instr[145] -> Instr[215] (MEMORY on memory)
+Instr[145] -> Instr[216] (MEMORY on memory)
+Instr[145] -> Instr[227] (MEMORY on memory)
+Instr[145] -> Instr[229] (MEMORY on memory)
+Instr[145] -> Instr[236] (MEMORY on memory)
+Instr[145] -> Instr[237] (MEMORY on memory)
+Instr[148] -> Instr[150] (MEMORY on memory)
+Instr[148] -> Instr[151] (MEMORY on memory)
+Instr[148] -> Instr[157] (MEMORY on memory)
+Instr[148] -> Instr[158] (MEMORY on memory)
+Instr[148] -> Instr[164] (MEMORY on memory)
+Instr[148] -> Instr[165] (MEMORY on memory)
+Instr[148] -> Instr[170] (MEMORY on memory)
+Instr[148] -> Instr[172] (MEMORY on memory)
+Instr[148] -> Instr[174] (MEMORY on memory)
+Instr[148] -> Instr[182] (MEMORY on memory)
+Instr[148] -> Instr[187] (MEMORY on memory)
+Instr[148] -> Instr[194] (MEMORY on memory)
+Instr[148] -> Instr[199] (MEMORY on memory)
+Instr[148] -> Instr[206] (MEMORY on memory)
+Instr[148] -> Instr[209] (MEMORY on memory)
+Instr[148] -> Instr[210] (MEMORY on memory)
+Instr[148] -> Instr[212] (MEMORY on memory)
+Instr[148] -> Instr[215] (MEMORY on memory)
+Instr[148] -> Instr[216] (MEMORY on memory)
+Instr[148] -> Instr[227] (MEMORY on memory)
+Instr[148] -> Instr[229] (MEMORY on memory)
+Instr[148] -> Instr[236] (MEMORY on memory)
+Instr[148] -> Instr[237] (MEMORY on memory)
+Instr[155] -> Instr[157] (MEMORY on memory)
+Instr[155] -> Instr[158] (MEMORY on memory)
+Instr[155] -> Instr[164] (MEMORY on memory)
+Instr[155] -> Instr[165] (MEMORY on memory)
+Instr[155] -> Instr[170] (MEMORY on memory)
+Instr[155] -> Instr[172] (MEMORY on memory)
+Instr[155] -> Instr[174] (MEMORY on memory)
+Instr[155] -> Instr[182] (MEMORY on memory)
+Instr[155] -> Instr[187] (MEMORY on memory)
+Instr[155] -> Instr[194] (MEMORY on memory)
+Instr[155] -> Instr[199] (MEMORY on memory)
+Instr[155] -> Instr[206] (MEMORY on memory)
+Instr[155] -> Instr[209] (MEMORY on memory)
+Instr[155] -> Instr[210] (MEMORY on memory)
+Instr[155] -> Instr[212] (MEMORY on memory)
+Instr[155] -> Instr[215] (MEMORY on memory)
+Instr[155] -> Instr[216] (MEMORY on memory)
+Instr[155] -> Instr[227] (MEMORY on memory)
+Instr[155] -> Instr[229] (MEMORY on memory)
+Instr[155] -> Instr[236] (MEMORY on memory)
+Instr[155] -> Instr[237] (MEMORY on memory)
+Instr[162] -> Instr[164] (MEMORY on memory)
+Instr[162] -> Instr[165] (MEMORY on memory)
+Instr[162] -> Instr[170] (MEMORY on memory)
+Instr[162] -> Instr[172] (MEMORY on memory)
+Instr[162] -> Instr[174] (MEMORY on memory)
+Instr[162] -> Instr[182] (MEMORY on memory)
+Instr[162] -> Instr[187] (MEMORY on memory)
+Instr[162] -> Instr[194] (MEMORY on memory)
+Instr[162] -> Instr[199] (MEMORY on memory)
+Instr[162] -> Instr[206] (MEMORY on memory)
+Instr[162] -> Instr[209] (MEMORY on memory)
+Instr[162] -> Instr[210] (MEMORY on memory)
+Instr[162] -> Instr[212] (MEMORY on memory)
+Instr[162] -> Instr[215] (MEMORY on memory)
+Instr[162] -> Instr[216] (MEMORY on memory)
+Instr[162] -> Instr[227] (MEMORY on memory)
+Instr[162] -> Instr[229] (MEMORY on memory)
+Instr[162] -> Instr[236] (MEMORY on memory)
+Instr[162] -> Instr[237] (MEMORY on memory)
+Instr[169] -> Instr[170] (MEMORY on memory)
+Instr[169] -> Instr[172] (MEMORY on memory)
+Instr[169] -> Instr[174] (MEMORY on memory)
+Instr[169] -> Instr[182] (MEMORY on memory)
+Instr[169] -> Instr[187] (MEMORY on memory)
+Instr[169] -> Instr[194] (MEMORY on memory)
+Instr[169] -> Instr[199] (MEMORY on memory)
+Instr[169] -> Instr[206] (MEMORY on memory)
+Instr[169] -> Instr[209] (MEMORY on memory)
+Instr[169] -> Instr[210] (MEMORY on memory)
+Instr[169] -> Instr[212] (MEMORY on memory)
+Instr[169] -> Instr[215] (MEMORY on memory)
+Instr[169] -> Instr[216] (MEMORY on memory)
+Instr[169] -> Instr[227] (MEMORY on memory)
+Instr[169] -> Instr[229] (MEMORY on memory)
+Instr[169] -> Instr[236] (MEMORY on memory)
+Instr[169] -> Instr[237] (MEMORY on memory)
+Instr[178] -> Instr[182] (MEMORY on memory)
+Instr[178] -> Instr[187] (MEMORY on memory)
+Instr[178] -> Instr[194] (MEMORY on memory)
+Instr[178] -> Instr[199] (MEMORY on memory)
+Instr[178] -> Instr[206] (MEMORY on memory)
+Instr[178] -> Instr[209] (MEMORY on memory)
+Instr[178] -> Instr[210] (MEMORY on memory)
+Instr[178] -> Instr[212] (MEMORY on memory)
+Instr[178] -> Instr[215] (MEMORY on memory)
+Instr[178] -> Instr[216] (MEMORY on memory)
+Instr[178] -> Instr[227] (MEMORY on memory)
+Instr[178] -> Instr[229] (MEMORY on memory)
+Instr[178] -> Instr[236] (MEMORY on memory)
+Instr[178] -> Instr[237] (MEMORY on memory)
+Instr[180] -> Instr[182] (MEMORY on memory)
+Instr[180] -> Instr[187] (MEMORY on memory)
+Instr[180] -> Instr[194] (MEMORY on memory)
+Instr[180] -> Instr[199] (MEMORY on memory)
+Instr[180] -> Instr[206] (MEMORY on memory)
+Instr[180] -> Instr[209] (MEMORY on memory)
+Instr[180] -> Instr[210] (MEMORY on memory)
+Instr[180] -> Instr[212] (MEMORY on memory)
+Instr[180] -> Instr[215] (MEMORY on memory)
+Instr[180] -> Instr[216] (MEMORY on memory)
+Instr[180] -> Instr[227] (MEMORY on memory)
+Instr[180] -> Instr[229] (MEMORY on memory)
+Instr[180] -> Instr[236] (MEMORY on memory)
+Instr[180] -> Instr[237] (MEMORY on memory)
+Instr[193] -> Instr[194] (MEMORY on memory)
+Instr[193] -> Instr[199] (MEMORY on memory)
+Instr[193] -> Instr[206] (MEMORY on memory)
+Instr[193] -> Instr[209] (MEMORY on memory)
+Instr[193] -> Instr[210] (MEMORY on memory)
+Instr[193] -> Instr[212] (MEMORY on memory)
+Instr[193] -> Instr[215] (MEMORY on memory)
+Instr[193] -> Instr[216] (MEMORY on memory)
+Instr[193] -> Instr[227] (MEMORY on memory)
+Instr[193] -> Instr[229] (MEMORY on memory)
+Instr[193] -> Instr[236] (MEMORY on memory)
+Instr[193] -> Instr[237] (MEMORY on memory)
+Instr[205] -> Instr[206] (MEMORY on memory)
+Instr[205] -> Instr[209] (MEMORY on memory)
+Instr[205] -> Instr[210] (MEMORY on memory)
+Instr[205] -> Instr[212] (MEMORY on memory)
+Instr[205] -> Instr[215] (MEMORY on memory)
+Instr[205] -> Instr[216] (MEMORY on memory)
+Instr[205] -> Instr[227] (MEMORY on memory)
+Instr[205] -> Instr[229] (MEMORY on memory)
+Instr[205] -> Instr[236] (MEMORY on memory)
+Instr[205] -> Instr[237] (MEMORY on memory)
+Instr[208] -> Instr[209] (MEMORY on memory)
+Instr[208] -> Instr[210] (MEMORY on memory)
+Instr[208] -> Instr[212] (MEMORY on memory)
+Instr[208] -> Instr[215] (MEMORY on memory)
+Instr[208] -> Instr[216] (MEMORY on memory)
+Instr[208] -> Instr[227] (MEMORY on memory)
+Instr[208] -> Instr[229] (MEMORY on memory)
+Instr[208] -> Instr[236] (MEMORY on memory)
+Instr[208] -> Instr[237] (MEMORY on memory)
+Instr[214] -> Instr[215] (MEMORY on memory)
+Instr[214] -> Instr[216] (MEMORY on memory)
+Instr[214] -> Instr[227] (MEMORY on memory)
+Instr[214] -> Instr[229] (MEMORY on memory)
+Instr[214] -> Instr[236] (MEMORY on memory)
+Instr[214] -> Instr[237] (MEMORY on memory)
+Instr[226] -> Instr[227] (MEMORY on memory)
+Instr[226] -> Instr[229] (MEMORY on memory)
+Instr[226] -> Instr[236] (MEMORY on memory)
+Instr[226] -> Instr[237] (MEMORY on memory)
+Instr[1] -> Instr[3] (MEMORY on memory)
+Instr[3] -> Instr[4] (MEMORY on memory)
+Instr[4] -> Instr[5] (MEMORY on memory)
+Instr[5] -> Instr[6] (MEMORY on memory)
+Instr[6] -> Instr[14] (MEMORY on memory)
+Instr[14] -> Instr[19] (MEMORY on memory)
+Instr[19] -> Instr[22] (MEMORY on memory)
+Instr[22] -> Instr[23] (MEMORY on memory)
+Instr[23] -> Instr[25] (MEMORY on memory)
+Instr[25] -> Instr[37] (MEMORY on memory)
+Instr[37] -> Instr[40] (MEMORY on memory)
+Instr[40] -> Instr[46] (MEMORY on memory)
+Instr[46] -> Instr[56] (MEMORY on memory)
+Instr[56] -> Instr[58] (MEMORY on memory)
+Instr[58] -> Instr[59] (MEMORY on memory)
+Instr[59] -> Instr[60] (MEMORY on memory)
+Instr[60] -> Instr[61] (MEMORY on memory)
+Instr[61] -> Instr[83] (MEMORY on memory)
+Instr[83] -> Instr[86] (MEMORY on memory)
+Instr[86] -> Instr[88] (MEMORY on memory)
+Instr[88] -> Instr[123] (MEMORY on memory)
+Instr[123] -> Instr[126] (MEMORY on memory)
+Instr[126] -> Instr[133] (MEMORY on memory)
+Instr[133] -> Instr[144] (MEMORY on memory)
+Instr[144] -> Instr[145] (MEMORY on memory)
+Instr[145] -> Instr[148] (MEMORY on memory)
+Instr[148] -> Instr[155] (MEMORY on memory)
+Instr[155] -> Instr[162] (MEMORY on memory)
+Instr[162] -> Instr[169] (MEMORY on memory)
+Instr[169] -> Instr[178] (MEMORY on memory)
+Instr[178] -> Instr[180] (MEMORY on memory)
+Instr[180] -> Instr[193] (MEMORY on memory)
+Instr[193] -> Instr[205] (MEMORY on memory)
+Instr[205] -> Instr[208] (MEMORY on memory)
+Instr[208] -> Instr[214] (MEMORY on memory)
+Instr[214] -> Instr[226] (MEMORY on memory)
+
+-----------------------
+phase2_dfg.txt
+
+# Data Flow Graph
+# Total nodos: 240
+# Nodos raíz: 111
+# Nodos hoja: 189
+
+Node 0 [Instr 0]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 1 [Instr 1]: sw
+  Latency: 5, EST: 0, LST: 0, Slack: 0 [CRITICAL PATH]
+  Predecessors: []
+  Successors: [7, 10, 15, 17, 18, 20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 3]
+
+Node 2 [Instr 2]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 3 [Instr 3]: sw
+  Latency: 5, EST: 5, LST: 5, Slack: 0 [CRITICAL PATH]
+  Predecessors: [1]
+  Successors: [7, 10, 15, 17, 18, 20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 4]
+
+Node 4 [Instr 4]: sw
+  Latency: 5, EST: 10, LST: 10, Slack: 0 [CRITICAL PATH]
+  Predecessors: [3]
+  Successors: [7, 10, 15, 17, 18, 20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 5]
+
+Node 5 [Instr 5]: sw
+  Latency: 5, EST: 15, LST: 15, Slack: 0 [CRITICAL PATH]
+  Predecessors: [4]
+  Successors: [7, 10, 15, 17, 18, 20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 6]
+
+Node 6 [Instr 6]: sw
+  Latency: 5, EST: 20, LST: 20, Slack: 0 [CRITICAL PATH]
+  Predecessors: [5]
+  Successors: [7, 10, 15, 17, 18, 20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 14]
+
+Node 7 [Instr 7]: lw
+  Latency: 3, EST: 25, LST: 185, Slack: 160
+  Predecessors: [1, 3, 4, 5, 6]
+  Successors: []
+
+Node 8 [Instr 8]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 9 [Instr 9]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 10 [Instr 10]: lw
+  Latency: 3, EST: 25, LST: 185, Slack: 160
+  Predecessors: [1, 3, 4, 5, 6]
+  Successors: []
+
+Node 11 [Instr 11]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 12 [Instr 12]: beq
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 13 [Instr 13]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 14 [Instr 14]: sw
+  Latency: 5, EST: 25, LST: 25, Slack: 0 [CRITICAL PATH]
+  Predecessors: [6]
+  Successors: [15, 17, 18, 20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 19]
+
+Node 15 [Instr 15]: lw
+  Latency: 3, EST: 30, LST: 185, Slack: 155
+  Predecessors: [1, 3, 4, 5, 6, 14]
+  Successors: []
+
+Node 16 [Instr 16]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 17 [Instr 17]: lw
+  Latency: 3, EST: 30, LST: 185, Slack: 155
+  Predecessors: [1, 3, 4, 5, 6, 14]
+  Successors: []
+
+Node 18 [Instr 18]: lw
+  Latency: 3, EST: 30, LST: 185, Slack: 155
+  Predecessors: [1, 3, 4, 5, 6, 14]
+  Successors: []
+
+Node 19 [Instr 19]: sw
+  Latency: 5, EST: 30, LST: 30, Slack: 0 [CRITICAL PATH]
+  Predecessors: [14]
+  Successors: [20, 21, 27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 22]
+
+Node 20 [Instr 20]: lw
+  Latency: 3, EST: 35, LST: 185, Slack: 150
+  Predecessors: [1, 3, 4, 5, 6, 14, 19]
+  Successors: []
+
+Node 21 [Instr 21]: lw
+  Latency: 3, EST: 35, LST: 185, Slack: 150
+  Predecessors: [1, 3, 4, 5, 6, 14, 19]
+  Successors: []
+
+Node 22 [Instr 22]: sw
+  Latency: 5, EST: 35, LST: 35, Slack: 0 [CRITICAL PATH]
+  Predecessors: [19]
+  Successors: [27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 23]
+
+Node 23 [Instr 23]: sw
+  Latency: 5, EST: 40, LST: 40, Slack: 0 [CRITICAL PATH]
+  Predecessors: [22]
+  Successors: [27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 25]
+
+Node 24 [Instr 24]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 25 [Instr 25]: sw
+  Latency: 5, EST: 45, LST: 45, Slack: 0 [CRITICAL PATH]
+  Predecessors: [23]
+  Successors: [27, 28, 33, 38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 37]
+
+Node 26 [Instr 26]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 27 [Instr 27]: lw
+  Latency: 3, EST: 50, LST: 185, Slack: 135
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25]
+  Successors: []
+
+Node 28 [Instr 28]: lw
+  Latency: 3, EST: 50, LST: 185, Slack: 135
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25]
+  Successors: []
+
+Node 29 [Instr 29]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 0, LST: 184, Slack: 184
+  Predecessors: []
+  Successors: [51]
+
+Node 30 [Instr 30]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 31 [Instr 31]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 32 [Instr 32]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 33 [Instr 33]: lw
+  Latency: 3, EST: 50, LST: 185, Slack: 135
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25]
+  Successors: []
+
+Node 34 [Instr 34]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 35 [Instr 35]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 36 [Instr 36]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 37 [Instr 37]: sw
+  Latency: 5, EST: 50, LST: 50, Slack: 0 [CRITICAL PATH]
+  Predecessors: [25]
+  Successors: [38, 41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 40]
+
+Node 38 [Instr 38]: lw
+  Latency: 3, EST: 55, LST: 185, Slack: 130
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37]
+  Successors: []
+
+Node 39 [Instr 39]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 40 [Instr 40]: sw
+  Latency: 5, EST: 55, LST: 55, Slack: 0 [CRITICAL PATH]
+  Predecessors: [37]
+  Successors: [41, 42, 44, 47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 46]
+
+Node 41 [Instr 41]: lw
+  Latency: 3, EST: 60, LST: 185, Slack: 125
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40]
+  Successors: []
+
+Node 42 [Instr 42]: lw
+  Latency: 3, EST: 60, LST: 185, Slack: 125
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40]
+  Successors: []
+
+Node 43 [Instr 43]: bltu
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 44 [Instr 44]: lw
+  Latency: 3, EST: 60, LST: 185, Slack: 125
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40]
+  Successors: []
+
+Node 45 [Instr 45]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 46 [Instr 46]: sw
+  Latency: 5, EST: 60, LST: 60, Slack: 0 [CRITICAL PATH]
+  Predecessors: [40]
+  Successors: [47, 48, 50, 52, 62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 56]
+
+Node 47 [Instr 47]: lw
+  Latency: 3, EST: 65, LST: 185, Slack: 120
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46]
+  Successors: []
+
+Node 48 [Instr 48]: lw
+  Latency: 3, EST: 65, LST: 185, Slack: 120
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46]
+  Successors: []
+
+Node 49 [Instr 49]: bltu
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 50 [Instr 50]: lw
+  Latency: 3, EST: 65, LST: 185, Slack: 120
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46]
+  Successors: []
+
+Node 51 [Instr 51]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 2, LST: 186, Slack: 184
+  Predecessors: [29]
+  Successors: []
+
+Node 52 [Instr 52]: lw
+  Latency: 3, EST: 65, LST: 185, Slack: 120
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46]
+  Successors: []
+
+Node 53 [Instr 53]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 54 [Instr 54]: jalr rd=zero rs1=ra
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 55 [Instr 55]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 56 [Instr 56]: sw
+  Latency: 5, EST: 65, LST: 65, Slack: 0 [CRITICAL PATH]
+  Predecessors: [46]
+  Successors: [62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 58]
+
+Node 57 [Instr 57]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 58 [Instr 58]: sw
+  Latency: 5, EST: 70, LST: 70, Slack: 0 [CRITICAL PATH]
+  Predecessors: [56]
+  Successors: [62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 59]
+
+Node 59 [Instr 59]: sw
+  Latency: 5, EST: 75, LST: 75, Slack: 0 [CRITICAL PATH]
+  Predecessors: [58]
+  Successors: [62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 60]
+
+Node 60 [Instr 60]: sw
+  Latency: 5, EST: 80, LST: 80, Slack: 0 [CRITICAL PATH]
+  Predecessors: [59]
+  Successors: [62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 61]
+
+Node 61 [Instr 61]: sw
+  Latency: 5, EST: 85, LST: 85, Slack: 0 [CRITICAL PATH]
+  Predecessors: [60]
+  Successors: [62, 63, 64, 65, 67, 68, 69, 70, 72, 73, 74, 75, 77, 78, 79, 80, 84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 83]
+
+Node 62 [Instr 62]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 63 [Instr 63]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 64 [Instr 64]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 65 [Instr 65]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 66 [Instr 66]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 67 [Instr 67]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 68 [Instr 68]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 69 [Instr 69]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 70 [Instr 70]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 71 [Instr 71]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 72 [Instr 72]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 73 [Instr 73]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 74 [Instr 74]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 75 [Instr 75]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 76 [Instr 76]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 77 [Instr 77]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 78 [Instr 78]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 79 [Instr 79]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 80 [Instr 80]: lw
+  Latency: 3, EST: 90, LST: 185, Slack: 95
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61]
+  Successors: []
+
+Node 81 [Instr 81]: beq
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 82 [Instr 82]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 83 [Instr 83]: sw
+  Latency: 5, EST: 90, LST: 90, Slack: 0 [CRITICAL PATH]
+  Predecessors: [61]
+  Successors: [84, 90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 86]
+
+Node 84 [Instr 84]: lw
+  Latency: 3, EST: 95, LST: 185, Slack: 90
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83]
+  Successors: []
+
+Node 85 [Instr 85]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 86 [Instr 86]: sw
+  Latency: 5, EST: 95, LST: 95, Slack: 0 [CRITICAL PATH]
+  Predecessors: [83]
+  Successors: [90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 88]
+
+Node 87 [Instr 87]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 88 [Instr 88]: sw
+  Latency: 5, EST: 100, LST: 100, Slack: 0 [CRITICAL PATH]
+  Predecessors: [86]
+  Successors: [90, 91, 96, 100, 101, 102, 107, 111, 113, 114, 119, 124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 123]
+
+Node 89 [Instr 89]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 90 [Instr 90]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 91 [Instr 91]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 92 [Instr 92]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 93 [Instr 93]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 94 [Instr 94]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 95 [Instr 95]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 96 [Instr 96]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 97 [Instr 97]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 98 [Instr 98]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 99 [Instr 99]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 100 [Instr 100]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 101 [Instr 101]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 102 [Instr 102]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 103 [Instr 103]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 104 [Instr 104]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 105 [Instr 105]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 106 [Instr 106]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 107 [Instr 107]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 108 [Instr 108]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 109 [Instr 109]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 110 [Instr 110]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 111 [Instr 111]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 112 [Instr 112]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 113 [Instr 113]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 114 [Instr 114]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 115 [Instr 115]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 0, LST: 184, Slack: 184
+  Predecessors: []
+  Successors: [139]
+
+Node 116 [Instr 116]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 117 [Instr 117]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 118 [Instr 118]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 119 [Instr 119]: lw
+  Latency: 3, EST: 105, LST: 185, Slack: 80
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88]
+  Successors: []
+
+Node 120 [Instr 120]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 121 [Instr 121]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 122 [Instr 122]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 123 [Instr 123]: sw
+  Latency: 5, EST: 105, LST: 105, Slack: 0 [CRITICAL PATH]
+  Predecessors: [88]
+  Successors: [124, 127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 126]
+
+Node 124 [Instr 124]: lw
+  Latency: 3, EST: 110, LST: 185, Slack: 75
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123]
+  Successors: []
+
+Node 125 [Instr 125]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 126 [Instr 126]: sw
+  Latency: 5, EST: 110, LST: 110, Slack: 0 [CRITICAL PATH]
+  Predecessors: [123]
+  Successors: [127, 128, 129, 131, 134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 133]
+
+Node 127 [Instr 127]: lw
+  Latency: 3, EST: 115, LST: 185, Slack: 70
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126]
+  Successors: []
+
+Node 128 [Instr 128]: lw
+  Latency: 3, EST: 115, LST: 185, Slack: 70
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126]
+  Successors: []
+
+Node 129 [Instr 129]: lw
+  Latency: 3, EST: 115, LST: 185, Slack: 70
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126]
+  Successors: []
+
+Node 130 [Instr 130]: bltu
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 131 [Instr 131]: lw
+  Latency: 3, EST: 115, LST: 185, Slack: 70
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126]
+  Successors: []
+
+Node 132 [Instr 132]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 133 [Instr 133]: sw
+  Latency: 5, EST: 115, LST: 115, Slack: 0 [CRITICAL PATH]
+  Predecessors: [126]
+  Successors: [134, 135, 136, 138, 140, 150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 144]
+
+Node 134 [Instr 134]: lw
+  Latency: 3, EST: 120, LST: 185, Slack: 65
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133]
+  Successors: []
+
+Node 135 [Instr 135]: lw
+  Latency: 3, EST: 120, LST: 185, Slack: 65
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133]
+  Successors: []
+
+Node 136 [Instr 136]: lw
+  Latency: 3, EST: 120, LST: 185, Slack: 65
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133]
+  Successors: []
+
+Node 137 [Instr 137]: bltu
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 138 [Instr 138]: lw
+  Latency: 3, EST: 120, LST: 185, Slack: 65
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133]
+  Successors: []
+
+Node 139 [Instr 139]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 2, LST: 186, Slack: 184
+  Predecessors: [115]
+  Successors: []
+
+Node 140 [Instr 140]: lw
+  Latency: 3, EST: 120, LST: 185, Slack: 65
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133]
+  Successors: []
+
+Node 141 [Instr 141]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 142 [Instr 142]: jalr rd=zero rs1=ra
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 143 [Instr 143]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 144 [Instr 144]: sw
+  Latency: 5, EST: 120, LST: 120, Slack: 0 [CRITICAL PATH]
+  Predecessors: [133]
+  Successors: [150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 145]
+
+Node 145 [Instr 145]: sw
+  Latency: 5, EST: 125, LST: 125, Slack: 0 [CRITICAL PATH]
+  Predecessors: [144]
+  Successors: [150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 148]
+
+Node 146 [Instr 146]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 147 [Instr 147]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 174, Slack: 174
+  Predecessors: []
+  Successors: [152]
+
+Node 148 [Instr 148]: sw
+  Latency: 5, EST: 130, LST: 130, Slack: 0 [CRITICAL PATH]
+  Predecessors: [145]
+  Successors: [150, 151, 157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 155]
+
+Node 149 [Instr 149]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 150 [Instr 150]: lw
+  Latency: 3, EST: 135, LST: 185, Slack: 50
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148]
+  Successors: []
+
+Node 151 [Instr 151]: lw
+  Latency: 3, EST: 135, LST: 185, Slack: 50
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148]
+  Successors: []
+
+Node 152 [Instr 152]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 2, LST: 176, Slack: 174
+  Predecessors: [147]
+  Successors: [154]
+
+Node 153 [Instr 153]: jal rd=ra
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 154 [Instr 154]: addi rd=a5 rs1=a0
+  Latency: 2, EST: 4, LST: 178, Slack: 174
+  Predecessors: [152]
+  Successors: [159]
+
+Node 155 [Instr 155]: sw
+  Latency: 5, EST: 135, LST: 135, Slack: 0 [CRITICAL PATH]
+  Predecessors: [148]
+  Successors: [157, 158, 164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 162]
+
+Node 156 [Instr 156]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 157 [Instr 157]: lw
+  Latency: 3, EST: 140, LST: 185, Slack: 45
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155]
+  Successors: []
+
+Node 158 [Instr 158]: lw
+  Latency: 3, EST: 140, LST: 185, Slack: 45
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155]
+  Successors: []
+
+Node 159 [Instr 159]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 6, LST: 180, Slack: 174
+  Predecessors: [154]
+  Successors: [161]
+
+Node 160 [Instr 160]: jal rd=ra
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 161 [Instr 161]: addi rd=a5 rs1=a0
+  Latency: 2, EST: 8, LST: 182, Slack: 174
+  Predecessors: [159]
+  Successors: [166]
+
+Node 162 [Instr 162]: sw
+  Latency: 5, EST: 140, LST: 140, Slack: 0 [CRITICAL PATH]
+  Predecessors: [155]
+  Successors: [164, 165, 170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 169]
+
+Node 163 [Instr 163]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 164 [Instr 164]: lw
+  Latency: 3, EST: 145, LST: 185, Slack: 40
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162]
+  Successors: []
+
+Node 165 [Instr 165]: lw
+  Latency: 3, EST: 145, LST: 185, Slack: 40
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162]
+  Successors: []
+
+Node 166 [Instr 166]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 10, LST: 184, Slack: 174
+  Predecessors: [161]
+  Successors: [168]
+
+Node 167 [Instr 167]: jal rd=ra
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 168 [Instr 168]: addi rd=a5 rs1=a0
+  Latency: 2, EST: 12, LST: 186, Slack: 174
+  Predecessors: [166]
+  Successors: []
+
+Node 169 [Instr 169]: sw
+  Latency: 5, EST: 145, LST: 145, Slack: 0 [CRITICAL PATH]
+  Predecessors: [162]
+  Successors: [170, 172, 174, 182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 178]
+
+Node 170 [Instr 170]: lw
+  Latency: 3, EST: 150, LST: 185, Slack: 35
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169]
+  Successors: []
+
+Node 171 [Instr 171]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 172 [Instr 172]: lw
+  Latency: 3, EST: 150, LST: 185, Slack: 35
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169]
+  Successors: []
+
+Node 173 [Instr 173]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 174 [Instr 174]: lw
+  Latency: 3, EST: 150, LST: 185, Slack: 35
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169]
+  Successors: []
+
+Node 175 [Instr 175]: beq
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 176 [Instr 176]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 177 [Instr 177]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 178 [Instr 178]: sw
+  Latency: 5, EST: 150, LST: 150, Slack: 0 [CRITICAL PATH]
+  Predecessors: [169]
+  Successors: [182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 180]
+
+Node 179 [Instr 179]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 180 [Instr 180]: sw
+  Latency: 5, EST: 155, LST: 155, Slack: 0 [CRITICAL PATH]
+  Predecessors: [178]
+  Successors: [182, 187, 194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 193]
+
+Node 181 [Instr 181]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 182 [Instr 182]: lw
+  Latency: 3, EST: 160, LST: 185, Slack: 25
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180]
+  Successors: []
+
+Node 183 [Instr 183]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 184 [Instr 184]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 185 [Instr 185]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 186 [Instr 186]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 187 [Instr 187]: lw
+  Latency: 3, EST: 160, LST: 185, Slack: 25
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180]
+  Successors: []
+
+Node 188 [Instr 188]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 189 [Instr 189]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 190 [Instr 190]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 191 [Instr 191]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 192 [Instr 192]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 180, Slack: 180
+  Predecessors: []
+  Successors: [195]
+
+Node 193 [Instr 193]: sw
+  Latency: 5, EST: 160, LST: 160, Slack: 0 [CRITICAL PATH]
+  Predecessors: [180]
+  Successors: [194, 199, 206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 205]
+
+Node 194 [Instr 194]: lw
+  Latency: 3, EST: 165, LST: 185, Slack: 20
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193]
+  Successors: []
+
+Node 195 [Instr 195]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 2, LST: 182, Slack: 180
+  Predecessors: [192]
+  Successors: [223]
+
+Node 196 [Instr 196]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 197 [Instr 197]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 198 [Instr 198]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 199 [Instr 199]: lw
+  Latency: 3, EST: 165, LST: 185, Slack: 20
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193]
+  Successors: []
+
+Node 200 [Instr 200]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 201 [Instr 201]: slli
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 202 [Instr 202]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 203 [Instr 203]: add
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 204 [Instr 204]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 184, Slack: 184
+  Predecessors: []
+  Successors: [222]
+
+Node 205 [Instr 205]: sw
+  Latency: 5, EST: 165, LST: 165, Slack: 0 [CRITICAL PATH]
+  Predecessors: [193]
+  Successors: [206, 209, 210, 212, 215, 216, 227, 229, 236, 237, 208]
+
+Node 206 [Instr 206]: lw
+  Latency: 3, EST: 170, LST: 185, Slack: 15
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205]
+  Successors: []
+
+Node 207 [Instr 207]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 208 [Instr 208]: sw
+  Latency: 5, EST: 170, LST: 170, Slack: 0 [CRITICAL PATH]
+  Predecessors: [205]
+  Successors: [209, 210, 212, 215, 216, 227, 229, 236, 237, 214]
+
+Node 209 [Instr 209]: lw
+  Latency: 3, EST: 175, LST: 185, Slack: 10
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208]
+  Successors: []
+
+Node 210 [Instr 210]: lw
+  Latency: 3, EST: 175, LST: 185, Slack: 10
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208]
+  Successors: []
+
+Node 211 [Instr 211]: bltu
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 212 [Instr 212]: lw
+  Latency: 3, EST: 175, LST: 185, Slack: 10
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208]
+  Successors: []
+
+Node 213 [Instr 213]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 214 [Instr 214]: sw
+  Latency: 5, EST: 175, LST: 175, Slack: 0 [CRITICAL PATH]
+  Predecessors: [208]
+  Successors: [215, 216, 227, 229, 236, 237, 226]
+
+Node 215 [Instr 215]: lw
+  Latency: 3, EST: 180, LST: 185, Slack: 5
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208, 214]
+  Successors: []
+
+Node 216 [Instr 216]: lw
+  Latency: 3, EST: 180, LST: 185, Slack: 5
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208, 214]
+  Successors: []
+
+Node 217 [Instr 217]: bltu
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 218 [Instr 218]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 219 [Instr 219]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 220 [Instr 220]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 221 [Instr 221]: addi rd=a2 rs1=a3
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 222 [Instr 222]: addi rd=a1 rs1=a4
+  Latency: 2, EST: 2, LST: 186, Slack: 184
+  Predecessors: [204]
+  Successors: []
+
+Node 223 [Instr 223]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 4, LST: 184, Slack: 180
+  Predecessors: [195]
+  Successors: [225]
+
+Node 224 [Instr 224]: jal rd=ra
+  Latency: 3, EST: 0, LST: 182, Slack: 182
+  Predecessors: []
+  Successors: [239]
+
+Node 225 [Instr 225]: addi rd=a5 rs1=a0
+  Latency: 2, EST: 6, LST: 186, Slack: 180
+  Predecessors: [223]
+  Successors: []
+
+Node 226 [Instr 226]: sw
+  Latency: 5, EST: 180, LST: 180, Slack: 0 [CRITICAL PATH]
+  Predecessors: [214]
+  Successors: [227, 229, 236, 237]
+
+Node 227 [Instr 227]: lw
+  Latency: 3, EST: 185, LST: 185, Slack: 0 [CRITICAL PATH]
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208, 214, 226]
+  Successors: []
+
+Node 228 [Instr 228]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 229 [Instr 229]: lw
+  Latency: 3, EST: 185, LST: 185, Slack: 0
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208, 214, 226]
+  Successors: []
+
+Node 230 [Instr 230]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 231 [Instr 231]: bne
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 232 [Instr 232]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 233 [Instr 233]: jal rd=zero
+  Latency: 3, EST: 0, LST: 185, Slack: 185
+  Predecessors: []
+  Successors: []
+
+Node 234 [Instr 234]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 184, Slack: 184
+  Predecessors: []
+  Successors: [235]
+
+Node 235 [Instr 235]: addi rd=a0 rs1=a5
+  Latency: 2, EST: 2, LST: 186, Slack: 184
+  Predecessors: [234]
+  Successors: []
+
+Node 236 [Instr 236]: lw
+  Latency: 3, EST: 185, LST: 185, Slack: 0
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208, 214, 226]
+  Successors: []
+
+Node 237 [Instr 237]: lw
+  Latency: 3, EST: 185, LST: 185, Slack: 0
+  Predecessors: [1, 3, 4, 5, 6, 14, 19, 22, 23, 25, 37, 40, 46, 56, 58, 59, 60, 61, 83, 86, 88, 123, 126, 133, 144, 145, 148, 155, 162, 169, 178, 180, 193, 205, 208, 214, 226]
+  Successors: []
+
+Node 238 [Instr 238]: addi
+  Latency: 2, EST: 0, LST: 186, Slack: 186
+  Predecessors: []
+  Successors: []
+
+Node 239 [Instr 239]: jalr rd=zero rs1=ra
+  Latency: 3, EST: 3, LST: 185, Slack: 182
+  Predecessors: [224]
+  Successors: []
+
+
+-----------------------
+phase2_register_pressure.txt
+
+# Register Pressure Analysis
+
+Available Registers: 32
+Maximum Pressure: 5
+Average Pressure: 2
+Spilling Required: NO
+
+## Live Ranges:
+a0: [2 - 6] length=4
+a1: [2 - 2] length=0
+a2: [0 - 0] length=0
+a3: [0 - 0] length=0
+a4: [0 - 2] length=2
+a5: [0 - 2] length=2
+ra: [0 - 3] length=3
+
+## Pressure at Each Time:
+Time 0: 5 registers live (a2, a3, a4, a5, ra)
+Time 1: 3 registers live (a4, a5, ra)
+Time 2: 5 registers live (a0, a1, a4, a5, ra)
+Time 3: 2 registers live (a0, ra)
+Time 4: 1 registers live (a0)
+Time 5: 1 registers live (a0)
+Time 6: 1 registers live (a0)
+
+-----------------------
+phase3_arbiter_stats.txt
+
+╔════════════════════════════════════════════════════════════════╗
+║              BUS ARBITER STATISTICS                            ║
+╚════════════════════════════════════════════════════════════════╝
+
+=== ARBITER CONFIGURATION ===
+Policy: round_robin
+Grant Latency: 1 cycle(s)
+Contention Penalty: 1 cycle(s)
+Number of PEs: 4
+
+=== BUS USAGE STATISTICS ===
+Total Bus Accesses: 127
+Total Contentions: 0
+Bus Utilization: 57.73%
+Makespan: 222 cycles
+
+Contention Rate: 0.00%
+Average Requests per Access: 1.00
+
+=== PER-PE BUS USAGE ===
+   PE |     Accesses |  Contentions |   Usage %
+----------------------------------------------
+    0 |           48 |            0 |     37.80%
+    1 |           32 |            0 |     25.20%
+    2 |           28 |            0 |     22.05%
+    3 |           19 |            0 |     14.96%
+
+=== ANALYSIS ===
+✓ LOW contention: Bus arbitration is efficient.
+
+=== DETAILED GRANT HISTORY ===
+Note: See phase3_schedule.txt for instruction-level bus access patterns.
+
+-----------------------
+phase3_combined.txt
+
+╔════════════════════════════════════════════════════════════════╗
+║          CGRA COMPILER - PHASE 3 COMBINED OUTPUT              ║
+╚════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════
+  COMPILATION SUMMARY
+═══════════════════════════════════════════════════════════════
+
+Total Instructions Parsed: 240
+Instructions Scheduled: 240
+Target Hardware: 4 PEs, 32 registers
+
+═══════════════════════════════════════════════════════════════
+  PERFORMANCE METRICS
+═══════════════════════════════════════════════════════════════
+
+Makespan: 222 cycles
+IPC: 1.0811
+PE Utilization: 52.59%
+Speedup: 3.17x
+Efficiency: 79.28%
+
+═══════════════════════════════════════════════════════════════
+  PE STATISTICS
+═══════════════════════════════════════════════════════════════
+
+PE0: 137 instructions, 81.1% utilized
+PE1: 53 instructions, 53.2% utilized
+PE2: 29 instructions, 43.7% utilized
+PE3: 21 instructions, 32.4% utilized
+
+═══════════════════════════════════════════════════════════════
+  For detailed information, see individual phase3_*.txt files
+═══════════════════════════════════════════════════════════════
+
+-----------------------
+phase3_hardware.txt
+
+# Hardware Configuration Used
+
+=== CGRA Configuration ===
+Number of PEs: 4
+Registers per PE: 8
+Total Registers: 32
+Memory Banks: 4
+
+=== Register Partitioning ===
+PE0: x0 - x7
+PE1: x8 - x15
+PE2: x16 - x23
+PE3: x24 - x31
+
+-----------------------
+phase3_mapping.txt
+
+# PE Mapping and Statistics
+
+=== GLOBAL METRICS ===
+Total Instructions: 240
+Makespan: 222 cycles
+Number of PEs: 4
+IPC (Instructions Per Cycle): 1.0811
+Overall Utilization: 52.59%
+
+=== PER-PE STATISTICS ===
+
+PE0:
+  Instructions Executed: 137
+  Total Cycles: 222
+  Busy Cycles: 180
+  Idle Cycles: 42
+  Utilization: 81.08%
+  Instructions: [125, 156, 149, 146, 143, 141, 132, 185, 0, 121, 120, 118, 117, 116, 112, 110, 109, 108, 202, 238, 220, 219, 218, 213, 207, 203, 122, 201, 200, 198, 197, 196, 191, 190, 189, 188, 186, 105, 45, 53, 39, 55, 106, 36, 35, 57, 34, 32, 31, 30, 104, 99, 98, 97, 2, 93, 94, 95, 181, 233, 26, 24, 16, 217, 231, 12, 228, 54, 89, 130, 87, 137, 85, 142, 81, 76, 153, 71, 160, 66, 167, 171, 173, 175, 177, 179, 49, 224, 11, 239, 192, 3, 4, 5, 6, 7, 15, 20, 23, 25, 27, 38, 41, 47, 56, 58, 59, 60, 61, 63, 62, 68, 73, 83, 84, 88, 90, 101, 113, 124, 127, 133, 134, 140, 145, 148, 150, 157, 164, 170, 180, 182, 194, 206, 209, 215, 229]
+
+PE1:
+  Instructions Executed: 53
+  Total Cycles: 222
+  Busy Cycles: 118
+  Idle Cycles: 104
+  Utilization: 53.15%
+  Instructions: [184, 183, 221, 103, 92, 9, 29, 115, 8, 51, 139, 230, 234, 222, 235, 195, 152, 223, 154, 225, 159, 161, 166, 168, 10, 17, 21, 28, 40, 42, 48, 80, 64, 69, 74, 86, 91, 102, 114, 126, 128, 135, 144, 151, 158, 165, 172, 187, 199, 208, 210, 216, 236]
+
+PE2:
+  Instructions Executed: 29
+  Total Cycles: 222
+  Busy Cycles: 97
+  Idle Cycles: 125
+  Utilization: 43.69%
+  Instructions: [176, 43, 13, 232, 147, 14, 18, 22, 33, 44, 50, 79, 65, 70, 75, 96, 107, 119, 129, 136, 155, 162, 169, 174, 193, 205, 212, 226, 237]
+
+PE3:
+  Instructions Executed: 21
+  Total Cycles: 222
+  Busy Cycles: 72
+  Idle Cycles: 150
+  Utilization: 32.43%
+  Instructions: [163, 211, 82, 204, 1, 19, 37, 46, 52, 78, 67, 72, 77, 100, 111, 123, 131, 138, 178, 214, 227]
+
+=== SUMMARY TABLE ===
+PE | Instructions | Busy Cycles | Idle Cycles | Utilization
+---|--------------|-------------|-------------|------------
+ 0 |          137 |         180 |          42 |      81.08%
+ 1 |           53 |         118 |         104 |      53.15%
+ 2 |           29 |          97 |         125 |      43.69%
+ 3 |           21 |          72 |         150 |      32.43%
+
+-----------------------
+phase3_metrics.txt
+
+# Performance Metrics
+
+=== Execution Metrics ===
+Total Instructions: 240
+Scheduled Instructions: 240
+Makespan (cycles): 222
+IPC (Instructions Per Cycle): 1.0811
+
+=== Resource Utilization ===
+Number of PEs: 4
+Overall PE Utilization: 52.59%
+
+=== Per-PE Utilization ===
+PE0:  81.08% (137 instructions)
+PE1:  53.15% (53 instructions)
+PE2:  43.69% (29 instructions)
+PE3:  32.43% (21 instructions)
+
+=== Performance Analysis ===
+Theoretical Speedup: 3.17x
+Parallel Efficiency: 79.28%
+Sequential Execution Time (est.): 704 cycles
+Parallel Execution Time: 222 cycles
+Time Saved: 482 cycles (68.5%)
+
+-----------------------
+phase3_register_partitioning.txt
+
+# Register Partitioning
+# Total PEs: 4
+# Total Registers: 32
+
+=== PE0 ===
+Range: x0 - x7
+Total: 8 registers
+Aliases: gp, ra, sp, t0, t1, t2, tp, zero
+
+=== PE1 ===
+Range: x8 - x15
+Total: 8 registers
+Aliases: a0, a1, a2, a3, a4, a5, s0, s1
+
+=== PE2 ===
+Range: x16 - x23
+Total: 8 registers
+Aliases: a6, a7, s2, s3, s4, s5, s6, s7
+
+=== PE3 ===
+Range: x24 - x31
+Total: 8 registers
+Aliases: s10, s11, s8, s9, t3, t4, t5, t6
+
+
+-----------------------
+phase3_schedule.txt
+
+# CGRA Schedule Output
+# Total Instructions: 240
+# Makespan: 222 cycles
+# Number of PEs: 4
+
+# Format: CYCLE | PE | INST_ID | OPCODE | RD | RS1 | RS2 | IMM | LATENCY | BUS | CRITICAL
+# ---------------------------------------------------------------------------------------
+
+    0 |  0 |     125 | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 1  | 184     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 1  | 183     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+0     | 2  | 176     | addi       | a5    | zero  | -     | -1     | 2       | YES | -
+0     | 3  | 163     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 156     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 149     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 146     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 143     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 141     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 132     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 185     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 0       | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 121     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 120     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 118     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 117     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 116     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 112     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 110     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 109     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 108     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 202     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 238     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 1  | 221     | addi       | a2    | a3    | -     | 0      | 2       | NO  | -
+0     | 0  | 220     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 219     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 218     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 213     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 207     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 203     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 122     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 201     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 200     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 198     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 197     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 196     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 191     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 190     | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 189     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 188     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 186     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 105     | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 45      | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 53      | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 39      | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 55      | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 106     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 36      | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 35      | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 57      | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 34      | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 32      | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 31      | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 30      | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 104     | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 1  | 103     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+0     | 0  | 99      | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 98      | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 97      | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 2       | addi       | -     | -     | -     | -      | 2       | NO  | -
+0     | 1  | 92      | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+0     | 0  | 93      | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 94      | add        | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 95      | slli       | -     | -     | -     | -      | 2       | NO  | -
+0     | 0  | 181     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 1  | 9       | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 2  | 43      | bltu       | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 233     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 26      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 24      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 3  | 211     | bltu       | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 16      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 217     | bltu       | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 231     | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 12      | beq        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 228     | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 54      | jalr       | zero  | ra    | -     | 0      | 3       | NO  | -
+0     | 0  | 89      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 130     | bltu       | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 87      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 137     | bltu       | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 85      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 142     | jalr       | zero  | ra    | -     | 0      | 3       | NO  | -
+0     | 0  | 81      | beq        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 76      | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 153     | jal        | ra    | -     | -     | -      | 3       | NO  | -
+0     | 0  | 71      | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 160     | jal        | ra    | -     | -     | -      | 3       | NO  | -
+0     | 0  | 66      | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 167     | jal        | ra    | -     | -     | -      | 3       | NO  | -
+0     | 0  | 171     | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 173     | bne        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 175     | beq        | -     | -     | -     | -      | 3       | NO  | -
+0     | 0  | 177     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 179     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 49      | bltu       | -     | -     | -     | -      | 3       | NO  | -
+0     | 1  | 29      | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+0     | 1  | 115     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+0     | 0  | 224     | jal        | ra    | -     | -     | -      | 3       | NO  | -
+2     | 1  | 8       | addi       | a5    | zero  | -     | 10     | 2       | YES | -
+2     | 1  | 51      | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+2     | 1  | 139     | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+3     | 0  | 11      | addi       | a5    | zero  | -     | 10     | 2       | YES | -
+3     | 2  | 13      | addi       | a5    | zero  | -     | -1     | 2       | YES | -
+3     | 3  | 82      | addi       | a5    | zero  | -     | -1     | 2       | YES | -
+3     | 0  | 239     | jalr       | zero  | ra    | -     | 0      | 3       | NO  | -
+4     | 1  | 230     | addi       | a5    | zero  | -     | 2      | 2       | YES | -
+5     | 2  | 232     | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+5     | 3  | 204     | addi       | a4    | zero  | -     | 1      | 2       | YES | -
+6     | 1  | 234     | addi       | a5    | zero  | -     | -1     | 2       | YES | -
+6     | 0  | 192     | addi       | a4    | zero  | -     | 1      | 2       | YES | -
+7     | 1  | 222     | addi       | a1    | a4    | -     | 0      | 2       | NO  | -
+7     | 2  | 147     | addi       | a5    | zero  | -     | 10     | 2       | YES | -
+7     | 3  | 1       | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+8     | 1  | 235     | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+8     | 1  | 195     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+9     | 1  | 152     | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+10    | 1  | 223     | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+11    | 1  | 154     | addi       | a5    | a0    | -     | 0      | 2       | NO  | -
+12    | 1  | 225     | addi       | a5    | a0    | -     | 0      | 2       | NO  | -
+12    | 0  | 3       | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+13    | 1  | 159     | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+15    | 1  | 161     | addi       | a5    | a0    | -     | 0      | 2       | NO  | -
+17    | 1  | 166     | addi       | a0    | a5    | -     | 0      | 2       | NO  | -
+17    | 0  | 4       | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+19    | 1  | 168     | addi       | a5    | a0    | -     | 0      | 2       | NO  | -
+22    | 0  | 5       | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+27    | 0  | 6       | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+32    | 0  | 7       | lw         | -     | -     | -     | -      | 3       | YES | -
+32    | 1  | 10      | lw         | -     | -     | -     | -      | 3       | YES | -
+32    | 2  | 14      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+37    | 0  | 15      | lw         | -     | -     | -     | -      | 3       | YES | -
+37    | 1  | 17      | lw         | -     | -     | -     | -      | 3       | YES | -
+37    | 2  | 18      | lw         | -     | -     | -     | -      | 3       | YES | -
+37    | 3  | 19      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+42    | 0  | 20      | lw         | -     | -     | -     | -      | 3       | YES | -
+42    | 1  | 21      | lw         | -     | -     | -     | -      | 3       | YES | -
+42    | 2  | 22      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+47    | 0  | 23      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+52    | 0  | 25      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+57    | 0  | 27      | lw         | -     | -     | -     | -      | 3       | YES | -
+57    | 1  | 28      | lw         | -     | -     | -     | -      | 3       | YES | -
+57    | 2  | 33      | lw         | -     | -     | -     | -      | 3       | YES | -
+57    | 3  | 37      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+62    | 0  | 38      | lw         | -     | -     | -     | -      | 3       | YES | -
+62    | 1  | 40      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+67    | 0  | 41      | lw         | -     | -     | -     | -      | 3       | YES | -
+67    | 1  | 42      | lw         | -     | -     | -     | -      | 3       | YES | -
+67    | 2  | 44      | lw         | -     | -     | -     | -      | 3       | YES | -
+67    | 3  | 46      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+72    | 0  | 47      | lw         | -     | -     | -     | -      | 3       | YES | -
+72    | 1  | 48      | lw         | -     | -     | -     | -      | 3       | YES | -
+72    | 2  | 50      | lw         | -     | -     | -     | -      | 3       | YES | -
+72    | 3  | 52      | lw         | -     | -     | -     | -      | 3       | YES | -
+75    | 0  | 56      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+80    | 0  | 58      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+85    | 0  | 59      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+90    | 0  | 60      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+95    | 0  | 61      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+100   | 0  | 63      | lw         | -     | -     | -     | -      | 3       | YES | -
+100   | 1  | 80      | lw         | -     | -     | -     | -      | 3       | YES | -
+100   | 2  | 79      | lw         | -     | -     | -     | -      | 3       | YES | -
+100   | 3  | 78      | lw         | -     | -     | -     | -      | 3       | YES | -
+103   | 0  | 62      | lw         | -     | -     | -     | -      | 3       | YES | -
+103   | 1  | 64      | lw         | -     | -     | -     | -      | 3       | YES | -
+103   | 2  | 65      | lw         | -     | -     | -     | -      | 3       | YES | -
+103   | 3  | 67      | lw         | -     | -     | -     | -      | 3       | YES | -
+106   | 0  | 68      | lw         | -     | -     | -     | -      | 3       | YES | -
+106   | 1  | 69      | lw         | -     | -     | -     | -      | 3       | YES | -
+106   | 2  | 70      | lw         | -     | -     | -     | -      | 3       | YES | -
+106   | 3  | 72      | lw         | -     | -     | -     | -      | 3       | YES | -
+109   | 0  | 73      | lw         | -     | -     | -     | -      | 3       | YES | -
+109   | 1  | 74      | lw         | -     | -     | -     | -      | 3       | YES | -
+109   | 2  | 75      | lw         | -     | -     | -     | -      | 3       | YES | -
+109   | 3  | 77      | lw         | -     | -     | -     | -      | 3       | YES | -
+112   | 0  | 83      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+117   | 0  | 84      | lw         | -     | -     | -     | -      | 3       | YES | -
+117   | 1  | 86      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+122   | 0  | 88      | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+127   | 0  | 90      | lw         | -     | -     | -     | -      | 3       | YES | -
+127   | 1  | 91      | lw         | -     | -     | -     | -      | 3       | YES | -
+127   | 2  | 96      | lw         | -     | -     | -     | -      | 3       | YES | -
+127   | 3  | 100     | lw         | -     | -     | -     | -      | 3       | YES | -
+130   | 0  | 101     | lw         | -     | -     | -     | -      | 3       | YES | -
+130   | 1  | 102     | lw         | -     | -     | -     | -      | 3       | YES | -
+130   | 2  | 107     | lw         | -     | -     | -     | -      | 3       | YES | -
+130   | 3  | 111     | lw         | -     | -     | -     | -      | 3       | YES | -
+133   | 0  | 113     | lw         | -     | -     | -     | -      | 3       | YES | -
+133   | 1  | 114     | lw         | -     | -     | -     | -      | 3       | YES | -
+133   | 2  | 119     | lw         | -     | -     | -     | -      | 3       | YES | -
+133   | 3  | 123     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+138   | 0  | 124     | lw         | -     | -     | -     | -      | 3       | YES | -
+138   | 1  | 126     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+143   | 0  | 127     | lw         | -     | -     | -     | -      | 3       | YES | -
+143   | 1  | 128     | lw         | -     | -     | -     | -      | 3       | YES | -
+143   | 2  | 129     | lw         | -     | -     | -     | -      | 3       | YES | -
+143   | 3  | 131     | lw         | -     | -     | -     | -      | 3       | YES | -
+146   | 0  | 133     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+151   | 0  | 134     | lw         | -     | -     | -     | -      | 3       | YES | -
+151   | 1  | 135     | lw         | -     | -     | -     | -      | 3       | YES | -
+151   | 2  | 136     | lw         | -     | -     | -     | -      | 3       | YES | -
+151   | 3  | 138     | lw         | -     | -     | -     | -      | 3       | YES | -
+154   | 0  | 140     | lw         | -     | -     | -     | -      | 3       | YES | -
+154   | 1  | 144     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+159   | 0  | 145     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+164   | 0  | 148     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+169   | 0  | 150     | lw         | -     | -     | -     | -      | 3       | YES | -
+169   | 1  | 151     | lw         | -     | -     | -     | -      | 3       | YES | -
+169   | 2  | 155     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+174   | 0  | 157     | lw         | -     | -     | -     | -      | 3       | YES | -
+174   | 1  | 158     | lw         | -     | -     | -     | -      | 3       | YES | -
+174   | 2  | 162     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+179   | 0  | 164     | lw         | -     | -     | -     | -      | 3       | YES | -
+179   | 1  | 165     | lw         | -     | -     | -     | -      | 3       | YES | -
+179   | 2  | 169     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+184   | 0  | 170     | lw         | -     | -     | -     | -      | 3       | YES | -
+184   | 1  | 172     | lw         | -     | -     | -     | -      | 3       | YES | -
+184   | 2  | 174     | lw         | -     | -     | -     | -      | 3       | YES | -
+184   | 3  | 178     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+189   | 0  | 180     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+194   | 0  | 182     | lw         | -     | -     | -     | -      | 3       | YES | -
+194   | 1  | 187     | lw         | -     | -     | -     | -      | 3       | YES | -
+194   | 2  | 193     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+199   | 0  | 194     | lw         | -     | -     | -     | -      | 3       | YES | -
+199   | 1  | 199     | lw         | -     | -     | -     | -      | 3       | YES | -
+199   | 2  | 205     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+204   | 0  | 206     | lw         | -     | -     | -     | -      | 3       | YES | -
+204   | 1  | 208     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+209   | 0  | 209     | lw         | -     | -     | -     | -      | 3       | YES | -
+209   | 1  | 210     | lw         | -     | -     | -     | -      | 3       | YES | -
+209   | 2  | 212     | lw         | -     | -     | -     | -      | 3       | YES | -
+209   | 3  | 214     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+214   | 0  | 215     | lw         | -     | -     | -     | -      | 3       | YES | -
+214   | 1  | 216     | lw         | -     | -     | -     | -      | 3       | YES | -
+214   | 2  | 226     | sw         | -     | -     | -     | -      | 5       | YES | CRIT
+219   | 0  | 229     | lw         | -     | -     | -     | -      | 3       | YES | -
+219   | 1  | 236     | lw         | -     | -     | -     | -      | 3       | YES | -
+219   | 2  | 237     | lw         | -     | -     | -     | -      | 3       | YES | -
+219   | 3  | 227     | lw         | -     | -     | -     | -      | 3       | YES | CRIT
+
+-----------------------
+phase3_visualization.txt
+
+# Schedule Visualization (Gantt Chart - Text Format)
+
+Cycle:     0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65   66   67   68   69   70   71   72   73   74   75   76   77   78   79
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PE0 |  I224 I224 I224 I239 I239 I239 I192 I192  .    .    .    .     I3   I3   I3   I3   I3   I4   I4   I4   I4   I4   I5   I5   I5   I5   I5   I6   I6   I6   I6   I6   I7   I7   I7  .    .    I15  I15  I15  .    .    I20  I20  I20  .    .    I23  I23  I23  I23  I23  I25  I25  I25  I25  I25  I27  I27  I27  .    .    I38  I38  I38  .    .    I41  I41  I41  .    .    I47  I47  I47  I56  I56  I56  I56  I56
+PE1 |  I115 I115 I139 I139 I230 I230 I234 I222 I195 I152 I223 I154 I225 I159 I159 I161 I161 I166 I166 I168 I168  .    .    .    .    .    .    .    .    .    .    .    I10  I10  I10  .    .    I17  I17  I17  .    .    I21  I21  I21  .    .    .    .    .    .    .    .    .    .    .    .    I28  I28  I28  .    .    I40  I40  I40  I40  I40  I42  I42  I42  .    .    I48  I48  I48  .    .    .    .    .  
+PE2 |   I43  I43  I43  I13  I13 I232 I232 I147 I147  .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    I14  I14  I14  I14  I14  I18  I18  I18  .    .    I22  I22  I22  I22  I22  .    .    .    .    .    .    .    .    .    .    I33  I33  I33  .    .    .    .    .    .    .    I44  I44  I44  .    .    I50  I50  I50  .    .    .    .    .  
+PE3 |  I211 I211 I211  I82  I82 I204 I204   I1   I1   I1   I1   I1  .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    I19  I19  I19  I19  I19  .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    I37  I37  I37  I37  I37  .    .    .    .    .    I46  I46  I46  I46  I46  I52  I52  I52  .    .    .    .    .  
+
+(Mostrando solo los primeros 80 ciclos de 222)
+
+
+Legend:
+  .   = Idle
+  IN  = Instruction N executing
+
