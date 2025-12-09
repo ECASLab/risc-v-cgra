@@ -9,7 +9,7 @@ import re
 class AsmNormalizer:
     def __init__(self):
         self.supported_instructions = {
-            'add', 'sub', 'multiply', 'and', 'or', 'xor', 
+            'add', 'sub', 'mul', 'and', 'or', 'xor', 
             'sll', 'srl', 'sra', 'slt', 'sltu',
             'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi',
             'slli', 'srli', 'srai',
@@ -76,7 +76,7 @@ class AsmNormalizer:
                 
                 print("These instructions are NOT supported by the CGRA ISA.")
                 print("\nSupported instructions are:")
-                print("  Arithmetic: add, sub, multiply")
+                print("  Arithmetic: add, sub, mul")
                 print("  Logical: and, or, xor, sll, srl, sra")
                 print("  Comparison: slt, sltu")
                 print("  Immediate: addi, slti, sltiu, xori, ori, andi")
@@ -151,10 +151,6 @@ class AsmNormalizer:
             original_pseudo = f"{opcode} {operands}".strip()
             self.pseudo_instruction_map[line_num] = original_pseudo
             return expanded
-        
-        # Replace mul with multiply
-        if opcode == 'mul':
-            return [f'\t{opcode.replace("mul", "multiply")} {operands}{comment}']
         
         # Check supported
         if opcode not in self.supported_instructions:

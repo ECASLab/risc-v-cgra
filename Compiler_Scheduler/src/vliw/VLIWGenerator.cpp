@@ -35,7 +35,7 @@ void VLIWGenerator::initializeOpcodeMappings() {
     opcode_map_["srli"]   = 0x13;  // 0010011
     opcode_map_["srai"]   = 0x13;  // 0010011
     
-    // R-Type: 0110011 (add, sub, sll, slt, sltu, xor, srl, sra, or, and, multiply)
+    // R-Type: 0110011 (add, sub, sll, slt, sltu, xor, srl, sra, or, and, mul)
     opcode_map_["add"]    = 0x33;  // 0110011
     opcode_map_["sub"]    = 0x33;  // 0110011
     opcode_map_["sll"]    = 0x33;  // 0110011
@@ -47,10 +47,6 @@ void VLIWGenerator::initializeOpcodeMappings() {
     opcode_map_["or"]     = 0x33;  // 0110011
     opcode_map_["and"]    = 0x33;  // 0110011
     opcode_map_["mul"]    = 0x33;  // 0110011
-    opcode_map_["mulh"]   = 0x33;  // 0110011
-    opcode_map_["mulhsu"] = 0x33;  // 0110011
-    opcode_map_["mulhu"]  = 0x33;  // 0110011
-    opcode_map_["multiply"] = 0x33;  // 0110011
     
     // I-Type Load: 0000011 (lw, lh, lhu, lb, lbu)
     opcode_map_["lw"]     = 0x03;  // 0000011
@@ -64,25 +60,17 @@ void VLIWGenerator::initializeOpcodeMappings() {
     opcode_map_["sh"]     = 0x23;  // 0100011
     opcode_map_["sb"]     = 0x23;  // 0100011
     
-    // B-Type: 1100011 (beq, bne, blt, bge, bltu, bgeu)
+    // B-Type: 1100011 (beq, bne, blt, bge)
     opcode_map_["beq"]    = 0x63;  // 1100011
     opcode_map_["bne"]    = 0x63;  // 1100011
     opcode_map_["blt"]    = 0x63;  // 1100011
     opcode_map_["bge"]    = 0x63;  // 1100011
-    opcode_map_["bltu"]   = 0x63;  // 1100011
-    opcode_map_["bgeu"]   = 0x63;  // 1100011
     
     // J-Type: 1101111 (jal)
     opcode_map_["jal"]    = 0x6F;  // 1101111
     
-    // I-Type: 1100111 (jalr)
-    opcode_map_["jalr"]   = 0x67;  // 1100111
-    
     // U-Type: 0110111 (lui)
     opcode_map_["lui"]    = 0x37;  // 0110111
-    
-    // U-Type: 0010111 (auipc)
-    opcode_map_["auipc"]  = 0x17;  // 0010111
 }
 
 // Inicializa el mapeo de nombres de registros a números de 5 bits (0-31)
@@ -171,7 +159,7 @@ uint8_t VLIWGenerator::getFunct3(const std::string& mnemonic) const {
     if (mnemonic == "srai") return 0x5;
     
     // R-Type
-    if (mnemonic == "add" || mnemonic == "sub") return 0x0;
+    if (mnemonic == "add" || mnemonic == "sub" || mnemonic == "mul") return 0x0;
     if (mnemonic == "sll") return 0x1;
     if (mnemonic == "slt") return 0x2;
     if (mnemonic == "sltu") return 0x3;
@@ -179,10 +167,6 @@ uint8_t VLIWGenerator::getFunct3(const std::string& mnemonic) const {
     if (mnemonic == "srl" || mnemonic == "sra") return 0x5;
     if (mnemonic == "or") return 0x6;
     if (mnemonic == "and") return 0x7;
-    if (mnemonic == "mul" || mnemonic == "multiply") return 0x0;
-    if (mnemonic == "mulh") return 0x1;
-    if (mnemonic == "mulhsu") return 0x2;
-    if (mnemonic == "mulhu") return 0x3;
     
     // Load
     if (mnemonic == "lb") return 0x0;
@@ -201,11 +185,6 @@ uint8_t VLIWGenerator::getFunct3(const std::string& mnemonic) const {
     if (mnemonic == "bne") return 0x1;
     if (mnemonic == "blt") return 0x4;
     if (mnemonic == "bge") return 0x5;
-    if (mnemonic == "bltu") return 0x6;
-    if (mnemonic == "bgeu") return 0x7;
-    
-    // JALR
-    if (mnemonic == "jalr") return 0x0;
     
     return 0x0;
 }
@@ -215,8 +194,7 @@ uint8_t VLIWGenerator::getFunct7(const std::string& mnemonic) const {
     if (mnemonic == "sub") return 0x20;
     if (mnemonic == "sra") return 0x20;
     if (mnemonic == "srai") return 0x20;
-    if (mnemonic == "mul" || mnemonic == "multiply" || 
-        mnemonic == "mulh" || mnemonic == "mulhsu" || mnemonic == "mulhu") return 0x01;
+    if (mnemonic == "mul") return 0x01;
     return 0x00;
 }
 
@@ -260,7 +238,7 @@ uint32_t VLIWGenerator::encodeInstruction(const ScheduledInstruction& sched_inst
         encoding |= (static_cast<uint32_t>(funct7) << 25);
     }
     // I-Type: imm[31:20] | rs1[19:15] | funct3[14:12] | rd[11:7] | opcode[6:0]
-    else if (opcode == 0x13 || opcode == 0x03 || opcode == 0x67) {  // I-Type (ALU, Load, JALR)
+    else if (opcode == 0x13 || opcode == 0x03) {  // I-Type (ALU, Load)
         encoding |= (static_cast<uint32_t>(rd) << 7);
         encoding |= (static_cast<uint32_t>(funct3) << 12);
         encoding |= (static_cast<uint32_t>(rs1) << 15);
@@ -302,7 +280,7 @@ uint32_t VLIWGenerator::encodeInstruction(const ScheduledInstruction& sched_inst
         encoding |= ((imm_10_5 << 25) | (imm_12 << 31));
     }
     // U-Type: imm[31:12] | rd[11:7] | opcode[6:0]
-    else if (opcode == 0x37 || opcode == 0x17) {  // U-Type (LUI, AUIPC)
+    else if (opcode == 0x37) {  // U-Type (LUI)
         encoding |= (static_cast<uint32_t>(rd) << 7);
         uint32_t imm_31_12 = (static_cast<uint32_t>(imm) >> 12) & 0xFFFFF;
         encoding |= (imm_31_12 << 12);
@@ -448,16 +426,10 @@ std::string VLIWGenerator::decodeToString(uint32_t encoding) const {
         else if (funct3 == 0x1) mnemonic = "bne";
         else if (funct3 == 0x4) mnemonic = "blt";
         else if (funct3 == 0x5) mnemonic = "bge";
-        else if (funct3 == 0x6) mnemonic = "bltu";
-        else if (funct3 == 0x7) mnemonic = "bgeu";
     } else if (opcode == 0x6F) {
         mnemonic = "jal";
-    } else if (opcode == 0x67) {
-        mnemonic = "jalr";
     } else if (opcode == 0x37) {
         mnemonic = "lui";
-    } else if (opcode == 0x17) {
-        mnemonic = "auipc";
     }
     
     std::string rd_name = "x" + std::to_string(rd);
@@ -486,16 +458,12 @@ std::string VLIWGenerator::decodeToString(uint32_t encoding) const {
         oss << " " << rd_name << ", " << imm << "(" << rs1_name << ")";
     }
     // U-Type: lui rd, imm
-    else if (opcode == 0x37 || opcode == 0x17) {
+    else if (opcode == 0x37) {
         oss << " " << rd_name << ", " << imm;
     }
     // J-Type: jal rd, offset
     else if (opcode == 0x6F) {
         oss << " " << rd_name << ", " << imm;
-    }
-    // JALR: jalr rd, offset(rs1)
-    else if (opcode == 0x67) {
-        oss << " " << rd_name << ", " << imm << "(" << rs1_name << ")";
     }
     // R-Type: add rd, rs1, rs2
     else if (opcode == 0x33) {

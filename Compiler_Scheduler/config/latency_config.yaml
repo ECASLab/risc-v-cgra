@@ -37,8 +37,8 @@ operation_latencies:
     SLTI: 2
     SLTIU: 2
 
-    # Multiplicación (asumiendo mayor latencia)
-    MULTIPLY: 4
+    # Multiplicación
+    MUL: 4
 
   control_operations:
     # Branch
@@ -46,16 +46,12 @@ operation_latencies:
     BNE: 3
     BLT: 3
     BGE: 3
-    BLTU: 3
-    BGEU: 3
 
     # Jump
     JAL: 3
-    JALR: 3
 
   special_operations:
     LUI: 1    # Carga inmediata simple
-    AUIPC: 2
 
 # Latencias de acceso a memoria
 memory_access:

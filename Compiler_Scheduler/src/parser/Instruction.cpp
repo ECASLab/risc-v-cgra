@@ -71,41 +71,44 @@ void Instruction::parse() {
 // Input: ninguno (usa opcode interno)
 // Output: establece campo type (R_TYPE, I_TYPE, S_TYPE, etc.)
 void Instruction::determineType() {
-    if (opcode == "add" || opcode == "sub" || opcode == "mul" || opcode == "multiply" ||
-        opcode == "and" || opcode == "or" || opcode == "xor" ||
-        opcode == "sll" || opcode == "srl" || opcode == "sra" ||
-        opcode == "slt" || opcode == "sltu") {
+    // Instrucciones Tipo R
+    if (opcode == "add" || opcode == "sub" || opcode == "sll" ||
+        opcode == "slt" || opcode == "sltu" || opcode == "xor" ||
+        opcode == "srl" || opcode == "sra" || opcode == "or" || opcode == "and" ||
+        opcode == "mul") {
         type = InstructionType::R_TYPE;
-        }
-        else if (opcode == "lw" || opcode == "lb" || opcode == "lh" ||
-            opcode == "lbu" || opcode == "lhu") {
-            type = InstructionType::I_TYPE;
-            }
-            else if (opcode == "addi" || opcode == "slti" || opcode == "sltiu" ||
-                opcode == "xori" || opcode == "ori" || opcode == "andi" ||
-                opcode == "slli" || opcode == "srli" || opcode == "srai") {
-                type = InstructionType::I_TYPE;
-                }
-                else if (opcode == "jalr") {
-                    type = InstructionType::I_TYPE;
-                }
-                else if (opcode == "sw" || opcode == "sb" || opcode == "sh") {
-                    type = InstructionType::S_TYPE;
-                }
-                else if (opcode == "beq" || opcode == "bne" || opcode == "blt" ||
-                    opcode == "bge" || opcode == "bltu" || opcode == "bgeu") {
-                    type = InstructionType::B_TYPE;
-                    }
-                    else if (opcode == "jal") {
-                        type = InstructionType::J_TYPE;
-                    }
-                    else if (opcode == "lui" || opcode == "auipc") {
-                        type = InstructionType::U_TYPE;
-                    }
-                    else {
-                        type = InstructionType::UNKNOWN;
-                        Logger::warning("Unknown opcode: " + opcode);
-                    }
+    }
+    // Instrucciones Tipo I - Loads
+    else if (opcode == "lb" || opcode == "lh" || opcode == "lw" ||
+             opcode == "lbu" || opcode == "lhu") {
+        type = InstructionType::I_TYPE;
+    }
+    // Instrucciones Tipo I - ALU
+    else if (opcode == "addi" || opcode == "slli" || opcode == "slti" ||
+             opcode == "sltiu" || opcode == "xori" || opcode == "srli" ||
+             opcode == "srai" || opcode == "ori" || opcode == "andi") {
+        type = InstructionType::I_TYPE;
+    }
+    // Instrucciones Tipo S
+    else if (opcode == "sb" || opcode == "sh" || opcode == "sw") {
+        type = InstructionType::S_TYPE;
+    }
+    // Instrucciones Tipo B
+    else if (opcode == "beq" || opcode == "bne" || opcode == "blt" || opcode == "bge") {
+        type = InstructionType::B_TYPE;
+    }
+    // Instrucciones Tipo U
+    else if (opcode == "lui") {
+        type = InstructionType::U_TYPE;
+    }
+    // Instrucciones Tipo J
+    else if (opcode == "jal") {
+        type = InstructionType::J_TYPE;
+    }
+    else {
+        type = InstructionType::UNKNOWN;
+        Logger::warning("Unknown opcode: " + opcode);
+    }
 }
 
 // Parsea instrucción R-Type (formato: opcode rd, rs1, rs2)
@@ -253,12 +256,12 @@ bool Instruction::isMemoryOperation() const {
 }
 
 bool Instruction::isLoadOperation() const {
-    return opcode == "lw" || opcode == "lb" || opcode == "lh" ||
-    opcode == "lbu" || opcode == "lhu";
+    return opcode == "lb" || opcode == "lh" || opcode == "lw" ||
+           opcode == "lbu" || opcode == "lhu";
 }
 
 bool Instruction::isStoreOperation() const {
-    return opcode == "sw" || opcode == "sb" || opcode == "sh";
+    return opcode == "sb" || opcode == "sh" || opcode == "sw";
 }
 
 bool Instruction::isBranchOperation() const {
@@ -266,7 +269,7 @@ bool Instruction::isBranchOperation() const {
 }
 
 bool Instruction::isJumpOperation() const {
-    return type == InstructionType::J_TYPE || opcode == "jalr";
+    return type == InstructionType::J_TYPE;
 }
 
 bool Instruction::isALUOperation() const {

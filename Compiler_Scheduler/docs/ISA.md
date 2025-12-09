@@ -1,45 +1,65 @@
-# RISC-V Instruction Formats
-
-## R Type Instruction
-| funct7 | rs2 | rs1 | funct3 | rd | op |
-|--------|-----|-----|--------|----|----|
-| 7 bits | 5 bits | 5 bits | 3 bits | 5 bits | 7 bits |
-
-## I Type Instruction
-| imm11:0 | rs1 | funct3 | rd | op |
-|---------|-----|--------|----|----|
-| 12 bits | 5 bits | 3 bits | 5 bits | 7 bits |
-
-## S Type Instruction
-| imm12:5 | rs2 | rs1 | funct3 | imm4:0 | op |
-|---------|-----|-----|--------|--------|----|
-| 7 bits | 5 bits | 5 bits | 3 bits | 5 bits | 7 bits |
-
-## U Type Instruction
-| immhi | rd | op |
-|-------|----|----|
-| 20 bits | 5 bits | 7 bits |
-
-## B Type Instruction
-| imm12,10:5 | rs2 | rs1 | funct3 | imm4:1,11 | op |
-|------------|-----|-----|--------|-----------|-----|
-| 7 bits | 5 bits | 5 bits | 3 bits | 5 bits | 7 bits |
-
-## J Type Instruction
-| immhi 20, 10:1, 11, 19:12 | rd | op |
-|---------------------------|----|----|
-| 20 bits | 5 bits | 7 bits |
-
----
-
 # Tabla 3.1: Instrucciones de RISC-V
 
-| Op | Instrucciones | Tipo instrucción |
-|---------|--------------|------------------|
-| 0000011 | lb, lh, lw, lbu, lhu | I |
-| 0010011 | addi, slli, slti, sltiu, xori, srli, srai, ori, andi | I |
-| 0100011 | sb, sh, sw | S |
-| 0110011 | add, sub, sll, slt, sltu, xor, srl, sra, or, and, multiply | R |
-| 0110111 | load upper immediate | U |
-| 1100011 | branch if equal, not equal | B |
-| 1101111 | jump and link register | J |
+## Instrucciones Tipo I
+
+| Función | Opcode | Funct3 | Funct7 |
+|---------|--------|--------|--------|
+| lb (load byte) | 0000011 | 000 | - |
+| lh | 0000011 | 001 | - |
+| lw | 0000011 | 010 | - |
+| lbu | 0000011 | 100 | - |
+| lhu | 0000011 | 101 | - |
+| addi | 0010011 | 000 | - |
+| slli | 0010011 | 001 | 0000000 |
+| slti | 0010011 | 010 | - |
+| sltiu | 0010011 | 011 | - |
+| xori | 0010011 | 100 | - |
+| srli | 0010011 | 101 | 0000000 |
+| srai | 0010011 | 101 | 0100000 |
+| ori | 0010011 | 110 | - |
+| andi | 0010011 | 111 | - |
+
+## Instrucciones Tipo S
+
+| Función | Opcode | Funct3 | Funct7 |
+|---------|--------|--------|--------|
+| sb (store byte) | 0100011 | 000 | - |
+| sh | 0100011 | 001 | - |
+| sw | 0100011 | 010 | - |
+
+## Instrucciones Tipo R
+
+| Función | Opcode | Funct3 | Funct7 |
+|---------|--------|--------|--------|
+| add | 0110011 | 000 | 0000000 |
+| sub | 0110011 | 000 | 0100000 |
+| sll | 0110011 | 001 | 0000000 |
+| slt | 0110011 | 010 | 0000000 |
+| sltu | 0110011 | 011 | 0000000 |
+| xor | 0110011 | 100 | 0000000 |
+| srl | 0110011 | 101 | 0000000 |
+| sra | 0110011 | 101 | 0100000 |
+| or | 0110011 | 110 | 0000000 |
+| and | 0110011 | 111 | 0000000 |
+| mul | 0110011 | 000 | 0000001 |
+
+## Instrucciones Tipo U
+
+| Función | Opcode | Funct3 | Funct7 |
+|---------|--------|--------|--------|
+| lui | 0110111 | - | - |
+
+## Instrucciones Tipo B
+
+| Función | Opcode | Funct3 | Funct7 |
+|---------|--------|--------|--------|
+| beq | 1100011 | 000 | - |
+| bne | 1100011 | 001 | - |
+| blt | 1100011 | 100 | - |
+| bge | 1100011 | 101 | - |
+
+## Instrucciones Tipo J
+
+| Función | Opcode | Funct3 | Funct7 |
+|---------|--------|--------|--------|
+| jal | 1101111 | - | - |

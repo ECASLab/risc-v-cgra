@@ -44,8 +44,8 @@ Phase 0.5 provides optional Python-based utilities to validate and normalize RIS
    - Example: `addi x1, x2, 2047` ✓ valid | `addi x1, x2, 5000` ✗ out of range
 
 4. **Opcode Recognition**
-   - Checks that all instruction mnemonics are recognized RV32IM opcodes
-   - Supported instruction sets: RV32I (base) + RV32M (multiply/divide)
+   - Checks that all instruction mnemonics are recognized RV32I opcodes
+   - Supported instruction set: RV32I (base) + mul from RV32M
    - Detects misspellings or unsupported instructions
    - Example: `add x1, x2, x3` ✓ valid | `addr x1, x2, x3` ✗ unknown opcode
 
@@ -155,14 +155,14 @@ Phase 2 transforms the parsed instructions and CFG from Phase 1 into a dependenc
 
 **Latency Configuration (`latency_config.yaml`)**:
 Based on thesis Figures 4.6-4.10:
-- **Load operations** (lw, lb, lh): 3 cycles
-- **Store operations** (sw, sb, sh): 5 cycles
-- **ALU operations** (add, sub, and, or, xor, sll, srl, sra, slt): 2 cycles
-- **ALU immediate** (addi, andi, ori, xori, slli, srli, srai, slti): 2 cycles
-- **Multiply**: 4 cycles
+- **Load operations** (lb, lh, lw, lbu, lhu): 3 cycles
+- **Store operations** (sb, sh, sw): 5 cycles
+- **ALU operations** (add, sub, and, or, xor, sll, srl, sra, slt, sltu): 2 cycles
+- **ALU immediate** (addi, andi, ori, xori, slli, srli, srai, slti, sltiu): 2 cycles
+- **Multiply** (mul): 4 cycles
 - **Branch** (beq, bne, blt, bge): 3 cycles
-- **Jump** (jal, jalr): 3 cycles
-- **Special** (lui, auipc): 1-2 cycles
+- **Jump** (jal): 3 cycles
+- **Special** (lui): 1 cycle
 
 #### 2.2 Dependency Analyzer
 - **Location**: `src/dependency/`
@@ -553,18 +553,18 @@ Phase 4 generates Very Long Instruction Word (VLIW) binary code from the schedul
 [10:0]  Immediate (11 bits) - Signed immediate value [-1024, 1023]
 ```
 
-**Opcode Mappings** (6-bit encoding):
+**Opcode Mappings** (standard RISC-V encoding):
 
-| Category | Opcode Range | Operations |
-|----------|--------------|------------|
-| NOP/Control | 0x00 (000000) | nop |
-| ALU Immediate | 0x01-0x09 (000001-001001) | addi, slti, sltiu, xori, ori, andi, slli, srli, srai |
-| ALU Register | 0x10-0x19 (010000-011001) | add, sub, sll, slt, sltu, xor, srl, sra, or, and |
-| Multiply | 0x20-0x23 (100000-100011) | mul, mulh, mulhsu, mulhu |
-| Load/Store | 0x24-0x2B (100100-101011) | lw, lh, lhu, lb, lbu, sw, sh, sb |
-| Branch | 0x30-0x35 (110000-110101) | beq, bne, blt, bge, bltu, bgeu |
-| Jump | 0x36-0x37 (110110-110111) | jal, jalr |
-| Upper Immediate | 0x38-0x39 (111000-111001) | lui, auipc |
+| Category | Opcode (7-bit) | Operations |
+|----------|----------------|------------|
+| NOP/Control | 0x13 (0010011) | nop |
+| ALU Immediate | 0x13 (0010011) | addi, slti, sltiu, xori, ori, andi, slli, srli, srai |
+| ALU Register | 0x33 (0110011) | add, sub, sll, slt, sltu, xor, srl, sra, or, and, mul |
+| Load | 0x03 (0000011) | lb, lh, lw, lbu, lhu |
+| Store | 0x23 (0100011) | sb, sh, sw |
+| Branch | 0x63 (1100011) | beq, bne, blt, bge |
+| Jump | 0x6F (1101111) | jal |
+| Upper Immediate | 0x37 (0110111) | lui |
 
 **NOP Encoding**:
 - All fields set to 0: `0x00000000`
@@ -665,7 +665,6 @@ Generated Code:
 Operation Distribution:
   addi        : 15
   add         : 8
-  multiply    : 4
   lw          : 6
   sw          : 2
   slt         : 4

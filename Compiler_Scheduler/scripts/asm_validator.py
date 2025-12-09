@@ -8,17 +8,22 @@ import re
 
 class AsmValidator:
     def __init__(self):
+        # Instrucciones soportadas según el ISA especificado
         self.supported_opcodes = {
-            'add', 'sub', 'multiply', 'and', 'or', 'xor', 
-            'sll', 'srl', 'sra', 'slt', 'sltu',
-            'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi',
-            'slli', 'srli', 'srai',
-            'lw', 'lh', 'lhu', 'lb', 'lbu',
-            'jalr',
-            'sw', 'sh', 'sb',
-            'beq', 'bne', 'blt', 'bge', 'bltu', 'bgeu',
-            'jal',
-            'lui', 'auipc'
+            # Tipo R
+            'add', 'sub', 'sll', 'slt', 'sltu', 'xor', 'srl', 'sra', 'or', 'and', 'mul',
+            # Tipo I - ALU
+            'addi', 'slli', 'slti', 'sltiu', 'xori', 'srli', 'srai', 'ori', 'andi',
+            # Tipo I - Loads
+            'lb', 'lh', 'lw', 'lbu', 'lhu',
+            # Tipo S
+            'sb', 'sh', 'sw',
+            # Tipo B
+            'beq', 'bne', 'blt', 'bge',
+            # Tipo U
+            'lui',
+            # Tipo J
+            'jal'
         }
         
         self.valid_registers = set()
@@ -38,16 +43,15 @@ class AsmValidator:
         }
         self.valid_registers.update(aliases.keys())
         
-        self.r_type = {'add', 'sub', 'multiply', 'and', 'or', 'xor', 
-                       'sll', 'srl', 'sra', 'slt', 'sltu'}
+        self.r_type = {'add', 'sub', 'sll', 'slt', 'sltu', 'xor', 
+                       'srl', 'sra', 'or', 'and', 'mul'}
         self.i_type_alu = {'addi', 'slti', 'sltiu', 'xori', 'ori', 'andi'}
         self.i_type_shift = {'slli', 'srli', 'srai'}
-        self.i_type_load = {'lw', 'lh', 'lhu', 'lb', 'lbu'}
-        self.i_type_jalr = {'jalr'}
-        self.s_type = {'sw', 'sh', 'sb'}
-        self.b_type = {'beq', 'bne', 'blt', 'bge', 'bltu', 'bgeu'}
+        self.i_type_load = {'lb', 'lh', 'lw', 'lbu', 'lhu'}
+        self.s_type = {'sb', 'sh', 'sw'}
+        self.b_type = {'beq', 'bne', 'blt', 'bge'}
         self.j_type = {'jal'}
-        self.u_type = {'lui', 'auipc'}
+        self.u_type = {'lui'}
         
         self.errors = []
         self.warnings = []
@@ -137,8 +141,6 @@ class AsmValidator:
             self.validate_i_type_shift(opcode, ops, line_num, full_line)
         elif opcode in self.i_type_load:
             self.validate_i_type_load(opcode, ops, line_num, full_line)
-        elif opcode in self.i_type_jalr:
-            self.validate_jalr(opcode, ops, line_num, full_line)
         elif opcode in self.s_type:
             self.validate_s_type(opcode, ops, line_num, full_line)
         elif opcode in self.b_type:
@@ -224,25 +226,6 @@ class AsmValidator:
         
         try:
             offset = int(offset_str)
-            if not (-2048 <= offset <= 2047):
-                self.errors.append((line_num, f"Offset {offset} out of range [-2048, 2047]", full_line))
-        except:
-            self.errors.append((line_num, f"Invalid offset: '{offset_str}'", full_line))
-    
-    def validate_jalr(self, opcode, ops, line_num, full_line):
-        if len(ops) != 3:
-            self.errors.append((line_num, f"JALR expects 3 operands, got {len(ops)}", full_line))
-            return
-        
-        rd, rs1, offset_str = ops
-        
-        if not self.is_valid_register(rd):
-            self.errors.append((line_num, f"Invalid destination register: '{rd}'", full_line))
-        if not self.is_valid_register(rs1):
-            self.errors.append((line_num, f"Invalid base register: '{rs1}'", full_line))
-        
-        try:
-            offset = self.parse_immediate(offset_str)
             if not (-2048 <= offset <= 2047):
                 self.errors.append((line_num, f"Offset {offset} out of range [-2048, 2047]", full_line))
         except:

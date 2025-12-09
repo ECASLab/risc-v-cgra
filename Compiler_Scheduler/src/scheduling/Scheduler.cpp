@@ -372,8 +372,7 @@ bool Scheduler::requiresBusAccess(const Instruction& inst) const {
     }
     
     if (opcode == "beq" || opcode == "bne" || opcode == "blt" || 
-        opcode == "bge" || opcode == "bltu" || opcode == "bgeu" ||
-        opcode == "jal" || opcode == "jalr") {
+        opcode == "bge" || opcode == "jal") {
         return false;
     }
     

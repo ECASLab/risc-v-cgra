@@ -37,7 +37,6 @@ void ConfigReader::setDefaultLatencies() {
     latencies["sltiu"] = 2;
 
     // Multiply - más ciclos
-    latencies["multiply"] = 4;
     latencies["mul"] = 4;
 
     // Load operations - 3 estados
@@ -57,14 +56,10 @@ void ConfigReader::setDefaultLatencies() {
     latencies["bne"] = 3;
     latencies["blt"] = 3;
     latencies["bge"] = 3;
-    latencies["bltu"] = 3;
-    latencies["bgeu"] = 3;
     latencies["jal"] = 3;
-    latencies["jalr"] = 3;
 
     // Special
     latencies["lui"] = 1;
-    latencies["auipc"] = 2;
 }
 
 // Establece la configuracion de hardware por defecto
