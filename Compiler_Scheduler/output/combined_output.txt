@@ -1,0 +1,3361 @@
+-----------------------
+phase1_cfg.txt
+
+# Control Flow Graph
+# Total bloques: 32
+
+BB0 [0-4]
+  Predecesores: []
+  Sucesores: [BB7]
+  Instrucciones: 5
+
+    [Line 10] addi rd=sp rs1=sp imm=-64
+    [Line 11] sw rs1=sp rs2=s0 imm=60
+    [Line 12] addi rd=s0 rs1=sp imm=64
+    [Line 13] sw rs1=s0 rs2=zero imm=-20
+    [Line 14] jal rd=zero label=.L2
+
+BB1 [5-23]
+  Predecesores: [BB7]
+  Sucesores: [BB3, BB2]
+  Instrucciones: 19
+
+    [Line 16] lui rd=a5 imm=269413
+    [Line 17] addi rd=a5 rs1=a5 imm=0
+    [Line 18] addi rd=a5 rs1=a5 imm=-403
+    [Line 19] sw rs1=s0 rs2=a5 imm=-52
+    [Line 20] lui rd=a5 imm=3
+    [Line 21] addi rd=a5 rs1=a5 imm=0
+    [Line 22] addi rd=a5 rs1=a5 imm=57
+    [Line 23] sw rs1=s0 rs2=a5 imm=-56
+    [Line 24] addi rd=a5 rs1=zero imm=0
+    [Line 25] lw rd=a4 rs1=a5 imm=0
+    [Line 26] lw rd=a5 rs1=s0 imm=-52
+    [Line 27] mul rd=a4 rs1=a4 rs2=a5
+    [Line 28] lw rd=a5 rs1=s0 imm=-56
+    [Line 29] add rd=a4 rs1=a4 rs2=a5
+    [Line 30] addi rd=a5 rs1=zero imm=0
+    [Line 31] sw rs1=a5 rs2=a4 imm=0
+    [Line 32] addi rd=a5 rs1=zero imm=0
+    [Line 33] lw rd=a5 rs1=a5 imm=0
+    [Line 34] bge rs1=a5 rs2=zero label=.L3
+
+BB2 [24-28]
+  Predecesores: [BB1]
+  Sucesores: [BB3]
+  Instrucciones: 5
+
+    [Line 35] addi rd=a5 rs1=zero imm=0
+    [Line 36] lw rd=a5 rs1=a5 imm=0
+    [Line 37] sub rd=a4 rs1=zero rs2=a5
+    [Line 38] addi rd=a5 rs1=zero imm=0
+    [Line 39] sw rs1=a5 rs2=a4 imm=0
+
+BB3 [29-32]
+  Predecesores: [BB1, BB2]
+  Sucesores: [BB5]
+  Instrucciones: 4
+
+    [Line 41] addi rd=a5 rs1=zero imm=0
+    [Line 42] lw rd=a5 rs1=a5 imm=0
+    [Line 43] sw rs1=s0 rs2=a5 imm=-32
+    [Line 44] jal rd=zero label=.L4
+
+BB4 [33-35]
+  Predecesores: [BB5]
+  Sucesores: [BB5]
+  Instrucciones: 3
+
+    [Line 46] lw rd=a5 rs1=s0 imm=-32
+    [Line 47] addi rd=a5 rs1=a5 imm=-30
+    [Line 48] sw rs1=s0 rs2=a5 imm=-32
+
+BB5 [36-38]
+  Predecesores: [BB3, BB4]
+  Sucesores: [BB4, BB6]
+  Instrucciones: 3
+
+    [Line 50] lw rd=a4 rs1=s0 imm=-32
+    [Line 51] addi rd=a5 rs1=zero imm=29
+    [Line 52] blt rs1=a5 rs2=a4 label=.L5
+
+BB6 [39-47]
+  Predecesores: [BB5]
+  Sucesores: [BB7]
+  Instrucciones: 9
+
+    [Line 53] addi rd=a4 rs1=zero imm=0
+    [Line 54] lw rd=a5 rs1=s0 imm=-20
+    [Line 55] slli rd=a5 rs1=a5 imm=2
+    [Line 56] add rd=a5 rs1=a4 rs2=a5
+    [Line 57] lw rd=a4 rs1=s0 imm=-32
+    [Line 58] sw rs1=a5 rs2=a4 imm=0
+    [Line 59] lw rd=a5 rs1=s0 imm=-20
+    [Line 60] addi rd=a5 rs1=a5 imm=1
+    [Line 61] sw rs1=s0 rs2=a5 imm=-20
+
+BB7 [48-50]
+  Predecesores: [BB0, BB6]
+  Sucesores: [BB1, BB8]
+  Instrucciones: 3
+
+    [Line 63] lw rd=a4 rs1=s0 imm=-20
+    [Line 64] addi rd=a5 rs1=zero imm=99
+    [Line 65] bge rs1=a5 rs2=a4 label=.L6
+
+BB8 [51-52]
+  Predecesores: [BB7]
+  Sucesores: [BB15]
+  Instrucciones: 2
+
+    [Line 66] sw rs1=s0 rs2=zero imm=-20
+    [Line 67] jal rd=zero label=.L7
+
+BB9 [53-71]
+  Predecesores: [BB15]
+  Sucesores: [BB11, BB10]
+  Instrucciones: 19
+
+    [Line 69] lui rd=a5 imm=269413
+    [Line 70] addi rd=a5 rs1=a5 imm=0
+    [Line 71] addi rd=a5 rs1=a5 imm=-403
+    [Line 72] sw rs1=s0 rs2=a5 imm=-52
+    [Line 73] lui rd=a5 imm=3
+    [Line 74] addi rd=a5 rs1=a5 imm=0
+    [Line 75] addi rd=a5 rs1=a5 imm=57
+    [Line 76] sw rs1=s0 rs2=a5 imm=-56
+    [Line 77] addi rd=a5 rs1=zero imm=0
+    [Line 78] lw rd=a4 rs1=a5 imm=0
+    [Line 79] lw rd=a5 rs1=s0 imm=-52
+    [Line 80] mul rd=a4 rs1=a4 rs2=a5
+    [Line 81] lw rd=a5 rs1=s0 imm=-56
+    [Line 82] add rd=a4 rs1=a4 rs2=a5
+    [Line 83] addi rd=a5 rs1=zero imm=0
+    [Line 84] sw rs1=a5 rs2=a4 imm=0
+    [Line 85] addi rd=a5 rs1=zero imm=0
+    [Line 86] lw rd=a5 rs1=a5 imm=0
+    [Line 87] bge rs1=a5 rs2=zero label=.L8
+
+BB10 [72-76]
+  Predecesores: [BB9]
+  Sucesores: [BB11]
+  Instrucciones: 5
+
+    [Line 88] addi rd=a5 rs1=zero imm=0
+    [Line 89] lw rd=a5 rs1=a5 imm=0
+    [Line 90] sub rd=a4 rs1=zero rs2=a5
+    [Line 91] addi rd=a5 rs1=zero imm=0
+    [Line 92] sw rs1=a5 rs2=a4 imm=0
+
+BB11 [77-80]
+  Predecesores: [BB9, BB10]
+  Sucesores: [BB13]
+  Instrucciones: 4
+
+    [Line 94] addi rd=a5 rs1=zero imm=0
+    [Line 95] lw rd=a5 rs1=a5 imm=0
+    [Line 96] sw rs1=s0 rs2=a5 imm=-32
+    [Line 97] jal rd=zero label=.L9
+
+BB12 [81-83]
+  Predecesores: [BB13]
+  Sucesores: [BB13]
+  Instrucciones: 3
+
+    [Line 99] lw rd=a5 rs1=s0 imm=-32
+    [Line 100] addi rd=a5 rs1=a5 imm=-30
+    [Line 101] sw rs1=s0 rs2=a5 imm=-32
+
+BB13 [84-86]
+  Predecesores: [BB11, BB12]
+  Sucesores: [BB12, BB14]
+  Instrucciones: 3
+
+    [Line 103] lw rd=a4 rs1=s0 imm=-32
+    [Line 104] addi rd=a5 rs1=zero imm=29
+    [Line 105] blt rs1=a5 rs2=a4 label=.L10
+
+BB14 [87-95]
+  Predecesores: [BB13]
+  Sucesores: [BB15]
+  Instrucciones: 9
+
+    [Line 106] addi rd=a4 rs1=zero imm=0
+    [Line 107] lw rd=a5 rs1=s0 imm=-20
+    [Line 108] slli rd=a5 rs1=a5 imm=2
+    [Line 109] add rd=a5 rs1=a4 rs2=a5
+    [Line 110] lw rd=a4 rs1=s0 imm=-32
+    [Line 111] sw rs1=a5 rs2=a4 imm=0
+    [Line 112] lw rd=a5 rs1=s0 imm=-20
+    [Line 113] addi rd=a5 rs1=a5 imm=1
+    [Line 114] sw rs1=s0 rs2=a5 imm=-20
+
+BB15 [96-98]
+  Predecesores: [BB8, BB14]
+  Sucesores: [BB9, BB16]
+  Instrucciones: 3
+
+    [Line 116] lw rd=a4 rs1=s0 imm=-20
+    [Line 117] addi rd=a5 rs1=zero imm=99
+    [Line 118] bge rs1=a5 rs2=a4 label=.L11
+
+BB16 [99-100]
+  Predecesores: [BB15]
+  Sucesores: [BB18]
+  Instrucciones: 2
+
+    [Line 119] sw rs1=s0 rs2=zero imm=-20
+    [Line 120] jal rd=zero label=.L12
+
+BB17 [101-108]
+  Predecesores: [BB18]
+  Sucesores: [BB18]
+  Instrucciones: 8
+
+    [Line 122] addi rd=a4 rs1=zero imm=0
+    [Line 123] lw rd=a5 rs1=s0 imm=-20
+    [Line 124] slli rd=a5 rs1=a5 imm=2
+    [Line 125] add rd=a5 rs1=a4 rs2=a5
+    [Line 126] sw rs1=a5 rs2=zero imm=0
+    [Line 127] lw rd=a5 rs1=s0 imm=-20
+    [Line 128] addi rd=a5 rs1=a5 imm=1
+    [Line 129] sw rs1=s0 rs2=a5 imm=-20
+
+BB18 [109-111]
+  Predecesores: [BB16, BB17]
+  Sucesores: [BB17, BB19]
+  Instrucciones: 3
+
+    [Line 131] lw rd=a4 rs1=s0 imm=-20
+    [Line 132] addi rd=a5 rs1=zero imm=99
+    [Line 133] bge rs1=a5 rs2=a4 label=.L13
+
+BB19 [112-113]
+  Predecesores: [BB18]
+  Sucesores: [BB27]
+  Instrucciones: 2
+
+    [Line 134] sw rs1=s0 rs2=zero imm=-20
+    [Line 135] jal rd=zero label=.L14
+
+BB20 [114-115]
+  Predecesores: [BB27]
+  Sucesores: [BB25]
+  Instrucciones: 2
+
+    [Line 137] sw rs1=s0 rs2=zero imm=-24
+    [Line 138] jal rd=zero label=.L15
+
+BB21 [116-118]
+  Predecesores: [BB25]
+  Sucesores: [BB23]
+  Instrucciones: 3
+
+    [Line 140] sw rs1=s0 rs2=zero imm=-36
+    [Line 141] sw rs1=s0 rs2=zero imm=-28
+    [Line 142] jal rd=zero label=.L16
+
+BB22 [119-153]
+  Predecesores: [BB23]
+  Sucesores: [BB23]
+  Instrucciones: 35
+
+    [Line 144] lw rd=a4 rs1=s0 imm=-20
+    [Line 145] addi rd=a5 rs1=a4 imm=0
+    [Line 146] slli rd=a5 rs1=a5 imm=2
+    [Line 147] add rd=a5 rs1=a5 rs2=a4
+    [Line 148] slli rd=a5 rs1=a5 imm=1
+    [Line 149] addi rd=a4 rs1=a5 imm=0
+    [Line 150] lw rd=a5 rs1=s0 imm=-28
+    [Line 151] add rd=a5 rs1=a5 rs2=a4
+    [Line 152] sw rs1=s0 rs2=a5 imm=-44
+    [Line 153] lw rd=a4 rs1=s0 imm=-28
+    [Line 154] addi rd=a5 rs1=a4 imm=0
+    [Line 155] slli rd=a5 rs1=a5 imm=2
+    [Line 156] add rd=a5 rs1=a5 rs2=a4
+    [Line 157] slli rd=a5 rs1=a5 imm=1
+    [Line 158] addi rd=a4 rs1=a5 imm=0
+    [Line 159] lw rd=a5 rs1=s0 imm=-24
+    [Line 160] add rd=a5 rs1=a5 rs2=a4
+    [Line 161] sw rs1=s0 rs2=a5 imm=-48
+    [Line 162] addi rd=a4 rs1=zero imm=0
+    [Line 163] lw rd=a5 rs1=s0 imm=-44
+    [Line 164] slli rd=a5 rs1=a5 imm=2
+    [Line 165] add rd=a5 rs1=a4 rs2=a5
+    [Line 166] lw rd=a4 rs1=a5 imm=0
+    [Line 167] addi rd=a3 rs1=zero imm=0
+    [Line 168] lw rd=a5 rs1=s0 imm=-48
+    [Line 169] slli rd=a5 rs1=a5 imm=2
+    [Line 170] add rd=a5 rs1=a3 rs2=a5
+    [Line 171] lw rd=a5 rs1=a5 imm=0
+    [Line 172] mul rd=a5 rs1=a4 rs2=a5
+    [Line 173] lw rd=a4 rs1=s0 imm=-36
+    [Line 174] add rd=a5 rs1=a4 rs2=a5
+    [Line 175] sw rs1=s0 rs2=a5 imm=-36
+    [Line 176] lw rd=a5 rs1=s0 imm=-28
+    [Line 177] addi rd=a5 rs1=a5 imm=1
+    [Line 178] sw rs1=s0 rs2=a5 imm=-28
+
+BB23 [154-156]
+  Predecesores: [BB21, BB22]
+  Sucesores: [BB22, BB24]
+  Instrucciones: 3
+
+    [Line 180] lw rd=a4 rs1=s0 imm=-28
+    [Line 181] addi rd=a5 rs1=zero imm=9
+    [Line 182] bge rs1=a5 rs2=a4 label=.L17
+
+BB24 [157-174]
+  Predecesores: [BB23]
+  Sucesores: [BB25]
+  Instrucciones: 18
+
+    [Line 183] lw rd=a4 rs1=s0 imm=-20
+    [Line 184] addi rd=a5 rs1=a4 imm=0
+    [Line 185] slli rd=a5 rs1=a5 imm=2
+    [Line 186] add rd=a5 rs1=a5 rs2=a4
+    [Line 187] slli rd=a5 rs1=a5 imm=1
+    [Line 188] addi rd=a4 rs1=a5 imm=0
+    [Line 189] lw rd=a5 rs1=s0 imm=-24
+    [Line 190] add rd=a5 rs1=a5 rs2=a4
+    [Line 191] sw rs1=s0 rs2=a5 imm=-40
+    [Line 192] addi rd=a4 rs1=zero imm=0
+    [Line 193] lw rd=a5 rs1=s0 imm=-40
+    [Line 194] slli rd=a5 rs1=a5 imm=2
+    [Line 195] add rd=a5 rs1=a4 rs2=a5
+    [Line 196] lw rd=a4 rs1=s0 imm=-36
+    [Line 197] sw rs1=a5 rs2=a4 imm=0
+    [Line 198] lw rd=a5 rs1=s0 imm=-24
+    [Line 199] addi rd=a5 rs1=a5 imm=1
+    [Line 200] sw rs1=s0 rs2=a5 imm=-24
+
+BB25 [175-177]
+  Predecesores: [BB20, BB24]
+  Sucesores: [BB21, BB26]
+  Instrucciones: 3
+
+    [Line 202] lw rd=a4 rs1=s0 imm=-24
+    [Line 203] addi rd=a5 rs1=zero imm=9
+    [Line 204] bge rs1=a5 rs2=a4 label=.L18
+
+BB26 [178-180]
+  Predecesores: [BB25]
+  Sucesores: [BB27]
+  Instrucciones: 3
+
+    [Line 205] lw rd=a5 rs1=s0 imm=-20
+    [Line 206] addi rd=a5 rs1=a5 imm=1
+    [Line 207] sw rs1=s0 rs2=a5 imm=-20
+
+BB27 [181-183]
+  Predecesores: [BB19, BB26]
+  Sucesores: [BB20, BB28]
+  Instrucciones: 3
+
+    [Line 209] lw rd=a4 rs1=s0 imm=-20
+    [Line 210] addi rd=a5 rs1=zero imm=9
+    [Line 211] bge rs1=a5 rs2=a4 label=.L19
+
+BB28 [184-185]
+  Predecesores: [BB27]
+  Sucesores: [BB30]
+  Instrucciones: 2
+
+    [Line 212] sw rs1=s0 rs2=zero imm=-20
+    [Line 213] jal rd=zero label=.L20
+
+BB29 [186-198]
+  Predecesores: [BB30]
+  Sucesores: [BB30]
+  Instrucciones: 13
+
+    [Line 215] addi rd=a4 rs1=zero imm=0
+    [Line 216] lw rd=a5 rs1=s0 imm=-20
+    [Line 217] slli rd=a5 rs1=a5 imm=2
+    [Line 218] add rd=a5 rs1=a4 rs2=a5
+    [Line 219] lw rd=a4 rs1=a5 imm=0
+    [Line 220] addi rd=a3 rs1=zero imm=0
+    [Line 221] lw rd=a5 rs1=s0 imm=-20
+    [Line 222] slli rd=a5 rs1=a5 imm=2
+    [Line 223] add rd=a5 rs1=a3 rs2=a5
+    [Line 224] sw rs1=a5 rs2=a4 imm=0
+    [Line 225] lw rd=a5 rs1=s0 imm=-20
+    [Line 226] addi rd=a5 rs1=a5 imm=1
+    [Line 227] sw rs1=s0 rs2=a5 imm=-20
+
+BB30 [199-201]
+  Predecesores: [BB28, BB29]
+  Sucesores: [BB29, BB31]
+  Instrucciones: 3
+
+    [Line 229] lw rd=a4 rs1=s0 imm=-20
+    [Line 230] addi rd=a5 rs1=zero imm=99
+    [Line 231] bge rs1=a5 rs2=a4 label=.L21
+
+BB31 [202-202]
+  Predecesores: [BB30, BB31]
+  Sucesores: [BB31]
+  Instrucciones: 1
+
+    [Line 233] jal rd=zero label=.L22
+
+
+-----------------------
+phase1_instructions.txt
+
+# Instrucciones parseadas: 203
+
+[0] [Line 10] addi rd=sp rs1=sp imm=-64
+[1] [Line 11] sw rs1=sp rs2=s0 imm=60
+[2] [Line 12] addi rd=s0 rs1=sp imm=64
+[3] [Line 13] sw rs1=s0 rs2=zero imm=-20
+[4] [Line 14] jal rd=zero label=.L2
+[5] [Line 16] lui rd=a5 imm=269413
+[6] [Line 17] addi rd=a5 rs1=a5 imm=0
+[7] [Line 18] addi rd=a5 rs1=a5 imm=-403
+[8] [Line 19] sw rs1=s0 rs2=a5 imm=-52
+[9] [Line 20] lui rd=a5 imm=3
+[10] [Line 21] addi rd=a5 rs1=a5 imm=0
+[11] [Line 22] addi rd=a5 rs1=a5 imm=57
+[12] [Line 23] sw rs1=s0 rs2=a5 imm=-56
+[13] [Line 24] addi rd=a5 rs1=zero imm=0
+[14] [Line 25] lw rd=a4 rs1=a5 imm=0
+[15] [Line 26] lw rd=a5 rs1=s0 imm=-52
+[16] [Line 27] mul rd=a4 rs1=a4 rs2=a5
+[17] [Line 28] lw rd=a5 rs1=s0 imm=-56
+[18] [Line 29] add rd=a4 rs1=a4 rs2=a5
+[19] [Line 30] addi rd=a5 rs1=zero imm=0
+[20] [Line 31] sw rs1=a5 rs2=a4 imm=0
+[21] [Line 32] addi rd=a5 rs1=zero imm=0
+[22] [Line 33] lw rd=a5 rs1=a5 imm=0
+[23] [Line 34] bge rs1=a5 rs2=zero label=.L3
+[24] [Line 35] addi rd=a5 rs1=zero imm=0
+[25] [Line 36] lw rd=a5 rs1=a5 imm=0
+[26] [Line 37] sub rd=a4 rs1=zero rs2=a5
+[27] [Line 38] addi rd=a5 rs1=zero imm=0
+[28] [Line 39] sw rs1=a5 rs2=a4 imm=0
+[29] [Line 41] addi rd=a5 rs1=zero imm=0
+[30] [Line 42] lw rd=a5 rs1=a5 imm=0
+[31] [Line 43] sw rs1=s0 rs2=a5 imm=-32
+[32] [Line 44] jal rd=zero label=.L4
+[33] [Line 46] lw rd=a5 rs1=s0 imm=-32
+[34] [Line 47] addi rd=a5 rs1=a5 imm=-30
+[35] [Line 48] sw rs1=s0 rs2=a5 imm=-32
+[36] [Line 50] lw rd=a4 rs1=s0 imm=-32
+[37] [Line 51] addi rd=a5 rs1=zero imm=29
+[38] [Line 52] blt rs1=a5 rs2=a4 label=.L5
+[39] [Line 53] addi rd=a4 rs1=zero imm=0
+[40] [Line 54] lw rd=a5 rs1=s0 imm=-20
+[41] [Line 55] slli rd=a5 rs1=a5 imm=2
+[42] [Line 56] add rd=a5 rs1=a4 rs2=a5
+[43] [Line 57] lw rd=a4 rs1=s0 imm=-32
+[44] [Line 58] sw rs1=a5 rs2=a4 imm=0
+[45] [Line 59] lw rd=a5 rs1=s0 imm=-20
+[46] [Line 60] addi rd=a5 rs1=a5 imm=1
+[47] [Line 61] sw rs1=s0 rs2=a5 imm=-20
+[48] [Line 63] lw rd=a4 rs1=s0 imm=-20
+[49] [Line 64] addi rd=a5 rs1=zero imm=99
+[50] [Line 65] bge rs1=a5 rs2=a4 label=.L6
+[51] [Line 66] sw rs1=s0 rs2=zero imm=-20
+[52] [Line 67] jal rd=zero label=.L7
+[53] [Line 69] lui rd=a5 imm=269413
+[54] [Line 70] addi rd=a5 rs1=a5 imm=0
+[55] [Line 71] addi rd=a5 rs1=a5 imm=-403
+[56] [Line 72] sw rs1=s0 rs2=a5 imm=-52
+[57] [Line 73] lui rd=a5 imm=3
+[58] [Line 74] addi rd=a5 rs1=a5 imm=0
+[59] [Line 75] addi rd=a5 rs1=a5 imm=57
+[60] [Line 76] sw rs1=s0 rs2=a5 imm=-56
+[61] [Line 77] addi rd=a5 rs1=zero imm=0
+[62] [Line 78] lw rd=a4 rs1=a5 imm=0
+[63] [Line 79] lw rd=a5 rs1=s0 imm=-52
+[64] [Line 80] mul rd=a4 rs1=a4 rs2=a5
+[65] [Line 81] lw rd=a5 rs1=s0 imm=-56
+[66] [Line 82] add rd=a4 rs1=a4 rs2=a5
+[67] [Line 83] addi rd=a5 rs1=zero imm=0
+[68] [Line 84] sw rs1=a5 rs2=a4 imm=0
+[69] [Line 85] addi rd=a5 rs1=zero imm=0
+[70] [Line 86] lw rd=a5 rs1=a5 imm=0
+[71] [Line 87] bge rs1=a5 rs2=zero label=.L8
+[72] [Line 88] addi rd=a5 rs1=zero imm=0
+[73] [Line 89] lw rd=a5 rs1=a5 imm=0
+[74] [Line 90] sub rd=a4 rs1=zero rs2=a5
+[75] [Line 91] addi rd=a5 rs1=zero imm=0
+[76] [Line 92] sw rs1=a5 rs2=a4 imm=0
+[77] [Line 94] addi rd=a5 rs1=zero imm=0
+[78] [Line 95] lw rd=a5 rs1=a5 imm=0
+[79] [Line 96] sw rs1=s0 rs2=a5 imm=-32
+[80] [Line 97] jal rd=zero label=.L9
+[81] [Line 99] lw rd=a5 rs1=s0 imm=-32
+[82] [Line 100] addi rd=a5 rs1=a5 imm=-30
+[83] [Line 101] sw rs1=s0 rs2=a5 imm=-32
+[84] [Line 103] lw rd=a4 rs1=s0 imm=-32
+[85] [Line 104] addi rd=a5 rs1=zero imm=29
+[86] [Line 105] blt rs1=a5 rs2=a4 label=.L10
+[87] [Line 106] addi rd=a4 rs1=zero imm=0
+[88] [Line 107] lw rd=a5 rs1=s0 imm=-20
+[89] [Line 108] slli rd=a5 rs1=a5 imm=2
+[90] [Line 109] add rd=a5 rs1=a4 rs2=a5
+[91] [Line 110] lw rd=a4 rs1=s0 imm=-32
+[92] [Line 111] sw rs1=a5 rs2=a4 imm=0
+[93] [Line 112] lw rd=a5 rs1=s0 imm=-20
+[94] [Line 113] addi rd=a5 rs1=a5 imm=1
+[95] [Line 114] sw rs1=s0 rs2=a5 imm=-20
+[96] [Line 116] lw rd=a4 rs1=s0 imm=-20
+[97] [Line 117] addi rd=a5 rs1=zero imm=99
+[98] [Line 118] bge rs1=a5 rs2=a4 label=.L11
+[99] [Line 119] sw rs1=s0 rs2=zero imm=-20
+[100] [Line 120] jal rd=zero label=.L12
+[101] [Line 122] addi rd=a4 rs1=zero imm=0
+[102] [Line 123] lw rd=a5 rs1=s0 imm=-20
+[103] [Line 124] slli rd=a5 rs1=a5 imm=2
+[104] [Line 125] add rd=a5 rs1=a4 rs2=a5
+[105] [Line 126] sw rs1=a5 rs2=zero imm=0
+[106] [Line 127] lw rd=a5 rs1=s0 imm=-20
+[107] [Line 128] addi rd=a5 rs1=a5 imm=1
+[108] [Line 129] sw rs1=s0 rs2=a5 imm=-20
+[109] [Line 131] lw rd=a4 rs1=s0 imm=-20
+[110] [Line 132] addi rd=a5 rs1=zero imm=99
+[111] [Line 133] bge rs1=a5 rs2=a4 label=.L13
+[112] [Line 134] sw rs1=s0 rs2=zero imm=-20
+[113] [Line 135] jal rd=zero label=.L14
+[114] [Line 137] sw rs1=s0 rs2=zero imm=-24
+[115] [Line 138] jal rd=zero label=.L15
+[116] [Line 140] sw rs1=s0 rs2=zero imm=-36
+[117] [Line 141] sw rs1=s0 rs2=zero imm=-28
+[118] [Line 142] jal rd=zero label=.L16
+[119] [Line 144] lw rd=a4 rs1=s0 imm=-20
+[120] [Line 145] addi rd=a5 rs1=a4 imm=0
+[121] [Line 146] slli rd=a5 rs1=a5 imm=2
+[122] [Line 147] add rd=a5 rs1=a5 rs2=a4
+[123] [Line 148] slli rd=a5 rs1=a5 imm=1
+[124] [Line 149] addi rd=a4 rs1=a5 imm=0
+[125] [Line 150] lw rd=a5 rs1=s0 imm=-28
+[126] [Line 151] add rd=a5 rs1=a5 rs2=a4
+[127] [Line 152] sw rs1=s0 rs2=a5 imm=-44
+[128] [Line 153] lw rd=a4 rs1=s0 imm=-28
+[129] [Line 154] addi rd=a5 rs1=a4 imm=0
+[130] [Line 155] slli rd=a5 rs1=a5 imm=2
+[131] [Line 156] add rd=a5 rs1=a5 rs2=a4
+[132] [Line 157] slli rd=a5 rs1=a5 imm=1
+[133] [Line 158] addi rd=a4 rs1=a5 imm=0
+[134] [Line 159] lw rd=a5 rs1=s0 imm=-24
+[135] [Line 160] add rd=a5 rs1=a5 rs2=a4
+[136] [Line 161] sw rs1=s0 rs2=a5 imm=-48
+[137] [Line 162] addi rd=a4 rs1=zero imm=0
+[138] [Line 163] lw rd=a5 rs1=s0 imm=-44
+[139] [Line 164] slli rd=a5 rs1=a5 imm=2
+[140] [Line 165] add rd=a5 rs1=a4 rs2=a5
+[141] [Line 166] lw rd=a4 rs1=a5 imm=0
+[142] [Line 167] addi rd=a3 rs1=zero imm=0
+[143] [Line 168] lw rd=a5 rs1=s0 imm=-48
+[144] [Line 169] slli rd=a5 rs1=a5 imm=2
+[145] [Line 170] add rd=a5 rs1=a3 rs2=a5
+[146] [Line 171] lw rd=a5 rs1=a5 imm=0
+[147] [Line 172] mul rd=a5 rs1=a4 rs2=a5
+[148] [Line 173] lw rd=a4 rs1=s0 imm=-36
+[149] [Line 174] add rd=a5 rs1=a4 rs2=a5
+[150] [Line 175] sw rs1=s0 rs2=a5 imm=-36
+[151] [Line 176] lw rd=a5 rs1=s0 imm=-28
+[152] [Line 177] addi rd=a5 rs1=a5 imm=1
+[153] [Line 178] sw rs1=s0 rs2=a5 imm=-28
+[154] [Line 180] lw rd=a4 rs1=s0 imm=-28
+[155] [Line 181] addi rd=a5 rs1=zero imm=9
+[156] [Line 182] bge rs1=a5 rs2=a4 label=.L17
+[157] [Line 183] lw rd=a4 rs1=s0 imm=-20
+[158] [Line 184] addi rd=a5 rs1=a4 imm=0
+[159] [Line 185] slli rd=a5 rs1=a5 imm=2
+[160] [Line 186] add rd=a5 rs1=a5 rs2=a4
+[161] [Line 187] slli rd=a5 rs1=a5 imm=1
+[162] [Line 188] addi rd=a4 rs1=a5 imm=0
+[163] [Line 189] lw rd=a5 rs1=s0 imm=-24
+[164] [Line 190] add rd=a5 rs1=a5 rs2=a4
+[165] [Line 191] sw rs1=s0 rs2=a5 imm=-40
+[166] [Line 192] addi rd=a4 rs1=zero imm=0
+[167] [Line 193] lw rd=a5 rs1=s0 imm=-40
+[168] [Line 194] slli rd=a5 rs1=a5 imm=2
+[169] [Line 195] add rd=a5 rs1=a4 rs2=a5
+[170] [Line 196] lw rd=a4 rs1=s0 imm=-36
+[171] [Line 197] sw rs1=a5 rs2=a4 imm=0
+[172] [Line 198] lw rd=a5 rs1=s0 imm=-24
+[173] [Line 199] addi rd=a5 rs1=a5 imm=1
+[174] [Line 200] sw rs1=s0 rs2=a5 imm=-24
+[175] [Line 202] lw rd=a4 rs1=s0 imm=-24
+[176] [Line 203] addi rd=a5 rs1=zero imm=9
+[177] [Line 204] bge rs1=a5 rs2=a4 label=.L18
+[178] [Line 205] lw rd=a5 rs1=s0 imm=-20
+[179] [Line 206] addi rd=a5 rs1=a5 imm=1
+[180] [Line 207] sw rs1=s0 rs2=a5 imm=-20
+[181] [Line 209] lw rd=a4 rs1=s0 imm=-20
+[182] [Line 210] addi rd=a5 rs1=zero imm=9
+[183] [Line 211] bge rs1=a5 rs2=a4 label=.L19
+[184] [Line 212] sw rs1=s0 rs2=zero imm=-20
+[185] [Line 213] jal rd=zero label=.L20
+[186] [Line 215] addi rd=a4 rs1=zero imm=0
+[187] [Line 216] lw rd=a5 rs1=s0 imm=-20
+[188] [Line 217] slli rd=a5 rs1=a5 imm=2
+[189] [Line 218] add rd=a5 rs1=a4 rs2=a5
+[190] [Line 219] lw rd=a4 rs1=a5 imm=0
+[191] [Line 220] addi rd=a3 rs1=zero imm=0
+[192] [Line 221] lw rd=a5 rs1=s0 imm=-20
+[193] [Line 222] slli rd=a5 rs1=a5 imm=2
+[194] [Line 223] add rd=a5 rs1=a3 rs2=a5
+[195] [Line 224] sw rs1=a5 rs2=a4 imm=0
+[196] [Line 225] lw rd=a5 rs1=s0 imm=-20
+[197] [Line 226] addi rd=a5 rs1=a5 imm=1
+[198] [Line 227] sw rs1=s0 rs2=a5 imm=-20
+[199] [Line 229] lw rd=a4 rs1=s0 imm=-20
+[200] [Line 230] addi rd=a5 rs1=zero imm=99
+[201] [Line 231] bge rs1=a5 rs2=a4 label=.L21
+[202] [Line 233] jal rd=zero label=.L22
+
+# Labels encontrados: 26
+.L10 @ instrucción 81
+.L11 @ instrucción 53
+.L12 @ instrucción 109
+.L13 @ instrucción 101
+.L14 @ instrucción 181
+.L15 @ instrucción 175
+.L16 @ instrucción 154
+.L17 @ instrucción 119
+.L18 @ instrucción 116
+.L19 @ instrucción 114
+.L2 @ instrucción 48
+.L20 @ instrucción 199
+.L21 @ instrucción 186
+.L22 @ instrucción 202
+.L3 @ instrucción 29
+.L4 @ instrucción 36
+.L5 @ instrucción 33
+.L6 @ instrucción 5
+.L7 @ instrucción 96
+.L8 @ instrucción 77
+.L9 @ instrucción 84
+main @ instrucción 0
+matrix_one @ instrucción 0
+matrix_two @ instrucción 0
+output @ instrucción 0
+seed @ instrucción 0
+
+-----------------------
+phase1_loops.txt
+
+# Loops Detectados
+# Total: 10
+
+=== LOOP 0 ===
+Loop @ BB5
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 2
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 1 ===
+Loop @ BB7
+  Nivel anidamiento: 0
+  Complejidad: MODERATE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 7
+  Bloques de salida: 0
+  Candidato CGRA: NO
+
+=== LOOP 2 ===
+Loop @ BB13
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 2
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 3 ===
+Loop @ BB15
+  Nivel anidamiento: 0
+  Complejidad: MODERATE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 7
+  Bloques de salida: 0
+  Candidato CGRA: NO
+
+=== LOOP 4 ===
+Loop @ BB18
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 2
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 5 ===
+Loop @ BB23
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 2
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 6 ===
+Loop @ BB25
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 5
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 7 ===
+Loop @ BB27
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 8
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 8 ===
+Loop @ BB30
+  Nivel anidamiento: 0
+  Complejidad: SIMPLE
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 2
+  Bloques de salida: 0
+  Candidato CGRA: SÍ
+
+=== LOOP 9 ===
+Loop @ BB31
+  Nivel anidamiento: 0
+  Complejidad: COMPLEX
+  Trip count: DESCONOCIDO
+  Bloques en cuerpo: 1
+  Bloques de salida: 0
+  Candidato CGRA: NO
+
+
+-----------------------
+phase2_critical_path.txt
+
+# Critical Path Analysis
+
+Critical Path Length: 145 cycles
+Nodes on Critical Path: 41
+Average Parallelism (ILP): 1.4
+
+## Critical Path Nodes:
+Node 5 [Instr 5]: lui
+  EST: 0, LST: 0, Slack: 0
+Node 6 [Instr 6]: addi
+  EST: 1, LST: 1, Slack: 0
+Node 7 [Instr 7]: addi
+  EST: 3, LST: 3, Slack: 0
+Node 8 [Instr 8]: sw
+  EST: 5, LST: 5, Slack: 0
+Node 15 [Instr 15]: lw
+  EST: 10, LST: 10, Slack: 0
+Node 16 [Instr 16]: mul
+  EST: 13, LST: 13, Slack: 0
+Node 18 [Instr 18]: add
+  EST: 17, LST: 17, Slack: 0
+Node 20 [Instr 20]: sw
+  EST: 19, LST: 19, Slack: 0
+Node 25 [Instr 25]: lw
+  EST: 24, LST: 24, Slack: 0
+Node 26 [Instr 26]: sub
+  EST: 27, LST: 27, Slack: 0
+Node 28 [Instr 28]: sw
+  EST: 29, LST: 29, Slack: 0
+Node 30 [Instr 30]: lw
+  EST: 34, LST: 34, Slack: 0
+Node 31 [Instr 31]: sw
+  EST: 37, LST: 37, Slack: 0
+Node 33 [Instr 33]: lw
+  EST: 42, LST: 42, Slack: 0
+Node 34 [Instr 34]: addi
+  EST: 45, LST: 45, Slack: 0
+Node 35 [Instr 35]: sw
+  EST: 47, LST: 47, Slack: 0
+Node 43 [Instr 43]: lw
+  EST: 52, LST: 52, Slack: 0
+Node 44 [Instr 44]: sw
+  EST: 55, LST: 55, Slack: 0
+Node 62 [Instr 62]: lw
+  EST: 60, LST: 60, Slack: 0
+Node 64 [Instr 64]: mul
+  EST: 63, LST: 63, Slack: 0
+Node 66 [Instr 66]: add
+  EST: 67, LST: 67, Slack: 0
+Node 68 [Instr 68]: sw
+  EST: 69, LST: 69, Slack: 0
+Node 73 [Instr 73]: lw
+  EST: 74, LST: 74, Slack: 0
+Node 74 [Instr 74]: sub
+  EST: 77, LST: 77, Slack: 0
+Node 76 [Instr 76]: sw
+  EST: 79, LST: 79, Slack: 0
+Node 78 [Instr 78]: lw
+  EST: 84, LST: 84, Slack: 0
+Node 79 [Instr 79]: sw
+  EST: 87, LST: 87, Slack: 0
+Node 81 [Instr 81]: lw
+  EST: 92, LST: 92, Slack: 0
+Node 82 [Instr 82]: addi
+  EST: 95, LST: 95, Slack: 0
+Node 83 [Instr 83]: sw
+  EST: 97, LST: 97, Slack: 0
+Node 91 [Instr 91]: lw
+  EST: 102, LST: 102, Slack: 0
+Node 92 [Instr 92]: sw
+  EST: 105, LST: 105, Slack: 0
+Node 105 [Instr 105]: sw
+  EST: 110, LST: 110, Slack: 0
+Node 141 [Instr 141]: lw
+  EST: 115, LST: 115, Slack: 0
+Node 147 [Instr 147]: mul
+  EST: 118, LST: 118, Slack: 0
+Node 149 [Instr 149]: add
+  EST: 122, LST: 122, Slack: 0
+Node 150 [Instr 150]: sw
+  EST: 124, LST: 124, Slack: 0
+Node 170 [Instr 170]: lw
+  EST: 129, LST: 129, Slack: 0
+Node 171 [Instr 171]: sw
+  EST: 132, LST: 132, Slack: 0
+Node 190 [Instr 190]: lw
+  EST: 137, LST: 137, Slack: 0
+Node 195 [Instr 195]: sw
+  EST: 140, LST: 140, Slack: 0
+
+-----------------------
+phase2_dependencies.txt
+
+# Dependency Analysis
+# Total dependencies: 915
+
+## Dependencias por tipo:
+RAW: 215
+WAR: 144
+WAW: 140
+MEMORY: 416
+
+## Lista de dependencias:
+Instr[0] -> Instr[1] (RAW on sp)
+Instr[0] -> Instr[2] (RAW on sp)
+Instr[2] -> Instr[3] (RAW on s0)
+Instr[5] -> Instr[6] (RAW on a5)
+Instr[6] -> Instr[7] (RAW on a5)
+Instr[2] -> Instr[8] (RAW on s0)
+Instr[7] -> Instr[8] (RAW on a5)
+Instr[9] -> Instr[10] (RAW on a5)
+Instr[10] -> Instr[11] (RAW on a5)
+Instr[2] -> Instr[12] (RAW on s0)
+Instr[11] -> Instr[12] (RAW on a5)
+Instr[13] -> Instr[14] (RAW on a5)
+Instr[2] -> Instr[15] (RAW on s0)
+Instr[14] -> Instr[16] (RAW on a4)
+Instr[15] -> Instr[16] (RAW on a5)
+Instr[2] -> Instr[17] (RAW on s0)
+Instr[16] -> Instr[18] (RAW on a4)
+Instr[17] -> Instr[18] (RAW on a5)
+Instr[19] -> Instr[20] (RAW on a5)
+Instr[18] -> Instr[20] (RAW on a4)
+Instr[21] -> Instr[22] (RAW on a5)
+Instr[22] -> Instr[23] (RAW on a5)
+Instr[24] -> Instr[25] (RAW on a5)
+Instr[25] -> Instr[26] (RAW on a5)
+Instr[27] -> Instr[28] (RAW on a5)
+Instr[26] -> Instr[28] (RAW on a4)
+Instr[29] -> Instr[30] (RAW on a5)
+Instr[2] -> Instr[31] (RAW on s0)
+Instr[30] -> Instr[31] (RAW on a5)
+Instr[2] -> Instr[33] (RAW on s0)
+Instr[33] -> Instr[34] (RAW on a5)
+Instr[2] -> Instr[35] (RAW on s0)
+Instr[34] -> Instr[35] (RAW on a5)
+Instr[2] -> Instr[36] (RAW on s0)
+Instr[37] -> Instr[38] (RAW on a5)
+Instr[36] -> Instr[38] (RAW on a4)
+Instr[2] -> Instr[40] (RAW on s0)
+Instr[40] -> Instr[41] (RAW on a5)
+Instr[39] -> Instr[42] (RAW on a4)
+Instr[41] -> Instr[42] (RAW on a5)
+Instr[2] -> Instr[43] (RAW on s0)
+Instr[42] -> Instr[44] (RAW on a5)
+Instr[43] -> Instr[44] (RAW on a4)
+Instr[2] -> Instr[45] (RAW on s0)
+Instr[45] -> Instr[46] (RAW on a5)
+Instr[2] -> Instr[47] (RAW on s0)
+Instr[46] -> Instr[47] (RAW on a5)
+Instr[2] -> Instr[48] (RAW on s0)
+Instr[49] -> Instr[50] (RAW on a5)
+Instr[48] -> Instr[50] (RAW on a4)
+Instr[2] -> Instr[51] (RAW on s0)
+Instr[53] -> Instr[54] (RAW on a5)
+Instr[54] -> Instr[55] (RAW on a5)
+Instr[2] -> Instr[56] (RAW on s0)
+Instr[55] -> Instr[56] (RAW on a5)
+Instr[57] -> Instr[58] (RAW on a5)
+Instr[58] -> Instr[59] (RAW on a5)
+Instr[2] -> Instr[60] (RAW on s0)
+Instr[59] -> Instr[60] (RAW on a5)
+Instr[61] -> Instr[62] (RAW on a5)
+Instr[2] -> Instr[63] (RAW on s0)
+Instr[62] -> Instr[64] (RAW on a4)
+Instr[63] -> Instr[64] (RAW on a5)
+Instr[2] -> Instr[65] (RAW on s0)
+Instr[64] -> Instr[66] (RAW on a4)
+Instr[65] -> Instr[66] (RAW on a5)
+Instr[67] -> Instr[68] (RAW on a5)
+Instr[66] -> Instr[68] (RAW on a4)
+Instr[69] -> Instr[70] (RAW on a5)
+Instr[70] -> Instr[71] (RAW on a5)
+Instr[72] -> Instr[73] (RAW on a5)
+Instr[73] -> Instr[74] (RAW on a5)
+Instr[75] -> Instr[76] (RAW on a5)
+Instr[74] -> Instr[76] (RAW on a4)
+Instr[77] -> Instr[78] (RAW on a5)
+Instr[2] -> Instr[79] (RAW on s0)
+Instr[78] -> Instr[79] (RAW on a5)
+Instr[2] -> Instr[81] (RAW on s0)
+Instr[81] -> Instr[82] (RAW on a5)
+Instr[2] -> Instr[83] (RAW on s0)
+Instr[82] -> Instr[83] (RAW on a5)
+Instr[2] -> Instr[84] (RAW on s0)
+Instr[85] -> Instr[86] (RAW on a5)
+Instr[84] -> Instr[86] (RAW on a4)
+Instr[2] -> Instr[88] (RAW on s0)
+Instr[88] -> Instr[89] (RAW on a5)
+Instr[87] -> Instr[90] (RAW on a4)
+Instr[89] -> Instr[90] (RAW on a5)
+Instr[2] -> Instr[91] (RAW on s0)
+Instr[90] -> Instr[92] (RAW on a5)
+Instr[91] -> Instr[92] (RAW on a4)
+Instr[2] -> Instr[93] (RAW on s0)
+Instr[93] -> Instr[94] (RAW on a5)
+Instr[2] -> Instr[95] (RAW on s0)
+Instr[94] -> Instr[95] (RAW on a5)
+Instr[2] -> Instr[96] (RAW on s0)
+Instr[97] -> Instr[98] (RAW on a5)
+Instr[96] -> Instr[98] (RAW on a4)
+Instr[2] -> Instr[99] (RAW on s0)
+Instr[2] -> Instr[102] (RAW on s0)
+Instr[102] -> Instr[103] (RAW on a5)
+Instr[101] -> Instr[104] (RAW on a4)
+Instr[103] -> Instr[104] (RAW on a5)
+Instr[104] -> Instr[105] (RAW on a5)
+Instr[2] -> Instr[106] (RAW on s0)
+Instr[106] -> Instr[107] (RAW on a5)
+Instr[2] -> Instr[108] (RAW on s0)
+Instr[107] -> Instr[108] (RAW on a5)
+Instr[2] -> Instr[109] (RAW on s0)
+Instr[110] -> Instr[111] (RAW on a5)
+Instr[109] -> Instr[111] (RAW on a4)
+Instr[2] -> Instr[112] (RAW on s0)
+Instr[2] -> Instr[114] (RAW on s0)
+Instr[2] -> Instr[116] (RAW on s0)
+Instr[2] -> Instr[117] (RAW on s0)
+Instr[2] -> Instr[119] (RAW on s0)
+Instr[119] -> Instr[120] (RAW on a4)
+Instr[120] -> Instr[121] (RAW on a5)
+Instr[121] -> Instr[122] (RAW on a5)
+Instr[119] -> Instr[122] (RAW on a4)
+Instr[122] -> Instr[123] (RAW on a5)
+Instr[123] -> Instr[124] (RAW on a5)
+Instr[2] -> Instr[125] (RAW on s0)
+Instr[125] -> Instr[126] (RAW on a5)
+Instr[124] -> Instr[126] (RAW on a4)
+Instr[2] -> Instr[127] (RAW on s0)
+Instr[126] -> Instr[127] (RAW on a5)
+Instr[2] -> Instr[128] (RAW on s0)
+Instr[128] -> Instr[129] (RAW on a4)
+Instr[129] -> Instr[130] (RAW on a5)
+Instr[130] -> Instr[131] (RAW on a5)
+Instr[128] -> Instr[131] (RAW on a4)
+Instr[131] -> Instr[132] (RAW on a5)
+Instr[132] -> Instr[133] (RAW on a5)
+Instr[2] -> Instr[134] (RAW on s0)
+Instr[134] -> Instr[135] (RAW on a5)
+Instr[133] -> Instr[135] (RAW on a4)
+Instr[2] -> Instr[136] (RAW on s0)
+Instr[135] -> Instr[136] (RAW on a5)
+Instr[2] -> Instr[138] (RAW on s0)
+Instr[138] -> Instr[139] (RAW on a5)
+Instr[137] -> Instr[140] (RAW on a4)
+Instr[139] -> Instr[140] (RAW on a5)
+Instr[140] -> Instr[141] (RAW on a5)
+Instr[2] -> Instr[143] (RAW on s0)
+Instr[143] -> Instr[144] (RAW on a5)
+Instr[142] -> Instr[145] (RAW on a3)
+Instr[144] -> Instr[145] (RAW on a5)
+Instr[145] -> Instr[146] (RAW on a5)
+Instr[141] -> Instr[147] (RAW on a4)
+Instr[146] -> Instr[147] (RAW on a5)
+Instr[2] -> Instr[148] (RAW on s0)
+Instr[148] -> Instr[149] (RAW on a4)
+Instr[147] -> Instr[149] (RAW on a5)
+Instr[2] -> Instr[150] (RAW on s0)
+Instr[149] -> Instr[150] (RAW on a5)
+Instr[2] -> Instr[151] (RAW on s0)
+Instr[151] -> Instr[152] (RAW on a5)
+Instr[2] -> Instr[153] (RAW on s0)
+Instr[152] -> Instr[153] (RAW on a5)
+Instr[2] -> Instr[154] (RAW on s0)
+Instr[155] -> Instr[156] (RAW on a5)
+Instr[154] -> Instr[156] (RAW on a4)
+Instr[2] -> Instr[157] (RAW on s0)
+Instr[157] -> Instr[158] (RAW on a4)
+Instr[158] -> Instr[159] (RAW on a5)
+Instr[159] -> Instr[160] (RAW on a5)
+Instr[157] -> Instr[160] (RAW on a4)
+Instr[160] -> Instr[161] (RAW on a5)
+Instr[161] -> Instr[162] (RAW on a5)
+Instr[2] -> Instr[163] (RAW on s0)
+Instr[163] -> Instr[164] (RAW on a5)
+Instr[162] -> Instr[164] (RAW on a4)
+Instr[2] -> Instr[165] (RAW on s0)
+Instr[164] -> Instr[165] (RAW on a5)
+Instr[2] -> Instr[167] (RAW on s0)
+Instr[167] -> Instr[168] (RAW on a5)
+Instr[166] -> Instr[169] (RAW on a4)
+Instr[168] -> Instr[169] (RAW on a5)
+Instr[2] -> Instr[170] (RAW on s0)
+Instr[169] -> Instr[171] (RAW on a5)
+Instr[170] -> Instr[171] (RAW on a4)
+Instr[2] -> Instr[172] (RAW on s0)
+Instr[172] -> Instr[173] (RAW on a5)
+Instr[2] -> Instr[174] (RAW on s0)
+Instr[173] -> Instr[174] (RAW on a5)
+Instr[2] -> Instr[175] (RAW on s0)
+Instr[176] -> Instr[177] (RAW on a5)
+Instr[175] -> Instr[177] (RAW on a4)
+Instr[2] -> Instr[178] (RAW on s0)
+Instr[178] -> Instr[179] (RAW on a5)
+Instr[2] -> Instr[180] (RAW on s0)
+Instr[179] -> Instr[180] (RAW on a5)
+Instr[2] -> Instr[181] (RAW on s0)
+Instr[182] -> Instr[183] (RAW on a5)
+Instr[181] -> Instr[183] (RAW on a4)
+Instr[2] -> Instr[184] (RAW on s0)
+Instr[2] -> Instr[187] (RAW on s0)
+Instr[187] -> Instr[188] (RAW on a5)
+Instr[186] -> Instr[189] (RAW on a4)
+Instr[188] -> Instr[189] (RAW on a5)
+Instr[189] -> Instr[190] (RAW on a5)
+Instr[2] -> Instr[192] (RAW on s0)
+Instr[192] -> Instr[193] (RAW on a5)
+Instr[191] -> Instr[194] (RAW on a3)
+Instr[193] -> Instr[194] (RAW on a5)
+Instr[194] -> Instr[195] (RAW on a5)
+Instr[190] -> Instr[195] (RAW on a4)
+Instr[2] -> Instr[196] (RAW on s0)
+Instr[196] -> Instr[197] (RAW on a5)
+Instr[2] -> Instr[198] (RAW on s0)
+Instr[197] -> Instr[198] (RAW on a5)
+Instr[2] -> Instr[199] (RAW on s0)
+Instr[200] -> Instr[201] (RAW on a5)
+Instr[199] -> Instr[201] (RAW on a4)
+Instr[1] -> Instr[2] (WAR on s0)
+Instr[6] -> Instr[7] (WAR on a5)
+Instr[7] -> Instr[9] (WAR on a5)
+Instr[8] -> Instr[9] (WAR on a5)
+Instr[10] -> Instr[11] (WAR on a5)
+Instr[11] -> Instr[13] (WAR on a5)
+Instr[12] -> Instr[13] (WAR on a5)
+Instr[14] -> Instr[15] (WAR on a5)
+Instr[16] -> Instr[17] (WAR on a5)
+Instr[16] -> Instr[18] (WAR on a4)
+Instr[18] -> Instr[19] (WAR on a5)
+Instr[20] -> Instr[21] (WAR on a5)
+Instr[22] -> Instr[24] (WAR on a5)
+Instr[23] -> Instr[24] (WAR on a5)
+Instr[18] -> Instr[26] (WAR on a4)
+Instr[20] -> Instr[26] (WAR on a4)
+Instr[25] -> Instr[27] (WAR on a5)
+Instr[26] -> Instr[27] (WAR on a5)
+Instr[28] -> Instr[29] (WAR on a5)
+Instr[30] -> Instr[33] (WAR on a5)
+Instr[31] -> Instr[33] (WAR on a5)
+Instr[28] -> Instr[36] (WAR on a4)
+Instr[34] -> Instr[37] (WAR on a5)
+Instr[35] -> Instr[37] (WAR on a5)
+Instr[38] -> Instr[39] (WAR on a4)
+Instr[38] -> Instr[40] (WAR on a5)
+Instr[41] -> Instr[42] (WAR on a5)
+Instr[42] -> Instr[43] (WAR on a4)
+Instr[42] -> Instr[45] (WAR on a5)
+Instr[44] -> Instr[45] (WAR on a5)
+Instr[44] -> Instr[48] (WAR on a4)
+Instr[46] -> Instr[49] (WAR on a5)
+Instr[47] -> Instr[49] (WAR on a5)
+Instr[50] -> Instr[53] (WAR on a5)
+Instr[54] -> Instr[55] (WAR on a5)
+Instr[55] -> Instr[57] (WAR on a5)
+Instr[56] -> Instr[57] (WAR on a5)
+Instr[58] -> Instr[59] (WAR on a5)
+Instr[59] -> Instr[61] (WAR on a5)
+Instr[60] -> Instr[61] (WAR on a5)
+Instr[50] -> Instr[62] (WAR on a4)
+Instr[62] -> Instr[63] (WAR on a5)
+Instr[64] -> Instr[65] (WAR on a5)
+Instr[64] -> Instr[66] (WAR on a4)
+Instr[66] -> Instr[67] (WAR on a5)
+Instr[68] -> Instr[69] (WAR on a5)
+Instr[70] -> Instr[72] (WAR on a5)
+Instr[71] -> Instr[72] (WAR on a5)
+Instr[66] -> Instr[74] (WAR on a4)
+Instr[68] -> Instr[74] (WAR on a4)
+Instr[73] -> Instr[75] (WAR on a5)
+Instr[74] -> Instr[75] (WAR on a5)
+Instr[76] -> Instr[77] (WAR on a5)
+Instr[78] -> Instr[81] (WAR on a5)
+Instr[79] -> Instr[81] (WAR on a5)
+Instr[76] -> Instr[84] (WAR on a4)
+Instr[82] -> Instr[85] (WAR on a5)
+Instr[83] -> Instr[85] (WAR on a5)
+Instr[86] -> Instr[87] (WAR on a4)
+Instr[86] -> Instr[88] (WAR on a5)
+Instr[89] -> Instr[90] (WAR on a5)
+Instr[90] -> Instr[91] (WAR on a4)
+Instr[90] -> Instr[93] (WAR on a5)
+Instr[92] -> Instr[93] (WAR on a5)
+Instr[92] -> Instr[96] (WAR on a4)
+Instr[94] -> Instr[97] (WAR on a5)
+Instr[95] -> Instr[97] (WAR on a5)
+Instr[98] -> Instr[101] (WAR on a4)
+Instr[98] -> Instr[102] (WAR on a5)
+Instr[103] -> Instr[104] (WAR on a5)
+Instr[104] -> Instr[106] (WAR on a5)
+Instr[105] -> Instr[106] (WAR on a5)
+Instr[104] -> Instr[109] (WAR on a4)
+Instr[107] -> Instr[110] (WAR on a5)
+Instr[108] -> Instr[110] (WAR on a5)
+Instr[111] -> Instr[119] (WAR on a4)
+Instr[111] -> Instr[120] (WAR on a5)
+Instr[121] -> Instr[122] (WAR on a5)
+Instr[122] -> Instr[123] (WAR on a5)
+Instr[120] -> Instr[124] (WAR on a4)
+Instr[122] -> Instr[124] (WAR on a4)
+Instr[123] -> Instr[125] (WAR on a5)
+Instr[124] -> Instr[125] (WAR on a5)
+Instr[126] -> Instr[128] (WAR on a4)
+Instr[126] -> Instr[129] (WAR on a5)
+Instr[127] -> Instr[129] (WAR on a5)
+Instr[130] -> Instr[131] (WAR on a5)
+Instr[131] -> Instr[132] (WAR on a5)
+Instr[129] -> Instr[133] (WAR on a4)
+Instr[131] -> Instr[133] (WAR on a4)
+Instr[132] -> Instr[134] (WAR on a5)
+Instr[133] -> Instr[134] (WAR on a5)
+Instr[135] -> Instr[137] (WAR on a4)
+Instr[135] -> Instr[138] (WAR on a5)
+Instr[136] -> Instr[138] (WAR on a5)
+Instr[139] -> Instr[140] (WAR on a5)
+Instr[140] -> Instr[141] (WAR on a4)
+Instr[140] -> Instr[143] (WAR on a5)
+Instr[141] -> Instr[143] (WAR on a5)
+Instr[144] -> Instr[145] (WAR on a5)
+Instr[145] -> Instr[146] (WAR on a5)
+Instr[146] -> Instr[147] (WAR on a5)
+Instr[147] -> Instr[148] (WAR on a4)
+Instr[147] -> Instr[149] (WAR on a5)
+Instr[149] -> Instr[151] (WAR on a5)
+Instr[150] -> Instr[151] (WAR on a5)
+Instr[149] -> Instr[154] (WAR on a4)
+Instr[152] -> Instr[155] (WAR on a5)
+Instr[153] -> Instr[155] (WAR on a5)
+Instr[156] -> Instr[157] (WAR on a4)
+Instr[156] -> Instr[158] (WAR on a5)
+Instr[159] -> Instr[160] (WAR on a5)
+Instr[160] -> Instr[161] (WAR on a5)
+Instr[158] -> Instr[162] (WAR on a4)
+Instr[160] -> Instr[162] (WAR on a4)
+Instr[161] -> Instr[163] (WAR on a5)
+Instr[162] -> Instr[163] (WAR on a5)
+Instr[164] -> Instr[166] (WAR on a4)
+Instr[164] -> Instr[167] (WAR on a5)
+Instr[165] -> Instr[167] (WAR on a5)
+Instr[168] -> Instr[169] (WAR on a5)
+Instr[169] -> Instr[170] (WAR on a4)
+Instr[169] -> Instr[172] (WAR on a5)
+Instr[171] -> Instr[172] (WAR on a5)
+Instr[171] -> Instr[175] (WAR on a4)
+Instr[173] -> Instr[176] (WAR on a5)
+Instr[174] -> Instr[176] (WAR on a5)
+Instr[177] -> Instr[178] (WAR on a5)
+Instr[177] -> Instr[181] (WAR on a4)
+Instr[179] -> Instr[182] (WAR on a5)
+Instr[180] -> Instr[182] (WAR on a5)
+Instr[183] -> Instr[186] (WAR on a4)
+Instr[183] -> Instr[187] (WAR on a5)
+Instr[188] -> Instr[189] (WAR on a5)
+Instr[189] -> Instr[190] (WAR on a4)
+Instr[145] -> Instr[191] (WAR on a3)
+Instr[189] -> Instr[192] (WAR on a5)
+Instr[190] -> Instr[192] (WAR on a5)
+Instr[193] -> Instr[194] (WAR on a5)
+Instr[194] -> Instr[196] (WAR on a5)
+Instr[195] -> Instr[196] (WAR on a5)
+Instr[195] -> Instr[199] (WAR on a4)
+Instr[197] -> Instr[200] (WAR on a5)
+Instr[198] -> Instr[200] (WAR on a5)
+Instr[5] -> Instr[6] (WAW on a5)
+Instr[6] -> Instr[7] (WAW on a5)
+Instr[7] -> Instr[9] (WAW on a5)
+Instr[9] -> Instr[10] (WAW on a5)
+Instr[10] -> Instr[11] (WAW on a5)
+Instr[11] -> Instr[13] (WAW on a5)
+Instr[13] -> Instr[15] (WAW on a5)
+Instr[14] -> Instr[16] (WAW on a4)
+Instr[15] -> Instr[17] (WAW on a5)
+Instr[16] -> Instr[18] (WAW on a4)
+Instr[17] -> Instr[19] (WAW on a5)
+Instr[19] -> Instr[21] (WAW on a5)
+Instr[21] -> Instr[22] (WAW on a5)
+Instr[22] -> Instr[24] (WAW on a5)
+Instr[24] -> Instr[25] (WAW on a5)
+Instr[18] -> Instr[26] (WAW on a4)
+Instr[25] -> Instr[27] (WAW on a5)
+Instr[27] -> Instr[29] (WAW on a5)
+Instr[29] -> Instr[30] (WAW on a5)
+Instr[30] -> Instr[33] (WAW on a5)
+Instr[33] -> Instr[34] (WAW on a5)
+Instr[26] -> Instr[36] (WAW on a4)
+Instr[34] -> Instr[37] (WAW on a5)
+Instr[36] -> Instr[39] (WAW on a4)
+Instr[37] -> Instr[40] (WAW on a5)
+Instr[40] -> Instr[41] (WAW on a5)
+Instr[41] -> Instr[42] (WAW on a5)
+Instr[39] -> Instr[43] (WAW on a4)
+Instr[42] -> Instr[45] (WAW on a5)
+Instr[45] -> Instr[46] (WAW on a5)
+Instr[43] -> Instr[48] (WAW on a4)
+Instr[46] -> Instr[49] (WAW on a5)
+Instr[49] -> Instr[53] (WAW on a5)
+Instr[53] -> Instr[54] (WAW on a5)
+Instr[54] -> Instr[55] (WAW on a5)
+Instr[55] -> Instr[57] (WAW on a5)
+Instr[57] -> Instr[58] (WAW on a5)
+Instr[58] -> Instr[59] (WAW on a5)
+Instr[59] -> Instr[61] (WAW on a5)
+Instr[48] -> Instr[62] (WAW on a4)
+Instr[61] -> Instr[63] (WAW on a5)
+Instr[62] -> Instr[64] (WAW on a4)
+Instr[63] -> Instr[65] (WAW on a5)
+Instr[64] -> Instr[66] (WAW on a4)
+Instr[65] -> Instr[67] (WAW on a5)
+Instr[67] -> Instr[69] (WAW on a5)
+Instr[69] -> Instr[70] (WAW on a5)
+Instr[70] -> Instr[72] (WAW on a5)
+Instr[72] -> Instr[73] (WAW on a5)
+Instr[66] -> Instr[74] (WAW on a4)
+Instr[73] -> Instr[75] (WAW on a5)
+Instr[75] -> Instr[77] (WAW on a5)
+Instr[77] -> Instr[78] (WAW on a5)
+Instr[78] -> Instr[81] (WAW on a5)
+Instr[81] -> Instr[82] (WAW on a5)
+Instr[74] -> Instr[84] (WAW on a4)
+Instr[82] -> Instr[85] (WAW on a5)
+Instr[84] -> Instr[87] (WAW on a4)
+Instr[85] -> Instr[88] (WAW on a5)
+Instr[88] -> Instr[89] (WAW on a5)
+Instr[89] -> Instr[90] (WAW on a5)
+Instr[87] -> Instr[91] (WAW on a4)
+Instr[90] -> Instr[93] (WAW on a5)
+Instr[93] -> Instr[94] (WAW on a5)
+Instr[91] -> Instr[96] (WAW on a4)
+Instr[94] -> Instr[97] (WAW on a5)
+Instr[96] -> Instr[101] (WAW on a4)
+Instr[97] -> Instr[102] (WAW on a5)
+Instr[102] -> Instr[103] (WAW on a5)
+Instr[103] -> Instr[104] (WAW on a5)
+Instr[104] -> Instr[106] (WAW on a5)
+Instr[106] -> Instr[107] (WAW on a5)
+Instr[101] -> Instr[109] (WAW on a4)
+Instr[107] -> Instr[110] (WAW on a5)
+Instr[109] -> Instr[119] (WAW on a4)
+Instr[110] -> Instr[120] (WAW on a5)
+Instr[120] -> Instr[121] (WAW on a5)
+Instr[121] -> Instr[122] (WAW on a5)
+Instr[122] -> Instr[123] (WAW on a5)
+Instr[119] -> Instr[124] (WAW on a4)
+Instr[123] -> Instr[125] (WAW on a5)
+Instr[125] -> Instr[126] (WAW on a5)
+Instr[124] -> Instr[128] (WAW on a4)
+Instr[126] -> Instr[129] (WAW on a5)
+Instr[129] -> Instr[130] (WAW on a5)
+Instr[130] -> Instr[131] (WAW on a5)
+Instr[131] -> Instr[132] (WAW on a5)
+Instr[128] -> Instr[133] (WAW on a4)
+Instr[132] -> Instr[134] (WAW on a5)
+Instr[134] -> Instr[135] (WAW on a5)
+Instr[133] -> Instr[137] (WAW on a4)
+Instr[135] -> Instr[138] (WAW on a5)
+Instr[138] -> Instr[139] (WAW on a5)
+Instr[139] -> Instr[140] (WAW on a5)
+Instr[137] -> Instr[141] (WAW on a4)
+Instr[140] -> Instr[143] (WAW on a5)
+Instr[143] -> Instr[144] (WAW on a5)
+Instr[144] -> Instr[145] (WAW on a5)
+Instr[145] -> Instr[146] (WAW on a5)
+Instr[146] -> Instr[147] (WAW on a5)
+Instr[141] -> Instr[148] (WAW on a4)
+Instr[147] -> Instr[149] (WAW on a5)
+Instr[149] -> Instr[151] (WAW on a5)
+Instr[151] -> Instr[152] (WAW on a5)
+Instr[148] -> Instr[154] (WAW on a4)
+Instr[152] -> Instr[155] (WAW on a5)
+Instr[154] -> Instr[157] (WAW on a4)
+Instr[155] -> Instr[158] (WAW on a5)
+Instr[158] -> Instr[159] (WAW on a5)
+Instr[159] -> Instr[160] (WAW on a5)
+Instr[160] -> Instr[161] (WAW on a5)
+Instr[157] -> Instr[162] (WAW on a4)
+Instr[161] -> Instr[163] (WAW on a5)
+Instr[163] -> Instr[164] (WAW on a5)
+Instr[162] -> Instr[166] (WAW on a4)
+Instr[164] -> Instr[167] (WAW on a5)
+Instr[167] -> Instr[168] (WAW on a5)
+Instr[168] -> Instr[169] (WAW on a5)
+Instr[166] -> Instr[170] (WAW on a4)
+Instr[169] -> Instr[172] (WAW on a5)
+Instr[172] -> Instr[173] (WAW on a5)
+Instr[170] -> Instr[175] (WAW on a4)
+Instr[173] -> Instr[176] (WAW on a5)
+Instr[176] -> Instr[178] (WAW on a5)
+Instr[178] -> Instr[179] (WAW on a5)
+Instr[175] -> Instr[181] (WAW on a4)
+Instr[179] -> Instr[182] (WAW on a5)
+Instr[181] -> Instr[186] (WAW on a4)
+Instr[182] -> Instr[187] (WAW on a5)
+Instr[187] -> Instr[188] (WAW on a5)
+Instr[188] -> Instr[189] (WAW on a5)
+Instr[186] -> Instr[190] (WAW on a4)
+Instr[142] -> Instr[191] (WAW on a3)
+Instr[189] -> Instr[192] (WAW on a5)
+Instr[192] -> Instr[193] (WAW on a5)
+Instr[193] -> Instr[194] (WAW on a5)
+Instr[194] -> Instr[196] (WAW on a5)
+Instr[196] -> Instr[197] (WAW on a5)
+Instr[190] -> Instr[199] (WAW on a4)
+Instr[197] -> Instr[200] (WAW on a5)
+Instr[3] -> Instr[40] (MEMORY on memory)
+Instr[3] -> Instr[45] (MEMORY on memory)
+Instr[3] -> Instr[47] (MEMORY on memory)
+Instr[3] -> Instr[48] (MEMORY on memory)
+Instr[3] -> Instr[51] (MEMORY on memory)
+Instr[3] -> Instr[88] (MEMORY on memory)
+Instr[3] -> Instr[93] (MEMORY on memory)
+Instr[3] -> Instr[95] (MEMORY on memory)
+Instr[3] -> Instr[96] (MEMORY on memory)
+Instr[3] -> Instr[99] (MEMORY on memory)
+Instr[3] -> Instr[102] (MEMORY on memory)
+Instr[3] -> Instr[106] (MEMORY on memory)
+Instr[3] -> Instr[108] (MEMORY on memory)
+Instr[3] -> Instr[109] (MEMORY on memory)
+Instr[3] -> Instr[112] (MEMORY on memory)
+Instr[3] -> Instr[119] (MEMORY on memory)
+Instr[3] -> Instr[157] (MEMORY on memory)
+Instr[3] -> Instr[178] (MEMORY on memory)
+Instr[3] -> Instr[180] (MEMORY on memory)
+Instr[3] -> Instr[181] (MEMORY on memory)
+Instr[3] -> Instr[184] (MEMORY on memory)
+Instr[3] -> Instr[187] (MEMORY on memory)
+Instr[3] -> Instr[192] (MEMORY on memory)
+Instr[3] -> Instr[196] (MEMORY on memory)
+Instr[3] -> Instr[198] (MEMORY on memory)
+Instr[3] -> Instr[199] (MEMORY on memory)
+Instr[8] -> Instr[15] (MEMORY on memory)
+Instr[8] -> Instr[56] (MEMORY on memory)
+Instr[8] -> Instr[63] (MEMORY on memory)
+Instr[12] -> Instr[17] (MEMORY on memory)
+Instr[12] -> Instr[60] (MEMORY on memory)
+Instr[12] -> Instr[65] (MEMORY on memory)
+Instr[14] -> Instr[20] (MEMORY on memory)
+Instr[14] -> Instr[28] (MEMORY on memory)
+Instr[14] -> Instr[44] (MEMORY on memory)
+Instr[14] -> Instr[68] (MEMORY on memory)
+Instr[14] -> Instr[76] (MEMORY on memory)
+Instr[14] -> Instr[92] (MEMORY on memory)
+Instr[14] -> Instr[105] (MEMORY on memory)
+Instr[14] -> Instr[171] (MEMORY on memory)
+Instr[14] -> Instr[195] (MEMORY on memory)
+Instr[15] -> Instr[56] (MEMORY on memory)
+Instr[17] -> Instr[60] (MEMORY on memory)
+Instr[20] -> Instr[22] (MEMORY on memory)
+Instr[20] -> Instr[25] (MEMORY on memory)
+Instr[20] -> Instr[28] (MEMORY on memory)
+Instr[20] -> Instr[30] (MEMORY on memory)
+Instr[20] -> Instr[44] (MEMORY on memory)
+Instr[20] -> Instr[62] (MEMORY on memory)
+Instr[20] -> Instr[68] (MEMORY on memory)
+Instr[20] -> Instr[70] (MEMORY on memory)
+Instr[20] -> Instr[73] (MEMORY on memory)
+Instr[20] -> Instr[76] (MEMORY on memory)
+Instr[20] -> Instr[78] (MEMORY on memory)
+Instr[20] -> Instr[92] (MEMORY on memory)
+Instr[20] -> Instr[105] (MEMORY on memory)
+Instr[20] -> Instr[141] (MEMORY on memory)
+Instr[20] -> Instr[146] (MEMORY on memory)
+Instr[20] -> Instr[171] (MEMORY on memory)
+Instr[20] -> Instr[190] (MEMORY on memory)
+Instr[20] -> Instr[195] (MEMORY on memory)
+Instr[22] -> Instr[28] (MEMORY on memory)
+Instr[22] -> Instr[44] (MEMORY on memory)
+Instr[22] -> Instr[68] (MEMORY on memory)
+Instr[22] -> Instr[76] (MEMORY on memory)
+Instr[22] -> Instr[92] (MEMORY on memory)
+Instr[22] -> Instr[105] (MEMORY on memory)
+Instr[22] -> Instr[171] (MEMORY on memory)
+Instr[22] -> Instr[195] (MEMORY on memory)
+Instr[25] -> Instr[28] (MEMORY on memory)
+Instr[25] -> Instr[44] (MEMORY on memory)
+Instr[25] -> Instr[68] (MEMORY on memory)
+Instr[25] -> Instr[76] (MEMORY on memory)
+Instr[25] -> Instr[92] (MEMORY on memory)
+Instr[25] -> Instr[105] (MEMORY on memory)
+Instr[25] -> Instr[171] (MEMORY on memory)
+Instr[25] -> Instr[195] (MEMORY on memory)
+Instr[28] -> Instr[30] (MEMORY on memory)
+Instr[28] -> Instr[44] (MEMORY on memory)
+Instr[28] -> Instr[62] (MEMORY on memory)
+Instr[28] -> Instr[68] (MEMORY on memory)
+Instr[28] -> Instr[70] (MEMORY on memory)
+Instr[28] -> Instr[73] (MEMORY on memory)
+Instr[28] -> Instr[76] (MEMORY on memory)
+Instr[28] -> Instr[78] (MEMORY on memory)
+Instr[28] -> Instr[92] (MEMORY on memory)
+Instr[28] -> Instr[105] (MEMORY on memory)
+Instr[28] -> Instr[141] (MEMORY on memory)
+Instr[28] -> Instr[146] (MEMORY on memory)
+Instr[28] -> Instr[171] (MEMORY on memory)
+Instr[28] -> Instr[190] (MEMORY on memory)
+Instr[28] -> Instr[195] (MEMORY on memory)
+Instr[30] -> Instr[44] (MEMORY on memory)
+Instr[30] -> Instr[68] (MEMORY on memory)
+Instr[30] -> Instr[76] (MEMORY on memory)
+Instr[30] -> Instr[92] (MEMORY on memory)
+Instr[30] -> Instr[105] (MEMORY on memory)
+Instr[30] -> Instr[171] (MEMORY on memory)
+Instr[30] -> Instr[195] (MEMORY on memory)
+Instr[31] -> Instr[33] (MEMORY on memory)
+Instr[31] -> Instr[35] (MEMORY on memory)
+Instr[31] -> Instr[36] (MEMORY on memory)
+Instr[31] -> Instr[43] (MEMORY on memory)
+Instr[31] -> Instr[79] (MEMORY on memory)
+Instr[31] -> Instr[81] (MEMORY on memory)
+Instr[31] -> Instr[83] (MEMORY on memory)
+Instr[31] -> Instr[84] (MEMORY on memory)
+Instr[31] -> Instr[91] (MEMORY on memory)
+Instr[33] -> Instr[35] (MEMORY on memory)
+Instr[33] -> Instr[79] (MEMORY on memory)
+Instr[33] -> Instr[83] (MEMORY on memory)
+Instr[35] -> Instr[36] (MEMORY on memory)
+Instr[35] -> Instr[43] (MEMORY on memory)
+Instr[35] -> Instr[79] (MEMORY on memory)
+Instr[35] -> Instr[81] (MEMORY on memory)
+Instr[35] -> Instr[83] (MEMORY on memory)
+Instr[35] -> Instr[84] (MEMORY on memory)
+Instr[35] -> Instr[91] (MEMORY on memory)
+Instr[36] -> Instr[79] (MEMORY on memory)
+Instr[36] -> Instr[83] (MEMORY on memory)
+Instr[40] -> Instr[47] (MEMORY on memory)
+Instr[40] -> Instr[51] (MEMORY on memory)
+Instr[40] -> Instr[95] (MEMORY on memory)
+Instr[40] -> Instr[99] (MEMORY on memory)
+Instr[40] -> Instr[108] (MEMORY on memory)
+Instr[40] -> Instr[112] (MEMORY on memory)
+Instr[40] -> Instr[180] (MEMORY on memory)
+Instr[40] -> Instr[184] (MEMORY on memory)
+Instr[40] -> Instr[198] (MEMORY on memory)
+Instr[43] -> Instr[79] (MEMORY on memory)
+Instr[43] -> Instr[83] (MEMORY on memory)
+Instr[44] -> Instr[62] (MEMORY on memory)
+Instr[44] -> Instr[68] (MEMORY on memory)
+Instr[44] -> Instr[70] (MEMORY on memory)
+Instr[44] -> Instr[73] (MEMORY on memory)
+Instr[44] -> Instr[76] (MEMORY on memory)
+Instr[44] -> Instr[78] (MEMORY on memory)
+Instr[44] -> Instr[92] (MEMORY on memory)
+Instr[44] -> Instr[105] (MEMORY on memory)
+Instr[44] -> Instr[141] (MEMORY on memory)
+Instr[44] -> Instr[146] (MEMORY on memory)
+Instr[44] -> Instr[171] (MEMORY on memory)
+Instr[44] -> Instr[190] (MEMORY on memory)
+Instr[44] -> Instr[195] (MEMORY on memory)
+Instr[45] -> Instr[47] (MEMORY on memory)
+Instr[45] -> Instr[51] (MEMORY on memory)
+Instr[45] -> Instr[95] (MEMORY on memory)
+Instr[45] -> Instr[99] (MEMORY on memory)
+Instr[45] -> Instr[108] (MEMORY on memory)
+Instr[45] -> Instr[112] (MEMORY on memory)
+Instr[45] -> Instr[180] (MEMORY on memory)
+Instr[45] -> Instr[184] (MEMORY on memory)
+Instr[45] -> Instr[198] (MEMORY on memory)
+Instr[47] -> Instr[48] (MEMORY on memory)
+Instr[47] -> Instr[51] (MEMORY on memory)
+Instr[47] -> Instr[88] (MEMORY on memory)
+Instr[47] -> Instr[93] (MEMORY on memory)
+Instr[47] -> Instr[95] (MEMORY on memory)
+Instr[47] -> Instr[96] (MEMORY on memory)
+Instr[47] -> Instr[99] (MEMORY on memory)
+Instr[47] -> Instr[102] (MEMORY on memory)
+Instr[47] -> Instr[106] (MEMORY on memory)
+Instr[47] -> Instr[108] (MEMORY on memory)
+Instr[47] -> Instr[109] (MEMORY on memory)
+Instr[47] -> Instr[112] (MEMORY on memory)
+Instr[47] -> Instr[119] (MEMORY on memory)
+Instr[47] -> Instr[157] (MEMORY on memory)
+Instr[47] -> Instr[178] (MEMORY on memory)
+Instr[47] -> Instr[180] (MEMORY on memory)
+Instr[47] -> Instr[181] (MEMORY on memory)
+Instr[47] -> Instr[184] (MEMORY on memory)
+Instr[47] -> Instr[187] (MEMORY on memory)
+Instr[47] -> Instr[192] (MEMORY on memory)
+Instr[47] -> Instr[196] (MEMORY on memory)
+Instr[47] -> Instr[198] (MEMORY on memory)
+Instr[47] -> Instr[199] (MEMORY on memory)
+Instr[48] -> Instr[51] (MEMORY on memory)
+Instr[48] -> Instr[95] (MEMORY on memory)
+Instr[48] -> Instr[99] (MEMORY on memory)
+Instr[48] -> Instr[108] (MEMORY on memory)
+Instr[48] -> Instr[112] (MEMORY on memory)
+Instr[48] -> Instr[180] (MEMORY on memory)
+Instr[48] -> Instr[184] (MEMORY on memory)
+Instr[48] -> Instr[198] (MEMORY on memory)
+Instr[51] -> Instr[88] (MEMORY on memory)
+Instr[51] -> Instr[93] (MEMORY on memory)
+Instr[51] -> Instr[95] (MEMORY on memory)
+Instr[51] -> Instr[96] (MEMORY on memory)
+Instr[51] -> Instr[99] (MEMORY on memory)
+Instr[51] -> Instr[102] (MEMORY on memory)
+Instr[51] -> Instr[106] (MEMORY on memory)
+Instr[51] -> Instr[108] (MEMORY on memory)
+Instr[51] -> Instr[109] (MEMORY on memory)
+Instr[51] -> Instr[112] (MEMORY on memory)
+Instr[51] -> Instr[119] (MEMORY on memory)
+Instr[51] -> Instr[157] (MEMORY on memory)
+Instr[51] -> Instr[178] (MEMORY on memory)
+Instr[51] -> Instr[180] (MEMORY on memory)
+Instr[51] -> Instr[181] (MEMORY on memory)
+Instr[51] -> Instr[184] (MEMORY on memory)
+Instr[51] -> Instr[187] (MEMORY on memory)
+Instr[51] -> Instr[192] (MEMORY on memory)
+Instr[51] -> Instr[196] (MEMORY on memory)
+Instr[51] -> Instr[198] (MEMORY on memory)
+Instr[51] -> Instr[199] (MEMORY on memory)
+Instr[56] -> Instr[63] (MEMORY on memory)
+Instr[60] -> Instr[65] (MEMORY on memory)
+Instr[62] -> Instr[68] (MEMORY on memory)
+Instr[62] -> Instr[76] (MEMORY on memory)
+Instr[62] -> Instr[92] (MEMORY on memory)
+Instr[62] -> Instr[105] (MEMORY on memory)
+Instr[62] -> Instr[171] (MEMORY on memory)
+Instr[62] -> Instr[195] (MEMORY on memory)
+Instr[68] -> Instr[70] (MEMORY on memory)
+Instr[68] -> Instr[73] (MEMORY on memory)
+Instr[68] -> Instr[76] (MEMORY on memory)
+Instr[68] -> Instr[78] (MEMORY on memory)
+Instr[68] -> Instr[92] (MEMORY on memory)
+Instr[68] -> Instr[105] (MEMORY on memory)
+Instr[68] -> Instr[141] (MEMORY on memory)
+Instr[68] -> Instr[146] (MEMORY on memory)
+Instr[68] -> Instr[171] (MEMORY on memory)
+Instr[68] -> Instr[190] (MEMORY on memory)
+Instr[68] -> Instr[195] (MEMORY on memory)
+Instr[70] -> Instr[76] (MEMORY on memory)
+Instr[70] -> Instr[92] (MEMORY on memory)
+Instr[70] -> Instr[105] (MEMORY on memory)
+Instr[70] -> Instr[171] (MEMORY on memory)
+Instr[70] -> Instr[195] (MEMORY on memory)
+Instr[73] -> Instr[76] (MEMORY on memory)
+Instr[73] -> Instr[92] (MEMORY on memory)
+Instr[73] -> Instr[105] (MEMORY on memory)
+Instr[73] -> Instr[171] (MEMORY on memory)
+Instr[73] -> Instr[195] (MEMORY on memory)
+Instr[76] -> Instr[78] (MEMORY on memory)
+Instr[76] -> Instr[92] (MEMORY on memory)
+Instr[76] -> Instr[105] (MEMORY on memory)
+Instr[76] -> Instr[141] (MEMORY on memory)
+Instr[76] -> Instr[146] (MEMORY on memory)
+Instr[76] -> Instr[171] (MEMORY on memory)
+Instr[76] -> Instr[190] (MEMORY on memory)
+Instr[76] -> Instr[195] (MEMORY on memory)
+Instr[78] -> Instr[92] (MEMORY on memory)
+Instr[78] -> Instr[105] (MEMORY on memory)
+Instr[78] -> Instr[171] (MEMORY on memory)
+Instr[78] -> Instr[195] (MEMORY on memory)
+Instr[79] -> Instr[81] (MEMORY on memory)
+Instr[79] -> Instr[83] (MEMORY on memory)
+Instr[79] -> Instr[84] (MEMORY on memory)
+Instr[79] -> Instr[91] (MEMORY on memory)
+Instr[81] -> Instr[83] (MEMORY on memory)
+Instr[83] -> Instr[84] (MEMORY on memory)
+Instr[83] -> Instr[91] (MEMORY on memory)
+Instr[88] -> Instr[95] (MEMORY on memory)
+Instr[88] -> Instr[99] (MEMORY on memory)
+Instr[88] -> Instr[108] (MEMORY on memory)
+Instr[88] -> Instr[112] (MEMORY on memory)
+Instr[88] -> Instr[180] (MEMORY on memory)
+Instr[88] -> Instr[184] (MEMORY on memory)
+Instr[88] -> Instr[198] (MEMORY on memory)
+Instr[92] -> Instr[105] (MEMORY on memory)
+Instr[92] -> Instr[141] (MEMORY on memory)
+Instr[92] -> Instr[146] (MEMORY on memory)
+Instr[92] -> Instr[171] (MEMORY on memory)
+Instr[92] -> Instr[190] (MEMORY on memory)
+Instr[92] -> Instr[195] (MEMORY on memory)
+Instr[93] -> Instr[95] (MEMORY on memory)
+Instr[93] -> Instr[99] (MEMORY on memory)
+Instr[93] -> Instr[108] (MEMORY on memory)
+Instr[93] -> Instr[112] (MEMORY on memory)
+Instr[93] -> Instr[180] (MEMORY on memory)
+Instr[93] -> Instr[184] (MEMORY on memory)
+Instr[93] -> Instr[198] (MEMORY on memory)
+Instr[95] -> Instr[96] (MEMORY on memory)
+Instr[95] -> Instr[99] (MEMORY on memory)
+Instr[95] -> Instr[102] (MEMORY on memory)
+Instr[95] -> Instr[106] (MEMORY on memory)
+Instr[95] -> Instr[108] (MEMORY on memory)
+Instr[95] -> Instr[109] (MEMORY on memory)
+Instr[95] -> Instr[112] (MEMORY on memory)
+Instr[95] -> Instr[119] (MEMORY on memory)
+Instr[95] -> Instr[157] (MEMORY on memory)
+Instr[95] -> Instr[178] (MEMORY on memory)
+Instr[95] -> Instr[180] (MEMORY on memory)
+Instr[95] -> Instr[181] (MEMORY on memory)
+Instr[95] -> Instr[184] (MEMORY on memory)
+Instr[95] -> Instr[187] (MEMORY on memory)
+Instr[95] -> Instr[192] (MEMORY on memory)
+Instr[95] -> Instr[196] (MEMORY on memory)
+Instr[95] -> Instr[198] (MEMORY on memory)
+Instr[95] -> Instr[199] (MEMORY on memory)
+Instr[96] -> Instr[99] (MEMORY on memory)
+Instr[96] -> Instr[108] (MEMORY on memory)
+Instr[96] -> Instr[112] (MEMORY on memory)
+Instr[96] -> Instr[180] (MEMORY on memory)
+Instr[96] -> Instr[184] (MEMORY on memory)
+Instr[96] -> Instr[198] (MEMORY on memory)
+Instr[99] -> Instr[102] (MEMORY on memory)
+Instr[99] -> Instr[106] (MEMORY on memory)
+Instr[99] -> Instr[108] (MEMORY on memory)
+Instr[99] -> Instr[109] (MEMORY on memory)
+Instr[99] -> Instr[112] (MEMORY on memory)
+Instr[99] -> Instr[119] (MEMORY on memory)
+Instr[99] -> Instr[157] (MEMORY on memory)
+Instr[99] -> Instr[178] (MEMORY on memory)
+Instr[99] -> Instr[180] (MEMORY on memory)
+Instr[99] -> Instr[181] (MEMORY on memory)
+Instr[99] -> Instr[184] (MEMORY on memory)
+Instr[99] -> Instr[187] (MEMORY on memory)
+Instr[99] -> Instr[192] (MEMORY on memory)
+Instr[99] -> Instr[196] (MEMORY on memory)
+Instr[99] -> Instr[198] (MEMORY on memory)
+Instr[99] -> Instr[199] (MEMORY on memory)
+Instr[102] -> Instr[108] (MEMORY on memory)
+Instr[102] -> Instr[112] (MEMORY on memory)
+Instr[102] -> Instr[180] (MEMORY on memory)
+Instr[102] -> Instr[184] (MEMORY on memory)
+Instr[102] -> Instr[198] (MEMORY on memory)
+Instr[105] -> Instr[141] (MEMORY on memory)
+Instr[105] -> Instr[146] (MEMORY on memory)
+Instr[105] -> Instr[171] (MEMORY on memory)
+Instr[105] -> Instr[190] (MEMORY on memory)
+Instr[105] -> Instr[195] (MEMORY on memory)
+Instr[106] -> Instr[108] (MEMORY on memory)
+Instr[106] -> Instr[112] (MEMORY on memory)
+Instr[106] -> Instr[180] (MEMORY on memory)
+Instr[106] -> Instr[184] (MEMORY on memory)
+Instr[106] -> Instr[198] (MEMORY on memory)
+Instr[108] -> Instr[109] (MEMORY on memory)
+Instr[108] -> Instr[112] (MEMORY on memory)
+Instr[108] -> Instr[119] (MEMORY on memory)
+Instr[108] -> Instr[157] (MEMORY on memory)
+Instr[108] -> Instr[178] (MEMORY on memory)
+Instr[108] -> Instr[180] (MEMORY on memory)
+Instr[108] -> Instr[181] (MEMORY on memory)
+Instr[108] -> Instr[184] (MEMORY on memory)
+Instr[108] -> Instr[187] (MEMORY on memory)
+Instr[108] -> Instr[192] (MEMORY on memory)
+Instr[108] -> Instr[196] (MEMORY on memory)
+Instr[108] -> Instr[198] (MEMORY on memory)
+Instr[108] -> Instr[199] (MEMORY on memory)
+Instr[109] -> Instr[112] (MEMORY on memory)
+Instr[109] -> Instr[180] (MEMORY on memory)
+Instr[109] -> Instr[184] (MEMORY on memory)
+Instr[109] -> Instr[198] (MEMORY on memory)
+Instr[112] -> Instr[119] (MEMORY on memory)
+Instr[112] -> Instr[157] (MEMORY on memory)
+Instr[112] -> Instr[178] (MEMORY on memory)
+Instr[112] -> Instr[180] (MEMORY on memory)
+Instr[112] -> Instr[181] (MEMORY on memory)
+Instr[112] -> Instr[184] (MEMORY on memory)
+Instr[112] -> Instr[187] (MEMORY on memory)
+Instr[112] -> Instr[192] (MEMORY on memory)
+Instr[112] -> Instr[196] (MEMORY on memory)
+Instr[112] -> Instr[198] (MEMORY on memory)
+Instr[112] -> Instr[199] (MEMORY on memory)
+Instr[114] -> Instr[134] (MEMORY on memory)
+Instr[114] -> Instr[163] (MEMORY on memory)
+Instr[114] -> Instr[172] (MEMORY on memory)
+Instr[114] -> Instr[174] (MEMORY on memory)
+Instr[114] -> Instr[175] (MEMORY on memory)
+Instr[116] -> Instr[148] (MEMORY on memory)
+Instr[116] -> Instr[150] (MEMORY on memory)
+Instr[116] -> Instr[170] (MEMORY on memory)
+Instr[117] -> Instr[125] (MEMORY on memory)
+Instr[117] -> Instr[128] (MEMORY on memory)
+Instr[117] -> Instr[151] (MEMORY on memory)
+Instr[117] -> Instr[153] (MEMORY on memory)
+Instr[117] -> Instr[154] (MEMORY on memory)
+Instr[119] -> Instr[180] (MEMORY on memory)
+Instr[119] -> Instr[184] (MEMORY on memory)
+Instr[119] -> Instr[198] (MEMORY on memory)
+Instr[125] -> Instr[153] (MEMORY on memory)
+Instr[127] -> Instr[138] (MEMORY on memory)
+Instr[128] -> Instr[153] (MEMORY on memory)
+Instr[134] -> Instr[174] (MEMORY on memory)
+Instr[136] -> Instr[143] (MEMORY on memory)
+Instr[141] -> Instr[171] (MEMORY on memory)
+Instr[141] -> Instr[195] (MEMORY on memory)
+Instr[146] -> Instr[171] (MEMORY on memory)
+Instr[146] -> Instr[195] (MEMORY on memory)
+Instr[148] -> Instr[150] (MEMORY on memory)
+Instr[150] -> Instr[170] (MEMORY on memory)
+Instr[151] -> Instr[153] (MEMORY on memory)
+Instr[153] -> Instr[154] (MEMORY on memory)
+Instr[157] -> Instr[180] (MEMORY on memory)
+Instr[157] -> Instr[184] (MEMORY on memory)
+Instr[157] -> Instr[198] (MEMORY on memory)
+Instr[163] -> Instr[174] (MEMORY on memory)
+Instr[165] -> Instr[167] (MEMORY on memory)
+Instr[171] -> Instr[190] (MEMORY on memory)
+Instr[171] -> Instr[195] (MEMORY on memory)
+Instr[172] -> Instr[174] (MEMORY on memory)
+Instr[174] -> Instr[175] (MEMORY on memory)
+Instr[178] -> Instr[180] (MEMORY on memory)
+Instr[178] -> Instr[184] (MEMORY on memory)
+Instr[178] -> Instr[198] (MEMORY on memory)
+Instr[180] -> Instr[181] (MEMORY on memory)
+Instr[180] -> Instr[184] (MEMORY on memory)
+Instr[180] -> Instr[187] (MEMORY on memory)
+Instr[180] -> Instr[192] (MEMORY on memory)
+Instr[180] -> Instr[196] (MEMORY on memory)
+Instr[180] -> Instr[198] (MEMORY on memory)
+Instr[180] -> Instr[199] (MEMORY on memory)
+Instr[181] -> Instr[184] (MEMORY on memory)
+Instr[181] -> Instr[198] (MEMORY on memory)
+Instr[184] -> Instr[187] (MEMORY on memory)
+Instr[184] -> Instr[192] (MEMORY on memory)
+Instr[184] -> Instr[196] (MEMORY on memory)
+Instr[184] -> Instr[198] (MEMORY on memory)
+Instr[184] -> Instr[199] (MEMORY on memory)
+Instr[187] -> Instr[198] (MEMORY on memory)
+Instr[190] -> Instr[195] (MEMORY on memory)
+Instr[192] -> Instr[198] (MEMORY on memory)
+Instr[196] -> Instr[198] (MEMORY on memory)
+Instr[198] -> Instr[199] (MEMORY on memory)
+
+-----------------------
+phase2_dfg.txt
+
+# Data Flow Graph
+# Total nodos: 203
+# Nodos raíz: 44
+# Nodos hoja: 23
+
+Node 0 [Instr 0]: addi rd=sp rs1=sp
+  Latency: 2, EST: 0, LST: 1, Slack: 1
+  Predecessors: []
+  Successors: [1, 2]
+
+Node 1 [Instr 1]: sw rs1=sp rs2=s0
+  Latency: 5, EST: 2, LST: 140, Slack: 138
+  Predecessors: [0]
+  Successors: []
+
+Node 2 [Instr 2]: addi rd=s0 rs1=sp
+  Latency: 2, EST: 2, LST: 3, Slack: 1
+  Predecessors: [0]
+  Successors: [3, 8, 12, 15, 17, 31, 33, 35, 36, 40, 43, 45, 47, 48, 51, 56, 60, 63, 65, 79, 81, 83, 84, 88, 91, 93, 95, 96, 99, 102, 106, 108, 109, 112, 114, 116, 117, 119, 125, 127, 128, 134, 136, 138, 143, 148, 150, 151, 153, 154, 157, 163, 165, 167, 170, 172, 174, 175, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 3 [Instr 3]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 4, LST: 29, Slack: 25
+  Predecessors: [2]
+  Successors: [40, 45, 47, 48, 51, 88, 93, 95, 96, 99, 102, 106, 108, 109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 4 [Instr 4]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 5 [Instr 5]: lui rd=a5
+  Latency: 1, EST: 0, LST: 0, Slack: 0 [CRITICAL PATH]
+  Predecessors: []
+  Successors: [6]
+
+Node 6 [Instr 6]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 1, LST: 1, Slack: 0 [CRITICAL PATH]
+  Predecessors: [5]
+  Successors: [7]
+
+Node 7 [Instr 7]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 3, LST: 3, Slack: 0 [CRITICAL PATH]
+  Predecessors: [6]
+  Successors: [8]
+
+Node 8 [Instr 8]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 5, LST: 5, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 7]
+  Successors: [15, 56, 63]
+
+Node 9 [Instr 9]: lui rd=a5
+  Latency: 1, EST: 0, LST: 4, Slack: 4
+  Predecessors: []
+  Successors: [10]
+
+Node 10 [Instr 10]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 1, LST: 5, Slack: 4
+  Predecessors: [9]
+  Successors: [11]
+
+Node 11 [Instr 11]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 3, LST: 7, Slack: 4
+  Predecessors: [10]
+  Successors: [12]
+
+Node 12 [Instr 12]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 5, LST: 9, Slack: 4
+  Predecessors: [2, 11]
+  Successors: [17, 60, 65]
+
+Node 13 [Instr 13]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 8, Slack: 8
+  Predecessors: []
+  Successors: [14]
+
+Node 14 [Instr 14]: lw rd=a4 rs1=a5
+  Latency: 3, EST: 2, LST: 10, Slack: 8
+  Predecessors: [13]
+  Successors: [16, 20, 28, 44, 68, 76, 92, 105, 171, 195]
+
+Node 15 [Instr 15]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 10, LST: 10, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 8]
+  Successors: [16, 56]
+
+Node 16 [Instr 16]: mul rd=a4 rs1=a4 rs2=a5
+  Latency: 4, EST: 13, LST: 13, Slack: 0 [CRITICAL PATH]
+  Predecessors: [14, 15]
+  Successors: [18]
+
+Node 17 [Instr 17]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 10, LST: 14, Slack: 4
+  Predecessors: [2, 12]
+  Successors: [18, 60]
+
+Node 18 [Instr 18]: add rd=a4 rs1=a4 rs2=a5
+  Latency: 2, EST: 17, LST: 17, Slack: 0 [CRITICAL PATH]
+  Predecessors: [16, 17]
+  Successors: [20]
+
+Node 19 [Instr 19]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 17, Slack: 17
+  Predecessors: []
+  Successors: [20]
+
+Node 20 [Instr 20]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 19, LST: 19, Slack: 0 [CRITICAL PATH]
+  Predecessors: [19, 18, 14]
+  Successors: [22, 25, 28, 30, 44, 62, 68, 70, 73, 76, 78, 92, 105, 141, 146, 171, 190, 195]
+
+Node 21 [Instr 21]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 24, Slack: 24
+  Predecessors: []
+  Successors: [22]
+
+Node 22 [Instr 22]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 24, LST: 26, Slack: 2
+  Predecessors: [21, 20]
+  Successors: [23, 28, 44, 68, 76, 92, 105, 171, 195]
+
+Node 23 [Instr 23]: bge rs1=a5 rs2=zero
+  Latency: 3, EST: 27, LST: 142, Slack: 115
+  Predecessors: [22]
+  Successors: []
+
+Node 24 [Instr 24]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 22, Slack: 22
+  Predecessors: []
+  Successors: [25]
+
+Node 25 [Instr 25]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 24, LST: 24, Slack: 0 [CRITICAL PATH]
+  Predecessors: [24, 20]
+  Successors: [26, 28, 44, 68, 76, 92, 105, 171, 195]
+
+Node 26 [Instr 26]: sub rd=a4 rs1=zero rs2=a5
+  Latency: 2, EST: 27, LST: 27, Slack: 0 [CRITICAL PATH]
+  Predecessors: [25]
+  Successors: [28]
+
+Node 27 [Instr 27]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 27, Slack: 27
+  Predecessors: []
+  Successors: [28]
+
+Node 28 [Instr 28]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 29, LST: 29, Slack: 0 [CRITICAL PATH]
+  Predecessors: [27, 26, 14, 20, 22, 25]
+  Successors: [30, 44, 62, 68, 70, 73, 76, 78, 92, 105, 141, 146, 171, 190, 195]
+
+Node 29 [Instr 29]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 32, Slack: 32
+  Predecessors: []
+  Successors: [30]
+
+Node 30 [Instr 30]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 34, LST: 34, Slack: 0 [CRITICAL PATH]
+  Predecessors: [29, 20, 28]
+  Successors: [31, 44, 68, 76, 92, 105, 171, 195]
+
+Node 31 [Instr 31]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 37, LST: 37, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 30]
+  Successors: [33, 35, 36, 43, 79, 81, 83, 84, 91]
+
+Node 32 [Instr 32]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 33 [Instr 33]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 42, LST: 42, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 31]
+  Successors: [34, 35, 79, 83]
+
+Node 34 [Instr 34]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 45, LST: 45, Slack: 0 [CRITICAL PATH]
+  Predecessors: [33]
+  Successors: [35]
+
+Node 35 [Instr 35]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 47, LST: 47, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 34, 31, 33]
+  Successors: [36, 43, 79, 81, 83, 84, 91]
+
+Node 36 [Instr 36]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 52, LST: 84, Slack: 32
+  Predecessors: [2, 31, 35]
+  Successors: [38, 79, 83]
+
+Node 37 [Instr 37]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [38]
+
+Node 38 [Instr 38]: blt rs1=a5 rs2=a4
+  Latency: 3, EST: 55, LST: 142, Slack: 87
+  Predecessors: [37, 36]
+  Successors: []
+
+Node 39 [Instr 39]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 51, Slack: 51
+  Predecessors: []
+  Successors: [42]
+
+Node 40 [Instr 40]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 36, Slack: 27
+  Predecessors: [2, 3]
+  Successors: [41, 47, 51, 95, 99, 108, 112, 180, 184, 198]
+
+Node 41 [Instr 41]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 12, LST: 51, Slack: 39
+  Predecessors: [40]
+  Successors: [42]
+
+Node 42 [Instr 42]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 14, LST: 53, Slack: 39
+  Predecessors: [39, 41]
+  Successors: [44]
+
+Node 43 [Instr 43]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 52, LST: 52, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 31, 35]
+  Successors: [44, 79, 83]
+
+Node 44 [Instr 44]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 55, LST: 55, Slack: 0 [CRITICAL PATH]
+  Predecessors: [42, 43, 14, 20, 22, 25, 28, 30]
+  Successors: [62, 68, 70, 73, 76, 78, 92, 105, 141, 146, 171, 190, 195]
+
+Node 45 [Instr 45]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 34, Slack: 25
+  Predecessors: [2, 3]
+  Successors: [46, 47, 51, 95, 99, 108, 112, 180, 184, 198]
+
+Node 46 [Instr 46]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 12, LST: 37, Slack: 25
+  Predecessors: [45]
+  Successors: [47]
+
+Node 47 [Instr 47]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 14, LST: 39, Slack: 25
+  Predecessors: [2, 46, 3, 40, 45]
+  Successors: [48, 51, 88, 93, 95, 96, 99, 102, 106, 108, 109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 48 [Instr 48]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 19, LST: 44, Slack: 25
+  Predecessors: [2, 3, 47]
+  Successors: [50, 51, 95, 99, 108, 112, 180, 184, 198]
+
+Node 49 [Instr 49]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [50]
+
+Node 50 [Instr 50]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 22, LST: 142, Slack: 120
+  Predecessors: [49, 48]
+  Successors: []
+
+Node 51 [Instr 51]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 22, LST: 47, Slack: 25
+  Predecessors: [2, 3, 40, 45, 47, 48]
+  Successors: [88, 93, 95, 96, 99, 102, 106, 108, 109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 52 [Instr 52]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 53 [Instr 53]: lui rd=a5
+  Latency: 1, EST: 0, LST: 50, Slack: 50
+  Predecessors: []
+  Successors: [54]
+
+Node 54 [Instr 54]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 1, LST: 51, Slack: 50
+  Predecessors: [53]
+  Successors: [55]
+
+Node 55 [Instr 55]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 3, LST: 53, Slack: 50
+  Predecessors: [54]
+  Successors: [56]
+
+Node 56 [Instr 56]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 13, LST: 55, Slack: 42
+  Predecessors: [2, 55, 8, 15]
+  Successors: [63]
+
+Node 57 [Instr 57]: lui rd=a5
+  Latency: 1, EST: 0, LST: 54, Slack: 54
+  Predecessors: []
+  Successors: [58]
+
+Node 58 [Instr 58]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 1, LST: 55, Slack: 54
+  Predecessors: [57]
+  Successors: [59]
+
+Node 59 [Instr 59]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 3, LST: 57, Slack: 54
+  Predecessors: [58]
+  Successors: [60]
+
+Node 60 [Instr 60]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 13, LST: 59, Slack: 46
+  Predecessors: [2, 59, 12, 17]
+  Successors: [65]
+
+Node 61 [Instr 61]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 58, Slack: 58
+  Predecessors: []
+  Successors: [62]
+
+Node 62 [Instr 62]: lw rd=a4 rs1=a5
+  Latency: 3, EST: 60, LST: 60, Slack: 0 [CRITICAL PATH]
+  Predecessors: [61, 20, 28, 44]
+  Successors: [64, 68, 76, 92, 105, 171, 195]
+
+Node 63 [Instr 63]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 18, LST: 60, Slack: 42
+  Predecessors: [2, 8, 56]
+  Successors: [64]
+
+Node 64 [Instr 64]: mul rd=a4 rs1=a4 rs2=a5
+  Latency: 4, EST: 63, LST: 63, Slack: 0 [CRITICAL PATH]
+  Predecessors: [62, 63]
+  Successors: [66]
+
+Node 65 [Instr 65]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 18, LST: 64, Slack: 46
+  Predecessors: [2, 12, 60]
+  Successors: [66]
+
+Node 66 [Instr 66]: add rd=a4 rs1=a4 rs2=a5
+  Latency: 2, EST: 67, LST: 67, Slack: 0 [CRITICAL PATH]
+  Predecessors: [64, 65]
+  Successors: [68]
+
+Node 67 [Instr 67]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 67, Slack: 67
+  Predecessors: []
+  Successors: [68]
+
+Node 68 [Instr 68]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 69, LST: 69, Slack: 0 [CRITICAL PATH]
+  Predecessors: [67, 66, 14, 20, 22, 25, 28, 30, 44, 62]
+  Successors: [70, 73, 76, 78, 92, 105, 141, 146, 171, 190, 195]
+
+Node 69 [Instr 69]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 74, Slack: 74
+  Predecessors: []
+  Successors: [70]
+
+Node 70 [Instr 70]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 74, LST: 76, Slack: 2
+  Predecessors: [69, 20, 28, 44, 68]
+  Successors: [71, 76, 92, 105, 171, 195]
+
+Node 71 [Instr 71]: bge rs1=a5 rs2=zero
+  Latency: 3, EST: 77, LST: 142, Slack: 65
+  Predecessors: [70]
+  Successors: []
+
+Node 72 [Instr 72]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 72, Slack: 72
+  Predecessors: []
+  Successors: [73]
+
+Node 73 [Instr 73]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 74, LST: 74, Slack: 0 [CRITICAL PATH]
+  Predecessors: [72, 20, 28, 44, 68]
+  Successors: [74, 76, 92, 105, 171, 195]
+
+Node 74 [Instr 74]: sub rd=a4 rs1=zero rs2=a5
+  Latency: 2, EST: 77, LST: 77, Slack: 0 [CRITICAL PATH]
+  Predecessors: [73]
+  Successors: [76]
+
+Node 75 [Instr 75]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 77, Slack: 77
+  Predecessors: []
+  Successors: [76]
+
+Node 76 [Instr 76]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 79, LST: 79, Slack: 0 [CRITICAL PATH]
+  Predecessors: [75, 74, 14, 20, 22, 25, 28, 30, 44, 62, 68, 70, 73]
+  Successors: [78, 92, 105, 141, 146, 171, 190, 195]
+
+Node 77 [Instr 77]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 82, Slack: 82
+  Predecessors: []
+  Successors: [78]
+
+Node 78 [Instr 78]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 84, LST: 84, Slack: 0 [CRITICAL PATH]
+  Predecessors: [77, 20, 28, 44, 68, 76]
+  Successors: [79, 92, 105, 171, 195]
+
+Node 79 [Instr 79]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 87, LST: 87, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 78, 31, 33, 35, 36, 43]
+  Successors: [81, 83, 84, 91]
+
+Node 80 [Instr 80]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 81 [Instr 81]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 92, LST: 92, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 31, 35, 79]
+  Successors: [82, 83]
+
+Node 82 [Instr 82]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 95, LST: 95, Slack: 0 [CRITICAL PATH]
+  Predecessors: [81]
+  Successors: [83]
+
+Node 83 [Instr 83]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 97, LST: 97, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 82, 31, 33, 35, 36, 43, 79, 81]
+  Successors: [84, 91]
+
+Node 84 [Instr 84]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 102, LST: 139, Slack: 37
+  Predecessors: [2, 31, 35, 79, 83]
+  Successors: [86]
+
+Node 85 [Instr 85]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [86]
+
+Node 86 [Instr 86]: blt rs1=a5 rs2=a4
+  Latency: 3, EST: 105, LST: 142, Slack: 37
+  Predecessors: [85, 84]
+  Successors: []
+
+Node 87 [Instr 87]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 101, Slack: 101
+  Predecessors: []
+  Successors: [90]
+
+Node 88 [Instr 88]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 27, LST: 54, Slack: 27
+  Predecessors: [2, 3, 47, 51]
+  Successors: [89, 95, 99, 108, 112, 180, 184, 198]
+
+Node 89 [Instr 89]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 30, LST: 101, Slack: 71
+  Predecessors: [88]
+  Successors: [90]
+
+Node 90 [Instr 90]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 32, LST: 103, Slack: 71
+  Predecessors: [87, 89]
+  Successors: [92]
+
+Node 91 [Instr 91]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 102, LST: 102, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 31, 35, 79, 83]
+  Successors: [92]
+
+Node 92 [Instr 92]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 105, LST: 105, Slack: 0 [CRITICAL PATH]
+  Predecessors: [90, 91, 14, 20, 22, 25, 28, 30, 44, 62, 68, 70, 73, 76, 78]
+  Successors: [105, 141, 146, 171, 190, 195]
+
+Node 93 [Instr 93]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 27, LST: 52, Slack: 25
+  Predecessors: [2, 3, 47, 51]
+  Successors: [94, 95, 99, 108, 112, 180, 184, 198]
+
+Node 94 [Instr 94]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 30, LST: 55, Slack: 25
+  Predecessors: [93]
+  Successors: [95]
+
+Node 95 [Instr 95]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 32, LST: 57, Slack: 25
+  Predecessors: [2, 94, 3, 40, 45, 47, 48, 51, 88, 93]
+  Successors: [96, 99, 102, 106, 108, 109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 96 [Instr 96]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 37, LST: 62, Slack: 25
+  Predecessors: [2, 3, 47, 51, 95]
+  Successors: [98, 99, 108, 112, 180, 184, 198]
+
+Node 97 [Instr 97]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [98]
+
+Node 98 [Instr 98]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 40, LST: 142, Slack: 102
+  Predecessors: [97, 96]
+  Successors: []
+
+Node 99 [Instr 99]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 40, LST: 65, Slack: 25
+  Predecessors: [2, 3, 40, 45, 47, 48, 51, 88, 93, 95, 96]
+  Successors: [102, 106, 108, 109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 100 [Instr 100]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 101 [Instr 101]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 106, Slack: 106
+  Predecessors: []
+  Successors: [104]
+
+Node 102 [Instr 102]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 45, LST: 72, Slack: 27
+  Predecessors: [2, 3, 47, 51, 95, 99]
+  Successors: [103, 108, 112, 180, 184, 198]
+
+Node 103 [Instr 103]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 48, LST: 106, Slack: 58
+  Predecessors: [102]
+  Successors: [104]
+
+Node 104 [Instr 104]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 50, LST: 108, Slack: 58
+  Predecessors: [101, 103]
+  Successors: [105]
+
+Node 105 [Instr 105]: sw rs1=a5 rs2=zero
+  Latency: 5, EST: 110, LST: 110, Slack: 0 [CRITICAL PATH]
+  Predecessors: [104, 14, 20, 22, 25, 28, 30, 44, 62, 68, 70, 73, 76, 78, 92]
+  Successors: [141, 146, 171, 190, 195]
+
+Node 106 [Instr 106]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 45, LST: 70, Slack: 25
+  Predecessors: [2, 3, 47, 51, 95, 99]
+  Successors: [107, 108, 112, 180, 184, 198]
+
+Node 107 [Instr 107]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 48, LST: 73, Slack: 25
+  Predecessors: [106]
+  Successors: [108]
+
+Node 108 [Instr 108]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 50, LST: 75, Slack: 25
+  Predecessors: [2, 107, 3, 40, 45, 47, 48, 51, 88, 93, 95, 96, 99, 102, 106]
+  Successors: [109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 109 [Instr 109]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 55, LST: 80, Slack: 25
+  Predecessors: [2, 3, 47, 51, 95, 99, 108]
+  Successors: [111, 112, 180, 184, 198]
+
+Node 110 [Instr 110]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [111]
+
+Node 111 [Instr 111]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 58, LST: 142, Slack: 84
+  Predecessors: [110, 109]
+  Successors: []
+
+Node 112 [Instr 112]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 58, LST: 83, Slack: 25
+  Predecessors: [2, 3, 40, 45, 47, 48, 51, 88, 93, 95, 96, 99, 102, 106, 108, 109]
+  Successors: [119, 157, 178, 180, 181, 184, 187, 192, 196, 198, 199]
+
+Node 113 [Instr 113]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 114 [Instr 114]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 4, LST: 93, Slack: 89
+  Predecessors: [2]
+  Successors: [134, 163, 172, 174, 175]
+
+Node 115 [Instr 115]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 116 [Instr 116]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 4, LST: 114, Slack: 110
+  Predecessors: [2]
+  Successors: [148, 150, 170]
+
+Node 117 [Instr 117]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 4, LST: 83, Slack: 79
+  Predecessors: [2]
+  Successors: [125, 128, 151, 153, 154]
+
+Node 118 [Instr 118]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 119 [Instr 119]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 63, LST: 88, Slack: 25
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112]
+  Successors: [120, 122, 180, 184, 198]
+
+Node 120 [Instr 120]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 66, LST: 91, Slack: 25
+  Predecessors: [119]
+  Successors: [121]
+
+Node 121 [Instr 121]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 68, LST: 93, Slack: 25
+  Predecessors: [120]
+  Successors: [122]
+
+Node 122 [Instr 122]: add rd=a5 rs1=a5 rs2=a4
+  Latency: 2, EST: 70, LST: 95, Slack: 25
+  Predecessors: [121, 119]
+  Successors: [123]
+
+Node 123 [Instr 123]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 72, LST: 97, Slack: 25
+  Predecessors: [122]
+  Successors: [124]
+
+Node 124 [Instr 124]: addi rd=a4 rs1=a5
+  Latency: 2, EST: 74, LST: 99, Slack: 25
+  Predecessors: [123]
+  Successors: [126]
+
+Node 125 [Instr 125]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 98, Slack: 89
+  Predecessors: [2, 117]
+  Successors: [126, 153]
+
+Node 126 [Instr 126]: add rd=a5 rs1=a5 rs2=a4
+  Latency: 2, EST: 76, LST: 101, Slack: 25
+  Predecessors: [125, 124]
+  Successors: [127]
+
+Node 127 [Instr 127]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 78, LST: 103, Slack: 25
+  Predecessors: [2, 126]
+  Successors: [138]
+
+Node 128 [Instr 128]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 9, LST: 88, Slack: 79
+  Predecessors: [2, 117]
+  Successors: [129, 131, 153]
+
+Node 129 [Instr 129]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 12, LST: 91, Slack: 79
+  Predecessors: [128]
+  Successors: [130]
+
+Node 130 [Instr 130]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 14, LST: 93, Slack: 79
+  Predecessors: [129]
+  Successors: [131]
+
+Node 131 [Instr 131]: add rd=a5 rs1=a5 rs2=a4
+  Latency: 2, EST: 16, LST: 95, Slack: 79
+  Predecessors: [130, 128]
+  Successors: [132]
+
+Node 132 [Instr 132]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 18, LST: 97, Slack: 79
+  Predecessors: [131]
+  Successors: [133]
+
+Node 133 [Instr 133]: addi rd=a4 rs1=a5
+  Latency: 2, EST: 20, LST: 99, Slack: 79
+  Predecessors: [132]
+  Successors: [135]
+
+Node 134 [Instr 134]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 98, Slack: 89
+  Predecessors: [2, 114]
+  Successors: [135, 174]
+
+Node 135 [Instr 135]: add rd=a5 rs1=a5 rs2=a4
+  Latency: 2, EST: 22, LST: 101, Slack: 79
+  Predecessors: [134, 133]
+  Successors: [136]
+
+Node 136 [Instr 136]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 24, LST: 103, Slack: 79
+  Predecessors: [2, 135]
+  Successors: [143]
+
+Node 137 [Instr 137]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 111, Slack: 111
+  Predecessors: []
+  Successors: [140]
+
+Node 138 [Instr 138]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 83, LST: 108, Slack: 25
+  Predecessors: [2, 127]
+  Successors: [139]
+
+Node 139 [Instr 139]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 86, LST: 111, Slack: 25
+  Predecessors: [138]
+  Successors: [140]
+
+Node 140 [Instr 140]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 88, LST: 113, Slack: 25
+  Predecessors: [137, 139]
+  Successors: [141]
+
+Node 141 [Instr 141]: lw rd=a4 rs1=a5
+  Latency: 3, EST: 115, LST: 115, Slack: 0 [CRITICAL PATH]
+  Predecessors: [140, 20, 28, 44, 68, 76, 92, 105]
+  Successors: [147, 171, 195]
+
+Node 142 [Instr 142]: addi rd=a3 rs1=zero
+  Latency: 2, EST: 0, LST: 111, Slack: 111
+  Predecessors: []
+  Successors: [145]
+
+Node 143 [Instr 143]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 29, LST: 108, Slack: 79
+  Predecessors: [2, 136]
+  Successors: [144]
+
+Node 144 [Instr 144]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 32, LST: 111, Slack: 79
+  Predecessors: [143]
+  Successors: [145]
+
+Node 145 [Instr 145]: add rd=a5 rs1=a3 rs2=a5
+  Latency: 2, EST: 34, LST: 113, Slack: 79
+  Predecessors: [142, 144]
+  Successors: [146]
+
+Node 146 [Instr 146]: lw rd=a5 rs1=a5
+  Latency: 3, EST: 115, LST: 115, Slack: 0
+  Predecessors: [145, 20, 28, 44, 68, 76, 92, 105]
+  Successors: [147, 171, 195]
+
+Node 147 [Instr 147]: mul rd=a5 rs1=a4 rs2=a5
+  Latency: 4, EST: 118, LST: 118, Slack: 0 [CRITICAL PATH]
+  Predecessors: [141, 146]
+  Successors: [149]
+
+Node 148 [Instr 148]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 9, LST: 119, Slack: 110
+  Predecessors: [2, 116]
+  Successors: [149, 150]
+
+Node 149 [Instr 149]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 122, LST: 122, Slack: 0 [CRITICAL PATH]
+  Predecessors: [148, 147]
+  Successors: [150]
+
+Node 150 [Instr 150]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 124, LST: 124, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 149, 116, 148]
+  Successors: [170]
+
+Node 151 [Instr 151]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 129, Slack: 120
+  Predecessors: [2, 117]
+  Successors: [152, 153]
+
+Node 152 [Instr 152]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 12, LST: 132, Slack: 120
+  Predecessors: [151]
+  Successors: [153]
+
+Node 153 [Instr 153]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 14, LST: 134, Slack: 120
+  Predecessors: [2, 152, 117, 125, 128, 151]
+  Successors: [154]
+
+Node 154 [Instr 154]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 19, LST: 139, Slack: 120
+  Predecessors: [2, 117, 153]
+  Successors: [156]
+
+Node 155 [Instr 155]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [156]
+
+Node 156 [Instr 156]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 22, LST: 142, Slack: 120
+  Predecessors: [155, 154]
+  Successors: []
+
+Node 157 [Instr 157]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 63, LST: 105, Slack: 42
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112]
+  Successors: [158, 160, 180, 184, 198]
+
+Node 158 [Instr 158]: addi rd=a5 rs1=a4
+  Latency: 2, EST: 66, LST: 108, Slack: 42
+  Predecessors: [157]
+  Successors: [159]
+
+Node 159 [Instr 159]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 68, LST: 110, Slack: 42
+  Predecessors: [158]
+  Successors: [160]
+
+Node 160 [Instr 160]: add rd=a5 rs1=a5 rs2=a4
+  Latency: 2, EST: 70, LST: 112, Slack: 42
+  Predecessors: [159, 157]
+  Successors: [161]
+
+Node 161 [Instr 161]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 72, LST: 114, Slack: 42
+  Predecessors: [160]
+  Successors: [162]
+
+Node 162 [Instr 162]: addi rd=a4 rs1=a5
+  Latency: 2, EST: 74, LST: 116, Slack: 42
+  Predecessors: [161]
+  Successors: [164]
+
+Node 163 [Instr 163]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 115, Slack: 106
+  Predecessors: [2, 114]
+  Successors: [164, 174]
+
+Node 164 [Instr 164]: add rd=a5 rs1=a5 rs2=a4
+  Latency: 2, EST: 76, LST: 118, Slack: 42
+  Predecessors: [163, 162]
+  Successors: [165]
+
+Node 165 [Instr 165]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 78, LST: 120, Slack: 42
+  Predecessors: [2, 164]
+  Successors: [167]
+
+Node 166 [Instr 166]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 128, Slack: 128
+  Predecessors: []
+  Successors: [169]
+
+Node 167 [Instr 167]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 83, LST: 125, Slack: 42
+  Predecessors: [2, 165]
+  Successors: [168]
+
+Node 168 [Instr 168]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 86, LST: 128, Slack: 42
+  Predecessors: [167]
+  Successors: [169]
+
+Node 169 [Instr 169]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 88, LST: 130, Slack: 42
+  Predecessors: [166, 168]
+  Successors: [171]
+
+Node 170 [Instr 170]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 129, LST: 129, Slack: 0 [CRITICAL PATH]
+  Predecessors: [2, 116, 150]
+  Successors: [171]
+
+Node 171 [Instr 171]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 132, LST: 132, Slack: 0 [CRITICAL PATH]
+  Predecessors: [169, 170, 14, 20, 22, 25, 28, 30, 44, 62, 68, 70, 73, 76, 78, 92, 105, 141, 146]
+  Successors: [190, 195]
+
+Node 172 [Instr 172]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 9, LST: 129, Slack: 120
+  Predecessors: [2, 114]
+  Successors: [173, 174]
+
+Node 173 [Instr 173]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 12, LST: 132, Slack: 120
+  Predecessors: [172]
+  Successors: [174]
+
+Node 174 [Instr 174]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 14, LST: 134, Slack: 120
+  Predecessors: [2, 173, 114, 134, 163, 172]
+  Successors: [175]
+
+Node 175 [Instr 175]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 19, LST: 139, Slack: 120
+  Predecessors: [2, 114, 174]
+  Successors: [177]
+
+Node 176 [Instr 176]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [177]
+
+Node 177 [Instr 177]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 22, LST: 142, Slack: 120
+  Predecessors: [176, 175]
+  Successors: []
+
+Node 178 [Instr 178]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 63, LST: 111, Slack: 48
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112]
+  Successors: [179, 180, 184, 198]
+
+Node 179 [Instr 179]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 66, LST: 114, Slack: 48
+  Predecessors: [178]
+  Successors: [180]
+
+Node 180 [Instr 180]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 68, LST: 116, Slack: 48
+  Predecessors: [2, 179, 3, 40, 45, 47, 48, 51, 88, 93, 95, 96, 99, 102, 106, 108, 109, 112, 119, 157, 178]
+  Successors: [181, 184, 187, 192, 196, 198, 199]
+
+Node 181 [Instr 181]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 73, LST: 121, Slack: 48
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112, 180]
+  Successors: [183, 184, 198]
+
+Node 182 [Instr 182]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [183]
+
+Node 183 [Instr 183]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 76, LST: 142, Slack: 66
+  Predecessors: [182, 181]
+  Successors: []
+
+Node 184 [Instr 184]: sw rs1=s0 rs2=zero
+  Latency: 5, EST: 76, LST: 124, Slack: 48
+  Predecessors: [2, 3, 40, 45, 47, 48, 51, 88, 93, 95, 96, 99, 102, 106, 108, 109, 112, 119, 157, 178, 180, 181]
+  Successors: [187, 192, 196, 198, 199]
+
+Node 185 [Instr 185]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+Node 186 [Instr 186]: addi rd=a4 rs1=zero
+  Latency: 2, EST: 0, LST: 133, Slack: 133
+  Predecessors: []
+  Successors: [189]
+
+Node 187 [Instr 187]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 81, LST: 130, Slack: 49
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112, 180, 184]
+  Successors: [188, 198]
+
+Node 188 [Instr 188]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 84, LST: 133, Slack: 49
+  Predecessors: [187]
+  Successors: [189]
+
+Node 189 [Instr 189]: add rd=a5 rs1=a4 rs2=a5
+  Latency: 2, EST: 86, LST: 135, Slack: 49
+  Predecessors: [186, 188]
+  Successors: [190]
+
+Node 190 [Instr 190]: lw rd=a4 rs1=a5
+  Latency: 3, EST: 137, LST: 137, Slack: 0 [CRITICAL PATH]
+  Predecessors: [189, 20, 28, 44, 68, 76, 92, 105, 171]
+  Successors: [195, 195]
+
+Node 191 [Instr 191]: addi rd=a3 rs1=zero
+  Latency: 2, EST: 0, LST: 136, Slack: 136
+  Predecessors: []
+  Successors: [194]
+
+Node 192 [Instr 192]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 81, LST: 131, Slack: 50
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112, 180, 184]
+  Successors: [193, 198]
+
+Node 193 [Instr 193]: slli rd=a5 rs1=a5
+  Latency: 2, EST: 84, LST: 136, Slack: 52
+  Predecessors: [192]
+  Successors: [194]
+
+Node 194 [Instr 194]: add rd=a5 rs1=a3 rs2=a5
+  Latency: 2, EST: 86, LST: 138, Slack: 52
+  Predecessors: [191, 193]
+  Successors: [195]
+
+Node 195 [Instr 195]: sw rs1=a5 rs2=a4
+  Latency: 5, EST: 140, LST: 140, Slack: 0 [CRITICAL PATH]
+  Predecessors: [194, 190, 14, 20, 22, 25, 28, 30, 44, 62, 68, 70, 73, 76, 78, 92, 105, 141, 146, 171, 190]
+  Successors: []
+
+Node 196 [Instr 196]: lw rd=a5 rs1=s0
+  Latency: 3, EST: 81, LST: 129, Slack: 48
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112, 180, 184]
+  Successors: [197, 198]
+
+Node 197 [Instr 197]: addi rd=a5 rs1=a5
+  Latency: 2, EST: 84, LST: 132, Slack: 48
+  Predecessors: [196]
+  Successors: [198]
+
+Node 198 [Instr 198]: sw rs1=s0 rs2=a5
+  Latency: 5, EST: 86, LST: 134, Slack: 48
+  Predecessors: [2, 197, 3, 40, 45, 47, 48, 51, 88, 93, 95, 96, 99, 102, 106, 108, 109, 112, 119, 157, 178, 180, 181, 184, 187, 192, 196]
+  Successors: [199]
+
+Node 199 [Instr 199]: lw rd=a4 rs1=s0
+  Latency: 3, EST: 91, LST: 139, Slack: 48
+  Predecessors: [2, 3, 47, 51, 95, 99, 108, 112, 180, 184, 198]
+  Successors: [201]
+
+Node 200 [Instr 200]: addi rd=a5 rs1=zero
+  Latency: 2, EST: 0, LST: 140, Slack: 140
+  Predecessors: []
+  Successors: [201]
+
+Node 201 [Instr 201]: bge rs1=a5 rs2=a4
+  Latency: 3, EST: 94, LST: 142, Slack: 48
+  Predecessors: [200, 199]
+  Successors: []
+
+Node 202 [Instr 202]: jal rd=zero
+  Latency: 3, EST: 0, LST: 142, Slack: 142
+  Predecessors: []
+  Successors: []
+
+
+-----------------------
+phase2_register_pressure.txt
+
+# Register Pressure Analysis
+
+Available Registers: 32
+Maximum Pressure: 5
+Average Pressure: 3
+Spilling Required: NO
+
+## Live Ranges:
+a3: [0 - 86] length=86
+a4: [2 - 94] length=92
+a5: [0 - 94] length=94
+s0: [0 - 91] length=91
+sp: [0 - 2] length=2
+
+## Pressure at Each Time:
+Time 0: 4 registers live (a3, a5, s0, sp)
+Time 1: 4 registers live (a3, a5, s0, sp)
+Time 2: 5 registers live (a3, a4, a5, s0, sp)
+Time 3: 4 registers live (a3, a4, a5, s0)
+Time 4: 4 registers live (a3, a4, a5, s0)
+Time 5: 4 registers live (a3, a4, a5, s0)
+Time 6: 4 registers live (a3, a4, a5, s0)
+Time 7: 4 registers live (a3, a4, a5, s0)
+Time 8: 4 registers live (a3, a4, a5, s0)
+Time 9: 4 registers live (a3, a4, a5, s0)
+Time 10: 4 registers live (a3, a4, a5, s0)
+Time 11: 4 registers live (a3, a4, a5, s0)
+Time 12: 4 registers live (a3, a4, a5, s0)
+Time 13: 4 registers live (a3, a4, a5, s0)
+Time 14: 4 registers live (a3, a4, a5, s0)
+Time 15: 4 registers live (a3, a4, a5, s0)
+Time 16: 4 registers live (a3, a4, a5, s0)
+Time 17: 4 registers live (a3, a4, a5, s0)
+Time 18: 4 registers live (a3, a4, a5, s0)
+Time 19: 4 registers live (a3, a4, a5, s0)
+Time 20: 4 registers live (a3, a4, a5, s0)
+Time 21: 4 registers live (a3, a4, a5, s0)
+Time 22: 4 registers live (a3, a4, a5, s0)
+Time 23: 4 registers live (a3, a4, a5, s0)
+Time 24: 4 registers live (a3, a4, a5, s0)
+Time 25: 4 registers live (a3, a4, a5, s0)
+Time 26: 4 registers live (a3, a4, a5, s0)
+Time 27: 4 registers live (a3, a4, a5, s0)
+Time 28: 4 registers live (a3, a4, a5, s0)
+Time 29: 4 registers live (a3, a4, a5, s0)
+Time 30: 4 registers live (a3, a4, a5, s0)
+Time 31: 4 registers live (a3, a4, a5, s0)
+Time 32: 4 registers live (a3, a4, a5, s0)
+Time 33: 4 registers live (a3, a4, a5, s0)
+Time 34: 4 registers live (a3, a4, a5, s0)
+Time 35: 4 registers live (a3, a4, a5, s0)
+Time 36: 4 registers live (a3, a4, a5, s0)
+Time 37: 4 registers live (a3, a4, a5, s0)
+Time 38: 4 registers live (a3, a4, a5, s0)
+Time 39: 4 registers live (a3, a4, a5, s0)
+Time 40: 4 registers live (a3, a4, a5, s0)
+Time 41: 4 registers live (a3, a4, a5, s0)
+Time 42: 4 registers live (a3, a4, a5, s0)
+Time 43: 4 registers live (a3, a4, a5, s0)
+Time 44: 4 registers live (a3, a4, a5, s0)
+Time 45: 4 registers live (a3, a4, a5, s0)
+Time 46: 4 registers live (a3, a4, a5, s0)
+Time 47: 4 registers live (a3, a4, a5, s0)
+Time 48: 4 registers live (a3, a4, a5, s0)
+Time 49: 4 registers live (a3, a4, a5, s0)
+Time 50: 4 registers live (a3, a4, a5, s0)
+Time 51: 4 registers live (a3, a4, a5, s0)
+Time 52: 4 registers live (a3, a4, a5, s0)
+Time 53: 4 registers live (a3, a4, a5, s0)
+Time 54: 4 registers live (a3, a4, a5, s0)
+Time 55: 4 registers live (a3, a4, a5, s0)
+Time 56: 4 registers live (a3, a4, a5, s0)
+Time 57: 4 registers live (a3, a4, a5, s0)
+Time 58: 4 registers live (a3, a4, a5, s0)
+Time 59: 4 registers live (a3, a4, a5, s0)
+Time 60: 4 registers live (a3, a4, a5, s0)
+Time 61: 4 registers live (a3, a4, a5, s0)
+Time 62: 4 registers live (a3, a4, a5, s0)
+Time 63: 4 registers live (a3, a4, a5, s0)
+Time 64: 4 registers live (a3, a4, a5, s0)
+Time 65: 4 registers live (a3, a4, a5, s0)
+Time 66: 4 registers live (a3, a4, a5, s0)
+Time 67: 4 registers live (a3, a4, a5, s0)
+Time 68: 4 registers live (a3, a4, a5, s0)
+Time 69: 4 registers live (a3, a4, a5, s0)
+Time 70: 4 registers live (a3, a4, a5, s0)
+Time 71: 4 registers live (a3, a4, a5, s0)
+Time 72: 4 registers live (a3, a4, a5, s0)
+Time 73: 4 registers live (a3, a4, a5, s0)
+Time 74: 4 registers live (a3, a4, a5, s0)
+Time 75: 4 registers live (a3, a4, a5, s0)
+Time 76: 4 registers live (a3, a4, a5, s0)
+Time 77: 4 registers live (a3, a4, a5, s0)
+Time 78: 4 registers live (a3, a4, a5, s0)
+Time 79: 4 registers live (a3, a4, a5, s0)
+Time 80: 4 registers live (a3, a4, a5, s0)
+Time 81: 4 registers live (a3, a4, a5, s0)
+Time 82: 4 registers live (a3, a4, a5, s0)
+Time 83: 4 registers live (a3, a4, a5, s0)
+Time 84: 4 registers live (a3, a4, a5, s0)
+Time 85: 4 registers live (a3, a4, a5, s0)
+Time 86: 4 registers live (a3, a4, a5, s0)
+Time 87: 3 registers live (a4, a5, s0)
+Time 88: 3 registers live (a4, a5, s0)
+Time 89: 3 registers live (a4, a5, s0)
+Time 90: 3 registers live (a4, a5, s0)
+Time 91: 3 registers live (a4, a5, s0)
+Time 92: 2 registers live (a4, a5)
+Time 93: 2 registers live (a4, a5)
+Time 94: 2 registers live (a4, a5)
+
+-----------------------
+phase3_arbiter_stats.txt
+
+╔════════════════════════════════════════════════════════════════╗
+║              BUS ARBITER STATISTICS                            ║
+╚════════════════════════════════════════════════════════════════╝
+
+=== ARBITER CONFIGURATION ===
+Policy: round_robin
+Grant Latency: 1 cycle(s)
+Contention Penalty: 1 cycle(s)
+Number of PEs: 4
+
+=== BUS USAGE STATISTICS ===
+Total Bus Accesses: 120
+Total Contentions: 0
+Bus Utilization: 65.93%
+Makespan: 186 cycles
+
+Contention Rate: 0.00%
+Average Requests per Access: 1.00
+
+=== PER-PE BUS USAGE ===
+   PE |     Accesses |  Contentions |   Usage %
+----------------------------------------------
+    0 |           36 |            0 |     30.00%
+    1 |           33 |            0 |     27.50%
+    2 |           27 |            0 |     22.50%
+    3 |           24 |            0 |     20.00%
+
+=== ANALYSIS ===
+✓ LOW contention: Bus arbitration is efficient.
+
+=== DETAILED GRANT HISTORY ===
+Note: See phase3_schedule.txt for instruction-level bus access patterns.
+
+-----------------------
+phase3_combined.txt
+
+╔════════════════════════════════════════════════════════════════╗
+║          CGRA COMPILER - PHASE 3 COMBINED OUTPUT              ║
+╚════════════════════════════════════════════════════════════════╝
+
+═══════════════════════════════════════════════════════════════
+  COMPILATION SUMMARY
+═══════════════════════════════════════════════════════════════
+
+Total Instructions Parsed: 203
+Instructions Scheduled: 203
+Target Hardware: 4 PEs, 32 registers
+
+═══════════════════════════════════════════════════════════════
+  PERFORMANCE METRICS
+═══════════════════════════════════════════════════════════════
+
+Makespan: 186 cycles
+IPC: 1.0914
+PE Utilization: 64.78%
+Speedup: 3.18x
+Efficiency: 79.44%
+
+═══════════════════════════════════════════════════════════════
+  PE STATISTICS
+═══════════════════════════════════════════════════════════════
+
+PE0: 54 instructions, 84.4% utilized
+PE1: 96 instructions, 81.7% utilized
+PE2: 29 instructions, 51.1% utilized
+PE3: 24 instructions, 41.9% utilized
+
+═══════════════════════════════════════════════════════════════
+  For detailed information, see individual phase3_*.txt files
+═══════════════════════════════════════════════════════════════
+
+-----------------------
+phase3_hardware.txt
+
+# Hardware Configuration Used
+
+=== CGRA Configuration ===
+Number of PEs: 4
+Registers per PE: 8
+Total Registers: 32
+Memory Banks: 4
+
+=== Register Partitioning ===
+PE0: x0 - x7
+PE1: x8 - x15
+PE2: x16 - x23
+PE3: x24 - x31
+
+-----------------------
+phase3_mapping.txt
+
+# PE Mapping and Statistics
+
+=== GLOBAL METRICS ===
+Total Instructions: 203
+Makespan: 186 cycles
+Number of PEs: 4
+IPC (Instructions Per Cycle): 1.0914
+Overall Utilization: 64.78%
+
+=== PER-PE STATISTICS ===
+
+PE0:
+  Instructions Executed: 54
+  Total Cycles: 186
+  Busy Cycles: 157
+  Idle Cycles: 29
+  Utilization: 84.41%
+  Instructions: [4, 202, 185, 118, 115, 113, 100, 80, 52, 32, 0, 1, 137, 75, 61, 21, 2, 116, 172, 125, 174, 175, 177, 156, 136, 56, 63, 22, 23, 96, 98, 31, 33, 35, 36, 38, 119, 180, 181, 183, 127, 138, 73, 74, 76, 79, 83, 91, 86, 105, 141, 150, 171, 195]
+
+PE1:
+  Instructions Executed: 96
+  Total Cycles: 186
+  Busy Cycles: 152
+  Idle Cycles: 34
+  Utilization: 81.72%
+  Instructions: [85, 57, 53, 9, 5, 200, 58, 54, 10, 6, 110, 59, 55, 11, 7, 191, 142, 77, 67, 27, 13, 12, 151, 152, 173, 128, 153, 129, 130, 131, 154, 132, 133, 41, 46, 135, 42, 15, 143, 16, 144, 18, 145, 88, 89, 94, 90, 26, 28, 30, 102, 103, 107, 104, 34, 109, 111, 44, 179, 158, 159, 120, 160, 121, 64, 161, 122, 162, 123, 66, 164, 124, 165, 126, 192, 193, 188, 197, 194, 189, 168, 139, 169, 140, 199, 201, 78, 81, 82, 84, 92, 146, 147, 149, 170, 190]
+
+PE2:
+  Instructions Executed: 29
+  Total Cycles: 186
+  Busy Cycles: 95
+  Idle Cycles: 91
+  Utilization: 51.08%
+  Instructions: [176, 49, 37, 186, 101, 69, 39, 24, 114, 148, 134, 60, 65, 40, 8, 48, 50, 20, 25, 99, 106, 108, 112, 178, 62, 184, 187, 167, 71]
+
+PE3:
+  Instructions Executed: 24
+  Total Cycles: 186
+  Busy Cycles: 78
+  Idle Cycles: 108
+  Utilization: 41.94%
+  Instructions: [155, 182, 97, 166, 87, 72, 29, 19, 117, 163, 17, 14, 3, 45, 47, 51, 93, 95, 43, 157, 68, 196, 70, 198]
+
+=== SUMMARY TABLE ===
+PE | Instructions | Busy Cycles | Idle Cycles | Utilization
+---|--------------|-------------|-------------|------------
+ 0 |           54 |         157 |          29 |      84.41%
+ 1 |           96 |         152 |          34 |      81.72%
+ 2 |           29 |          95 |          91 |      51.08%
+ 3 |           24 |          78 |         108 |      41.94%
+
+-----------------------
+phase3_metrics.txt
+
+# Performance Metrics
+
+=== Execution Metrics ===
+Total Instructions: 203
+Scheduled Instructions: 203
+Makespan (cycles): 186
+IPC (Instructions Per Cycle): 1.0914
+
+=== Resource Utilization ===
+Number of PEs: 4
+Overall PE Utilization: 64.78%
+
+=== Per-PE Utilization ===
+PE0:  84.41% (54 instructions)
+PE1:  81.72% (96 instructions)
+PE2:  51.08% (29 instructions)
+PE3:  41.94% (24 instructions)
+
+=== Performance Analysis ===
+Theoretical Speedup: 3.18x
+Parallel Efficiency: 79.44%
+Sequential Execution Time (est.): 591 cycles
+Parallel Execution Time: 186 cycles
+Time Saved: 405 cycles (68.5%)
+
+-----------------------
+phase3_register_init_report.txt
+
+# Análisis de Registros Usados
+# Total de registros únicos: 4
+
+=== Registros Detectados ===
+  a3
+  a4
+  a5
+  s0
+
+=== Bloque de Inicialización Generado ===
+
+# ============================================
+# BLOQUE DE INICIALIZACIÓN DE REGISTROS
+# Inicializa todos los registros usados a 0
+# para evitar valores indefinidos (X)
+# ============================================
+
+    addi a3, zero, 0
+    addi a4, zero, 0
+    addi a5, zero, 0
+    addi s0, zero, 0
+
+# ============================================
+# FIN BLOQUE DE INICIALIZACIÓN
+# ============================================
+
+
+-----------------------
+phase3_register_partitioning.txt
+
+# Register Partitioning
+# Total PEs: 4
+# Total Registers: 32
+
+=== PE0 ===
+Range: x0 - x7
+Total: 8 registers
+Aliases: gp, ra, sp, t0, t1, t2, tp, zero
+
+=== PE1 ===
+Range: x8 - x15
+Total: 8 registers
+Aliases: a0, a1, a2, a3, a4, a5, s0, s1
+
+=== PE2 ===
+Range: x16 - x23
+Total: 8 registers
+Aliases: a6, a7, s2, s3, s4, s5, s6, s7
+
+=== PE3 ===
+Range: x24 - x31
+Total: 8 registers
+Aliases: s10, s11, s8, s9, t3, t4, t5, t6
+
+
+-----------------------
+phase3_schedule.txt
+
+# CGRA Schedule Output
+# Total Instructions: 203
+# Makespan: 186 cycles
+# Number of PEs: 4
+
+# Format: CYCLE | PE | INST_ID | OPCODE | RD | RS1 | RS2 | IMM | LATENCY | BUS | CRITICAL
+# ---------------------------------------------------------------------------------------
+
+    0 |  0 |       4 | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 202     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 185     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 118     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 115     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 113     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 100     | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 80      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 52      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 0  | 32      | jal        | zero  | -     | -     | -      | 3       | NO  | -
+0     | 1  | 85      | addi       | a5    | zero  | -     | 29     | 2       | YES | -
+0     | 2  | 176     | addi       | a5    | zero  | -     | 9      | 2       | YES | -
+0     | 3  | 155     | addi       | a5    | zero  | -     | 9      | 2       | YES | -
+0     | 1  | 57      | lui        | a5    | -     | -     | 3      | 1       | NO  | -
+0     | 1  | 53      | lui        | a5    | -     | -     | 269413 | 1       | NO  | -
+0     | 1  | 9       | lui        | a5    | -     | -     | 3      | 1       | NO  | -
+0     | 0  | 0       | addi       | sp    | sp    | -     | -64    | 2       | NO  | -
+0     | 1  | 5       | lui        | a5    | -     | -     | 269413 | 1       | NO  | CRIT
+1     | 1  | 200     | addi       | a5    | zero  | -     | 99     | 2       | YES | -
+1     | 1  | 58      | addi       | a5    | a5    | -     | 0      | 2       | NO  | -
+1     | 1  | 54      | addi       | a5    | a5    | -     | 0      | 2       | NO  | -
+1     | 1  | 10      | addi       | a5    | a5    | -     | 0      | 2       | NO  | -
+1     | 1  | 6       | addi       | a5    | a5    | -     | 0      | 2       | NO  | CRIT
+2     | 0  | 1       | sw         | -     | sp    | s0    | 60     | 5       | YES | -
+2     | 2  | 49      | addi       | a5    | zero  | -     | 99     | 2       | YES | -
+2     | 3  | 182     | addi       | a5    | zero  | -     | 9      | 2       | YES | -
+3     | 1  | 110     | addi       | a5    | zero  | -     | 99     | 2       | YES | -
+3     | 1  | 59      | addi       | a5    | a5    | -     | 57     | 2       | NO  | -
+3     | 1  | 55      | addi       | a5    | a5    | -     | -403   | 2       | NO  | -
+3     | 1  | 11      | addi       | a5    | a5    | -     | 57     | 2       | NO  | -
+3     | 1  | 7       | addi       | a5    | a5    | -     | -403   | 2       | NO  | CRIT
+4     | 2  | 37      | addi       | a5    | zero  | -     | 29     | 2       | YES | -
+4     | 3  | 97      | addi       | a5    | zero  | -     | 99     | 2       | YES | -
+5     | 1  | 191     | addi       | a3    | zero  | -     | 0      | 2       | YES | -
+6     | 2  | 186     | addi       | a4    | zero  | -     | 0      | 2       | YES | -
+6     | 3  | 166     | addi       | a4    | zero  | -     | 0      | 2       | YES | -
+7     | 1  | 142     | addi       | a3    | zero  | -     | 0      | 2       | YES | -
+7     | 0  | 137     | addi       | a4    | zero  | -     | 0      | 2       | YES | -
+8     | 2  | 101     | addi       | a4    | zero  | -     | 0      | 2       | YES | -
+8     | 3  | 87      | addi       | a4    | zero  | -     | 0      | 2       | YES | -
+9     | 1  | 77      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+9     | 0  | 75      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+10    | 2  | 69      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+10    | 3  | 72      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+11    | 1  | 67      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+11    | 0  | 61      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+12    | 2  | 39      | addi       | a4    | zero  | -     | 0      | 2       | YES | -
+12    | 3  | 29      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+13    | 1  | 27      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+13    | 0  | 21      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+14    | 2  | 24      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+14    | 3  | 19      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+15    | 1  | 13      | addi       | a5    | zero  | -     | 0      | 2       | YES | -
+15    | 0  | 2       | addi       | s0    | sp    | -     | 64     | 2       | YES | -
+17    | 0  | 116     | sw         | -     | s0    | zero  | -36    | 5       | YES | -
+17    | 1  | 12      | sw         | -     | s0    | a5    | -56    | 5       | YES | -
+17    | 2  | 114     | sw         | -     | s0    | zero  | -24    | 5       | YES | -
+17    | 3  | 117     | sw         | -     | s0    | zero  | -28    | 5       | YES | -
+22    | 1  | 151     | lw         | a5    | s0    | -     | -28    | 3       | YES | -
+22    | 0  | 172     | lw         | a5    | s0    | -     | -24    | 3       | YES | -
+22    | 2  | 148     | lw         | a4    | s0    | -     | -36    | 3       | YES | -
+22    | 3  | 163     | lw         | a5    | s0    | -     | -24    | 3       | YES | -
+25    | 1  | 152     | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+25    | 1  | 173     | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+25    | 0  | 125     | lw         | a5    | s0    | -     | -28    | 3       | YES | -
+25    | 2  | 134     | lw         | a5    | s0    | -     | -24    | 3       | YES | -
+25    | 3  | 17      | lw         | a5    | s0    | -     | -56    | 3       | YES | -
+27    | 1  | 128     | lw         | a4    | s0    | -     | -28    | 3       | YES | -
+28    | 0  | 174     | sw         | -     | s0    | a5    | -24    | 5       | YES | -
+28    | 2  | 60      | sw         | -     | s0    | a5    | -56    | 5       | YES | -
+28    | 3  | 14      | lw         | a4    | a5    | -     | 0      | 3       | YES | -
+30    | 1  | 153     | sw         | -     | s0    | a5    | -28    | 5       | YES | -
+30    | 1  | 129     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+31    | 3  | 3       | sw         | -     | s0    | zero  | -20    | 5       | YES | -
+32    | 1  | 130     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+33    | 0  | 175     | lw         | a4    | s0    | -     | -24    | 3       | YES | -
+33    | 2  | 65      | lw         | a5    | s0    | -     | -56    | 3       | YES | -
+34    | 1  | 131     | add        | a5    | a5    | a4    | -      | 2       | NO  | -
+36    | 0  | 177     | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+36    | 1  | 154     | lw         | a4    | s0    | -     | -28    | 3       | YES | -
+36    | 1  | 132     | slli       | a5    | a5    | -     | 1      | 2       | NO  | -
+36    | 2  | 40      | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+36    | 3  | 45      | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+38    | 1  | 133     | addi       | a4    | a5    | -     | 0      | 2       | NO  | -
+39    | 0  | 156     | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+39    | 1  | 41      | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+39    | 1  | 46      | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+39    | 2  | 8       | sw         | -     | s0    | a5    | -52    | 5       | YES | CRIT
+40    | 1  | 135     | add        | a5    | a5    | a4    | -      | 2       | NO  | -
+41    | 1  | 42      | add        | a5    | a4    | a5    | -      | 2       | NO  | -
+41    | 3  | 47      | sw         | -     | s0    | a5    | -20    | 5       | YES | -
+42    | 0  | 136     | sw         | -     | s0    | a5    | -48    | 5       | YES | -
+44    | 1  | 15      | lw         | a5    | s0    | -     | -52    | 3       | YES | CRIT
+46    | 2  | 48      | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+47    | 1  | 143     | lw         | a5    | s0    | -     | -48    | 3       | YES | -
+47    | 0  | 56      | sw         | -     | s0    | a5    | -52    | 5       | YES | -
+47    | 1  | 16      | mul        | a4    | a4    | a5    | -      | 4       | NO  | CRIT
+49    | 2  | 50      | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+49    | 3  | 51      | sw         | -     | s0    | zero  | -20    | 5       | YES | -
+50    | 1  | 144     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+51    | 1  | 18      | add        | a4    | a4    | a5    | -      | 2       | NO  | CRIT
+52    | 1  | 145     | add        | a5    | a3    | a5    | -      | 2       | NO  | -
+52    | 0  | 63      | lw         | a5    | s0    | -     | -52    | 3       | YES | -
+53    | 2  | 20      | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+54    | 1  | 88      | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+54    | 3  | 93      | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+57    | 1  | 89      | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+57    | 1  | 94      | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+58    | 0  | 22      | lw         | a5    | a5    | -     | 0      | 3       | YES | -
+58    | 2  | 25      | lw         | a5    | a5    | -     | 0      | 3       | YES | CRIT
+59    | 1  | 90      | add        | a5    | a4    | a5    | -      | 2       | NO  | -
+59    | 3  | 95      | sw         | -     | s0    | a5    | -20    | 5       | YES | -
+61    | 0  | 23      | bge        | -     | a5    | zero  | -      | 3       | NO  | -
+61    | 1  | 26      | sub        | a4    | zero  | a5    | -      | 2       | YES | CRIT
+63    | 1  | 28      | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+64    | 0  | 96      | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+67    | 0  | 98      | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+67    | 2  | 99      | sw         | -     | s0    | zero  | -20    | 5       | YES | -
+68    | 1  | 30      | lw         | a5    | a5    | -     | 0      | 3       | YES | CRIT
+71    | 0  | 31      | sw         | -     | s0    | a5    | -32    | 5       | YES | CRIT
+72    | 1  | 102     | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+72    | 2  | 106     | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+75    | 1  | 103     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+75    | 1  | 107     | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+76    | 0  | 33      | lw         | a5    | s0    | -     | -32    | 3       | YES | CRIT
+77    | 1  | 104     | add        | a5    | a4    | a5    | -      | 2       | NO  | -
+77    | 2  | 108     | sw         | -     | s0    | a5    | -20    | 5       | YES | -
+79    | 1  | 34      | addi       | a5    | a5    | -     | -30    | 2       | NO  | CRIT
+81    | 0  | 35      | sw         | -     | s0    | a5    | -32    | 5       | YES | CRIT
+82    | 1  | 109     | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+85    | 1  | 111     | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+85    | 2  | 112     | sw         | -     | s0    | zero  | -20    | 5       | YES | -
+86    | 0  | 36      | lw         | a4    | s0    | -     | -32    | 3       | YES | -
+86    | 3  | 43      | lw         | a4    | s0    | -     | -32    | 3       | YES | CRIT
+89    | 0  | 38      | blt        | -     | a5    | a4    | -      | 3       | NO  | -
+89    | 1  | 44      | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+90    | 2  | 178     | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+90    | 3  | 157     | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+92    | 0  | 119     | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+93    | 1  | 179     | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+93    | 1  | 158     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+94    | 2  | 62      | lw         | a4    | a5    | -     | 0      | 3       | YES | CRIT
+95    | 1  | 159     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+95    | 1  | 120     | addi       | a5    | a4    | -     | 0      | 2       | NO  | -
+95    | 0  | 180     | sw         | -     | s0    | a5    | -20    | 5       | YES | -
+97    | 1  | 160     | add        | a5    | a5    | a4    | -      | 2       | NO  | -
+97    | 1  | 121     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+97    | 1  | 64      | mul        | a4    | a4    | a5    | -      | 4       | NO  | CRIT
+99    | 1  | 161     | slli       | a5    | a5    | -     | 1      | 2       | NO  | -
+99    | 1  | 122     | add        | a5    | a5    | a4    | -      | 2       | NO  | -
+100   | 0  | 181     | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+101   | 1  | 162     | addi       | a4    | a5    | -     | 0      | 2       | NO  | -
+101   | 1  | 123     | slli       | a5    | a5    | -     | 1      | 2       | NO  | -
+101   | 1  | 66      | add        | a4    | a4    | a5    | -      | 2       | NO  | CRIT
+103   | 0  | 183     | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+103   | 1  | 164     | add        | a5    | a5    | a4    | -      | 2       | NO  | -
+103   | 1  | 124     | addi       | a4    | a5    | -     | 0      | 2       | NO  | -
+103   | 2  | 184     | sw         | -     | s0    | zero  | -20    | 5       | YES | -
+103   | 3  | 68      | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+105   | 1  | 165     | sw         | -     | s0    | a5    | -40    | 5       | YES | -
+105   | 1  | 126     | add        | a5    | a5    | a4    | -      | 2       | NO  | -
+107   | 0  | 127     | sw         | -     | s0    | a5    | -44    | 5       | YES | -
+108   | 1  | 192     | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+108   | 2  | 187     | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+108   | 3  | 196     | lw         | a5    | s0    | -     | -20    | 3       | YES | -
+111   | 1  | 193     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+111   | 1  | 188     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+111   | 1  | 197     | addi       | a5    | a5    | -     | 1      | 2       | NO  | -
+111   | 2  | 167     | lw         | a5    | s0    | -     | -40    | 3       | YES | -
+111   | 3  | 70      | lw         | a5    | a5    | -     | 0      | 3       | YES | -
+112   | 0  | 138     | lw         | a5    | s0    | -     | -44    | 3       | YES | -
+113   | 1  | 194     | add        | a5    | a3    | a5    | -      | 2       | NO  | -
+113   | 1  | 189     | add        | a5    | a4    | a5    | -      | 2       | NO  | -
+114   | 2  | 71      | bge        | -     | a5    | zero  | -      | 3       | NO  | -
+114   | 3  | 198     | sw         | -     | s0    | a5    | -20    | 5       | YES | -
+114   | 1  | 168     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+115   | 1  | 139     | slli       | a5    | a5    | -     | 2      | 2       | NO  | -
+115   | 0  | 73      | lw         | a5    | a5    | -     | 0      | 3       | YES | CRIT
+116   | 1  | 169     | add        | a5    | a4    | a5    | -      | 2       | NO  | -
+117   | 1  | 140     | add        | a5    | a4    | a5    | -      | 2       | NO  | -
+118   | 0  | 74      | sub        | a4    | zero  | a5    | -      | 2       | YES | CRIT
+119   | 1  | 199     | lw         | a4    | s0    | -     | -20    | 3       | YES | -
+120   | 0  | 76      | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+122   | 1  | 201     | bge        | -     | a5    | a4    | -      | 3       | NO  | -
+125   | 1  | 78      | lw         | a5    | a5    | -     | 0      | 3       | YES | CRIT
+128   | 0  | 79      | sw         | -     | s0    | a5    | -32    | 5       | YES | CRIT
+133   | 1  | 81      | lw         | a5    | s0    | -     | -32    | 3       | YES | CRIT
+136   | 1  | 82      | addi       | a5    | a5    | -     | -30    | 2       | NO  | CRIT
+138   | 0  | 83      | sw         | -     | s0    | a5    | -32    | 5       | YES | CRIT
+143   | 1  | 84      | lw         | a4    | s0    | -     | -32    | 3       | YES | -
+143   | 0  | 91      | lw         | a4    | s0    | -     | -32    | 3       | YES | CRIT
+146   | 0  | 86      | blt        | -     | a5    | a4    | -      | 3       | NO  | -
+146   | 1  | 92      | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+151   | 0  | 105     | sw         | -     | a5    | zero  | 0      | 5       | YES | CRIT
+156   | 1  | 146     | lw         | a5    | a5    | -     | 0      | 3       | YES | -
+156   | 0  | 141     | lw         | a4    | a5    | -     | 0      | 3       | YES | CRIT
+159   | 1  | 147     | mul        | a5    | a4    | a5    | -      | 4       | NO  | CRIT
+163   | 1  | 149     | add        | a5    | a4    | a5    | -      | 2       | NO  | CRIT
+165   | 0  | 150     | sw         | -     | s0    | a5    | -36    | 5       | YES | CRIT
+170   | 1  | 170     | lw         | a4    | s0    | -     | -36    | 3       | YES | CRIT
+173   | 0  | 171     | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+178   | 1  | 190     | lw         | a4    | a5    | -     | 0      | 3       | YES | CRIT
+181   | 0  | 195     | sw         | -     | a5    | a4    | 0      | 5       | YES | CRIT
+
+-----------------------
+phase3_visualization.txt
+
+# Schedule Visualization (Gantt Chart - Text Format)
+
+Cycle:     0    1    2    3    4    5    6    7    8    9   10   11   12   13   14   15   16   17   18   19   20   21   22   23   24   25   26   27   28   29   30   31   32   33   34   35   36   37   38   39   40   41   42   43   44   45   46   47   48   49   50   51   52   53   54   55   56   57   58   59   60   61   62   63   64   65   66   67   68   69   70   71   72   73   74   75   76   77   78   79
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+PE0 |    I0   I0   I1   I1   I1   I1   I1 I137 I137  I75  I75  I61  I61  I21  I21   I2   I2 I116 I116 I116 I116 I116 I172 I172 I172 I125 I125 I125 I174 I174 I174 I174 I174 I175 I175 I175 I177 I177 I177 I156 I156 I156 I136 I136 I136 I136 I136  I56  I56  I56  I56  I56  I63  I63  I63  .    .    .    I22  I22  I22  I23  I23  I23  I96  I96  I96  I98  I98  I98  .    I31  I31  I31  I31  I31  I33  I33  I33  .  
+PE1 |    I5   I6   I6   I7   I7 I191 I191 I142 I142  I77  I77  I67  I67  I27  I27  I13  I13  I12  I12  I12  I12  I12 I151 I151 I151 I173 I173 I128 I128 I128 I129 I129 I130 I130 I131 I131 I132 I132 I133  I46 I135  I42  I42  .    I15  I15  I15  I16  I16  I16 I144  I18 I145 I145  I88  I88  I88  I94  I94  I90  I90  I26  I26  I28  I28  I28  I28  I28  I30  I30  I30  .   I102 I102 I102 I107 I107 I104 I104  I34
+PE2 |  I176 I176  I49  I49  I37  I37 I186 I186 I101 I101  I69  I69  I39  I39  I24  I24  .   I114 I114 I114 I114 I114 I148 I148 I148 I134 I134 I134  I60  I60  I60  I60  I60  I65  I65  I65  I40  I40  I40   I8   I8   I8   I8   I8  .    .    I48  I48  I48  I50  I50  I50  .    I20  I20  I20  I20  I20  I25  I25  I25  .    .    .    .    .    .    I99  I99  I99  I99  I99 I106 I106 I106  .    .   I108 I108 I108
+PE3 |  I155 I155 I182 I182  I97  I97 I166 I166  I87  I87  I72  I72  I29  I29  I19  I19  .   I117 I117 I117 I117 I117 I163 I163 I163  I17  I17  I17  I14  I14  I14   I3   I3   I3   I3   I3  I45  I45  I45  .    .    I47  I47  I47  I47  I47  .    .    .    I51  I51  I51  I51  I51  I93  I93  I93  .    .    I95  I95  I95  I95  I95  .    .    .    .    .    .    .    .    .    .    .    .    .    .    .    .  
+
+(Mostrando solo los primeros 80 ciclos de 186)
+
+
+Legend:
+  .   = Idle
+  IN  = Instruction N executing
+

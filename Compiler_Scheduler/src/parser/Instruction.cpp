@@ -233,10 +233,41 @@ void Instruction::parseUType() {
 // Output: vector de tokens
 std::vector<std::string> Instruction::tokenize(const std::string& str) const {
     std::vector<std::string> tokens;
-    std::istringstream iss(str);
+    
+    // Pre-procesar: agregar espacios alrededor de comas para tokenizar correctamente
+    std::string processed = str;
+    for (size_t i = 0; i < processed.length(); i++) {
+        if (processed[i] == ',') {
+            // Agregar espacio antes de la coma si no existe
+            if (i > 0 && processed[i-1] != ' ') {
+                processed.insert(i, " ");
+                i++;
+            }
+            // Agregar espacio después de la coma si no existe
+            if (i + 1 < processed.length() && processed[i+1] != ' ') {
+                processed.insert(i + 1, " ");
+                i++;
+            }
+        }
+    }
+    
+    std::istringstream iss(processed);
     std::string token;
     while (iss >> token) {
-        tokens.push_back(token);
+        // Eliminar comas residuales de los tokens
+        if (!token.empty() && token.back() == ',') {
+            token.pop_back();
+            if (!token.empty()) {
+                tokens.push_back(token);
+            }
+        } else if (!token.empty() && token.front() == ',') {
+            token.erase(0, 1);
+            if (!token.empty()) {
+                tokens.push_back(token);
+            }
+        } else if (!token.empty() && token != ",") {
+            tokens.push_back(token);
+        }
     }
     return tokens;
 }

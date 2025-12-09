@@ -63,7 +63,8 @@ SOURCES = $(wildcard $(SRC_DIR)/*.cpp) \
           $(wildcard $(SRC_DIR)/mapping/*.cpp) \
           $(wildcard $(SRC_DIR)/output_generator/*.cpp) \
           $(wildcard $(SRC_DIR)/arbiter/*.cpp) \
-          $(wildcard $(SRC_DIR)/vliw/*.cpp)
+          $(wildcard $(SRC_DIR)/vliw/*.cpp) \
+          $(wildcard $(SRC_DIR)/register_init/*.cpp)
 
 # Archivos objeto
 OBJECTS = $(SOURCES:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)

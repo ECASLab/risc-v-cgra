@@ -1,0 +1,978 @@
+[14:41:31][INFO] Logger initialized with file: output/compiler.log
+[14:41:31][INFO] === INICIANDO COMPILACIÓN ===
+[14:41:31][INFO] Archivo de entrada: input/matrix_multiply_static.s
+[14:41:31][INFO] 
+========== FASE 1 ==========
+[14:41:31][INFO] 
+[FASE 1.1] Lexer
+[14:41:31][INFO] Leyendo archivo: input/matrix_multiply_static.s
+[14:41:31][INFO] Archivo leído: 233 líneas
+[14:41:31][INFO] 
+[FASE 1.2] Parser
+[14:41:31][INFO] Iniciando parsing...
+[14:41:31][DEBUG] Label encontrado: matrix_one @ index 0
+[14:41:31][DEBUG] Label encontrado: matrix_two @ index 0
+[14:41:31][DEBUG] Label encontrado: output @ index 0
+[14:41:31][DEBUG] Label encontrado: seed @ index 0
+[14:41:31][DEBUG] Label encontrado: main @ index 0
+[14:41:31][DEBUG] Label encontrado: .L6 @ index 5
+[14:41:31][DEBUG] Label encontrado: .L3 @ index 29
+[14:41:31][DEBUG] Label encontrado: .L5 @ index 33
+[14:41:31][DEBUG] Label encontrado: .L4 @ index 36
+[14:41:31][DEBUG] Label encontrado: .L2 @ index 48
+[14:41:31][DEBUG] Label encontrado: .L11 @ index 53
+[14:41:31][DEBUG] Label encontrado: .L8 @ index 77
+[14:41:31][DEBUG] Label encontrado: .L10 @ index 81
+[14:41:31][DEBUG] Label encontrado: .L9 @ index 84
+[14:41:31][DEBUG] Label encontrado: .L7 @ index 96
+[14:41:31][DEBUG] Label encontrado: .L13 @ index 101
+[14:41:31][DEBUG] Label encontrado: .L12 @ index 109
+[14:41:31][DEBUG] Label encontrado: .L19 @ index 114
+[14:41:31][DEBUG] Label encontrado: .L18 @ index 116
+[14:41:31][DEBUG] Label encontrado: .L17 @ index 119
+[14:41:31][DEBUG] Label encontrado: .L16 @ index 154
+[14:41:31][DEBUG] Label encontrado: .L15 @ index 175
+[14:41:31][DEBUG] Label encontrado: .L14 @ index 181
+[14:41:31][DEBUG] Label encontrado: .L21 @ index 186
+[14:41:31][DEBUG] Label encontrado: .L20 @ index 199
+[14:41:31][DEBUG] Label encontrado: .L22 @ index 202
+[14:41:31][INFO] Parsing completado: 203 instrucciones
+[14:41:31][INFO] Labels encontrados: 26
+[14:41:31][INFO] Resolviendo referencias a labels...
+[14:41:31][DEBUG] Resuelto: .L2 -> 48
+[14:41:31][DEBUG] Resuelto: .L3 -> 29
+[14:41:31][DEBUG] Resuelto: .L4 -> 36
+[14:41:31][DEBUG] Resuelto: .L5 -> 33
+[14:41:31][DEBUG] Resuelto: .L6 -> 5
+[14:41:31][DEBUG] Resuelto: .L7 -> 96
+[14:41:31][DEBUG] Resuelto: .L8 -> 77
+[14:41:31][DEBUG] Resuelto: .L9 -> 84
+[14:41:31][DEBUG] Resuelto: .L10 -> 81
+[14:41:31][DEBUG] Resuelto: .L11 -> 53
+[14:41:31][DEBUG] Resuelto: .L12 -> 109
+[14:41:31][DEBUG] Resuelto: .L13 -> 101
+[14:41:31][DEBUG] Resuelto: .L14 -> 181
+[14:41:31][DEBUG] Resuelto: .L15 -> 175
+[14:41:31][DEBUG] Resuelto: .L16 -> 154
+[14:41:31][DEBUG] Resuelto: .L17 -> 119
+[14:41:31][DEBUG] Resuelto: .L18 -> 116
+[14:41:31][DEBUG] Resuelto: .L19 -> 114
+[14:41:31][DEBUG] Resuelto: .L20 -> 199
+[14:41:31][DEBUG] Resuelto: .L21 -> 186
+[14:41:31][DEBUG] Resuelto: .L22 -> 202
+[14:41:31][INFO] Resultados guardados en: output/phase1_instructions.txt
+[14:41:31][INFO] 
+[FASE 1.3] CFG Builder
+[14:41:31][INFO] Construyendo CFG...
+[14:41:31][DEBUG] Identificando límites de bloques básicos...
+[14:41:31][DEBUG] Límites identificados: 32
+[14:41:31][DEBUG] Creando bloques básicos...
+[14:41:31][DEBUG] Bloques creados: 32
+[14:41:31][DEBUG] Conectando bloques (creando aristas)...
+[14:41:31][DEBUG] Aristas creadas
+[14:41:31][INFO] CFG construido: 32 bloques básicos
+[14:41:31][INFO] CFG guardado en: output/phase1_cfg.txt
+[14:41:31][INFO] Archivo DOT guardado: output/phase1_cfg.dot
+[14:41:31][INFO] Generar imagen con: dot -Tpng output/phase1_cfg.dot -o cfg.png
+[14:41:31][INFO] 
+[FASE 1.4] Loop Detector
+[14:41:31][INFO] Detectando loops...
+[14:41:31][DEBUG] Back-edge: BB4 -> BB5
+[14:41:31][DEBUG] Back-edge: BB6 -> BB7
+[14:41:31][DEBUG] Back-edge: BB12 -> BB13
+[14:41:31][DEBUG] Back-edge: BB14 -> BB15
+[14:41:31][DEBUG] Back-edge: BB17 -> BB18
+[14:41:31][DEBUG] Back-edge: BB22 -> BB23
+[14:41:31][DEBUG] Back-edge: BB24 -> BB25
+[14:41:31][DEBUG] Back-edge: BB26 -> BB27
+[14:41:31][DEBUG] Back-edge: BB29 -> BB30
+[14:41:31][DEBUG] Back-edge: BB31 -> BB31
+[14:41:31][DEBUG] Back-edges encontrados: 10
+[14:41:31][DEBUG] Loop @ BB5 tiene 2 bloques
+[14:41:31][DEBUG] Loop @ BB7 tiene 7 bloques
+[14:41:31][DEBUG] Loop @ BB13 tiene 2 bloques
+[14:41:31][DEBUG] Loop @ BB15 tiene 7 bloques
+[14:41:31][DEBUG] Loop @ BB18 tiene 2 bloques
+[14:41:31][DEBUG] Loop @ BB23 tiene 2 bloques
+[14:41:31][DEBUG] Loop @ BB25 tiene 5 bloques
+[14:41:31][DEBUG] Loop @ BB27 tiene 8 bloques
+[14:41:31][DEBUG] Loop @ BB30 tiene 2 bloques
+[14:41:31][DEBUG] Loop @ BB31 tiene 1 bloques
+[14:41:31][DEBUG] Loop @ BB5: 6 instrs, 1 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += -30
+[14:41:31][DEBUG] Loop @ BB5 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB7: 46 instrs, 3 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += -403
+[14:41:31][DEBUG]   Induction variable: a5 += 57
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB7 - Branches: 2, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB13: 6 instrs, 1 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += -30
+[14:41:31][DEBUG] Loop @ BB13 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB15: 46 instrs, 3 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += -403
+[14:41:31][DEBUG]   Induction variable: a5 += 57
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB15 - Branches: 2, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB18: 11 instrs, 1 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB18 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB23: 38 instrs, 1 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB23 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB25: 62 instrs, 2 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB25 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB27: 70 instrs, 3 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB27 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB30: 16 instrs, 1 branches (total en cuerpo)
+[14:41:31][DEBUG]   Induction variable: a5 += 1
+[14:41:31][DEBUG] Loop @ BB30 - Branches: 1, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][DEBUG] Loop @ BB31: 1 instrs, 0 branches (total en cuerpo)
+[14:41:31][DEBUG] Loop @ BB31 - Branches: 0, Internal: 0, Countable: 0, TripCount: -1
+[14:41:31][INFO] Loops detectados: 10
+[14:41:31][INFO] Loops guardados en: output/phase1_loops.txt
+[14:41:31][INFO] 
+========== FASE 2 ==========
+[14:41:31][INFO] 
+[FASE 2.1] Configuración
+[14:41:31][INFO] Configuración de latencias cargada desde: config/latency_config.yaml
+[14:41:31][INFO] Configuración de hardware cargada desde: config/cgra_config.yaml
+[14:41:31][INFO] Configuración cargada:
+[14:41:31][INFO]   PEs: 4
+[14:41:31][INFO]   Registros: 32
+[14:41:31][INFO]   Bancos de memoria: 4
+[14:41:31][INFO] 
+[FASE 2.2] Análisis de Dependencias
+[14:41:31][INFO] Analizando dependencias...
+[14:41:31][DEBUG] Analizando dependencias RAW (Read After Write)...
+[14:41:31][DEBUG] Analizando dependencias WAR (Write After Read)...
+[14:41:31][DEBUG] Analizando dependencias WAW (Write After Write)...
+[14:41:31][DEBUG] Analizando dependencias de memoria...
+[14:41:31][DEBUG] Dependencias de memoria creadas: 416
+[14:41:31][INFO] Dependencias detectadas: 915
+[14:41:31][INFO] === DEPENDENCIAS DETECTADAS ===
+[14:41:31][INFO] Dependencias guardadas en: output/phase2_dependencies.txt
+[14:41:31][INFO] Archivo DOT guardado: output/phase2_dependencies.dot
+[14:41:31][INFO] 
+[FASE 2.3] Construcción del DFG
+[14:41:31][INFO] Construyendo Data Flow Graph...
+[14:41:31][DEBUG] Creando nodos del DFG...
+[14:41:31][DEBUG] Nodos creados: 203
+[14:41:31][DEBUG] Conectando aristas del DFG...
+[14:41:31][DEBUG] Aristas creadas
+[14:41:31][INFO] DFG construido: 203 nodos
+[14:41:31][INFO] Nodos raíz: 44
+[14:41:31][INFO] Nodos hoja: 23
+[14:41:31][INFO] 
+[FASE 2.4] Análisis de Camino Crítico
+[14:41:31][INFO] Analizando camino crítico...
+[14:41:31][DEBUG] Calculando ASAP (Earliest Start Times)...
+[14:41:31][DEBUG] Calculando ALAP (Latest Start Times)...
+[14:41:31][DEBUG] Identificando nodos en el camino crítico...
+[14:41:31][DEBUG] Nodo final encontrado: Node 195 (finish=145)
+[14:41:31][DEBUG] Nodos en camino crítico: 41
+[14:41:31][DEBUG] Calculando paralelismo promedio...
+[14:41:31][INFO] Longitud del camino crítico: 145 ciclos
+[14:41:31][INFO] Paralelismo promedio: 1.400000
+[14:41:31][INFO] === ANÁLISIS DE CAMINO CRÍTICO ===
+[14:41:31][INFO] Análisis guardado en: output/phase2_critical_path.txt
+[14:41:31][INFO] DFG guardado en: output/phase2_dfg.txt
+[14:41:31][INFO] Archivo DOT del DFG guardado: output/phase2_dfg.dot
+[14:41:31][INFO] 
+[FASE 2.5] Análisis de Presión de Registros
+[14:41:31][INFO] Analizando presión de registros...
+[14:41:31][DEBUG] Calculando live ranges...
+[14:41:31][DEBUG] Live ranges calculados: 5
+[14:41:31][DEBUG] Calculando presión en cada tiempo...
+[14:41:31][DEBUG] Presión máxima: 5
+[14:41:31][DEBUG] Presión promedio: 3
+[14:41:31][INFO] Presión máxima de registros: 5 / 32
+[14:41:31][INFO] === ANÁLISIS DE PRESIÓN DE REGISTROS ===
+[14:41:31][INFO] Análisis guardado en: output/phase2_register_pressure.txt
+[14:41:31][INFO] 
+=== RESUMEN FASE 1 ===
+[14:41:31][INFO] Instrucciones parseadas: 203
+[14:41:31][INFO] Labels encontrados: 26
+[14:41:31][INFO] Bloques básicos: 32
+[14:41:31][INFO] Loops detectados: 10
+[14:41:31][INFO] Loops candidatos para CGRA: 7
+[14:41:31][INFO] 
+=== RESUMEN FASE 2 ===
+[14:41:31][INFO] Dependencias detectadas: 915
+[14:41:31][INFO] Nodos en DFG: 203
+[14:41:31][INFO] Camino crítico: 145 ciclos
+[14:41:31][INFO] Paralelismo disponible (ILP): 1.400000
+[14:41:31][INFO] Presión máxima de registros: 5 / 32
+[14:41:31][INFO] 
+========== FASE 3 ==========
+[14:41:31][INFO] 
+[FASE 3.1] Particionamiento de Registros
+[14:41:31][INFO] Creando particionamiento de registros...
+[14:41:31][INFO] Particionamiento creado: 4 PEs, 8 registros por PE
+[14:41:31][INFO] 
+=== PARTICIONAMIENTO DE REGISTROS ===
+[14:41:31][INFO] 
+PE0:
+[14:41:31][INFO]   Rango: x0 - x7
+[14:41:31][INFO]   Total: 8 registros
+[14:41:31][INFO] 
+PE1:
+[14:41:31][INFO]   Rango: x8 - x15
+[14:41:31][INFO]   Total: 8 registros
+[14:41:31][INFO] 
+PE2:
+[14:41:31][INFO]   Rango: x16 - x23
+[14:41:31][INFO]   Total: 8 registros
+[14:41:31][INFO] 
+PE3:
+[14:41:31][INFO]   Rango: x24 - x31
+[14:41:31][INFO]   Total: 8 registros
+[14:41:31][INFO] Particionamiento guardado en: output/phase3_register_partitioning.txt
+[14:41:31][INFO] 
+[FASE 3.2] List Scheduling
+[14:41:31][INFO] Arbiter inicializado: 4 PEs, política Round-Robin (acceso paralelo habilitado)
+[14:41:31][INFO] Scheduler inicializado con Arbiter Round-Robin
+[14:41:31][INFO] Iniciando List Scheduling...
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[4] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[202] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[185] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[118] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[115] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[113] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[100] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[80] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[52] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[32] jal @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[85] addi @ cycle 0 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[176] addi @ cycle 0 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[155] addi @ cycle 0 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[57] lui @ cycle 0 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[53] lui @ cycle 0 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[9] lui @ cycle 0 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[0] addi @ cycle 0 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[5] lui @ cycle 0 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[200] addi @ cycle 1 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[58] addi @ cycle 1 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[54] addi @ cycle 1 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[10] addi @ cycle 1 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[6] addi @ cycle 1 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[1] sw @ cycle 2 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[49] addi @ cycle 2 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[182] addi @ cycle 2 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[110] addi @ cycle 3 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[59] addi @ cycle 3 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[55] addi @ cycle 3 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[11] addi @ cycle 3 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[7] addi @ cycle 3 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[37] addi @ cycle 4 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[97] addi @ cycle 4 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[191] addi @ cycle 5 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[186] addi @ cycle 6 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[166] addi @ cycle 6 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[142] addi @ cycle 7 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[137] addi @ cycle 7 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[101] addi @ cycle 8 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[87] addi @ cycle 8 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[77] addi @ cycle 9 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[75] addi @ cycle 9 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[69] addi @ cycle 10 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[72] addi @ cycle 10 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[67] addi @ cycle 11 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[61] addi @ cycle 11 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[39] addi @ cycle 12 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[29] addi @ cycle 12 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[27] addi @ cycle 13 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[21] addi @ cycle 13 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[24] addi @ cycle 14 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[19] addi @ cycle 14 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[13] addi @ cycle 15 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[2] addi @ cycle 15 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[116] sw @ cycle 17 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[12] sw @ cycle 17 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[114] sw @ cycle 17 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[117] sw @ cycle 17 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[151] lw @ cycle 22 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[172] lw @ cycle 22 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[148] lw @ cycle 22 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[163] lw @ cycle 22 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[152] addi @ cycle 25 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[173] addi @ cycle 25 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[125] lw @ cycle 25 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[134] lw @ cycle 25 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[17] lw @ cycle 25 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[128] lw @ cycle 27 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[174] sw @ cycle 28 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[60] sw @ cycle 28 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[14] lw @ cycle 28 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[153] sw @ cycle 30 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[129] addi @ cycle 30 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[3] sw @ cycle 31 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[130] slli @ cycle 32 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[175] lw @ cycle 33 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[65] lw @ cycle 33 on PE2
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[131] add @ cycle 34 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[177] bge @ cycle 36 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[154] lw @ cycle 36 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[132] slli @ cycle 36 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[40] lw @ cycle 36 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[45] lw @ cycle 36 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[133] addi @ cycle 38 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[156] bge @ cycle 39 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[41] slli @ cycle 39 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[46] addi @ cycle 39 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[8] sw @ cycle 39 on PE2
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[135] add @ cycle 40 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[42] add @ cycle 41 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[47] sw @ cycle 41 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[136] sw @ cycle 42 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[15] lw @ cycle 44 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[48] lw @ cycle 46 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[143] lw @ cycle 47 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[56] sw @ cycle 47 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[16] mul @ cycle 47 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[50] bge @ cycle 49 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[51] sw @ cycle 49 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[144] slli @ cycle 50 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[18] add @ cycle 51 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[145] add @ cycle 52 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[63] lw @ cycle 52 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[20] sw @ cycle 53 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[88] lw @ cycle 54 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[93] lw @ cycle 54 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[89] slli @ cycle 57 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[94] addi @ cycle 57 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[22] lw @ cycle 58 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[25] lw @ cycle 58 on PE2
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[90] add @ cycle 59 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[95] sw @ cycle 59 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[23] bge @ cycle 61 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[26] sub @ cycle 61 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[28] sw @ cycle 63 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[96] lw @ cycle 64 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[98] bge @ cycle 67 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[99] sw @ cycle 67 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[30] lw @ cycle 68 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[31] sw @ cycle 71 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[102] lw @ cycle 72 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[106] lw @ cycle 72 on PE2
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[103] slli @ cycle 75 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[107] addi @ cycle 75 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[33] lw @ cycle 76 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[104] add @ cycle 77 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[108] sw @ cycle 77 on PE2
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[34] addi @ cycle 79 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[35] sw @ cycle 81 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[109] lw @ cycle 82 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[111] bge @ cycle 85 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[112] sw @ cycle 85 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[36] lw @ cycle 86 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[43] lw @ cycle 86 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[38] blt @ cycle 89 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[44] sw @ cycle 89 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[178] lw @ cycle 90 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[157] lw @ cycle 90 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[119] lw @ cycle 92 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[179] addi @ cycle 93 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[158] addi @ cycle 93 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[62] lw @ cycle 94 on PE2
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[159] slli @ cycle 95 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[120] addi @ cycle 95 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[180] sw @ cycle 95 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[160] add @ cycle 97 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[121] slli @ cycle 97 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[64] mul @ cycle 97 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[161] slli @ cycle 99 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[122] add @ cycle 99 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[181] lw @ cycle 100 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[162] addi @ cycle 101 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[123] slli @ cycle 101 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[66] add @ cycle 101 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[183] bge @ cycle 103 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[164] add @ cycle 103 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[124] addi @ cycle 103 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[184] sw @ cycle 103 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[68] sw @ cycle 103 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[165] sw @ cycle 105 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[126] add @ cycle 105 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[127] sw @ cycle 107 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[192] lw @ cycle 108 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[187] lw @ cycle 108 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[196] lw @ cycle 108 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[193] slli @ cycle 111 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[188] slli @ cycle 111 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[197] addi @ cycle 111 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[167] lw @ cycle 111 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[70] lw @ cycle 111 on PE3
+[14:41:31][DEBUG] Scheduled (BUS): Inst[138] lw @ cycle 112 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[194] add @ cycle 113 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[189] add @ cycle 113 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[71] bge @ cycle 114 on PE2
+[14:41:31][DEBUG] Scheduled (BUS): Inst[198] sw @ cycle 114 on PE3
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[168] slli @ cycle 114 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[139] slli @ cycle 115 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[73] lw @ cycle 115 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[169] add @ cycle 116 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[140] add @ cycle 117 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[74] sub @ cycle 118 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[199] lw @ cycle 119 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[76] sw @ cycle 120 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[201] bge @ cycle 122 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[78] lw @ cycle 125 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[79] sw @ cycle 128 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[81] lw @ cycle 133 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[82] addi @ cycle 136 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[83] sw @ cycle 138 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[84] lw @ cycle 143 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[91] lw @ cycle 143 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[86] blt @ cycle 146 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[92] sw @ cycle 146 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[105] sw @ cycle 151 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[146] lw @ cycle 156 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[141] lw @ cycle 156 on PE0
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[147] mul @ cycle 159 on PE1
+[14:41:31][DEBUG] Scheduled (LOCAL): Inst[149] add @ cycle 163 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[150] sw @ cycle 165 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[170] lw @ cycle 170 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[171] sw @ cycle 173 on PE0
+[14:41:31][DEBUG] Scheduled (BUS): Inst[190] lw @ cycle 178 on PE1
+[14:41:31][DEBUG] Scheduled (BUS): Inst[195] sw @ cycle 181 on PE0
+[14:41:31][INFO] Scheduling completado: 203 instrucciones en 186 ciclos
+[14:41:31][INFO] 
+=== Estadísticas del Arbiter ===
+[14:41:31][INFO] Total accesos al bus: 120
+[14:41:31][INFO] Total contenciones: 0
+[14:41:31][INFO] Utilización del bus: 65.934066%
+[14:41:31][INFO] 
+Contenciones por PE:
+[14:41:31][INFO]   PE0: 0
+[14:41:31][INFO]   PE1: 0
+[14:41:31][INFO]   PE2: 0
+[14:41:31][INFO]   PE3: 0
+[14:41:31][INFO] 
+=== SCHEDULE GENERADO ===
+[14:41:31][INFO] Makespan: 186 ciclos
+[14:41:31][INFO] Total instrucciones: 203
+[14:41:31][INFO] 
+Schedule por ciclo:
+[14:41:31][INFO] 
+Ciclo 0:
+[14:41:31][INFO]   PE0: [4] jal rd=zero
+[14:41:31][INFO]   PE0: [202] jal rd=zero
+[14:41:31][INFO]   PE0: [185] jal rd=zero
+[14:41:31][INFO]   PE0: [118] jal rd=zero
+[14:41:31][INFO]   PE0: [115] jal rd=zero
+[14:41:31][INFO]   PE0: [113] jal rd=zero
+[14:41:31][INFO]   PE0: [100] jal rd=zero
+[14:41:31][INFO]   PE0: [80] jal rd=zero
+[14:41:31][INFO]   PE0: [52] jal rd=zero
+[14:41:31][INFO]   PE0: [32] jal rd=zero
+[14:41:31][INFO]   PE1: [85] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE2: [176] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE3: [155] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE1: [57] lui rd=a5
+[14:41:31][INFO]   PE1: [53] lui rd=a5
+[14:41:31][INFO]   PE1: [9] lui rd=a5
+[14:41:31][INFO]   PE0: [0] addi rd=sp rs1=sp
+[14:41:31][INFO]   PE1: [5] lui rd=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 1:
+[14:41:31][INFO]   PE1: [200] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE1: [58] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [54] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [10] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [6] addi rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 2:
+[14:41:31][INFO]   PE0: [1] sw rs1=sp rs2=s0
+[14:41:31][INFO]   PE2: [49] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE3: [182] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 3:
+[14:41:31][INFO]   PE1: [110] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE1: [59] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [55] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [11] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [7] addi rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 4:
+[14:41:31][INFO]   PE2: [37] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE3: [97] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 5:
+[14:41:31][INFO]   PE1: [191] addi rd=a3 rs1=zero
+[14:41:31][INFO] 
+Ciclo 6:
+[14:41:31][INFO]   PE2: [186] addi rd=a4 rs1=zero
+[14:41:31][INFO]   PE3: [166] addi rd=a4 rs1=zero
+[14:41:31][INFO] 
+Ciclo 7:
+[14:41:31][INFO]   PE1: [142] addi rd=a3 rs1=zero
+[14:41:31][INFO]   PE0: [137] addi rd=a4 rs1=zero
+[14:41:31][INFO] 
+Ciclo 8:
+[14:41:31][INFO]   PE2: [101] addi rd=a4 rs1=zero
+[14:41:31][INFO]   PE3: [87] addi rd=a4 rs1=zero
+[14:41:31][INFO] 
+Ciclo 9:
+[14:41:31][INFO]   PE1: [77] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE0: [75] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 10:
+[14:41:31][INFO]   PE2: [69] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE3: [72] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 11:
+[14:41:31][INFO]   PE1: [67] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE0: [61] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 12:
+[14:41:31][INFO]   PE2: [39] addi rd=a4 rs1=zero
+[14:41:31][INFO]   PE3: [29] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 13:
+[14:41:31][INFO]   PE1: [27] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE0: [21] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 14:
+[14:41:31][INFO]   PE2: [24] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE3: [19] addi rd=a5 rs1=zero
+[14:41:31][INFO] 
+Ciclo 15:
+[14:41:31][INFO]   PE1: [13] addi rd=a5 rs1=zero
+[14:41:31][INFO]   PE0: [2] addi rd=s0 rs1=sp
+[14:41:31][INFO] 
+Ciclo 17:
+[14:41:31][INFO]   PE0: [116] sw rs1=s0 rs2=zero
+[14:41:31][INFO]   PE1: [12] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE2: [114] sw rs1=s0 rs2=zero
+[14:41:31][INFO]   PE3: [117] sw rs1=s0 rs2=zero
+[14:41:31][INFO] 
+Ciclo 22:
+[14:41:31][INFO]   PE1: [151] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE0: [172] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE2: [148] lw rd=a4 rs1=s0
+[14:41:31][INFO]   PE3: [163] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 25:
+[14:41:31][INFO]   PE1: [152] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [173] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE0: [125] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE2: [134] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE3: [17] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 27:
+[14:41:31][INFO]   PE1: [128] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 28:
+[14:41:31][INFO]   PE0: [174] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE2: [60] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE3: [14] lw rd=a4 rs1=a5
+[14:41:31][INFO] 
+Ciclo 30:
+[14:41:31][INFO]   PE1: [153] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE1: [129] addi rd=a5 rs1=a4
+[14:41:31][INFO] 
+Ciclo 31:
+[14:41:31][INFO]   PE3: [3] sw rs1=s0 rs2=zero
+[14:41:31][INFO] 
+Ciclo 32:
+[14:41:31][INFO]   PE1: [130] slli rd=a5 rs1=a5
+[14:41:31][INFO] 
+Ciclo 33:
+[14:41:31][INFO]   PE0: [175] lw rd=a4 rs1=s0
+[14:41:31][INFO]   PE2: [65] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 34:
+[14:41:31][INFO]   PE1: [131] add rd=a5 rs1=a5 rs2=a4
+[14:41:31][INFO] 
+Ciclo 36:
+[14:41:31][INFO]   PE0: [177] bge rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [154] lw rd=a4 rs1=s0
+[14:41:31][INFO]   PE1: [132] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE2: [40] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE3: [45] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 38:
+[14:41:31][INFO]   PE1: [133] addi rd=a4 rs1=a5
+[14:41:31][INFO] 
+Ciclo 39:
+[14:41:31][INFO]   PE0: [156] bge rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [41] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [46] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE2: [8] sw rs1=s0 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 40:
+[14:41:31][INFO]   PE1: [135] add rd=a5 rs1=a5 rs2=a4
+[14:41:31][INFO] 
+Ciclo 41:
+[14:41:31][INFO]   PE1: [42] add rd=a5 rs1=a4 rs2=a5
+[14:41:31][INFO]   PE3: [47] sw rs1=s0 rs2=a5
+[14:41:31][INFO] 
+Ciclo 42:
+[14:41:31][INFO]   PE0: [136] sw rs1=s0 rs2=a5
+[14:41:31][INFO] 
+Ciclo 44:
+[14:41:31][INFO]   PE1: [15] lw rd=a5 rs1=s0 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 46:
+[14:41:31][INFO]   PE2: [48] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 47:
+[14:41:31][INFO]   PE1: [143] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE0: [56] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE1: [16] mul rd=a4 rs1=a4 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 49:
+[14:41:31][INFO]   PE2: [50] bge rs1=a5 rs2=a4
+[14:41:31][INFO]   PE3: [51] sw rs1=s0 rs2=zero
+[14:41:31][INFO] 
+Ciclo 50:
+[14:41:31][INFO]   PE1: [144] slli rd=a5 rs1=a5
+[14:41:31][INFO] 
+Ciclo 51:
+[14:41:31][INFO]   PE1: [18] add rd=a4 rs1=a4 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 52:
+[14:41:31][INFO]   PE1: [145] add rd=a5 rs1=a3 rs2=a5
+[14:41:31][INFO]   PE0: [63] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 53:
+[14:41:31][INFO]   PE2: [20] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 54:
+[14:41:31][INFO]   PE1: [88] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE3: [93] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 57:
+[14:41:31][INFO]   PE1: [89] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [94] addi rd=a5 rs1=a5
+[14:41:31][INFO] 
+Ciclo 58:
+[14:41:31][INFO]   PE0: [22] lw rd=a5 rs1=a5
+[14:41:31][INFO]   PE2: [25] lw rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 59:
+[14:41:31][INFO]   PE1: [90] add rd=a5 rs1=a4 rs2=a5
+[14:41:31][INFO]   PE3: [95] sw rs1=s0 rs2=a5
+[14:41:31][INFO] 
+Ciclo 61:
+[14:41:31][INFO]   PE0: [23] bge rs1=a5 rs2=zero
+[14:41:31][INFO]   PE1: [26] sub rd=a4 rs1=zero rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 63:
+[14:41:31][INFO]   PE1: [28] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 64:
+[14:41:31][INFO]   PE0: [96] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 67:
+[14:41:31][INFO]   PE0: [98] bge rs1=a5 rs2=a4
+[14:41:31][INFO]   PE2: [99] sw rs1=s0 rs2=zero
+[14:41:31][INFO] 
+Ciclo 68:
+[14:41:31][INFO]   PE1: [30] lw rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 71:
+[14:41:31][INFO]   PE0: [31] sw rs1=s0 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 72:
+[14:41:31][INFO]   PE1: [102] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE2: [106] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 75:
+[14:41:31][INFO]   PE1: [103] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [107] addi rd=a5 rs1=a5
+[14:41:31][INFO] 
+Ciclo 76:
+[14:41:31][INFO]   PE0: [33] lw rd=a5 rs1=s0 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 77:
+[14:41:31][INFO]   PE1: [104] add rd=a5 rs1=a4 rs2=a5
+[14:41:31][INFO]   PE2: [108] sw rs1=s0 rs2=a5
+[14:41:31][INFO] 
+Ciclo 79:
+[14:41:31][INFO]   PE1: [34] addi rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 81:
+[14:41:31][INFO]   PE0: [35] sw rs1=s0 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 82:
+[14:41:31][INFO]   PE1: [109] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 85:
+[14:41:31][INFO]   PE1: [111] bge rs1=a5 rs2=a4
+[14:41:31][INFO]   PE2: [112] sw rs1=s0 rs2=zero
+[14:41:31][INFO] 
+Ciclo 86:
+[14:41:31][INFO]   PE0: [36] lw rd=a4 rs1=s0
+[14:41:31][INFO]   PE3: [43] lw rd=a4 rs1=s0 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 89:
+[14:41:31][INFO]   PE0: [38] blt rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [44] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 90:
+[14:41:31][INFO]   PE2: [178] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE3: [157] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 92:
+[14:41:31][INFO]   PE0: [119] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 93:
+[14:41:31][INFO]   PE1: [179] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [158] addi rd=a5 rs1=a4
+[14:41:31][INFO] 
+Ciclo 94:
+[14:41:31][INFO]   PE2: [62] lw rd=a4 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 95:
+[14:41:31][INFO]   PE1: [159] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [120] addi rd=a5 rs1=a4
+[14:41:31][INFO]   PE0: [180] sw rs1=s0 rs2=a5
+[14:41:31][INFO] 
+Ciclo 97:
+[14:41:31][INFO]   PE1: [160] add rd=a5 rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [121] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [64] mul rd=a4 rs1=a4 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 99:
+[14:41:31][INFO]   PE1: [161] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [122] add rd=a5 rs1=a5 rs2=a4
+[14:41:31][INFO] 
+Ciclo 100:
+[14:41:31][INFO]   PE0: [181] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 101:
+[14:41:31][INFO]   PE1: [162] addi rd=a4 rs1=a5
+[14:41:31][INFO]   PE1: [123] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [66] add rd=a4 rs1=a4 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 103:
+[14:41:31][INFO]   PE0: [183] bge rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [164] add rd=a5 rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [124] addi rd=a4 rs1=a5
+[14:41:31][INFO]   PE2: [184] sw rs1=s0 rs2=zero
+[14:41:31][INFO]   PE3: [68] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 105:
+[14:41:31][INFO]   PE1: [165] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE1: [126] add rd=a5 rs1=a5 rs2=a4
+[14:41:31][INFO] 
+Ciclo 107:
+[14:41:31][INFO]   PE0: [127] sw rs1=s0 rs2=a5
+[14:41:31][INFO] 
+Ciclo 108:
+[14:41:31][INFO]   PE1: [192] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE2: [187] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE3: [196] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 111:
+[14:41:31][INFO]   PE1: [193] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [188] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE1: [197] addi rd=a5 rs1=a5
+[14:41:31][INFO]   PE2: [167] lw rd=a5 rs1=s0
+[14:41:31][INFO]   PE3: [70] lw rd=a5 rs1=a5
+[14:41:31][INFO] 
+Ciclo 112:
+[14:41:31][INFO]   PE0: [138] lw rd=a5 rs1=s0
+[14:41:31][INFO] 
+Ciclo 113:
+[14:41:31][INFO]   PE1: [194] add rd=a5 rs1=a3 rs2=a5
+[14:41:31][INFO]   PE1: [189] add rd=a5 rs1=a4 rs2=a5
+[14:41:31][INFO] 
+Ciclo 114:
+[14:41:31][INFO]   PE2: [71] bge rs1=a5 rs2=zero
+[14:41:31][INFO]   PE3: [198] sw rs1=s0 rs2=a5
+[14:41:31][INFO]   PE1: [168] slli rd=a5 rs1=a5
+[14:41:31][INFO] 
+Ciclo 115:
+[14:41:31][INFO]   PE1: [139] slli rd=a5 rs1=a5
+[14:41:31][INFO]   PE0: [73] lw rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 116:
+[14:41:31][INFO]   PE1: [169] add rd=a5 rs1=a4 rs2=a5
+[14:41:31][INFO] 
+Ciclo 117:
+[14:41:31][INFO]   PE1: [140] add rd=a5 rs1=a4 rs2=a5
+[14:41:31][INFO] 
+Ciclo 118:
+[14:41:31][INFO]   PE0: [74] sub rd=a4 rs1=zero rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 119:
+[14:41:31][INFO]   PE1: [199] lw rd=a4 rs1=s0
+[14:41:31][INFO] 
+Ciclo 120:
+[14:41:31][INFO]   PE0: [76] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 122:
+[14:41:31][INFO]   PE1: [201] bge rs1=a5 rs2=a4
+[14:41:31][INFO] 
+Ciclo 125:
+[14:41:31][INFO]   PE1: [78] lw rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 128:
+[14:41:31][INFO]   PE0: [79] sw rs1=s0 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 133:
+[14:41:31][INFO]   PE1: [81] lw rd=a5 rs1=s0 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 136:
+[14:41:31][INFO]   PE1: [82] addi rd=a5 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 138:
+[14:41:31][INFO]   PE0: [83] sw rs1=s0 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 143:
+[14:41:31][INFO]   PE1: [84] lw rd=a4 rs1=s0
+[14:41:31][INFO]   PE0: [91] lw rd=a4 rs1=s0 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 146:
+[14:41:31][INFO]   PE0: [86] blt rs1=a5 rs2=a4
+[14:41:31][INFO]   PE1: [92] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 151:
+[14:41:31][INFO]   PE0: [105] sw rs1=a5 rs2=zero [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 156:
+[14:41:31][INFO]   PE1: [146] lw rd=a5 rs1=a5
+[14:41:31][INFO]   PE0: [141] lw rd=a4 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 159:
+[14:41:31][INFO]   PE1: [147] mul rd=a5 rs1=a4 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 163:
+[14:41:31][INFO]   PE1: [149] add rd=a5 rs1=a4 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 165:
+[14:41:31][INFO]   PE0: [150] sw rs1=s0 rs2=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 170:
+[14:41:31][INFO]   PE1: [170] lw rd=a4 rs1=s0 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 173:
+[14:41:31][INFO]   PE0: [171] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 178:
+[14:41:31][INFO]   PE1: [190] lw rd=a4 rs1=a5 [CRITICAL]
+[14:41:31][INFO] 
+Ciclo 181:
+[14:41:31][INFO]   PE0: [195] sw rs1=a5 rs2=a4 [CRITICAL]
+[14:41:31][INFO] Schedule guardado en: output/phase3_schedule.txt
+[14:41:31][INFO] 
+[FASE 3.3] Análisis de Mapeo a PEs
+[14:41:31][INFO] Analizando mapeo de instrucciones a PEs...
+[14:41:31][INFO] Análisis de mapeo completado
+[14:41:31][INFO] 
+=== MAPEO Y ESTADÍSTICAS DE PEs ===
+[14:41:31][INFO] 
+PE0:
+[14:41:31][INFO]   Instrucciones ejecutadas: 54
+[14:41:31][INFO]   Ciclos totales: 186
+[14:41:31][INFO]   Ciclos ocupados: 157
+[14:41:31][INFO]   Ciclos idle: 29
+[14:41:31][INFO]   Utilización: 84.408602%
+[14:41:31][INFO] 
+PE1:
+[14:41:31][INFO]   Instrucciones ejecutadas: 96
+[14:41:31][INFO]   Ciclos totales: 186
+[14:41:31][INFO]   Ciclos ocupados: 152
+[14:41:31][INFO]   Ciclos idle: 34
+[14:41:31][INFO]   Utilización: 81.720430%
+[14:41:31][INFO] 
+PE2:
+[14:41:31][INFO]   Instrucciones ejecutadas: 29
+[14:41:31][INFO]   Ciclos totales: 186
+[14:41:31][INFO]   Ciclos ocupados: 95
+[14:41:31][INFO]   Ciclos idle: 91
+[14:41:31][INFO]   Utilización: 51.075269%
+[14:41:31][INFO] 
+PE3:
+[14:41:31][INFO]   Instrucciones ejecutadas: 24
+[14:41:31][INFO]   Ciclos totales: 186
+[14:41:31][INFO]   Ciclos ocupados: 78
+[14:41:31][INFO]   Ciclos idle: 108
+[14:41:31][INFO]   Utilización: 41.935484%
+[14:41:31][INFO] 
+=== MÉTRICAS GLOBALES ===
+[14:41:31][INFO] Utilización total: 64.784946%
+[14:41:31][INFO] IPC (Instructions Per Cycle): 1.091398
+[14:41:31][INFO] Makespan: 186 ciclos
+[14:41:31][INFO] Total instrucciones: 203
+[14:41:31][INFO] Mapeo guardado en: output/phase3_mapping.txt
+[14:41:31][INFO] 
+[FASE 3.4] Generación de Archivos de Salida
+[14:41:31][INFO] Generando archivos de salida...
+[14:41:31][INFO] Arbiter statistics saved to: output/phase3_arbiter_stats.txt
+[14:41:31][INFO] Generando código assembly con inicialización de registros...
+[14:41:31][INFO] Recopilando registros usados...
+[14:41:31][INFO] Registros únicos detectados: 4
+[14:41:31][INFO] Bloque de inicialización generado con 4 registros
+[14:41:31][INFO] Código assembly con inicialización guardado en: output/phase3_initialized_code.s
+[14:41:31][INFO] Bloque de inicialización generado con 4 registros
+[14:41:31][INFO] Información de inicialización guardada en: output/phase3_register_init_report.txt
+[14:41:31][INFO] Archivos de salida generados en: output
+[14:41:31][INFO] 
+========== FASE 4 ==========
+[14:41:31][INFO] 
+[FASE 4.1] Generación de Instrucciones VLIW de 128 bits
+[14:41:31][INFO] Generando instrucciones VLIW de 128 bits (4 PEs × 32 bits)...
+[14:41:31][INFO] Makespan: 186 ciclos
+[14:41:31][INFO] Generadas 186 palabras VLIW de 128 bits
+[14:41:31][INFO] 
+[FASE 4.2] Guardando Archivos VLIW
+[14:41:31][INFO] Archivo binario guardado: output/matrix_multiply_static.bin
+[14:41:31][INFO] Archivo hexadecimal concatenado guardado: output/matrix_multiply_static_concatenated.hex
+[14:41:31][INFO] Archivo hexadecimal separado guardado: output/matrix_multiply_static_separated.hex
+[14:41:31][INFO] Archivo Verilog guardado: output/matrix_multiply_static.mem
+[14:41:31][INFO] Archivo detallado guardado: output/matrix_multiply_static_detailed.txt
+[14:41:31][INFO] Archivo assembly guardado: output/matrix_multiply_static.s
+[14:41:31][INFO] Archivo ELF guardado: output/matrix_multiply_static.elf
+[14:41:31][INFO] 
+[FASE 4.3] Estadísticas VLIW
+[14:41:31][INFO] 
+=== RESUMEN FASE 3 ===
+[14:41:31][INFO] Instrucciones calendarizadas: 203
+[14:41:31][INFO] Makespan: 186 ciclos
+[14:41:31][INFO] IPC: 1.091398
+[14:41:31][INFO] Utilización de PEs: 64.784946%
+[14:41:31][INFO] 
+=== RESUMEN FASE 4 ===
+[14:41:31][INFO] Palabras VLIW generadas: 186
+[14:41:31][INFO] Formato: 128 bits (4 PEs × 32 bits)
+[14:41:31][INFO] PE0: bits [31:0]   (menos significativo)
+[14:41:31][INFO] PE1: bits [63:32]
+[14:41:31][INFO] PE2: bits [95:64]
+[14:41:31][INFO] PE3: bits [127:96] (más significativo)
+[14:41:31][INFO] 
+Archivos generados en output/:
+[14:41:31][INFO]   Fase 1:
+[14:41:31][INFO]     - phase1_instructions.txt
+[14:41:31][INFO]     - phase1_cfg.txt / .dot
+[14:41:31][INFO]     - phase1_loops.txt
+[14:41:31][INFO]   Fase 2:
+[14:41:31][INFO]     - phase2_dependencies.txt / .dot
+[14:41:31][INFO]     - phase2_dfg.txt / .dot
+[14:41:31][INFO]     - phase2_critical_path.txt
+[14:41:31][INFO]     - phase2_register_pressure.txt
+[14:41:31][INFO]   Fase 3:
+[14:41:31][INFO]     - phase3_register_partitioning.txt
+[14:41:31][INFO]     - phase3_schedule.txt
+[14:41:31][INFO]     - phase3_mapping.txt
+[14:41:31][INFO]     - phase3_metrics.txt
+[14:41:31][INFO]     - phase3_hardware.txt
+[14:41:31][INFO]     - phase3_arbiter_stats.txt
+[14:41:31][INFO]     - phase3_visualization.txt
+[14:41:31][INFO]     - phase3_combined.txt
+[14:41:31][INFO]   Fase 4:
+[14:41:31][INFO]     - matrix_multiply_static.bin (binario puro)
+[14:41:31][INFO]     - matrix_multiply_static_concatenated.hex (128-bit VLIW concatenado)
+[14:41:31][INFO]     - matrix_multiply_static_separated.hex (32-bit por línea)
+[14:41:31][INFO]     - matrix_multiply_static.mem (Verilog $readmemh)
+[14:41:31][INFO]     - matrix_multiply_static.s (assembly anotado)
+[14:41:31][INFO]     - matrix_multiply_static.elf (ejecutable ELF)
+[14:41:31][INFO]     - matrix_multiply_static_detailed.txt (detallado con comentarios)
+[14:41:31][INFO]     - compiler.log
+[14:41:31][INFO] 
+=== TODAS LAS FASES (1-4) COMPLETADAS EXITOSAMENTE ===

@@ -1,5 +1,6 @@
 #include "OutputGenerator.h"
 #include "../utils/Logger.h"
+#include "../register_init/RegisterInitializer.h"
 #include <fstream>
 #include <iomanip>
 #include <map>
@@ -27,6 +28,7 @@ void OutputGenerator::generateAll(const std::string& output_dir) {
     generateVisualization(output_dir + "/phase3_visualization.txt");
     generateArbiterStats(output_dir + "/phase3_arbiter_stats.txt");
     generateCombinedOutput(output_dir + "/phase3_combined.txt");
+    generateInitializedAssembly(output_dir + "/phase3_initialized_code.s");
     
     Logger::info("Archivos de salida generados en: " + output_dir);
 }
@@ -382,4 +384,147 @@ void OutputGenerator::generateArbiterStats(const std::string& filename) {
     
     file.close();
     Logger::info("Arbiter statistics saved to: " + filename);
+}
+
+// Genera archivo assembly con bloque de inicialización de registros
+// Input: filename (ruta del archivo)
+// Output: archivo .s con bloque de inicialización + código original
+void OutputGenerator::generateInitializedAssembly(const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file.is_open()) {
+        Logger::error("No se pudo crear archivo: " + filename);
+        return;
+    }
+    
+    Logger::info("Generando código assembly con inicialización de registros...");
+    
+    // Crear inicializador y recopilar registros usados
+    RegisterInitializer initializer(parser_);
+    initializer.collectUsedRegisters();
+    
+    file << "# ╔══════════════════════════════════════════════════════════════════╗\n";
+    file << "# ║    CÓDIGO ASSEMBLY CON INICIALIZACIÓN DE REGISTROS              ║\n";
+    file << "# ║    Generado por CGRA Compiler - Phase 3                         ║\n";
+    file << "# ╚══════════════════════════════════════════════════════════════════╝\n";
+    file << "#\n";
+    file << "# Registros únicos detectados: " << initializer.getUsedRegisters().size() << "\n";
+    file << "# Instrucciones originales: " << parser_.getInstructions().size() << "\n";
+    file << "#\n\n";
+    
+    // Generar bloque de inicialización
+    auto init_block = initializer.generateInitBlock();
+    for (const auto& line : init_block) {
+        file << line << "\n";
+    }
+    
+    // Agregar código original
+    file << "\n";
+    file << "# ============================================\n";
+    file << "# CÓDIGO ORIGINAL\n";
+    file << "# ============================================\n";
+    file << "\n";
+    
+    const auto& instructions = parser_.getInstructions();
+    const auto& labels = parser_.getLabels();
+    
+    // Crear mapa inverso de labels (índice -> nombre)
+    std::map<int, std::string> label_by_index;
+    for (const auto& [label_name, index] : labels) {
+        label_by_index[index] = label_name;
+    }
+    
+    // Escribir instrucciones con labels
+    for (size_t i = 0; i < instructions.size(); i++) {
+        // Si hay un label en este índice, escribirlo primero
+        if (label_by_index.find(i) != label_by_index.end()) {
+            file << label_by_index[i] << ":\n";
+        }
+        
+        // Escribir instrucción
+        const auto& instr = instructions[i];
+        file << "    " << instr.getOpcode();
+        
+        // Reconstruir operandos según el tipo de instrucción
+        if (instr.isStoreOperation()) {
+            // Store: sw rs2, offset(rs1)
+            if (!instr.getRs2().empty()) {
+                file << " " << instr.getRs2();
+                if (!instr.getRs1().empty()) {
+                    file << ", " << instr.getImmediate() << "(" << instr.getRs1() << ")";
+                }
+            }
+        } else if (instr.isLoadOperation()) {
+            // Load: lw rd, offset(rs1)
+            if (!instr.getRd().empty()) {
+                file << " " << instr.getRd();
+                if (!instr.getRs1().empty()) {
+                    file << ", " << instr.getImmediate() << "(" << instr.getRs1() << ")";
+                }
+            }
+        } else if (instr.isBranchOperation()) {
+            // Branch: beq rs1, rs2, label
+            if (!instr.getRs1().empty()) {
+                file << " " << instr.getRs1();
+                if (!instr.getRs2().empty()) {
+                    file << ", " << instr.getRs2();
+                }
+                if (!instr.getLabel().empty()) {
+                    file << ", " << instr.getLabel();
+                }
+            }
+        } else if (instr.isJumpOperation()) {
+            // Jump: jal rd, label OR jal label
+            if (!instr.getRd().empty() && instr.getRd() != "x1") {
+                file << " " << instr.getRd();
+                if (!instr.getLabel().empty()) {
+                    file << ", " << instr.getLabel();
+                }
+            } else if (!instr.getLabel().empty()) {
+                file << " " << instr.getLabel();
+            }
+        } else if (instr.getType() == InstructionType::R_TYPE) {
+            // R-Type: add rd, rs1, rs2
+            if (!instr.getRd().empty()) {
+                file << " " << instr.getRd();
+                if (!instr.getRs1().empty()) {
+                    file << ", " << instr.getRs1();
+                    if (!instr.getRs2().empty()) {
+                        file << ", " << instr.getRs2();
+                    }
+                }
+            }
+        } else if (instr.getType() == InstructionType::I_TYPE && !instr.isLoadOperation()) {
+            // I-Type (ALU): addi rd, rs1, imm
+            if (!instr.getRd().empty()) {
+                file << " " << instr.getRd();
+                if (!instr.getRs1().empty()) {
+                    file << ", " << instr.getRs1();
+                    if (instr.hasImmediateValue()) {
+                        file << ", " << instr.getImmediate();
+                    }
+                }
+            }
+        } else if (instr.getType() == InstructionType::U_TYPE) {
+            // U-Type: lui rd, imm
+            if (!instr.getRd().empty()) {
+                file << " " << instr.getRd();
+                if (instr.hasImmediateValue()) {
+                    file << ", " << instr.getImmediate();
+                }
+            }
+        }
+        
+        file << "\n";
+    }
+    
+    file << "\n# ============================================\n";
+    file << "# FIN DEL CÓDIGO\n";
+    file << "# ============================================\n";
+    
+    file.close();
+    Logger::info("Código assembly con inicialización guardado en: " + filename);
+    
+    // También guardar reporte de registros
+    std::string report_file = filename.substr(0, filename.rfind('/')) + "/phase3_register_init_report.txt";
+    initializer.saveToFile(report_file);
 }

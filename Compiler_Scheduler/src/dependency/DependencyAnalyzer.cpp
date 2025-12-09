@@ -117,44 +117,101 @@ void DependencyAnalyzer::analyzeWAW() {
 }
 
 // Analiza dependencias de memoria entre operaciones load y store
-// Usa estrategia conservadora para garantizar correctitud
+// Usa estrategia mejorada que considera direcciones cuando es posible
 void DependencyAnalyzer::analyzeMemoryDependencies() {
     Logger::debug("Analizando dependencias de memoria...");
 
     const auto& instructions = parser.getInstructions();
-    std::vector<int> loads;
-    std::vector<int> stores;
-
-    // Recolectar todas las operaciones de memoria
+    
+    // Agrupar por base + offset para detectar accesos al mismo lugar
+    struct MemAccess {
+        int index;
+        std::string baseReg;
+        int offset;
+        bool isStore;
+    };
+    
+    std::vector<MemAccess> memOps;
+    
+    // Recolectar todas las operaciones de memoria con su información
     for (size_t i = 0; i < instructions.size(); i++) {
         const auto& instr = instructions[i];
-
-        if (instr.isLoadOperation()) {
-            loads.push_back(i);
-        } else if (instr.isStoreOperation()) {
-            stores.push_back(i);
+        
+        if (instr.isMemoryOperation()) {
+            MemAccess access;
+            access.index = i;
+            access.baseReg = instr.getRs1();
+            access.offset = instr.getImmediate();
+            access.isStore = instr.isStoreOperation();
+            memOps.push_back(access);
         }
     }
-
-    // Estrategia conservadora:
-    // Store -> Load: RAW de memoria (conservador: todos los loads posteriores)
-    for (int storeIdx : stores) {
-        for (int loadIdx : loads) {
-            if (loadIdx > storeIdx) {
-                addDependency(storeIdx, loadIdx, DependencyType::MEMORY, "memory");
+    
+    int depCount = 0;
+    
+    // Crear dependencias basadas en análisis de direcciones
+    for (size_t i = 0; i < memOps.size(); i++) {
+        for (size_t j = i + 1; j < memOps.size(); j++) {
+            const auto& earlier = memOps[i];
+            const auto& later = memOps[j];
+            
+            // Determinar si pueden acceder a la misma dirección
+            bool mayAlias = false;  // Cambiar a optimista por defecto
+            
+            // Si usan el mismo registro base y mismo offset, definitivamente alias
+            if (earlier.baseReg == later.baseReg && 
+                earlier.offset == later.offset &&
+                !earlier.baseReg.empty()) {
+                mayAlias = true;
+            }
+            // Si usan el mismo registro base pero offsets muy cercanos (< 4 bytes)
+            else if (earlier.baseReg == later.baseReg && 
+                     !earlier.baseReg.empty() &&
+                     std::abs(earlier.offset - later.offset) < 4) {
+                // Offsets muy cercanos, posible overlap
+                mayAlias = true;
+            }
+            // Si usan diferente registro base, asumir que NO son alias
+            else if (earlier.baseReg != later.baseReg && 
+                     !earlier.baseReg.empty() && 
+                     !later.baseReg.empty()) {
+                // Diferentes bases = direcciones diferentes (optimista)
+                mayAlias = false;
+            }
+            // Si mismo base pero offsets muy separados (>= 4 bytes)
+            else if (earlier.baseReg == later.baseReg && 
+                     std::abs(earlier.offset - later.offset) >= 4) {
+                // Definitivamente accesos diferentes
+                mayAlias = false;
+            }
+            // Casos ambiguos (base vacío o zero): asumir NO alias (optimista)
+            else {
+                mayAlias = false;
+            }
+            
+            // Crear dependencias solo si hay potencial alias
+            if (mayAlias) {
+                if (earlier.isStore && !later.isStore) {
+                    // Store -> Load: RAW
+                    addDependency(earlier.index, later.index, DependencyType::MEMORY, "memory");
+                    depCount++;
+                }
+                else if (earlier.isStore && later.isStore) {
+                    // Store -> Store: WAW
+                    addDependency(earlier.index, later.index, DependencyType::MEMORY, "memory");
+                    depCount++;
+                }
+                else if (!earlier.isStore && later.isStore) {
+                    // Load -> Store: WAR
+                    addDependency(earlier.index, later.index, DependencyType::MEMORY, "memory");
+                    depCount++;
+                }
+                // Load -> Load: no dependency needed (pueden ejecutarse en paralelo)
             }
         }
     }
-
-    // Store -> Store: serializar consecutivos (preservar orden de escrituras)
-    for (size_t i = 0; i + 1 < stores.size(); i++) {
-        addDependency(stores[i], stores[i + 1], DependencyType::MEMORY, "memory");
-    }
-
-    // Load -> Load: pueden ejecutarse en paralelo (no se crean dependencias)
-
-    int memDeps = stores.size() * loads.size() + (stores.size() > 0 ? stores.size() - 1 : 0);
-    Logger::debug("Dependencias de memoria creadas: " + std::to_string(memDeps));
+    
+    Logger::debug("Dependencias de memoria creadas: " + std::to_string(depCount));
 }
 
 // Agrega una nueva dependencia al grafo

@@ -23,6 +23,7 @@ public:
     void generateVisualization(const std::string& filename);
     void generateCombinedOutput(const std::string& filename);
     void generateArbiterStats(const std::string& filename);
+    void generateInitializedAssembly(const std::string& filename);
 
 private:
     const Scheduler& scheduler_;

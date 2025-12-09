@@ -22,7 +22,7 @@ main:
 	sw a5,-20(s0)
 .L2:
 	lw a4,-20(s0)
-	addi a5, zero, 3 # li a5, 3
+	addi a5, zero, 99 # li a5, 99
 	bge a5, a4, .L3 # ble a4, a5, .L3
 	sw zero,-20(s0)
 	jal zero, .L4 # j .L4
@@ -38,7 +38,7 @@ main:
 	sw a5,-20(s0)
 .L4:
 	lw a4,-20(s0)
-	addi a5, zero, 3 # li a5, 3
+	addi a5, zero, 99 # li a5, 99
 	bge a5, a4, .L5 # ble a4, a5, .L5
 	sw zero,-20(s0)
 	jal zero, .L6 # j .L6
@@ -53,7 +53,7 @@ main:
 	sw a5,-20(s0)
 .L6:
 	lw a4,-20(s0)
-	addi a5, zero, 3 # li a5, 3
+	addi a5, zero, 99 # li a5, 99
 	bge a5, a4, .L7 # ble a4, a5, .L7
 	sw zero,-20(s0)
 	jal zero, .L8 # j .L8
@@ -79,7 +79,7 @@ main:
 	sw a5,-20(s0)
 .L8:
 	lw a4,-20(s0)
-	addi a5, zero, 3 # li a5, 3
+	addi a5, zero, 99 # li a5, 99
 	bge a5, a4, .L9 # ble a4, a5, .L9
 	sw zero,-20(s0)
 	jal zero, .L10 # j .L10
@@ -99,7 +99,7 @@ main:
 	sw a5,-20(s0)
 .L10:
 	lw a4,-20(s0)
-	addi a5, zero, 3 # li a5, 3
+	addi a5, zero, 99 # li a5, 99
 	bge a5, a4, .L11 # ble a4, a5, .L11
 .L12:
 	jal zero, .L12 # j .L12
